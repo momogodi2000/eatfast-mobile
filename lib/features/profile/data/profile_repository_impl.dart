@@ -97,7 +97,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Result<void, core_failure.Failure>> deleteProfileImage() async {
     try {
       await _apiClient.delete('/user/avatar');
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -156,7 +156,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Result<void, core_failure.Failure>> deleteAddress(String addressId) async {
     try {
       await _apiClient.delete('/user/addresses/$addressId');
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -170,7 +170,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       await _apiClient.put(
         '/user/addresses/$addressId/default',
       );
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -233,7 +233,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Result<void, core_failure.Failure>> deletePaymentMethod(String methodId) async {
     try {
       await _apiClient.delete('/user/payment-methods/$methodId');
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -247,7 +247,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       await _apiClient.put(
         '/user/payment-methods/$methodId/default',
       );
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -303,7 +303,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           'newPassword': newPassword,
         },
       );
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -318,7 +318,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         '/user/two-factor-auth',
         data: {'enabled': enable},
       );
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
@@ -339,7 +339,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           if (reason != null) 'reason': reason,
         },
       );
-      return const Result.success(null);
+      return Result.success(null);
     } on DioException catch (e) {
       return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {

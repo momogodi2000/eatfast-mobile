@@ -4,8 +4,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../shared/widgets/app_button.dart';
-import '../../../shared/widgets/app_loading_indicator.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../domain/models.dart';
 import '../providers/profile_provider.dart';
 

@@ -96,5 +96,6 @@ class AppColors {
 
   // Convenience getters for common usage
   static Color get onPrimary => textOnPrimary;
+  static Color get onBackground => textPrimary;
   static Color get gray => textSecondary;
 }

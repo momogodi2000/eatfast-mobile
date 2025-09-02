@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as google_maps;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../shared/widgets/app_button.dart';
-import '../../../shared/widgets/app_loading_indicator.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../domain/models.dart';
 import '../providers/profile_provider.dart';
 
@@ -391,8 +390,8 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
   final _postalCodeController = TextEditingController();
   final _countryController = TextEditingController();
   
-  GoogleMapController? _mapController;
-  LatLng? _selectedLocation;
+  google_maps.GoogleMapController? _mapController;
+  google_maps.LatLng? _selectedLocation;
   bool _isDefault = false;
   bool _isLoadingLocation = false;
 
@@ -424,7 +423,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
       _isDefault = address.isDefault;
       
       if (address.latitude != null && address.longitude != null) {
-        _selectedLocation = LatLng(address.latitude!, address.longitude!);
+        _selectedLocation = google_maps.LatLng(address.latitude!, address.longitude!);
       }
     } else {
       // Set default country for new addresses
@@ -536,25 +535,25 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-            GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: _selectedLocation ?? const LatLng(3.848, 11.502), // Yaoundé
+            google_maps.GoogleMap(
+              initialCameraPosition: google_maps.CameraPosition(
+                target: _selectedLocation ?? const google_maps.LatLng(3.848, 11.502), // Yaoundé
                 zoom: 15,
               ),
               onMapCreated: (controller) => _mapController = controller,
               onTap: _onMapTap,
               markers: _selectedLocation != null
                   ? {
-                      Marker(
-                        markerId: const MarkerId('selected_location'),
+                      google_maps.Marker(
+                        markerId: const google_maps.MarkerId('selected_location'),
                         position: _selectedLocation!,
-                        infoWindow: const InfoWindow(
+                        infoWindow: google_maps.InfoWindow(
                           title: 'Adresse sélectionnée',
                         ),
                       ),
                     }
                   : {},
-              mapType: MapType.normal,
+              mapType: google_maps.MapType.normal,
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
             ),
@@ -697,7 +696,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
     );
   }
 
-  void _onMapTap(LatLng location) {
+  void _onMapTap(google_maps.LatLng location) {
     setState(() {
       _selectedLocation = location;
     });
@@ -715,14 +714,14 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
         desiredAccuracy: LocationAccuracy.high,
       );
       
-      final location = LatLng(position.latitude, position.longitude);
+      final location = google_maps.LatLng(position.latitude, position.longitude);
       
       setState(() {
         _selectedLocation = location;
       });
       
       _mapController?.animateCamera(
-        CameraUpdate.newLatLngZoom(location, 15),
+        google_maps.CameraUpdate.newLatLngZoom(location, 15),
       );
       
       await _reverseGeocode(location);
@@ -785,7 +784,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
     return true;
   }
 
-  Future<void> _reverseGeocode(LatLng location) async {
+  Future<void> _reverseGeocode(google_maps.LatLng location) async {
     try {
       final placemarks = await placemarkFromCoordinates(
         location.latitude,

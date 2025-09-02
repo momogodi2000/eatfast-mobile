@@ -168,6 +168,12 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     );
   }
 
+  /// Update profile picture (alias for uploadProfileImage)
+  Future<void> updateProfilePicture(String imagePath) async {
+    final imageFile = File(imagePath);
+    await uploadProfileImage(imageFile);
+  }
+
   /// Delete profile image
   Future<void> deleteProfileImage() async {
     if (state.value == null) return;
