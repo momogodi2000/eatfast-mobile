@@ -1,0 +1,272 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../core/constants/app_constants.dart';
+import '../domain/models.dart';
+
+/// Authentication state management with Riverpod
+class AuthNotifier extends StateNotifier<AuthState> {
+  AuthNotifier() : super(const AuthState.initial());
+
+  /// Login with email and password
+  Future<void> loginWithEmail(String email, String password) async {
+    state = const AuthState.loading();
+    
+    try {
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+      
+      // Mock authentication - replace with real API call
+      if (email.isNotEmpty && password.length >= 6) {
+        final user = User(
+          id: 'user_123',
+          name: 'John Doe',
+          email: email,
+          phone: '+237698765432',
+          createdAt: DateTime.now(),
+        );
+        
+        final authResponse = AuthResponse(
+          user: user,
+          token: 'mock_token_123456789',
+          refreshToken: 'mock_refresh_token_123456789',
+          expiresAt: DateTime.now().add(const Duration(hours: 24)),
+        );
+        
+        await _saveAuthData(authResponse);
+        state = AuthState.authenticated(user: user);
+      } else {
+        state = const AuthState.error(message: 'Email ou mot de passe incorrect');
+      }
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur de connexion: ${e.toString()}');
+    }
+  }
+
+  /// Register new user
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+  }) async {
+    state = const AuthState.loading();
+    
+    try {
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+      
+      // Mock registration - replace with real API call
+      final user = User(
+        id: 'user_${DateTime.now().millisecondsSinceEpoch}',
+        name: name,
+        email: email,
+        phone: phone,
+        createdAt: DateTime.now(),
+      );
+      
+      final authResponse = AuthResponse(
+        user: user,
+        token: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
+        refreshToken: 'mock_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
+        expiresAt: DateTime.now().add(const Duration(hours: 24)),
+      );
+      
+      await _saveAuthData(authResponse);
+      state = AuthState.authenticated(user: user);
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur d\'inscription: ${e.toString()}');
+    }
+  }
+
+  /// Login with phone number
+  Future<void> loginWithPhone(String phoneNumber) async {
+    state = const AuthState.loading();
+    
+    try {
+      await Future.delayed(const Duration(seconds: 1)); // Simulate API call
+      
+      // Mock phone login - replace with real API call
+      state = AuthState.otpSent(phoneNumber: phoneNumber);
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur d\'envoi du code: ${e.toString()}');
+    }
+  }
+
+  /// Verify OTP
+  Future<void> verifyOtp(String phoneNumber, String otp) async {
+    state = const AuthState.loading();
+    
+    try {
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+      
+      // Mock OTP verification - replace with real API call
+      if (otp == '123456') {
+        final user = User(
+          id: 'user_phone_${DateTime.now().millisecondsSinceEpoch}',
+          name: 'Utilisateur',
+          email: '',
+          phone: phoneNumber,
+          createdAt: DateTime.now(),
+        );
+        
+        final authResponse = AuthResponse(
+          user: user,
+          token: 'mock_token_otp_${DateTime.now().millisecondsSinceEpoch}',
+          refreshToken: 'mock_refresh_token_otp_${DateTime.now().millisecondsSinceEpoch}',
+          expiresAt: DateTime.now().add(const Duration(hours: 24)),
+        );
+        
+        await _saveAuthData(authResponse);
+        state = AuthState.authenticated(user: user);
+      } else {
+        state = const AuthState.error(message: 'Code de vérification incorrect');
+      }
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur de vérification: ${e.toString()}');
+    }
+  }
+
+  /// Logout user
+  Future<void> logout() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(AppConstants.keyUserToken);
+      await prefs.remove(AppConstants.keyUserData);
+      state = const AuthState.unauthenticated();
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur de déconnexion: ${e.toString()}');
+    }
+  }
+
+  /// Check if user is authenticated
+  Future<void> checkAuthStatus() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(AppConstants.keyUserToken);
+      final userData = prefs.getString(AppConstants.keyUserData);
+      
+      if (token != null && userData != null) {
+        // In real app, verify token with server
+        final userMap = Map<String, dynamic>.from(
+          Uri.splitQueryString(userData),
+        );
+        final user = User.fromJson(userMap);
+        state = AuthState.authenticated(user: user);
+      } else {
+        state = const AuthState.unauthenticated();
+      }
+    } catch (e) {
+      state = const AuthState.unauthenticated();
+    }
+  }
+
+  /// Forgot password
+  Future<void> forgotPassword(String email) async {
+    state = const AuthState.loading();
+    
+    try {
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+      
+      // Mock forgot password - replace with real API call
+      state = const AuthState.passwordResetSent();
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur d\'envoi du mail: ${e.toString()}');
+    }
+  }
+
+  /// Save authentication data locally
+  Future<void> _saveAuthData(AuthResponse authResponse) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppConstants.keyUserToken, authResponse.token);
+    await prefs.setString(AppConstants.keyUserData, authResponse.user.toString());
+  }
+
+  /// Update user profile
+  Future<void> updateProfile({
+    String? name,
+    String? phone,
+    String? profilePicture,
+  }) async {
+    if (state is AuthAuthenticated) {
+      final currentState = state as AuthAuthenticated;
+      final updatedUser = currentState.user.copyWith(
+        name: name,
+        phone: phone,
+        profilePicture: profilePicture,
+        updatedAt: DateTime.now(),
+      );
+      
+      // Save updated user data
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(AppConstants.keyUserData, updatedUser.toString());
+      
+      state = AuthState.authenticated(user: updatedUser);
+    }
+  }
+
+  /// Clear error state
+  void clearError() {
+    if (state is AuthError) {
+      state = const AuthState.unauthenticated();
+    }
+  }
+}
+
+/// Authentication states
+sealed class AuthState {
+  const AuthState();
+  
+  const factory AuthState.initial() = AuthInitial;
+  const factory AuthState.loading() = AuthLoading;
+  const factory AuthState.authenticated({required User user}) = AuthAuthenticated;
+  const factory AuthState.unauthenticated() = AuthUnauthenticated;
+  const factory AuthState.error({required String message}) = AuthError;
+  const factory AuthState.otpSent({required String phoneNumber}) = AuthOtpSent;
+  const factory AuthState.passwordResetSent() = AuthPasswordResetSent;
+}
+
+class AuthInitial extends AuthState {
+  const AuthInitial();
+}
+
+class AuthLoading extends AuthState {
+  const AuthLoading();
+}
+
+class AuthAuthenticated extends AuthState {
+  final User user;
+  const AuthAuthenticated({required this.user});
+}
+
+class AuthUnauthenticated extends AuthState {
+  const AuthUnauthenticated();
+}
+
+class AuthError extends AuthState {
+  final String message;
+  const AuthError({required this.message});
+}
+
+class AuthOtpSent extends AuthState {
+  final String phoneNumber;
+  const AuthOtpSent({required this.phoneNumber});
+}
+
+class AuthPasswordResetSent extends AuthState {
+  const AuthPasswordResetSent();
+}
+
+/// Provider for authentication state
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+  return AuthNotifier();
+});
+
+/// Provider for current user
+final currentUserProvider = Provider<User?>((ref) {
+  final authState = ref.watch(authProvider);
+  return authState is AuthAuthenticated ? authState.user : null;
+});
+
+/// Provider to check if user is authenticated
+final isAuthenticatedProvider = Provider<bool>((ref) {
+  final authState = ref.watch(authProvider);
+  return authState is AuthAuthenticated;
+});
