@@ -1,21 +1,61 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:local_auth/local_auth.dart';
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/security/secure_storage_service.dart';
+import '../../../../core/security/biometric_auth_service.dart';
 import '../domain/models.dart';
 
 /// Authentication state management with Riverpod
 class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier() : super(const AuthState.initial());
+  AuthNotifier() : super(const AuthState.initial()) {
+    _initialize();
+  }
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+  );
+
+  /// Initialize authentication state
+  Future<void> _initialize() async {
+    try {
+      // Check if user has valid tokens
+      final hasTokens = await SecureStorageService.hasValidTokens();
+      
+      if (hasTokens) {
+        // Load user data and validate
+        await checkAuthStatus();
+      } else {
+        state = const AuthState.unauthenticated();
+      }
+    } catch (e) {
+      state = const AuthState.unauthenticated();
+    }
+  }
 
   /// Login with email and password
   Future<void> loginWithEmail(String email, String password) async {
     state = const AuthState.loading();
     
     try {
+      // Check if account is locked
+      if (await SecureStorageService.isAccountLocked()) {
+        final remainingTime = await SecureStorageService.getRemainingLockTime();
+        final minutes = remainingTime?.inMinutes ?? 0;
+        state = AuthState.error(
+          message: 'Compte temporairement verrouillé. Réessayez dans $minutes minutes.',
+        );
+        return;
+      }
+
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
       
       // Mock authentication - replace with real API call
       if (email.isNotEmpty && password.length >= 6) {
+        // Reset failed attempts on successful login
+        await SecureStorageService.resetFailedLoginAttempts();
+
         final user = User(
           id: 'user_123',
           name: 'John Doe',
@@ -34,9 +74,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
         await _saveAuthData(authResponse);
         state = AuthState.authenticated(user: user);
       } else {
+        await SecureStorageService.incrementFailedLoginAttempts();
+        await SecureStorageService.storeLoginAttempt();
         state = const AuthState.error(message: 'Email ou mot de passe incorrect');
       }
     } catch (e) {
+      await SecureStorageService.incrementFailedLoginAttempts();
+      await SecureStorageService.storeLoginAttempt();
       state = AuthState.error(message: 'Erreur de connexion: ${e.toString()}');
     }
   }
@@ -127,13 +171,123 @@ class AuthNotifier extends StateNotifier<AuthState> {
   /// Logout user
   Future<void> logout() async {
     try {
+      // Sign out from Google if signed in
+      if (await _googleSignIn.isSignedIn()) {
+        await _googleSignIn.signOut();
+      }
+
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(AppConstants.keyUserToken);
       await prefs.remove(AppConstants.keyUserData);
+      
+      // Clear tokens but keep biometric credentials
+      await SecureStorageService.clearTokens();
+      
       state = const AuthState.unauthenticated();
     } catch (e) {
       state = AuthState.error(message: 'Erreur de déconnexion: ${e.toString()}');
     }
+  }
+
+  /// Google Sign In
+  Future<void> signInWithGoogle() async {
+    state = const AuthState.loading();
+    
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      
+      if (googleUser == null) {
+        state = const AuthState.unauthenticated();
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create user from Google data
+      final user = User(
+        id: googleUser.id,
+        email: googleUser.email,
+        name: googleUser.displayName ?? 'Google User',
+        phone: '',
+        profilePicture: googleUser.photoUrl,
+        createdAt: DateTime.now(),
+      );
+
+      final authResponse = AuthResponse(
+        user: user,
+        token: googleAuth.accessToken ?? '',
+        refreshToken: googleAuth.idToken ?? '',
+        expiresAt: DateTime.now().add(const Duration(hours: 24)),
+      );
+
+      await _saveAuthData(authResponse);
+      state = AuthState.authenticated(user: user);
+    } catch (e) {
+      state = AuthState.error(message: 'Erreur de connexion Google: ${e.toString()}');
+    }
+  }
+
+  /// Biometric authentication
+  Future<void> authenticateWithBiometrics() async {
+    state = const AuthState.loading();
+    
+    try {
+      final canUse = await BiometricAuthService.canUseBiometricLogin();
+      if (!canUse) {
+        state = const AuthState.error(
+          message: 'Authentification biométrique non disponible',
+        );
+        return;
+      }
+
+      final credentials = await BiometricAuthService.authenticateAndGetCredentials();
+      if (credentials == null) {
+        state = const AuthState.error(
+          message: 'Échec de l\'authentification biométrique',
+        );
+        return;
+      }
+
+      // Use stored credentials to authenticate
+      await loginWithEmail(
+        credentials['email']!,
+        credentials['hashedPassword']!,
+      );
+    } catch (e) {
+      state = AuthState.error(
+        message: 'Erreur biométrique: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Setup biometric login
+  Future<bool> setupBiometricLogin({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      return await BiometricAuthService.setupBiometricLogin(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Check if biometric authentication is available
+  Future<bool> isBiometricAvailable() async {
+    return await BiometricAuthService.isAvailable();
+  }
+
+  /// Get available biometric types
+  Future<List<BiometricType>> getAvailableBiometrics() async {
+    return await BiometricAuthService.getAvailableBiometrics();
+  }
+
+  /// Check if biometric login can be used
+  Future<bool> canUseBiometricLogin() async {
+    return await BiometricAuthService.canUseBiometricLogin();
   }
 
   /// Check if user is authenticated
@@ -177,6 +331,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(AppConstants.keyUserToken, authResponse.token);
     await prefs.setString(AppConstants.keyUserData, authResponse.user.toString());
+    
+    // Store tokens securely
+    await SecureStorageService.storeAccessToken(authResponse.token);
+    await SecureStorageService.storeRefreshToken(authResponse.refreshToken);
   }
 
   /// Update user profile
