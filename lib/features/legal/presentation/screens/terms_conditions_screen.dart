@@ -238,7 +238,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                   padding: const EdgeInsets.all(DesignTokens.spaceLG),
                   decoration: BoxDecoration(
                     color: DesignTokens.white,
-                    border: Border(
+                    border: const Border(
                       top: BorderSide(
                         color: DesignTokens.lightGrey,
                         width: 1,
@@ -272,7 +272,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.arrow_downward,
                                 size: DesignTokens.iconSM,
                                 color: DesignTokens.warningColor,
@@ -351,18 +351,18 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                               vertical: DesignTokens.spaceMD,
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 AppConstants.continueButton,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: DesignTokens.fontSizeMD,
                                   fontWeight: DesignTokens.fontWeightSemiBold,
                                 ),
                               ),
-                              const SizedBox(width: DesignTokens.spaceXS),
-                              const Icon(Icons.arrow_forward),
+                              SizedBox(width: DesignTokens.spaceXS),
+                              Icon(Icons.arrow_forward),
                             ],
                           ),
                         ),

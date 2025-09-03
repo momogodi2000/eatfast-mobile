@@ -185,7 +185,7 @@ class CartItemCard extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -233,7 +233,7 @@ class CartItemCard extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(
+            const Icon(
               Icons.edit_outlined,
               size: 14,
               color: DesignTokens.textTertiary,

@@ -240,7 +240,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
           
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.access_time,
                 size: 16,
                 color: DesignTokens.textSecondary,
@@ -259,7 +259,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
           
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.attach_money,
                 size: 16,
                 color: DesignTokens.textSecondary,
@@ -302,7 +302,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
                   color: DesignTokens.successColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.delivery_dining,
                   color: DesignTokens.successColor,
                   size: 24,
@@ -331,7 +331,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
               ),
               if (order.driverPhone != null)
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.phone,
                     color: DesignTokens.successColor,
                   ),
@@ -378,7 +378,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
               label: const Text('Annuler la commande'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: DesignTokens.errorColor,
-                side: BorderSide(color: DesignTokens.errorColor),
+                side: const BorderSide(color: DesignTokens.errorColor),
               ),
             ),
           ),

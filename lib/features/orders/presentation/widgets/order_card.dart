@@ -222,7 +222,7 @@ class OrderCard extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.refresh,
                                   size: 12,
                                   color: DesignTokens.successColor,

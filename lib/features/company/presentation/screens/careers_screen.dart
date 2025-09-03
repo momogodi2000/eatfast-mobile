@@ -178,7 +178,7 @@ class CareersScreen extends StatelessWidget {
             
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.schedule,
                   size: DesignTokens.iconSM,
                   color: DesignTokens.textSecondary,
@@ -193,7 +193,7 @@ class CareersScreen extends StatelessWidget {
                 
                 const SizedBox(width: DesignTokens.spaceMD),
                 
-                Icon(
+                const Icon(
                   Icons.location_on,
                   size: DesignTokens.iconSM,
                   color: DesignTokens.textSecondary,

@@ -144,7 +144,7 @@ class CartNotifier extends StateNotifier<CartState> {
     int quantity, 
     List<SelectedCustomization> customizations,
   ) {
-    double basePrice = menuItem.price * quantity;
+    final double basePrice = menuItem.price * quantity;
     double customizationPrice = 0.0;
     
     for (final customization in customizations) {
@@ -158,7 +158,7 @@ class CartNotifier extends StateNotifier<CartState> {
 }
 
 // Cart state
-abstract class CartState {
+sealed class CartState {
   const CartState();
 
   const factory CartState.initial() = CartInitial;

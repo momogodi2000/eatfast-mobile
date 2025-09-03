@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/result.dart';
 import '../data/order_repository_impl.dart';
 import '../domain/models/order.dart';
 import '../domain/repositories/order_repository.dart';
@@ -163,7 +162,7 @@ class ActiveOrderNotifier extends StateNotifier<ActiveOrderState> {
 }
 
 // Order states
-abstract class OrdersState {
+sealed class OrdersState {
   const OrdersState();
 
   const factory OrdersState.initial() = OrdersInitial;
@@ -190,7 +189,7 @@ class OrdersError extends OrdersState {
   const OrdersError(this.message);
 }
 
-abstract class ActiveOrderState {
+sealed class ActiveOrderState {
   const ActiveOrderState();
 
   const factory ActiveOrderState.initial() = ActiveOrderInitial;

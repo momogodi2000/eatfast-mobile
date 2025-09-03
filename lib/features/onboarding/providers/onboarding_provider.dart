@@ -36,7 +36,7 @@ class OnboardingInitial extends OnboardingState {
 }
 
 class OnboardingPageChanged extends OnboardingState {
-  const OnboardingPageChanged({required int currentPage}) : super(currentPage: currentPage);
+  const OnboardingPageChanged({required super.currentPage});
 }
 
 class OnboardingCompleted extends OnboardingState {

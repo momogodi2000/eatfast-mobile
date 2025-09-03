@@ -8,7 +8,7 @@ import '../../restaurants/domain/models/menu_item.dart';
 
 class CartRepositoryImpl implements CartRepository {
   // In-memory cart storage for mock implementation
-  static Cart _currentCart = Cart(
+  static Cart _currentCart = const Cart(
     id: 'cart_1',
     userId: 'user_123',
     items: [],
@@ -200,18 +200,18 @@ class CartRepositoryImpl implements CartRepository {
     }
 
     // Calculate tax (10% in Cameroon)
-    double tax = subtotal * 0.1;
+    final double tax = subtotal * 0.1;
     
     // Delivery fee (free delivery if order is above minimum)
-    double deliveryFee = subtotal >= AppConstants.minimumOrderAmount 
+    final double deliveryFee = subtotal >= AppConstants.minimumOrderAmount 
         ? 0.0 
         : AppConstants.deliveryFee;
     
     // Apply any discounts (mock implementation)
-    double discount = 0.0;
+    final double discount = 0.0;
     
     // Calculate total
-    double total = subtotal + tax + deliveryFee - discount;
+    final double total = subtotal + tax + deliveryFee - discount;
 
     _currentCart = _currentCart.copyWith(
       subtotal: subtotal,
@@ -228,7 +228,7 @@ class CartRepositoryImpl implements CartRepository {
     int quantity,
     List<SelectedCustomization> customizations,
   ) {
-    double basePrice = menuItem.price * quantity;
+    final double basePrice = menuItem.price * quantity;
     double customizationPrice = 0.0;
 
     for (final customization in customizations) {

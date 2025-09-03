@@ -277,7 +277,7 @@ class _AddressManagementScreenState
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.error,
@@ -547,7 +547,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
                       google_maps.Marker(
                         markerId: const google_maps.MarkerId('selected_location'),
                         position: _selectedLocation!,
-                        infoWindow: google_maps.InfoWindow(
+                        infoWindow: const google_maps.InfoWindow(
                           title: 'Adresse sélectionnée',
                         ),
                       ),

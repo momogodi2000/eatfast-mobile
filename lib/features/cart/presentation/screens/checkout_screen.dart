@@ -119,12 +119,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       child: ListTile(
         leading: const Icon(Icons.location_on),
         title: Text(
-          selectedAddress?.name ?? l10n.selectAddress,
+          selectedAddress?.label ?? l10n.selectAddress,
           style: const TextStyle(fontWeight: DesignTokens.fontWeightMedium),
         ),
         subtitle: selectedAddress != null 
-            ? Text(selectedAddress!.address)
-            : Text('Tap to select delivery address'),
+            ? Text(selectedAddress!.fullAddress)
+            : const Text('Tap to select delivery address'),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
           // TODO: Navigate to address selection screen
@@ -146,7 +146,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         ),
         subtitle: selectedPaymentMethod != null 
             ? Text(selectedPaymentMethod!.type.toString())
-            : Text('Tap to select payment method'),
+            : const Text('Tap to select payment method'),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
           // TODO: Navigate to payment method selection screen

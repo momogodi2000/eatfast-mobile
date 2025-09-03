@@ -17,11 +17,11 @@ class MockProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
   }
 
   void setError(String error) {
-    this.state = AsyncValue.error(error, StackTrace.current);
+    state = AsyncValue.error(error, StackTrace.current);
   }
 
   void setLoading() {
-    this.state = const AsyncValue.loading();
+    state = const AsyncValue.loading();
   }
 }
 

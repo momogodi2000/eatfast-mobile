@@ -180,7 +180,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
                     
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: DesignTokens.warningColor,
                           size: 14,
@@ -206,7 +206,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
                     
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.access_time,
                           color: DesignTokens.textSecondary,
                           size: 14,

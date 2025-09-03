@@ -3,7 +3,7 @@ import '../../features/restaurants/domain/models/menu_item.dart';
 
 class MockRestaurantData {
   static final List<Restaurant> restaurants = [
-    Restaurant(
+    const Restaurant(
       id: 'rest_1',
       name: 'Chez Tante Marie',
       description: 'Restaurant traditionnel camerounais spécialisé dans les plats authentiques du terroir.',
@@ -15,7 +15,7 @@ class MockRestaurantData {
       estimatedDeliveryTime: 35,
       deliveryFee: 500,
       isOpen: true,
-      address: const RestaurantAddress(
+      address: RestaurantAddress(
         street: 'Rue de la Réunification',
         city: 'Douala',
         district: 'Akwa',
@@ -30,7 +30,7 @@ class MockRestaurantData {
       isPromoted: true,
       paymentMethods: ['MTN Mobile Money', 'Orange Money', 'Espèces'],
     ),
-    Restaurant(
+    const Restaurant(
       id: 'rest_2',
       name: 'Fast Bite',
       description: 'Restaurant de fast-food moderne avec des options rapides et délicieuses.',
@@ -42,7 +42,7 @@ class MockRestaurantData {
       estimatedDeliveryTime: 25,
       deliveryFee: 300,
       isOpen: true,
-      address: const RestaurantAddress(
+      address: RestaurantAddress(
         street: 'Avenue Charles de Gaulle',
         city: 'Douala',
         district: 'Bonapriso',
@@ -55,7 +55,7 @@ class MockRestaurantData {
       specialties: ['Burgers', 'Pizza', 'Poulet frit'],
       paymentMethods: ['MTN Mobile Money', 'Orange Money', 'EU Mobile', 'Espèces'],
     ),
-    Restaurant(
+    const Restaurant(
       id: 'rest_3',
       name: 'Le Petit Gourmet',
       description: 'Cuisine française raffinée avec une touche camerounaise.',
@@ -67,7 +67,7 @@ class MockRestaurantData {
       estimatedDeliveryTime: 45,
       deliveryFee: 800,
       isOpen: false,
-      address: const RestaurantAddress(
+      address: RestaurantAddress(
         street: 'Rue Joss',
         city: 'Douala',
         district: 'Bonanjo',
@@ -80,7 +80,7 @@ class MockRestaurantData {
       specialties: ['Coq au vin', 'Ratatouille', 'Crème brûlée'],
       paymentMethods: ['MTN Mobile Money', 'Orange Money'],
     ),
-    Restaurant(
+    const Restaurant(
       id: 'rest_4',
       name: 'Mama Africa Kitchen',
       description: 'Saveurs panafricaines avec une spécialité camerounaise.',
@@ -92,7 +92,7 @@ class MockRestaurantData {
       estimatedDeliveryTime: 40,
       deliveryFee: 600,
       isOpen: true,
-      address: const RestaurantAddress(
+      address: RestaurantAddress(
         street: 'Boulevard de la Liberté',
         city: 'Douala',
         district: 'New Bell',
@@ -106,7 +106,7 @@ class MockRestaurantData {
       isFavorite: true,
       paymentMethods: ['MTN Mobile Money', 'Orange Money', 'Espèces'],
     ),
-    Restaurant(
+    const Restaurant(
       id: 'rest_5',
       name: 'Pizza Corner',
       description: 'Les meilleures pizzas de Douala avec des ingrédients frais.',
@@ -118,7 +118,7 @@ class MockRestaurantData {
       estimatedDeliveryTime: 30,
       deliveryFee: 400,
       isOpen: true,
-      address: const RestaurantAddress(
+      address: RestaurantAddress(
         street: 'Rue de Nkololoun',
         city: 'Yaoundé',
         district: 'Centre-ville',
@@ -178,7 +178,7 @@ class MockRestaurantData {
 
   static final List<MenuItem> menuItems = [
     // Chez Tante Marie - Plats Traditionnels
-    MenuItem(
+    const MenuItem(
       id: 'item_1',
       restaurantId: 'rest_1',
       name: 'Ndolé Complet',
@@ -240,7 +240,7 @@ class MockRestaurantData {
         ),
       ],
     ),
-    MenuItem(
+    const MenuItem(
       id: 'item_2',
       restaurantId: 'rest_1',
       name: 'Eru avec Waterleaf',
@@ -277,7 +277,7 @@ class MockRestaurantData {
         ),
       ],
     ),
-    MenuItem(
+    const MenuItem(
       id: 'item_3',
       restaurantId: 'rest_1',
       name: 'Poisson Braisé',
@@ -291,7 +291,7 @@ class MockRestaurantData {
       isRecommended: true,
     ),
     // Fast Bite - Burgers
-    MenuItem(
+    const MenuItem(
       id: 'item_4',
       restaurantId: 'rest_2',
       name: 'Big Bite Burger',
@@ -352,7 +352,7 @@ class MockRestaurantData {
         ),
       ],
     ),
-    MenuItem(
+    const MenuItem(
       id: 'item_5',
       restaurantId: 'rest_2',
       name: 'Pizza Margherita',

@@ -84,7 +84,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline,
                       color: DesignTokens.infoColor,
                       size: DesignTokens.iconSM,
@@ -194,13 +194,13 @@ class LanguageSettingsScreen extends ConsumerWidget {
               
               // Selection indicator
               if (isSelected)
-                Icon(
+                const Icon(
                   Icons.check_circle,
                   color: DesignTokens.primaryColor,
                   size: DesignTokens.iconMD,
                 )
               else
-                Icon(
+                const Icon(
                   Icons.radio_button_unchecked,
                   color: DesignTokens.textTertiary,
                   size: DesignTokens.iconMD,

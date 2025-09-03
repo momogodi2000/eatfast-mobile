@@ -145,9 +145,8 @@ final _router = GoRouter(
     GoRoute(
       path: RouteNames.restaurants,
       builder: (context, state) {
-        // Parse query parameters for filtering
-        final queryParams = state.uri.queryParameters;
-        return const RestaurantListScreen();
+  // Parse query parameters for filtering (not used yet)
+  return const RestaurantListScreen();
       },
     ),
     

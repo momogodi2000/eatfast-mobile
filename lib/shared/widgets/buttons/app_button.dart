@@ -195,7 +195,7 @@ class AppButton extends StatelessWidget {
   BorderSide _getBorderSide(AppButtonStyle style, BuildContext context) {
     switch (style) {
       case AppButtonStyle.outline:
-        return BorderSide(
+        return const BorderSide(
           color: DesignTokens.primaryColor,
           width: 1.5,
         );

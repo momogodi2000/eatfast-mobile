@@ -280,18 +280,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                     borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
                                   ),
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       'Créer mon compte',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: DesignTokens.fontSizeLG,
                                         fontWeight: DesignTokens.fontWeightSemiBold,
                                       ),
                                     ),
-                                    const SizedBox(width: DesignTokens.spaceXS),
-                                    const Icon(Icons.arrow_forward),
+                                    SizedBox(width: DesignTokens.spaceXS),
+                                    Icon(Icons.arrow_forward),
                                   ],
                                 ),
                               ),
@@ -304,9 +304,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               width: double.infinity,
                               child: OutlinedButton(
                                 onPressed: _exploreAsGuest,
-                                child: Text(
+                                child: const Text(
                                   'Explorer en tant qu\'invité',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: DesignTokens.fontSizeMD,
                                     fontWeight: DesignTokens.fontWeightMedium,
                                   ),

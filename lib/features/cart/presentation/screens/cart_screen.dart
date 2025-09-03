@@ -61,14 +61,14 @@ class CartScreen extends ConsumerWidget {
             ),
         ],
       ),
-      body: _buildBody(context, cartState),
+      body: _buildBody(context, ref, cartState),
       bottomNavigationBar: cartState is CartLoaded && !cartState.cart.isEmpty
           ? _buildBottomBar(context, cartState.cart)
           : null,
     );
   }
 
-  Widget _buildBody(BuildContext context, CartState cartState) {
+  Widget _buildBody(BuildContext context, WidgetRef ref, CartState cartState) {
     return switch (cartState) {
       CartInitial() || CartLoading() => const AppLoadingIndicator(),
       
@@ -116,7 +116,7 @@ class CartScreen extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.shopping_cart_outlined,
             size: 80,
             color: DesignTokens.textTertiary,
@@ -199,7 +199,7 @@ class CartScreen extends ConsumerWidget {
               color: DesignTokens.primaryColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.restaurant,
               color: DesignTokens.primaryColor,
               size: 20,
@@ -271,7 +271,7 @@ class CartScreen extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.info_outline,
                     color: DesignTokens.warningColor,
                     size: 16,
@@ -354,7 +354,7 @@ class CartScreen extends ConsumerWidget {
               ),
               child: Text(
                 'Commande minimum: ${AppConstants.minimumOrderAmount.toInt()} FCFA',
-                style: TextStyle(
+                style: const TextStyle(
                   color: DesignTokens.errorColor,
                   fontSize: DesignTokens.fontSizeSM,
                   fontWeight: DesignTokens.fontWeightMedium,

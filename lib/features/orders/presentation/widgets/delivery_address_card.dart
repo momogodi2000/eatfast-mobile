@@ -38,7 +38,7 @@ class DeliveryAddressCard extends StatelessWidget {
                   color: DesignTokens.primaryColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.location_on,
                   color: DesignTokens.primaryColor,
                   size: 20,
@@ -59,7 +59,7 @@ class DeliveryAddressCard extends StatelessWidget {
           const SizedBox(height: DesignTokens.spaceMD),
           
           // Address label
-          if (address.label?.isNotEmpty == true) ...[
+          if (address.label.isNotEmpty == true) ...[
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: DesignTokens.spaceSM,
@@ -70,8 +70,8 @@ class DeliveryAddressCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
               ),
               child: Text(
-                address.label!,
-                style: TextStyle(
+                address.label,
+                style: const TextStyle(
                   color: DesignTokens.primaryColor,
                   fontSize: DesignTokens.fontSizeXS,
                   fontWeight: DesignTokens.fontWeightMedium,
@@ -85,18 +85,16 @@ class DeliveryAddressCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (address.street.isNotEmpty)
-                _buildAddressLine(context, address.street),
+              if ((address.street ?? '').isNotEmpty)
+                _buildAddressLine(context, address.street!),
               
-              if (address.buildingDetails?.isNotEmpty == true)
-                _buildAddressLine(context, address.buildingDetails!),
+              if (address.buildingInfo?.isNotEmpty == true)
+                _buildAddressLine(context, address.buildingInfo!),
               
-              if (address.neighborhood?.isNotEmpty == true)
-                _buildAddressLine(context, address.neighborhood!),
+              if ((address.city ?? '').isNotEmpty || (address.state ?? '').isNotEmpty)
+                _buildAddressLine(context, '${address.city ?? ''}${(address.city?.isNotEmpty == true && address.state?.isNotEmpty == true) ? ', ' : ''}${address.state ?? ''}'),
               
-              _buildAddressLine(context, '${address.city}, ${address.region}'),
-              
-              if (address.postalCode?.isNotEmpty == true)
+              if ((address.postalCode ?? '').isNotEmpty)
                 _buildAddressLine(context, address.postalCode!),
               
               if (address.country.isNotEmpty)
@@ -105,7 +103,7 @@ class DeliveryAddressCard extends StatelessWidget {
           ),
           
           // Delivery instructions
-          if (address.deliveryInstructions?.isNotEmpty == true) ...[
+          if (address.metadata != null && (address.metadata!['deliveryInstructions'] as String?)?.isNotEmpty == true) ...[
             const SizedBox(height: DesignTokens.spaceMD),
             Container(
               width: double.infinity,
@@ -122,7 +120,7 @@ class DeliveryAddressCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.info_outline,
                         size: 16,
                         color: DesignTokens.infoColor,
@@ -139,7 +137,7 @@ class DeliveryAddressCard extends StatelessWidget {
                   ),
                   const SizedBox(height: DesignTokens.spaceXS),
                   Text(
-                    address.deliveryInstructions!,
+                    address.metadata!['deliveryInstructions'] as String,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: DesignTokens.textPrimary,
                     ),
@@ -150,18 +148,18 @@ class DeliveryAddressCard extends StatelessWidget {
           ],
           
           // Contact info
-          if (address.contactPhone?.isNotEmpty == true) ...[
+          if (address.metadata != null && (address.metadata!['contactPhone'] as String?)?.isNotEmpty == true) ...[
             const SizedBox(height: DesignTokens.spaceMD),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.phone,
                   size: 16,
                   color: DesignTokens.textSecondary,
                 ),
                 const SizedBox(width: DesignTokens.spaceXS),
                 Text(
-                  address.contactPhone!,
+                  address.metadata!['contactPhone'] as String,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: DesignTokens.textSecondary,
                   ),
@@ -187,13 +185,13 @@ class DeliveryAddressCard extends StatelessWidget {
                 ),
               ),
               
-              if (address.contactPhone?.isNotEmpty == true) ...[
+              if (address.metadata != null && (address.metadata!['contactPhone'] as String?)?.isNotEmpty == true) ...[
                 const SizedBox(width: DesignTokens.spaceMD),
                 OutlinedButton.icon(
                   onPressed: () {
                     // TODO: Call phone number
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Appeler ${address.contactPhone}')),
+                      SnackBar(content: Text('Appeler ${address.metadata!['contactPhone']}')),
                     );
                   },
                   icon: const Icon(Icons.phone),

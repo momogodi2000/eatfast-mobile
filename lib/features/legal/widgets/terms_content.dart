@@ -198,7 +198,7 @@ Version : 1.0
           ),
           child: Column(
             children: [
-              Icon(
+              const Icon(
                 Icons.verified_user,
                 size: DesignTokens.iconLG,
                 color: DesignTokens.primaryColor,

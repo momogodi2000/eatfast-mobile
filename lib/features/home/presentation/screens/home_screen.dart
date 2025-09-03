@@ -82,11 +82,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          const _HomeContent(),
-          const RestaurantListScreen(),
-          const OrderHistoryScreen(),
-          const _ProfileContent(),
+        children: const [
+          _HomeContent(),
+          RestaurantListScreen(),
+          OrderHistoryScreen(),
+          _ProfileContent(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -184,11 +184,11 @@ class _HomeContent extends ConsumerWidget {
               ),
             ),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Rechercher des plats, restaurants...',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(Icons.search),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.all(DesignTokens.spaceMD),
+                contentPadding: EdgeInsets.all(DesignTokens.spaceMD),
               ),
               onTap: () {
                 context.go('/restaurants?search=true');

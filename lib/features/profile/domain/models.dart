@@ -1,4 +1,5 @@
 /// Profile-related domain models
+library;
 
 /// Address model
 class Address {

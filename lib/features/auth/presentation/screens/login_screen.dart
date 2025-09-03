@@ -379,7 +379,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
           ),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.info_outline,
                 color: DesignTokens.infoColor,
                 size: DesignTokens.iconSM,
@@ -426,7 +426,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         // Forgot Password
         TextButton(
           onPressed: _navigateToForgotPassword,
-          child: Text(
+          child: const Text(
             'Mot de passe oublié?',
             style: TextStyle(
               color: DesignTokens.primaryColor,
@@ -529,7 +529,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         ),
         TextButton(
           onPressed: _navigateToRegister,
-          child: Text(
+          child: const Text(
             'Créer un compte',
             style: TextStyle(
               color: DesignTokens.primaryColor,

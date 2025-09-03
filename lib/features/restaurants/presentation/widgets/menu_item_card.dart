@@ -106,7 +106,7 @@ class MenuItemCard extends StatelessWidget {
                   color: DesignTokens.warningColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
-                child: Text(
+                child: const Text(
                   'POPULAIRE',
                   style: TextStyle(
                     color: DesignTokens.warningColor,
@@ -126,7 +126,7 @@ class MenuItemCard extends StatelessWidget {
                   color: DesignTokens.successColor.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
-                child: Text(
+                child: const Text(
                   'RECOMMANDÉ',
                   style: TextStyle(
                     color: DesignTokens.successColor,
@@ -169,7 +169,7 @@ class MenuItemCard extends StatelessWidget {
             
             // Preparation time
             if (menuItem.preparationTime > 0) ...[
-              Icon(
+              const Icon(
                 Icons.access_time,
                 size: 14,
                 color: DesignTokens.textTertiary,
@@ -232,7 +232,7 @@ class MenuItemCard extends StatelessWidget {
               color: DesignTokens.errorColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
             ),
-            child: Text(
+            child: const Text(
               'INDISPONIBLE',
               style: TextStyle(
                 color: DesignTokens.errorColor,
@@ -243,7 +243,7 @@ class MenuItemCard extends StatelessWidget {
           )
         else
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: DesignTokens.primaryColor,
               shape: BoxShape.circle,
             ),

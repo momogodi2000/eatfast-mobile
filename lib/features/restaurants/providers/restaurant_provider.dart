@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/result.dart';
 import '../data/restaurant_repository_impl.dart';
 import '../domain/models/restaurant.dart';
 import '../domain/models/menu_item.dart';
@@ -154,7 +153,7 @@ class FavoriteRestaurantsNotifier extends StateNotifier<Set<String>> {
 }
 
 // State classes
-abstract class RestaurantListState {
+sealed class RestaurantListState {
   const RestaurantListState();
 
   const factory RestaurantListState.initial() = RestaurantListInitial;
@@ -181,7 +180,7 @@ class RestaurantListError extends RestaurantListState {
   const RestaurantListError(this.message);
 }
 
-abstract class RestaurantSearchState {
+sealed class RestaurantSearchState {
   const RestaurantSearchState();
 
   const factory RestaurantSearchState.initial() = RestaurantSearchInitial;

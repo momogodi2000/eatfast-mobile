@@ -273,7 +273,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline,
             size: 64,
             color: AppColors.error,
@@ -434,25 +434,25 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
       'value': 'momo_mtn',
       'name': 'MTN Mobile Money',
       'icon': Icons.phone_android_outlined,
-      'color': Color(0xFFFFD700),
+      'color': const Color(0xFFFFD700),
     },
     {
       'value': 'momo_orange',
       'name': 'Orange Money',
       'icon': Icons.phone_android_outlined,
-      'color': Color(0xFFFF8C00),
+      'color': const Color(0xFFFF8C00),
     },
     {
       'value': 'eu_mobile',
       'name': 'EU Mobile',
       'icon': Icons.phone_android_outlined,
-      'color': Color(0xFF4169E1),
+      'color': const Color(0xFF4169E1),
     },
     {
       'value': 'cash',
       'name': 'Espèces à la livraison',
       'icon': Icons.payments_outlined,
-      'color': Color(0xFF228B22),
+      'color': const Color(0xFF228B22),
     },
   ];
 

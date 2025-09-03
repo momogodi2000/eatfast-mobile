@@ -129,7 +129,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
     try {
       await _simulateNetworkDelay();
 
-      var items = MockRestaurantData.menuItems.where((item) {
+      final items = MockRestaurantData.menuItems.where((item) {
         final searchText = query.toLowerCase();
         final matchesQuery = item.name.toLowerCase().contains(searchText) ||
                            item.description.toLowerCase().contains(searchText);

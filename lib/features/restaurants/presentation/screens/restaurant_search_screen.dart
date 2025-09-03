@@ -170,7 +170,7 @@ class _RestaurantSearchScreenState extends ConsumerState<RestaurantSearchScreen>
                   width: 6,
                   height: 6,
                   margin: const EdgeInsets.only(top: 8, right: DesignTokens.spaceSM),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: DesignTokens.primaryColor,
                     shape: BoxShape.circle,
                   ),
@@ -197,7 +197,7 @@ class _RestaurantSearchScreenState extends ConsumerState<RestaurantSearchScreen>
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }
@@ -273,7 +273,7 @@ class _RestaurantSearchScreenState extends ConsumerState<RestaurantSearchScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.search_off,
               size: 80,
               color: DesignTokens.textTertiary,

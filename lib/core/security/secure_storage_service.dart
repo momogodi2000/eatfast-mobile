@@ -181,7 +181,7 @@ class SecureStorageService {
     final lastAttempt = await getLastLoginAttempt();
     
     if (failedAttempts >= 5 && lastAttempt != null) {
-      final lockDuration = Duration(minutes: 15);
+      final lockDuration = const Duration(minutes: 15);
       final unlockTime = DateTime.fromMillisecondsSinceEpoch(lastAttempt)
           .add(lockDuration);
       
@@ -196,7 +196,7 @@ class SecureStorageService {
     if (await isAccountLocked()) {
       final lastAttempt = await getLastLoginAttempt();
       if (lastAttempt != null) {
-        final lockDuration = Duration(minutes: 15);
+        final lockDuration = const Duration(minutes: 15);
         final unlockTime = DateTime.fromMillisecondsSinceEpoch(lastAttempt)
             .add(lockDuration);
         

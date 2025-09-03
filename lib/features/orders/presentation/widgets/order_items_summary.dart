@@ -218,7 +218,7 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.note_outlined,
                           size: 12,
                           color: DesignTokens.infoColor,

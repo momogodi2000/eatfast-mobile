@@ -2,13 +2,10 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/domain/user.dart';
-import '../../auth/providers/auth_provider.dart';
 import '../domain/models.dart';
 import '../domain/profile_repository.dart';
 import '../data/profile_repository_impl.dart';
 import '../../../core/network/api_client.dart';
-import '../../../core/result.dart';
-import '../../../core/failure.dart';
 
 /// Profile repository provider
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {

@@ -197,7 +197,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
                   const SizedBox(height: DesignTokens.spaceXS),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star,
                         color: DesignTokens.warningColor,
                         size: 20,
@@ -311,7 +311,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
                 ),
                 child: Text(
                   cuisineType,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: DesignTokens.primaryColor,
                     fontSize: DesignTokens.fontSizeSM,
                     fontWeight: DesignTokens.fontWeightMedium,
@@ -483,7 +483,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildInfoSection('Adresse', [
-            '${restaurant.address.street}',
+            (restaurant.address.street),
             '${restaurant.address.district}, ${restaurant.address.city}',
             if (restaurant.address.landmark != null) restaurant.address.landmark!,
           ]),
@@ -528,7 +528,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
               Container(
                 width: 4,
                 height: 4,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: DesignTokens.primaryColor,
                   shape: BoxShape.circle,
                 ),
@@ -542,7 +542,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
               ),
             ],
           ),
-        )).toList(),
+        )),
       ],
     );
   }
@@ -728,7 +728,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                           ),
                           child: Text(
                             tag.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: DesignTokens.successColor,
                               fontSize: DesignTokens.fontSizeXS,
                               fontWeight: DesignTokens.fontWeightMedium,
@@ -745,7 +745,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                   Row(
                     children: [
                       if (menuItem.preparationTime > 0) ...[
-                        Icon(
+                        const Icon(
                           Icons.access_time,
                           size: 16,
                           color: DesignTokens.textSecondary,
@@ -761,7 +761,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                       ],
                       
                       if (menuItem.calories > 0) ...[
-                        Icon(
+                        const Icon(
                           Icons.local_fire_department,
                           size: 16,
                           color: DesignTokens.textSecondary,

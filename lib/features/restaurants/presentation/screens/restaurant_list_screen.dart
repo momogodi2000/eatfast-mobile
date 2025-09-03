@@ -262,7 +262,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.restaurant_outlined,
             size: 80,
             color: DesignTokens.textTertiary,

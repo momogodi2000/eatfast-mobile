@@ -29,7 +29,7 @@ class CartConflictDialog extends StatelessWidget {
               color: DesignTokens.warningColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.warning_outlined,
               color: DesignTokens.warningColor,
               size: 24,
@@ -81,7 +81,7 @@ class CartConflictDialog extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.shopping_cart_outlined,
                       color: DesignTokens.primaryColor,
                       size: 20,
@@ -125,7 +125,7 @@ class CartConflictDialog extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.refresh,
                       color: DesignTokens.errorColor,
                       size: 20,
@@ -155,7 +155,7 @@ class CartConflictDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: onKeepCurrent,
-          child: Text(
+          child: const Text(
             'Garder le panier',
             style: TextStyle(
               color: DesignTokens.primaryColor,

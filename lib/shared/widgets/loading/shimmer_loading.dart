@@ -189,10 +189,10 @@ class ShimmerCard extends StatelessWidget {
         child: SizedBox(
           width: width,
           height: height,
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 flex: 3,
                 child: ShimmerContainer(
                   width: double.infinity,
@@ -202,19 +202,19 @@ class ShimmerCard extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: const EdgeInsets.all(DesignTokens.spaceSM),
+                  padding: EdgeInsets.all(DesignTokens.spaceSM),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ShimmerContainer(width: double.infinity, height: 16),
-                      const SizedBox(height: DesignTokens.spaceXS),
-                      const ShimmerContainer(width: 120, height: 12),
-                      const Spacer(),
+                      ShimmerContainer(width: double.infinity, height: 16),
+                      SizedBox(height: DesignTokens.spaceXS),
+                      ShimmerContainer(width: 120, height: 12),
+                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const ShimmerContainer(width: 80, height: 14),
-                          const ShimmerContainer(width: 60, height: 16),
+                          ShimmerContainer(width: 80, height: 14),
+                          ShimmerContainer(width: 60, height: 16),
                         ],
                       ),
                     ],

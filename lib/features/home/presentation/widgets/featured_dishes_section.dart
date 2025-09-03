@@ -181,7 +181,7 @@ class FeaturedDishesSection extends ConsumerWidget {
                           color: DesignTokens.white.withOpacity(0.9),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.eco,
                           color: DesignTokens.successColor,
                           size: 16,
@@ -239,7 +239,7 @@ class FeaturedDishesSection extends ConsumerWidget {
                         if (dish.rating > 0) ...[ 
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: DesignTokens.warningColor,
                                 size: 14,

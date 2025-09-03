@@ -344,13 +344,15 @@ class _RestaurantFilterBottomSheetState extends State<RestaurantFilterBottomShee
             value: sortBy,
             groupValue: _filter.sortBy,
             onChanged: (value) {
-              setState(() {
-                _filter = _filter.copyWith(sortBy: value);
-              });
+              if (value != null) {
+                setState(() {
+                  _filter = _filter.copyWith(sortBy: value);
+                });
+              }
             },
             contentPadding: EdgeInsets.zero,
           );
-        }).toList(),
+        }),
       ],
     );
   }

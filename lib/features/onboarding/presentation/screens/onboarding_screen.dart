@@ -237,7 +237,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         TextButton.icon(
                           onPressed: _previousPage,
                           icon: const Icon(Icons.arrow_back),
-                          label: Text(AppConstants.previousButton),
+                          label: const Text(AppConstants.previousButton),
                           style: TextButton.styleFrom(
                             foregroundColor: DesignTokens.white.withOpacity(0.8),
                           ),

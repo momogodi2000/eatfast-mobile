@@ -45,8 +45,8 @@ class RestaurantCard extends StatelessWidget {
     return Container(
       height: 180,
       width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(DesignTokens.radiusLG),
           topRight: Radius.circular(DesignTokens.radiusLG),
         ),
@@ -310,7 +310,7 @@ class RestaurantCard extends StatelessWidget {
                       ),
                       child: Text(
                         cuisineType,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: DesignTokens.primaryColor,
                           fontSize: DesignTokens.fontSizeXS,
                           fontWeight: DesignTokens.fontWeightMedium,
@@ -346,7 +346,7 @@ class RestaurantCard extends StatelessWidget {
               
               const SizedBox(width: DesignTokens.spaceMD),
               
-              Icon(
+              const Icon(
                 Icons.location_on_outlined,
                 size: 16,
                 color: DesignTokens.textTertiary,

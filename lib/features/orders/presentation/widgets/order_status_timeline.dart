@@ -88,7 +88,7 @@ class OrderStatusTimeline extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.schedule,
                     color: DesignTokens.infoColor,
                     size: 20,
@@ -229,7 +229,7 @@ class OrderStatusTimeline extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.cancel_outlined,
             size: 48,
             color: DesignTokens.errorColor,
