@@ -58,10 +58,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
         final user = User(
           id: 'user_123',
-          name: 'John Doe',
+          fullName: 'John Doe',
           email: email,
-          phone: '+237698765432',
+          phoneNumber: '+237698765432',
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
         
         final authResponse = AuthResponse(
@@ -100,10 +101,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // Mock registration - replace with real API call
       final user = User(
         id: 'user_${DateTime.now().millisecondsSinceEpoch}',
-        name: name,
+        fullName: name,
         email: email,
-        phone: phone,
+        phoneNumber: phone,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
       
       final authResponse = AuthResponse(
@@ -145,10 +147,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (otp == '123456') {
         final user = User(
           id: 'user_phone_${DateTime.now().millisecondsSinceEpoch}',
-          name: 'Utilisateur',
+          fullName: 'Utilisateur',
           email: '',
-          phone: phoneNumber,
+          phoneNumber: phoneNumber,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
         
         final authResponse = AuthResponse(
@@ -207,10 +210,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final user = User(
         id: googleUser.id,
         email: googleUser.email,
-        name: googleUser.displayName ?? 'Google User',
-        phone: '',
-        profilePicture: googleUser.photoUrl,
+        fullName: googleUser.displayName ?? 'Google User',
+        phoneNumber: '',
+        avatarUrl: googleUser.photoUrl,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
 
       final authResponse = AuthResponse(
@@ -339,16 +343,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   /// Update user profile
   Future<void> updateProfile({
-    String? name,
-    String? phone,
-    String? profilePicture,
+    String? fullName,
+    String? phoneNumber,
+    String? avatarUrl,
   }) async {
     if (state is AuthAuthenticated) {
       final currentState = state as AuthAuthenticated;
       final updatedUser = currentState.user.copyWith(
-        name: name,
-        phone: phone,
-        profilePicture: profilePicture,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        avatarUrl: avatarUrl,
         updatedAt: DateTime.now(),
       );
       

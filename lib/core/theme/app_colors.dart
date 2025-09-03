@@ -63,16 +63,16 @@ class AppColors {
   /// Get material color swatch from color
   static MaterialColor getMaterialColor(Color color) {
     final Map<int, Color> shades = {
-      50: color.withOpacity(0.1),
-      100: color.withOpacity(0.2),
-      200: color.withOpacity(0.3),
-      300: color.withOpacity(0.4),
-      400: color.withOpacity(0.5),
+      50: color.withValues(alpha: 0.1),
+      100: color.withValues(alpha: 0.2),
+      200: color.withValues(alpha: 0.3),
+      300: color.withValues(alpha: 0.4),
+      400: color.withValues(alpha: 0.5),
       500: color,
-      600: color.withOpacity(0.7),
-      700: color.withOpacity(0.8),
-      800: color.withOpacity(0.9),
-      900: color.withOpacity(1.0),
+      600: color.withValues(alpha: 0.7),
+      700: color.withValues(alpha: 0.8),
+      800: color.withValues(alpha: 0.9),
+      900: color.withValues(alpha: 1.0),
     };
     return MaterialColor(color.value, shades);
   }

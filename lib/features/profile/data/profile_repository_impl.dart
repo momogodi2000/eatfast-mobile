@@ -63,9 +63,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final user = User.fromJson(response.data['user']);
       return Result.success(user);
     } on DioException catch (e) {
-      return Result.failure(Failure.fromDioError(e));
+      return Result.failure(core_failure.Failure.fromDioError(e));
     } catch (e) {
-      return Result.failure(Failure.unknown(e.toString()));
+      return Result.failure(core_failure.Failure.unknown(e.toString()));
     }
   }
 

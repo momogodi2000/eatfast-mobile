@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../constants/app_constants.dart';
 
 /// Secure storage service for sensitive data
 /// Handles JWT tokens, user credentials, and other sensitive information
