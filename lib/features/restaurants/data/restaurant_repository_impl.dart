@@ -40,7 +40,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       final endIndex = startIndex + limit;
       
       if (startIndex >= restaurants.length) {
-        return const Result.success([]);
+        return Result.success([]);
       }
 
       final paginatedResults = restaurants.sublist(
@@ -61,7 +61,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
 
       final restaurant = MockRestaurantData.getRestaurantById(id);
       if (restaurant == null) {
-        return const Result.failure('Restaurant non trouvé');
+        return Result.failure('Restaurant non trouvé');
       }
 
       return Result.success(restaurant);
@@ -154,7 +154,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
 
       // In a real app, this would make an API call
       // For now, we'll simulate success
-      return const Result.success(null);
+      return Result.success(null);
     } catch (e) {
       return Result.failure('Erreur lors de la modification des favoris: ${e.toString()}');
     }

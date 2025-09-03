@@ -58,9 +58,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
         final user = User(
           id: 'user_123',
-          fullName: 'John Doe',
+          name: 'John Doe',
           email: email,
-          phoneNumber: '+237698765432',
+          phone: '+237698765432',
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -101,9 +101,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       // Mock registration - replace with real API call
       final user = User(
         id: 'user_${DateTime.now().millisecondsSinceEpoch}',
-        fullName: name,
+        name: name,
         email: email,
-        phoneNumber: phone,
+        phone: phone,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -147,9 +147,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       if (otp == '123456') {
         final user = User(
           id: 'user_phone_${DateTime.now().millisecondsSinceEpoch}',
-          fullName: 'Utilisateur',
+          name: 'Utilisateur',
           email: '',
-          phoneNumber: phoneNumber,
+          phone: phoneNumber,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
@@ -210,9 +210,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final user = User(
         id: googleUser.id,
         email: googleUser.email,
-        fullName: googleUser.displayName ?? 'Google User',
-        phoneNumber: '',
-        avatarUrl: googleUser.photoUrl,
+        name: googleUser.displayName ?? 'Google User',
+        phone: '',
+        profilePicture: googleUser.photoUrl,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -350,9 +350,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
     if (state is AuthAuthenticated) {
       final currentState = state as AuthAuthenticated;
       final updatedUser = currentState.user.copyWith(
-        fullName: fullName,
-        phoneNumber: phoneNumber,
-        avatarUrl: avatarUrl,
+        name: fullName,
+        phone: phoneNumber,
+        profilePicture: avatarUrl,
         updatedAt: DateTime.now(),
       );
       

@@ -1,4 +1,4 @@
-import '../../../core/result.dart';
+import '../../../../core/result.dart';
 import '../models/cart.dart';
 
 abstract class CartRepository {

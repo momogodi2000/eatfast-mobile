@@ -109,8 +109,8 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     Object? tax = null,
     Object? discount = null,
     Object? total = null,
-    Object? deliveryAddress = freezed,
-    Object? paymentMethod = freezed,
+    Object? deliveryAddress = null,
+    Object? paymentMethod = null,
     Object? specialInstructions = freezed,
     Object? driverId = freezed,
     Object? driverName = freezed,
@@ -166,11 +166,11 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as double,
-      deliveryAddress: freezed == deliveryAddress
+      deliveryAddress: null == deliveryAddress
           ? _value.deliveryAddress
           : deliveryAddress // ignore: cast_nullable_to_non_nullable
               as UserAddress,
-      paymentMethod: freezed == paymentMethod
+      paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as PaymentMethod,
@@ -270,8 +270,8 @@ class __$$OrderImplCopyWithImpl<$Res>
     Object? tax = null,
     Object? discount = null,
     Object? total = null,
-    Object? deliveryAddress = freezed,
-    Object? paymentMethod = freezed,
+    Object? deliveryAddress = null,
+    Object? paymentMethod = null,
     Object? specialInstructions = freezed,
     Object? driverId = freezed,
     Object? driverName = freezed,
@@ -327,11 +327,11 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as double,
-      deliveryAddress: freezed == deliveryAddress
+      deliveryAddress: null == deliveryAddress
           ? _value.deliveryAddress
           : deliveryAddress // ignore: cast_nullable_to_non_nullable
               as UserAddress,
-      paymentMethod: freezed == paymentMethod
+      paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as PaymentMethod,
@@ -492,10 +492,10 @@ class _$OrderImpl extends _Order {
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
             (identical(other.total, total) || other.total == total) &&
-            const DeepCollectionEquality()
-                .equals(other.deliveryAddress, deliveryAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.paymentMethod, paymentMethod) &&
+            (identical(other.deliveryAddress, deliveryAddress) ||
+                other.deliveryAddress == deliveryAddress) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
             (identical(other.specialInstructions, specialInstructions) ||
                 other.specialInstructions == specialInstructions) &&
             (identical(other.driverId, driverId) ||
@@ -531,8 +531,8 @@ class _$OrderImpl extends _Order {
         tax,
         discount,
         total,
-        const DeepCollectionEquality().hash(deliveryAddress),
-        const DeepCollectionEquality().hash(paymentMethod),
+        deliveryAddress,
+        paymentMethod,
         specialInstructions,
         driverId,
         driverName,

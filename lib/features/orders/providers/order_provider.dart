@@ -5,6 +5,7 @@ import '../domain/models/order.dart';
 import '../domain/repositories/order_repository.dart';
 import '../../cart/domain/models/cart.dart';
 import '../../profile/domain/models.dart';
+import '../../profile/domain/user_address.dart';
 
 // Repository provider
 final orderRepositoryProvider = Provider<OrderRepository>((ref) {

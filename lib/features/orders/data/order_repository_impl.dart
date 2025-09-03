@@ -5,6 +5,7 @@ import '../domain/models/order.dart';
 import '../domain/repositories/order_repository.dart';
 import '../../cart/domain/models/cart.dart';
 import '../../profile/domain/models.dart';
+import '../../profile/domain/user_address.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
   // Mock orders storage
@@ -29,7 +30,7 @@ class OrderRepositoryImpl implements OrderRepository {
       await _simulateDelay();
 
       if (cart.isEmpty) {
-        return const Result.failure('Le panier est vide');
+        return Result.failure('Le panier est vide');
       }
 
       final orderId = 'order_${_orderCounter++}_${DateTime.now().millisecondsSinceEpoch}';
@@ -96,7 +97,7 @@ class OrderRepositoryImpl implements OrderRepository {
       final endIndex = startIndex + limit;
       
       if (startIndex >= orders.length) {
-        return const Result.success([]);
+        return Result.success([]);
       }
 
       final paginatedOrders = orders.sublist(
@@ -117,7 +118,7 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final order = _orders.where((o) => o.id == orderId).firstOrNull;
       if (order == null) {
-        return const Result.failure('Commande non trouvée');
+        return Result.failure('Commande non trouvée');
       }
 
       return Result.success(order);
@@ -133,12 +134,12 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final orderIndex = _orders.indexWhere((o) => o.id == orderId);
       if (orderIndex == -1) {
-        return const Result.failure('Commande non trouvée');
+        return Result.failure('Commande non trouvée');
       }
 
       final order = _orders[orderIndex];
       if (!order.canBeCancelled) {
-        return const Result.failure('Cette commande ne peut plus être annulée');
+        return Result.failure('Cette commande ne peut plus être annulée');
       }
 
       final updatedOrder = order.copyWith(
@@ -158,7 +159,7 @@ class OrderRepositoryImpl implements OrderRepository {
 
       _orders[orderIndex] = updatedOrder;
 
-      return const Result.success(null);
+      return Result.success(null);
     } catch (e) {
       return Result.failure('Erreur lors de l\'annulation: ${e.toString()}');
     }
@@ -171,7 +172,7 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final originalOrder = _orders.where((o) => o.id == orderId).firstOrNull;
       if (originalOrder == null) {
-        return const Result.failure('Commande originale non trouvée');
+        return Result.failure('Commande originale non trouvée');
       }
 
       // Create a new order with the same items
@@ -218,7 +219,7 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final orderIndex = _orders.indexWhere((o) => o.id == orderId);
       if (orderIndex == -1) {
-        return const Result.failure('Commande non trouvée');
+        return Result.failure('Commande non trouvée');
       }
 
       final order = _orders[orderIndex];
@@ -255,18 +256,18 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final orderIndex = _orders.indexWhere((o) => o.id == orderId);
       if (orderIndex == -1) {
-        return const Result.failure('Commande non trouvée');
+        return Result.failure('Commande non trouvée');
       }
 
       final order = _orders[orderIndex];
       if (!order.isDelivered) {
-        return const Result.failure('Vous ne pouvez évaluer que les commandes livrées');
+        return Result.failure('Vous ne pouvez évaluer que les commandes livrées');
       }
 
       // In a real app, this would save the rating to the database
       // For now, we'll just simulate success
 
-      return const Result.success(null);
+      return Result.success(null);
     } catch (e) {
       return Result.failure('Erreur lors de l\'évaluation: ${e.toString()}');
     }

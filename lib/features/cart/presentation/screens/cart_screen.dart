@@ -105,7 +105,7 @@ class CartScreen extends ConsumerWidget {
       
       CartLoaded(:final cart) => cart.isEmpty
           ? _buildEmptyCart(context)
-          : _buildCartContent(context, cart),
+          : _buildCartContent(context, ref, cart),
           
       CartConflictingRestaurant() => const AppLoadingIndicator(),
     };
@@ -147,11 +147,11 @@ class CartScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildCartContent(BuildContext context, cart) {
+  Widget _buildCartContent(BuildContext context, WidgetRef ref, cart) {
     return Column(
       children: [
         // Restaurant info header
-        if (cart.restaurantName != null) _buildRestaurantHeader(cart),
+        if (cart.restaurantName != null) _buildRestaurantHeader(context, cart),
         
         // Cart items
         Expanded(
@@ -164,9 +164,9 @@ class CartScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: DesignTokens.spaceMD),
                 child: CartItemCard(
                   cartItem: item,
-                  onQuantityChanged: (quantity) => _updateQuantity(context, item.id, quantity),
-                  onRemove: () => _removeItem(context, item.id),
-                  onUpdateInstructions: (instructions) => _updateInstructions(context, item.id, instructions),
+                  onQuantityChanged: (quantity) => _updateQuantity(context, item.id, quantity, ref),
+                  onRemove: () => _removeItem(context, item.id, ref),
+                  onUpdateInstructions: (instructions) => _updateInstructions(context, item.id, instructions, ref),
                 ),
               );
             },
@@ -179,7 +179,7 @@ class CartScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildRestaurantHeader(cart) {
+  Widget _buildRestaurantHeader(BuildContext context, cart) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(DesignTokens.spaceMD),

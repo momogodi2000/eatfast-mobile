@@ -1,7 +1,8 @@
-import '../../../core/result.dart';
+import '../../../../core/result.dart';
 import '../models/order.dart';
-import '../../cart/domain/models/cart.dart';
-import '../../profile/domain/models.dart';
+import '../../../cart/domain/models/cart.dart';
+import '../../../profile/domain/models.dart';
+import '../../../profile/domain/user_address.dart';
 
 abstract class OrderRepository {
   /// Place a new order

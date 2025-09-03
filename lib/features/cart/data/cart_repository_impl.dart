@@ -116,7 +116,7 @@ class CartRepositoryImpl implements CartRepository {
 
       final itemIndex = _currentCart.items.indexWhere((item) => item.id == itemId);
       if (itemIndex == -1) {
-        return const Result.failure('Article non trouvé dans le panier');
+        return Result.failure('Article non trouvé dans le panier');
       }
 
       final updatedItems = List<CartItem>.from(_currentCart.items);
@@ -145,7 +145,7 @@ class CartRepositoryImpl implements CartRepository {
 
       final itemIndex = _currentCart.items.indexWhere((item) => item.id == itemId);
       if (itemIndex == -1) {
-        return const Result.failure('Article non trouvé dans le panier');
+        return Result.failure('Article non trouvé dans le panier');
       }
 
       final updatedItems = List<CartItem>.from(_currentCart.items);

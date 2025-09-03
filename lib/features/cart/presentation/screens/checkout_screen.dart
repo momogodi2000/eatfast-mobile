@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../profile/domain/models.dart';
+import '../../../profile/domain/user_address.dart';
 import '../../providers/cart_provider.dart';
 import '../../domain/models/cart.dart';
 

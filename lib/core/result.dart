@@ -1,7 +1,13 @@
-/// Minimal Result wrapper used across the codebase.
-/// Simple abstract class with Success and Failure subclasses.
+/// Result wrapper used across the codebase.
+/// Abstract class with Success and Failure subclasses and factory methods.
 abstract class Result<T, E> {
   const Result();
+
+  /// Factory method to create a Success result
+  static Result<T, E> success<T, E>(T value) => Success<T, E>(value);
+
+  /// Factory method to create a Failure result
+  static Result<T, E> failure<T, E>(E error) => Failure<T, E>(error);
 
   R when<R>({required R Function(T value) success, required R Function(E error) failure});
 

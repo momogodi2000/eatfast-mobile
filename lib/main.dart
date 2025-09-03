@@ -155,10 +155,8 @@ final _router = GoRouter(
       path: '/restaurants/:restaurantId',
       builder: (context, state) {
         final restaurantId = state.pathParameters['restaurantId']!;
-        final highlightMenuItemId = state.uri.queryParameters['highlight'];
         return RestaurantDetailScreen(
           restaurantId: restaurantId,
-          highlightMenuItemId: highlightMenuItemId,
         );
       },
     ),

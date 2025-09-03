@@ -1,4 +1,4 @@
-import '../../../core/result.dart';
+import '../../../../core/result.dart';
 import '../models/restaurant.dart';
 import '../models/menu_item.dart';
 

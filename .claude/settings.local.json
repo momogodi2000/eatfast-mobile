@@ -10,7 +10,8 @@
       "Read(E:\\Eat Fast App\\eatfast-backend/**)",
       "Read(E:\\Eat Fast App\\eatfast-backend/**)",
       "Bash(timeout:*)",
-      "Bash(flutter:*)"
+      "Bash(flutter:*)",
+      "Bash(dart run build_runner:*)"
     ],
     "deny": [],
     "ask": []
