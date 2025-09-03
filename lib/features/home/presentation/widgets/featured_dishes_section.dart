@@ -38,7 +38,7 @@ class FeaturedDishesSection extends ConsumerWidget {
         const SizedBox(height: DesignTokens.spaceMD),
         
         switch (restaurantsState) {
-          RestaurantListLoading() => const _LoadingDishes(),
+          RestaurantListInitial() || RestaurantListLoading() => const _LoadingDishes(),
           RestaurantListError(:final message) => Center(
             child: Text(
               'Erreur: $message',

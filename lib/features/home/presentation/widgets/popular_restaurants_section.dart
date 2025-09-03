@@ -40,7 +40,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
         SizedBox(
           height: 220,
           child: switch (restaurantsState) {
-            RestaurantListLoading() => const _LoadingRestaurants(),
+            RestaurantListInitial() || RestaurantListLoading() => const _LoadingRestaurants(),
             RestaurantListError(:final message) => Center(
               child: Text(
                 'Erreur: $message',
