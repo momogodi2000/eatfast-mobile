@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../lib/features/profile/presentation/profile_screen.dart';
-import '../../lib/features/profile/providers/profile_provider.dart';
-import '../../lib/features/auth/domain/user.dart';
-import '../../lib/features/profile/domain/models.dart';
+import '../../../lib/features/profile/presentation/screens/profile_screen.dart';
+import '../../../lib/features/profile/providers/profile_provider.dart';
+import '../../../lib/core/auth/models/app_user.dart';
+import '../../../lib/features/profile/domain/models.dart';
 
 // Mock class for testing
 class MockProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {

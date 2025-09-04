@@ -2,9 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:local_auth/local_auth.dart';
-import '../../../../core/constants/app_constants.dart';
-import '../../../../core/security/secure_storage_service.dart';
-import '../../../../core/security/biometric_auth_service.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/security/secure_storage_service.dart';
+import '../../../core/security/biometric_auth_service.dart';
 import '../domain/models.dart';
 
 /// Authentication state management with Riverpod

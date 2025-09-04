@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../lib/features/profile/domain/models.dart';
+import '../../../lib/features/profile/domain/models.dart';
 
 void main() {
   group('Address', () {

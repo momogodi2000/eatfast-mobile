@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(for:*)"
+      "Bash(for:*)",
+      "Bash(mkdir:*)",
+      "Bash(flutter pub:*)",
+      "Bash(flutter build:*)",
+      "Bash(dart run build_runner build:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter test:*)"
     ],
     "deny": [],
     "ask": []

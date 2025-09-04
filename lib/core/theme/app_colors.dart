@@ -74,7 +74,7 @@ class AppColors {
       800: color.withValues(alpha: 0.9),
       900: color.withValues(alpha: 1.0),
     };
-    return MaterialColor(color.value, shades);
+    return MaterialColor(color.toARGB32(), shades);
   }
 
   /// Primary material color swatch
