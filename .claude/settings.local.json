@@ -9,7 +9,9 @@
       "Bash(flutter analyze:*)",
       "Bash(flutter test:*)",
       "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\features\\auth\\providers/**)",
-      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)"
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\features\\auth\\providers/**)"
     ],
     "deny": [],
     "ask": []
