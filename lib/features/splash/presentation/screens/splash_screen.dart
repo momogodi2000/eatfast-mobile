@@ -116,10 +116,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     Future.delayed(const Duration(milliseconds: AppConstants.splashDuration), () {
       if (mounted) {
         ref.read(splashProvider.notifier).checkFirstTimeUser().then((isFirstTime) {
-          if (isFirstTime) {
-            context.go(RouteNames.terms);
-          } else {
-            context.go(RouteNames.home);
+          if (mounted) {
+            if (isFirstTime) {
+              context.go(RouteNames.terms);
+            } else {
+              context.go(RouteNames.home);
+            }
           }
         });
       }

@@ -75,7 +75,7 @@ class _TipScreenState extends ConsumerState<TipScreen> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withValues(alpha: 0.05),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -219,7 +219,7 @@ class _TipScreenState extends ConsumerState<TipScreen> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: isSelected 
-                                      ? Colors.white.withOpacity(0.8)
+                                      ? Colors.white.withValues(alpha: 0.8)
                                       : Colors.grey[600],
                                 ),
                               ),
@@ -428,7 +428,7 @@ class _TipScreenState extends ConsumerState<TipScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 8,
                   offset: const Offset(0, -2),
                 ),

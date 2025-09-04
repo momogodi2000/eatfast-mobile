@@ -75,13 +75,13 @@ void main() {
 
     test('Color values are valid hex colors', () {
       // Test that primary color is not default black/white
-      expect(DesignTokens.primaryColor.value, isNot(equals(Colors.black.value)));
-      expect(DesignTokens.primaryColor.value, isNot(equals(Colors.white.value)));
+      expect(DesignTokens.primaryColor.toARGB32(), isNot(equals(Colors.black.toARGB32())));
+      expect(DesignTokens.primaryColor.toARGB32(), isNot(equals(Colors.white.toARGB32())));
       
       // Test that colors have proper alpha channel (opaque)
-      expect(DesignTokens.primaryColor.alpha, equals(255));
-      expect(DesignTokens.successColor.alpha, equals(255));
-      expect(DesignTokens.errorColor.alpha, equals(255));
+      expect((DesignTokens.primaryColor.a * 255.0).round() & 0xff, equals(255));
+      expect((DesignTokens.successColor.a * 255.0).round() & 0xff, equals(255));
+      expect((DesignTokens.errorColor.a * 255.0).round() & 0xff, equals(255));
     });
 
     test('Spacing values create proper hierarchy', () {

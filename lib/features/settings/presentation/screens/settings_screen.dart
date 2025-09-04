@@ -29,14 +29,14 @@ class SettingsScreen extends ConsumerWidget {
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: DesignTokens.primaryColor.withOpacity(0.1),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: DesignTokens.primaryColor.withOpacity(0.2),
+                    backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.2),
                     backgroundImage: user.avatar != null
                         ? NetworkImage(user.avatar!)
                         : null,

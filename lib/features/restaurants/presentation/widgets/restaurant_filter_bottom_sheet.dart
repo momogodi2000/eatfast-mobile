@@ -337,8 +337,6 @@ class _RestaurantFilterBottomSheetState extends State<RestaurantFilterBottomShee
         ),
         const SizedBox(height: DesignTokens.spaceSM),
         ...RestaurantSortBy.values.map((sortBy) {
-          final isSelected = _filter.sortBy == sortBy;
-          
           return RadioListTile<RestaurantSortBy>(
             title: Text(_getSortByDisplayName(sortBy)),
             value: sortBy,

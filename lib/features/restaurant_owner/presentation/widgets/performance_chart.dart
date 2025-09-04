@@ -212,10 +212,6 @@ class ChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (data.isEmpty) return;
 
-    final paint = Paint()
-      ..color = DesignTokens.primaryColor.withValues(alpha: 0.8)
-      ..style = PaintingStyle.fill;
-
     final gradientPaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.topCenter,

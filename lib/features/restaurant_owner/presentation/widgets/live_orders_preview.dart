@@ -389,6 +389,7 @@ class LiveOrdersPreview extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               // TODO: Call reject order with reason
+              print('Rejecting order ${order.orderId} with reason: $reason');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: DesignTokens.errorColor,
