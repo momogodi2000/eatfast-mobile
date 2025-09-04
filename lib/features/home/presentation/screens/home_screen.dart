@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/router/route_names.dart';
-import '../../../restaurants/providers/restaurant_provider.dart';
-import '../../../restaurants/domain/models/restaurant.dart';
-import '../../../orders/providers/order_provider.dart';
 import '../widgets/active_order_card.dart';
 import '../widgets/popular_restaurants_section.dart';
 import '../widgets/featured_dishes_section.dart';

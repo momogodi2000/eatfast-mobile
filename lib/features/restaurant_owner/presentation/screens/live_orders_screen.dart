@@ -5,7 +5,6 @@ import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
 import '../../providers/restaurant_owner_provider.dart';
 import '../../domain/models/live_order.dart';
-import '../widgets/order_filter_chips.dart';
 import '../widgets/order_detail_card.dart';
 
 class LiveOrdersScreen extends ConsumerStatefulWidget {
@@ -129,7 +128,7 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.error_outline,
                 size: 64,
                 color: DesignTokens.errorColor,
@@ -484,7 +483,7 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
         onTap: onTap,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-          side: BorderSide(color: DesignTokens.borderColor),
+          side: const BorderSide(color: DesignTokens.borderColor),
         ),
       ),
     );

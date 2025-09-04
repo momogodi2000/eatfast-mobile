@@ -135,7 +135,7 @@ class OrderDetailCard extends StatelessWidget {
           backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.1),
           child: Text(
             order.customerName.substring(0, 1).toUpperCase(),
-            style: TextStyle(
+            style: const TextStyle(
               color: DesignTokens.primaryColor,
               fontWeight: DesignTokens.fontWeightBold,
             ),
@@ -156,7 +156,7 @@ class OrderDetailCard extends StatelessWidget {
               const SizedBox(height: 2),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.phone,
                     size: 14,
                     color: DesignTokens.textSecondary,
@@ -164,7 +164,7 @@ class OrderDetailCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     order.customerPhone,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: DesignTokens.textSecondary,
                       fontSize: 14,
                     ),
@@ -208,7 +208,7 @@ class OrderDetailCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.restaurant_menu,
                 size: 16,
                 color: DesignTokens.textSecondary,
@@ -216,7 +216,7 @@ class OrderDetailCard extends StatelessWidget {
               const SizedBox(width: DesignTokens.spaceXS),
               Text(
                 'Articles commandés (${order.items.length})',
-                style: TextStyle(
+                style: const TextStyle(
                   color: DesignTokens.textSecondary,
                   fontWeight: DesignTokens.fontWeightMedium,
                   fontSize: 12,
@@ -232,7 +232,7 @@ class OrderDetailCard extends StatelessWidget {
                 Container(
                   width: 20,
                   height: 20,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: DesignTokens.primaryColor,
                     shape: BoxShape.circle,
                   ),
@@ -259,7 +259,7 @@ class OrderDetailCard extends StatelessWidget {
                 ),
                 Text(
                   '${item.totalPrice.toStringAsFixed(0)} F',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: DesignTokens.fontWeightMedium,
                     color: DesignTokens.textPrimary,
@@ -272,7 +272,7 @@ class OrderDetailCard extends StatelessWidget {
             const SizedBox(height: DesignTokens.spaceXS),
             Text(
               '+${order.items.length - 3} autres articles...',
-              style: TextStyle(
+              style: const TextStyle(
                 color: DesignTokens.textTertiary,
                 fontSize: 12,
                 fontStyle: FontStyle.italic,
@@ -299,7 +299,7 @@ class OrderDetailCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.note_outlined,
             size: 16,
             color: DesignTokens.warningColor,
@@ -309,7 +309,7 @@ class OrderDetailCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Instructions spéciales:',
                   style: TextStyle(
                     color: DesignTokens.warningColor,
@@ -320,7 +320,7 @@ class OrderDetailCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   order.specialInstructions,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: DesignTokens.textPrimary,
                     fontSize: 14,
                   ),
@@ -339,7 +339,7 @@ class OrderDetailCard extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.access_time,
                 size: 16,
                 color: DesignTokens.textSecondary,
@@ -349,7 +349,7 @@ class OrderDetailCard extends StatelessWidget {
                 order.estimatedPrepTime > 0 
                     ? '${order.estimatedPrepTime} min'
                     : 'Non défini',
-                style: TextStyle(
+                style: const TextStyle(
                   color: DesignTokens.textSecondary,
                   fontSize: 14,
                 ),
@@ -368,7 +368,7 @@ class OrderDetailCard extends StatelessWidget {
           ),
           child: Text(
             '${order.totalAmount.toStringAsFixed(0)} FCFA',
-            style: TextStyle(
+            style: const TextStyle(
               color: DesignTokens.successColor,
               fontWeight: DesignTokens.fontWeightBold,
               fontSize: 16,
@@ -389,7 +389,7 @@ class OrderDetailCard extends StatelessWidget {
             label: const Text('Rejeter'),
             style: OutlinedButton.styleFrom(
               foregroundColor: DesignTokens.errorColor,
-              side: BorderSide(color: DesignTokens.errorColor),
+              side: const BorderSide(color: DesignTokens.errorColor),
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),
@@ -455,7 +455,7 @@ class OrderDetailCard extends StatelessWidget {
                     label: const Text('Récupéré'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: DesignTokens.infoColor,
-                      side: BorderSide(color: DesignTokens.infoColor),
+                      side: const BorderSide(color: DesignTokens.infoColor),
                     ),
                   ),
                 ),

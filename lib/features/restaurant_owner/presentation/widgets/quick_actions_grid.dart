@@ -177,7 +177,7 @@ class _QuickActionCardState extends State<QuickActionCard>
                     ],
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.chevron_right,
                   color: DesignTokens.textTertiary,
                   size: 20,

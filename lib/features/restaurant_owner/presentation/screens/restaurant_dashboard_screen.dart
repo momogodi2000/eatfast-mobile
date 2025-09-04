@@ -262,12 +262,12 @@ class _RestaurantDashboardScreenState extends ConsumerState<RestaurantDashboardS
             ),
             child: Row(
               children: [
-                Icon(Icons.error_outline, color: DesignTokens.errorColor),
+                const Icon(Icons.error_outline, color: DesignTokens.errorColor),
                 const SizedBox(width: DesignTokens.spaceSM),
                 Expanded(
                   child: Text(
                     'Erreur: $error',
-                    style: TextStyle(color: DesignTokens.errorColor),
+                    style: const TextStyle(color: DesignTokens.errorColor),
                   ),
                 ),
               ],

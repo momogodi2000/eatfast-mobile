@@ -53,7 +53,7 @@ class PerformanceChart extends StatelessWidget {
                   color: DesignTokens.successColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
-                child: Text(
+                child: const Text(
                   '+15%',
                   style: TextStyle(
                     color: DesignTokens.successColor,
@@ -121,7 +121,7 @@ class PerformanceChart extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.bar_chart,
               size: 48,
               color: DesignTokens.textTertiary,

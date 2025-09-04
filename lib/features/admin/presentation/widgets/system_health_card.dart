@@ -71,7 +71,7 @@ class SystemHealthCard extends ConsumerWidget {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
               childAspectRatio: 1.2,
-              children: [
+              children: const [
                 _HealthMetric(
                   title: 'Disponibilité',
                   value: '99.9%',
@@ -137,7 +137,7 @@ class SystemHealthCard extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Wrap(
+                  const Wrap(
                     spacing: 16,
                     runSpacing: 8,
                     children: [

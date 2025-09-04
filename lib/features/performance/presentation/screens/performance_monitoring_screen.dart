@@ -116,13 +116,13 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.health_and_safety,
                   color: DesignTokens.successColor,
                   size: DesignTokens.iconMD,
                 ),
                 const SizedBox(width: DesignTokens.spaceSM),
-                Text(
+                const Text(
                   'System Health',
                   style: TextStyle(
                     fontSize: DesignTokens.fontSizeLG,
@@ -140,7 +140,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                     color: DesignTokens.successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Excellent',
                     style: TextStyle(
                       color: DesignTokens.successColor,
@@ -155,7 +155,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
             const SizedBox(height: DesignTokens.spaceMD),
             
             // Health Score Progress
-            LinearProgressIndicator(
+            const LinearProgressIndicator(
               value: 0.92, // Mock value
               backgroundColor: DesignTokens.lightGrey,
               valueColor: AlwaysStoppedAnimation<Color>(DesignTokens.successColor),
@@ -164,7 +164,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
             
             const SizedBox(height: DesignTokens.spaceSM),
             
-            Text(
+            const Text(
               'Overall Score: 92/100',
               style: TextStyle(
                 color: DesignTokens.textSecondary,
@@ -217,7 +217,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                 const SizedBox(height: DesignTokens.spaceSM),
                 Text(
                   metric.value,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: DesignTokens.fontSizeXL,
                     fontWeight: DesignTokens.fontWeightBold,
                     color: DesignTokens.textPrimary,
@@ -225,7 +225,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                 ),
                 Text(
                   metric.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: DesignTokens.textSecondary,
                     fontSize: DesignTokens.fontSizeSM,
                   ),
@@ -249,7 +249,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Network Activity',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -285,7 +285,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
         const SizedBox(height: DesignTokens.spaceXS),
         Text(
           value,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: DesignTokens.fontSizeMD,
             fontWeight: DesignTokens.fontWeightSemiBold,
             color: DesignTokens.textPrimary,
@@ -293,7 +293,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
         ),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: DesignTokens.textSecondary,
             fontSize: DesignTokens.fontSizeSM,
           ),
@@ -313,14 +313,14 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
                 Icon(
                   Icons.bug_report,
                   color: DesignTokens.errorColor,
                   size: DesignTokens.iconMD,
                 ),
-                const SizedBox(width: DesignTokens.spaceSM),
+                SizedBox(width: DesignTokens.spaceSM),
                 Text(
                   'Recent Errors',
                   style: TextStyle(
@@ -346,26 +346,26 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                   'Location permission denied',
                 ];
                 return ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.error_outline,
                     color: DesignTokens.errorColor,
                     size: DesignTokens.iconSM,
                   ),
                   title: Text(
                     errors[index],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: DesignTokens.fontSizeSM,
                       color: DesignTokens.textPrimary,
                     ),
                   ),
                   subtitle: Text(
                     '${index + 1} hour${index == 0 ? '' : 's'} ago',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: DesignTokens.textTertiary,
                       fontSize: DesignTokens.fontSizeXS,
                     ),
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.chevron_right,
                     color: DesignTokens.textSecondary,
                     size: DesignTokens.iconSM,
@@ -384,7 +384,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
       padding: const EdgeInsets.all(DesignTokens.spaceMD),
       child: Column(
         children: [
-          Text(
+          const Text(
             'Performance Trends',
             style: TextStyle(
               fontSize: DesignTokens.fontSizeXL,
@@ -401,7 +401,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
               color: DesignTokens.backgroundSecondary,
               borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
             ),
-            child: Center(
+            child: const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -410,7 +410,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                     size: DesignTokens.iconXL,
                     color: DesignTokens.textSecondary,
                   ),
-                  const SizedBox(height: DesignTokens.spaceSM),
+                  SizedBox(height: DesignTokens.spaceSM),
                   Text(
                     'Performance charts will be displayed here',
                     style: TextStyle(
@@ -455,14 +455,14 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
             ),
             title: Text(
               alert.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: DesignTokens.fontWeightMedium,
                 color: DesignTokens.textPrimary,
               ),
             ),
             subtitle: Text(
               alert.description,
-              style: TextStyle(
+              style: const TextStyle(
                 color: DesignTokens.textSecondary,
                 fontSize: DesignTokens.fontSizeSM,
               ),
@@ -496,7 +496,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
       padding: const EdgeInsets.all(DesignTokens.spaceMD),
       child: Column(
         children: [
-          Text(
+          const Text(
             'Performance Reports',
             style: TextStyle(
               fontSize: DesignTokens.fontSizeXL,
@@ -547,7 +547,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
               const SizedBox(height: DesignTokens.spaceSM),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: DesignTokens.fontWeightMedium,
                   color: DesignTokens.textPrimary,
                 ),
@@ -556,7 +556,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
               const SizedBox(height: DesignTokens.spaceXS),
               Text(
                 subtitle,
-                style: TextStyle(
+                style: const TextStyle(
                   color: DesignTokens.textSecondary,
                   fontSize: DesignTokens.fontSizeSM,
                 ),
@@ -585,8 +585,8 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
   void _refreshMetrics() {
     // Mock refresh implementation
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Performance metrics refreshed'),
+      const SnackBar(
+        content: Text('Performance metrics refreshed'),
         backgroundColor: DesignTokens.successColor,
       ),
     );
@@ -601,7 +601,7 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'Performance Settings',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -617,11 +617,11 @@ class _PerformanceMonitoringScreenState extends ConsumerState<PerformanceMonitor
                 onChanged: (value) {},
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.schedule),
-              title: const Text('Auto-refresh Interval'),
-              subtitle: const Text('Every 30 seconds'),
-              trailing: const Icon(Icons.chevron_right),
+            const ListTile(
+              leading: Icon(Icons.schedule),
+              title: Text('Auto-refresh Interval'),
+              subtitle: Text('Every 30 seconds'),
+              trailing: Icon(Icons.chevron_right),
             ),
           ],
         ),

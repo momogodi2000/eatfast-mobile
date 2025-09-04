@@ -83,7 +83,7 @@ class RatingNotifier extends StateNotifier<RatingState> {
   ];
 
   final Map<String, RatingSummary> _mockSummaries = {
-    'restaurant1': RatingSummary(
+    'restaurant1': const RatingSummary(
       averageRating: 4.5,
       totalRatings: 125,
       ratingDistribution: {
@@ -95,7 +95,7 @@ class RatingNotifier extends StateNotifier<RatingState> {
       },
       recentRatings: [],
     ),
-    'item1': RatingSummary(
+    'item1': const RatingSummary(
       averageRating: 4.2,
       totalRatings: 45,
       ratingDistribution: {

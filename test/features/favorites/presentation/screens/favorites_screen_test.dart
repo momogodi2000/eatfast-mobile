@@ -44,10 +44,10 @@ void main() {
 
     group('Empty State Tests', () {
       testWidgets('should display empty state when no favorites', (WidgetTester tester) async {
-        final emptyWidget = ProviderScope(
+        final emptyWidget = const ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: const Center(
+              body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -73,10 +73,10 @@ void main() {
 
     group('Loading State Tests', () {
       testWidgets('should display loading indicator when loading', (WidgetTester tester) async {
-        final loadingWidget = ProviderScope(
+        final loadingWidget = const ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: const Center(
+              body: Center(
                 child: CircularProgressIndicator(),
               ),
             ),
@@ -307,10 +307,10 @@ void main() {
 
     group('Error State Tests', () {
       testWidgets('should display error message when error occurs', (WidgetTester tester) async {
-        final errorWidget = ProviderScope(
+        final errorWidget = const ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: const Center(
+              body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -122,7 +122,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.check_circle,
                           color: Colors.green,
                           size: 20,

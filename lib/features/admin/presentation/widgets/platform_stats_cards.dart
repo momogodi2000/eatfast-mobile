@@ -25,7 +25,7 @@ class PlatformStatsCards extends ConsumerWidget {
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
           childAspectRatio: 1.5,
-          children: [
+          children: const [
             _StatCard(
               title: 'Revenus totaux',
               value: '2,450,000 FCFA',

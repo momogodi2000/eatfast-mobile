@@ -119,7 +119,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       return _buildErrorWidget(state.error!);
     }
 
-    List<FavoriteItem> displayFavorites = _searchQuery.isEmpty
+    final List<FavoriteItem> displayFavorites = _searchQuery.isEmpty
         ? state.favorites
         : ref.read(favoritesProvider.notifier).searchFavorites(_searchQuery);
 
@@ -151,7 +151,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
         .where((f) => f.favorite.type == FavoriteType.restaurant)
         .toList();
 
-    List<FavoriteItem> displayRestaurants = _searchQuery.isEmpty
+    final List<FavoriteItem> displayRestaurants = _searchQuery.isEmpty
         ? restaurants
         : restaurants.where((r) => 
             r.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
@@ -288,7 +288,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                       const SizedBox(height: 4),
                       Text(
                         'Chez ${favorite.restaurantName}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: DesignTokens.primaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -301,7 +301,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                     Row(
                       children: [
                         if (favorite.rating != null) ...[
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Colors.amber,
                             size: 16,
@@ -352,7 +352,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                   ),
                   if (favorite.favorite.type == FavoriteType.item)
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_shopping_cart,
                         color: DesignTokens.primaryColor,
                       ),
@@ -433,7 +433,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                   Row(
                     children: [
                       if (restaurant.rating != null) ...[
-                        Icon(
+                        const Icon(
                           Icons.star,
                           color: Colors.amber,
                           size: 18,
@@ -787,7 +787,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Articles ajoutés au panier!'),
+          content: const Text('Articles ajoutés au panier!'),
           backgroundColor: Colors.green,
           action: SnackBarAction(
             label: 'Voir panier',

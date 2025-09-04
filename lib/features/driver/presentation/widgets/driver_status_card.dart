@@ -122,7 +122,7 @@ class DriverStatusCard extends ConsumerWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline,
                       color: Colors.orange,
                       size: 20,

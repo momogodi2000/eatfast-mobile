@@ -368,7 +368,7 @@ class _RecommendedItemTile extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.star,
                   size: 10,
                   color: Colors.amber,

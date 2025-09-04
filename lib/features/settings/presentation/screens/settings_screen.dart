@@ -48,7 +48,7 @@ class SettingsScreen extends ConsumerWidget {
                                 .take(2)
                                 .join()
                                 .toUpperCase(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: DesignTokens.primaryColor,
@@ -76,15 +76,15 @@ class SettingsScreen extends ConsumerWidget {
                           ),
                         ),
                         if (user.isVerified)
-                          Row(
+                          const Row(
                             children: [
                               Icon(
                                 Icons.verified,
                                 size: 16,
                                 color: Colors.green,
                               ),
-                              const SizedBox(width: 4),
-                              const Text(
+                              SizedBox(width: 4),
+                              Text(
                                 'Compte vérifié',
                                 style: TextStyle(
                                   fontSize: 12,

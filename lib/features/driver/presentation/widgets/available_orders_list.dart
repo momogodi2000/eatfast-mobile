@@ -196,7 +196,7 @@ class _AvailableOrderCard extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.location_on,
                     color: Colors.red,
                     size: 16,
@@ -271,7 +271,7 @@ class _AvailableOrderCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.info_outline,
                         size: 16,
                         color: Colors.blue,

@@ -33,7 +33,7 @@ class _SubmitRatingScreenState extends ConsumerState<SubmitRatingScreen> {
   final _imagePicker = ImagePicker();
   
   double _rating = 0.0;
-  List<File> _selectedImages = [];
+  final List<File> _selectedImages = [];
 
   @override
   void dispose() {
@@ -163,7 +163,7 @@ class _SubmitRatingScreenState extends ConsumerState<SubmitRatingScreen> {
               Center(
                 child: Text(
                   _getRatingText(_rating),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: DesignTokens.primaryColor,
                     fontWeight: FontWeight.w500,

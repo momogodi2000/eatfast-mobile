@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/utils/responsive_utils.dart';
-import '../widgets/dashboard_stats_card.dart';
-import '../widgets/quick_actions_grid.dart';
-import '../widgets/live_orders_preview.dart';
-import '../widgets/performance_chart.dart';
-import '../widgets/popular_items_list.dart';
 
 class ResponsiveRestaurantDashboardScreen extends ConsumerStatefulWidget {
   final String restaurantId;
@@ -188,9 +183,9 @@ class _ResponsiveRestaurantDashboardScreenState
       backgroundColor: theme.colorScheme.primary,
       foregroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
-        title: ResponsiveText(
+        title: const ResponsiveText(
           'Tableau de bord',
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
@@ -217,9 +212,9 @@ class _ResponsiveRestaurantDashboardScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                ResponsiveText(
+                const ResponsiveText(
                   'Restaurant Le Bon Goût',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white70,
                   ),
                   mobileFontSize: 16,
@@ -240,9 +235,9 @@ class _ResponsiveRestaurantDashboardScreenState
                       ),
                     ),
                     const SizedBox(width: 4),
-                    ResponsiveText(
+                    const ResponsiveText(
                       'Propriétaire de restaurant',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white70,
                       ),
                       mobileFontSize: 14,
@@ -434,9 +429,9 @@ class _ResponsiveRestaurantDashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ResponsiveText(
+            const ResponsiveText(
               'Actions rapides',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
               ),
               mobileFontSize: 16,
@@ -564,9 +559,9 @@ class _ResponsiveRestaurantDashboardScreenState
           children: [
             Row(
               children: [
-                ResponsiveText(
+                const ResponsiveText(
                   'Commandes en cours',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
                   mobileFontSize: 16,
@@ -583,9 +578,9 @@ class _ResponsiveRestaurantDashboardScreenState
                     color: Colors.orange.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: ResponsiveText(
+                  child: const ResponsiveText(
                     '3 nouvelles',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.orange,
                       fontWeight: FontWeight.w600,
                     ),
@@ -628,9 +623,9 @@ class _ResponsiveRestaurantDashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ResponsiveText(
+            const ResponsiveText(
               'Performance de la semaine',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
               ),
               mobileFontSize: 16,
@@ -673,9 +668,9 @@ class _ResponsiveRestaurantDashboardScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ResponsiveText(
+            const ResponsiveText(
               'Plats populaires',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
               ),
               mobileFontSize: 16,

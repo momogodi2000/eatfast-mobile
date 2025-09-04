@@ -218,7 +218,7 @@ class _RatingsScreenState extends ConsumerState<RatingsScreen>
                                   child: LinearProgressIndicator(
                                     value: percentage,
                                     backgroundColor: Colors.grey[200],
-                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                    valueColor: const AlwaysStoppedAnimation<Color>(
                                       DesignTokens.primaryColor,
                                     ),
                                   ),

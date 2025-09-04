@@ -113,29 +113,29 @@ class _TipScreenState extends ConsumerState<TipScreen> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                     size: 16,
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Text(
+                                  SizedBox(width: 4),
+                                  Text(
                                     '4.9',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
+                                  SizedBox(width: 16),
                                   Icon(
                                     Icons.delivery_dining,
                                     color: Colors.green,
                                     size: 16,
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Text(
+                                  SizedBox(width: 4),
+                                  Text(
                                     '250+ livraisons',
                                     style: TextStyle(
                                       fontSize: 14,
@@ -352,7 +352,7 @@ class _TipScreenState extends ConsumerState<TipScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Pourboire',
                                 style: TextStyle(
                                   color: DesignTokens.primaryColor,
@@ -361,7 +361,7 @@ class _TipScreenState extends ConsumerState<TipScreen> {
                               ),
                               Text(
                                 calculation.formattedTip,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: DesignTokens.primaryColor,
                                   fontWeight: FontWeight.bold,
                                 ),

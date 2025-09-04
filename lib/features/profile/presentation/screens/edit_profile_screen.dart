@@ -104,7 +104,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                     .take(2)
                                     .join()
                                     .toUpperCase(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
                                   color: DesignTokens.primaryColor,
@@ -116,7 +116,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         bottom: 0,
                         right: 0,
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: DesignTokens.primaryColor,
                             shape: BoxShape.circle,
                           ),

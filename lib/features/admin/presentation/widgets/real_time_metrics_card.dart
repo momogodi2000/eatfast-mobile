@@ -72,7 +72,7 @@ class RealTimeMetricsCard extends ConsumerWidget {
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
               childAspectRatio: 1,
-              children: [
+              children: const [
                 _MetricItem(
                   title: 'Livreurs en ligne',
                   value: '89',
@@ -116,7 +116,7 @@ class RealTimeMetricsCard extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: _QuickMetric(
                       label: 'Commandes aujourd\'hui',
                       value: '1,234',
@@ -129,7 +129,7 @@ class RealTimeMetricsCard extends ConsumerWidget {
                     height: 40,
                     color: colorScheme.outline.withValues(alpha: 0.3),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: _QuickMetric(
                       label: 'Revenus aujourd\'hui',
                       value: '45,670 FCFA',
@@ -142,7 +142,7 @@ class RealTimeMetricsCard extends ConsumerWidget {
                     height: 40,
                     color: colorScheme.outline.withValues(alpha: 0.3),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: _QuickMetric(
                       label: 'Taux d\'annulation',
                       value: '2.3%',

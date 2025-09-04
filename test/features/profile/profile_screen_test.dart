@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../lib/features/profile/presentation/screens/profile_screen.dart';
-import '../../../lib/features/profile/providers/profile_provider.dart';
-import '../../../lib/features/auth/domain/models.dart';
-import '../../../lib/features/profile/domain/models.dart';
+import 'package:eatfast_mobile/features/profile/presentation/screens/profile_screen.dart';
+import 'package:eatfast_mobile/features/profile/providers/profile_provider.dart';
+import 'package:eatfast_mobile/features/auth/domain/models.dart';
+import 'package:eatfast_mobile/features/profile/domain/models.dart';
 
 // Mock class for testing
 class MockProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
@@ -40,8 +40,8 @@ void main() {
         overrides: [
           profileProvider.overrideWith((ref) => mockNotifier),
         ],
-        child: MaterialApp(
-          home: const ProfileScreen(),
+        child: const MaterialApp(
+          home: ProfileScreen(),
         ),
       );
     }

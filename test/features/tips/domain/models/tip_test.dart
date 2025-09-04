@@ -188,7 +188,7 @@ void main() {
         value: 1000,
       );
 
-      final fixedCalculation = TipCalculation(
+      final fixedCalculation = const TipCalculation(
         orderTotal: 4000,
         deliveryFee: 500,
         selectedOption: fixedOption,
@@ -206,7 +206,7 @@ void main() {
         isCustom: true,
       );
 
-      final customCalculation = TipCalculation(
+      final customCalculation = const TipCalculation(
         orderTotal: 4000,
         deliveryFee: 500,
         selectedOption: customOption,
@@ -224,7 +224,7 @@ void main() {
       expect(testCalculation.isValid, true);
 
       // Invalid: negative tip
-      final invalidCalculation = TipCalculation(
+      final invalidCalculation = const TipCalculation(
         orderTotal: 4000,
         deliveryFee: 500,
         customAmount: -100,
@@ -232,7 +232,7 @@ void main() {
       expect(invalidCalculation.isValid, false);
 
       // Invalid: tip too high (> 50% of order)
-      final tooHighCalculation = TipCalculation(
+      final tooHighCalculation = const TipCalculation(
         orderTotal: 4000,
         deliveryFee: 500,
         customAmount: 2500, // > 50% of 4000
@@ -249,7 +249,7 @@ void main() {
     });
 
     test('should handle no selected option', () {
-      final noOptionCalculation = TipCalculation(
+      final noOptionCalculation = const TipCalculation(
         orderTotal: 4000,
         deliveryFee: 500,
         customAmount: 0,

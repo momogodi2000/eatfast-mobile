@@ -14,7 +14,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
     
     return Scaffold(
       appBar: AppBar(
-        title: LocalizedText('language'),
+        title: const LocalizedText('language'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(

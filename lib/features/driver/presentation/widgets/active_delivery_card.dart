@@ -102,7 +102,7 @@ class ActiveDeliveryCard extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                       color: Colors.red,
                       size: 16,
@@ -164,7 +164,7 @@ class ActiveDeliveryCard extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                       color: Colors.red,
                       size: 16,

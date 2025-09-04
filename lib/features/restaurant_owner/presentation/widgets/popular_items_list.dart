@@ -38,7 +38,7 @@ class PopularItemsList extends StatelessWidget {
             padding: const EdgeInsets.all(DesignTokens.spaceMD),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.trending_up,
                   color: DesignTokens.successColor,
                   size: 20,
@@ -80,7 +80,7 @@ class PopularItemsList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.restaurant_menu_outlined,
             size: 48,
             color: DesignTokens.textTertiary,
@@ -176,7 +176,7 @@ class PopularItemsList extends StatelessWidget {
                   const SizedBox(height: 2),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.shopping_cart_outlined,
                         size: 14,
                         color: DesignTokens.textSecondary,
@@ -190,7 +190,7 @@ class PopularItemsList extends StatelessWidget {
                       ),
                       const SizedBox(width: DesignTokens.spaceMD),
                       if (item.rating > 0) ...[
-                        Icon(
+                        const Icon(
                           Icons.star,
                           size: 14,
                           color: DesignTokens.warningColor,
@@ -230,7 +230,7 @@ class PopularItemsList extends StatelessWidget {
                     color: DesignTokens.successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                   ),
-                  child: Text(
+                  child: const Text(
                     '↗ Tendance',
                     style: TextStyle(
                       color: DesignTokens.successColor,

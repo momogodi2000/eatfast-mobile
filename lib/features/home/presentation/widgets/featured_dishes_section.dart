@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/shimmer_loading.dart';
 import '../../../restaurants/providers/restaurant_provider.dart';
-import '../../../restaurants/domain/models/menu_item.dart';
 
 class FeaturedDishesSection extends ConsumerWidget {
   const FeaturedDishesSection({super.key});

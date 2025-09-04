@@ -39,7 +39,7 @@ class LiveOrdersPreview extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.inbox_outlined,
             size: 48,
             color: DesignTokens.textTertiary,
@@ -155,7 +155,7 @@ class LiveOrdersPreview extends StatelessWidget {
                         const SizedBox(height: DesignTokens.spaceXXS),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.timer_outlined,
                               size: 14,
                               color: DesignTokens.warningColor,
@@ -186,7 +186,7 @@ class LiveOrdersPreview extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.note_outlined,
                         size: 16,
                         color: DesignTokens.textSecondary,
@@ -217,7 +217,7 @@ class LiveOrdersPreview extends StatelessWidget {
                         label: const Text('Rejeter'),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: DesignTokens.errorColor,
-                          side: BorderSide(color: DesignTokens.errorColor),
+                          side: const BorderSide(color: DesignTokens.errorColor),
                         ),
                       ),
                     ),
@@ -289,7 +289,7 @@ class LiveOrdersPreview extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
           ),
-          title: Text(
+          title: const Text(
             'Accepter la commande',
             style: TextStyle(
               fontWeight: DesignTokens.fontWeightBold,
@@ -299,7 +299,7 @@ class LiveOrdersPreview extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Temps de préparation estimé:'),
+              const Text('Temps de préparation estimé:'),
               const SizedBox(height: DesignTokens.spaceMD),
               Row(
                 children: [
@@ -357,7 +357,7 @@ class LiveOrdersPreview extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         ),
-        title: Text(
+        title: const Text(
           'Rejeter la commande',
           style: TextStyle(
             fontWeight: DesignTokens.fontWeightBold,
@@ -366,7 +366,7 @@ class LiveOrdersPreview extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Pourquoi rejetez-vous cette commande?'),
+            const Text('Pourquoi rejetez-vous cette commande?'),
             const SizedBox(height: DesignTokens.spaceMD),
             TextField(
               onChanged: (value) => reason = value,

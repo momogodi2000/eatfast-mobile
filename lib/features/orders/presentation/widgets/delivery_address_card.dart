@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/design_tokens.dart';
-import '../../../profile/domain/models.dart';
 import '../../../profile/domain/user_address.dart';
 
 class DeliveryAddressCard extends StatelessWidget {

@@ -62,14 +62,14 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
       isAvailable: true,
       weeklyStats: [
         DeliveryStatistics(
-          date: DateTime.now().subtract(Duration(days: 6)),
+          date: DateTime.now().subtract(const Duration(days: 6)),
           deliveries: 8,
           earnings: 15000,
           rating: 4.7,
           onlineHours: 6,
         ),
         DeliveryStatistics(
-          date: DateTime.now().subtract(Duration(days: 5)),
+          date: DateTime.now().subtract(const Duration(days: 5)),
           deliveries: 12,
           earnings: 22000,
           rating: 4.9,
@@ -79,7 +79,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
       ],
     );
 
-    mockEarnings = DriverEarnings(
+    mockEarnings = const DriverEarnings(
       driverId: 'driver123',
       totalEarnings: 850000,
       todayEarnings: 25000,
@@ -108,8 +108,8 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         deliveryAddress: '456 Rue de la Paix, Yaoundé',
         deliveryLatitude: 3.8580,
         deliveryLongitude: 11.5121,
-        orderTime: DateTime.now().subtract(Duration(minutes: 30)),
-        expectedDeliveryTime: DateTime.now().add(Duration(minutes: 15)),
+        orderTime: DateTime.now().subtract(const Duration(minutes: 30)),
+        expectedDeliveryTime: DateTime.now().add(const Duration(minutes: 15)),
         orderValue: 15000,
         deliveryFee: 1500,
         status: DeliveryStatus.assigned,
@@ -119,12 +119,12 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         distanceKm: 2.5,
         estimatedDuration: 15,
         items: [
-          OrderItem(
+          const OrderItem(
             itemName: 'Ndolé avec du riz',
             quantity: 2,
             price: 5000,
           ),
-          OrderItem(
+          const OrderItem(
             itemName: 'Boisson fraîche',
             quantity: 1,
             price: 1500,
@@ -145,8 +145,8 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
       deliveryAddress: '321 Rue de la Joie, Douala',
       deliveryLatitude: 4.0583,
       deliveryLongitude: 9.7143,
-      orderTime: DateTime.now().subtract(Duration(hours: 1)),
-      expectedDeliveryTime: DateTime.now().add(Duration(minutes: 10)),
+      orderTime: DateTime.now().subtract(const Duration(hours: 1)),
+      expectedDeliveryTime: DateTime.now().add(const Duration(minutes: 10)),
       orderValue: 12000,
       deliveryFee: 1200,
       status: DeliveryStatus.delivering,
@@ -154,14 +154,14 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
       isPaid: true,
       distanceKm: 1.8,
       estimatedDuration: 10,
-      pickedUpAt: DateTime.now().subtract(Duration(minutes: 20)),
+      pickedUpAt: DateTime.now().subtract(const Duration(minutes: 20)),
       items: [
-        OrderItem(
+        const OrderItem(
           itemName: 'Poulet DG',
           quantity: 1,
           price: 8000,
         ),
-        OrderItem(
+        const OrderItem(
           itemName: 'Plantain frit',
           quantity: 1,
           price: 2000,
@@ -429,7 +429,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
                       ),
                     ),
                     const SizedBox(width: 4),
-                    Text(
+                    const Text(
                       'Recherche...',
                       style: TextStyle(
                         color: DesignTokens.successColor,

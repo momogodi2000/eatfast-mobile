@@ -169,31 +169,31 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
   }
 
   Widget _buildOverviewTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PlatformStatsCards(),
-          const SizedBox(height: 16),
-          const RealTimeMetricsCard(),
-          const SizedBox(height: 16),
+          PlatformStatsCards(),
+          SizedBox(height: 16),
+          RealTimeMetricsCard(),
+          SizedBox(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 flex: 2,
                 child: QuickActionsGrid(),
               ),
-              const SizedBox(width: 16),
-              const Expanded(
+              SizedBox(width: 16),
+              Expanded(
                 flex: 3,
                 child: RecentActivitiesCard(),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          const SystemHealthCard(),
+          SizedBox(height: 16),
+          SystemHealthCard(),
         ],
       ),
     );
@@ -222,12 +222,12 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
             ],
           ),
           const SizedBox(height: 16),
-          Row(
+          const Row(
             children: [
               Expanded(
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -237,15 +237,15 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                               Icons.person,
                               color: Colors.blue,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
+                            SizedBox(width: 8),
+                            Text(
                               'Clients',
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
+                        SizedBox(height: 8),
+                        Text(
                           '12,450',
                           style: TextStyle(
                             fontSize: 24,
@@ -253,17 +253,17 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                             color: Colors.blue,
                           ),
                         ),
-                        const Text('Utilisateurs actifs'),
+                        Text('Utilisateurs actifs'),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -273,15 +273,15 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                               Icons.restaurant,
                               color: Colors.green,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
+                            SizedBox(width: 8),
+                            Text(
                               'Restaurants',
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
+                        SizedBox(height: 8),
+                        Text(
                           '287',
                           style: TextStyle(
                             fontSize: 24,
@@ -289,17 +289,17 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                             color: Colors.green,
                           ),
                         ),
-                        const Text('Partenaires actifs'),
+                        Text('Partenaires actifs'),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -309,15 +309,15 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                               Icons.delivery_dining,
                               color: Colors.orange,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
+                            SizedBox(width: 8),
+                            Text(
                               'Livreurs',
                               style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
+                        SizedBox(height: 8),
+                        Text(
                           '156',
                           style: TextStyle(
                             fontSize: 24,
@@ -325,7 +325,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                             color: Colors.orange,
                           ),
                         ),
-                        const Text('Livreurs actifs'),
+                        Text('Livreurs actifs'),
                       ],
                     ),
                   ),
@@ -435,7 +435,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                                 color: Colors.blue.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(6),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.access_time,
                                 color: Colors.blue,
                                 size: 16,
@@ -475,7 +475,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                                 color: Colors.green.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(6),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.check_circle,
                                 color: Colors.green,
                                 size: 16,
@@ -515,7 +515,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                                 color: Colors.red.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(6),
                               ),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.cancel,
                                 color: Colors.red,
                                 size: 16,
@@ -624,13 +624,13 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                   itemBuilder: (context, index) => ListTile(
                     leading: CircleAvatar(
                       backgroundColor: Colors.orange.withValues(alpha: 0.1),
-                      child: Icon(
+                      child: const Icon(
                         Icons.warning,
                         color: Colors.orange,
                       ),
                     ),
                     title: Text('Alerte système #${index + 1}'),
-                    subtitle: Text('Description de l\'alerte système'),
+                    subtitle: const Text('Description de l\'alerte système'),
                     trailing: const Text('il y a 2h'),
                   ),
                 ),

@@ -111,13 +111,13 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.security,
                   color: DesignTokens.successColor,
                   size: DesignTokens.iconLG,
                 ),
                 const SizedBox(width: DesignTokens.spaceMD),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -145,7 +145,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
                     shape: BoxShape.circle,
                     color: DesignTokens.successColor.withValues(alpha: 0.1),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       '85',
                       style: TextStyle(
@@ -161,7 +161,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             const SizedBox(height: DesignTokens.spaceMD),
             
-            LinearProgressIndicator(
+            const LinearProgressIndicator(
               value: 0.85,
               backgroundColor: DesignTokens.lightGrey,
               valueColor: AlwaysStoppedAnimation<Color>(DesignTokens.successColor),
@@ -184,7 +184,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Biometric Authentication',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -196,7 +196,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             // Fingerprint
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.fingerprint,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -212,7 +212,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             // Face ID
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.face,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -228,7 +228,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             // Fallback option
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.lock_outline,
                 color: DesignTokens.textSecondary,
                 size: DesignTokens.iconMD,
@@ -258,7 +258,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'PIN & Password',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -269,7 +269,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.pin,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -281,7 +281,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.password,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -293,7 +293,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.timer,
                 color: DesignTokens.textSecondary,
                 size: DesignTokens.iconMD,
@@ -320,7 +320,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Active Sessions',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -332,7 +332,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             // Current device
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.smartphone,
                 color: DesignTokens.successColor,
                 size: DesignTokens.iconMD,
@@ -348,7 +348,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
                   color: DesignTokens.successColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                 ),
-                child: Text(
+                child: const Text(
                   'CURRENT',
                   style: TextStyle(
                     color: DesignTokens.successColor,
@@ -361,7 +361,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             // Other devices (mock data)
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.laptop,
                 color: DesignTokens.textSecondary,
                 size: DesignTokens.iconMD,
@@ -370,7 +370,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
               subtitle: const Text('2 hours ago • Chrome on Windows'),
               trailing: TextButton(
                 onPressed: () => _revokeSession('web'),
-                child: Text(
+                child: const Text(
                   'REVOKE',
                   style: TextStyle(
                     color: DesignTokens.errorColor,
@@ -437,7 +437,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Data Usage',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -448,7 +448,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.analytics_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -463,7 +463,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.bug_report_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -478,7 +478,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.location_on_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -508,7 +508,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Privacy Controls',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -519,7 +519,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.email_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -534,7 +534,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.notifications_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -549,7 +549,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.visibility_off_outlined,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -576,7 +576,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Data Rights (GDPR)',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -587,7 +587,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.download_outlined,
                 color: DesignTokens.infoColor,
                 size: DesignTokens.iconMD,
@@ -599,7 +599,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.delete_outline,
                 color: DesignTokens.errorColor,
                 size: DesignTokens.iconMD,
@@ -611,7 +611,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.policy_outlined,
                 color: DesignTokens.textSecondary,
                 size: DesignTokens.iconMD,
@@ -662,13 +662,13 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.enhanced_encryption,
                   color: DesignTokens.successColor,
                   size: DesignTokens.iconMD,
                 ),
                 const SizedBox(width: DesignTokens.spaceSM),
-                Text(
+                const Text(
                   'Data Encryption',
                   style: TextStyle(
                     fontSize: DesignTokens.fontSizeLG,
@@ -686,7 +686,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
                     color: DesignTokens.successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                   ),
-                  child: Text(
+                  child: const Text(
                     'ENABLED',
                     style: TextStyle(
                       color: DesignTokens.successColor,
@@ -700,7 +700,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             const SizedBox(height: DesignTokens.spaceMD),
             
-            Text(
+            const Text(
               'Your data is encrypted using AES-256 encryption. This includes personal information, payment data, and communication.',
               style: TextStyle(
                 color: DesignTokens.textSecondary,
@@ -710,7 +710,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             
             const SizedBox(height: DesignTokens.spaceMD),
             
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
@@ -770,7 +770,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Fraud Detection',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -781,7 +781,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.security,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -796,7 +796,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.location_searching,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -811,7 +811,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.devices,
                 color: DesignTokens.primaryColor,
                 size: DesignTokens.iconMD,
@@ -840,13 +840,13 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
         padding: const EdgeInsets.all(DesignTokens.spaceMD),
         child: Column(
           children: [
-            Icon(
+            const Icon(
               Icons.shield_outlined,
               size: DesignTokens.iconXL,
               color: DesignTokens.primaryColor,
             ),
             const SizedBox(height: DesignTokens.spaceMD),
-            Text(
+            const Text(
               'Security Scan',
               style: TextStyle(
                 fontSize: DesignTokens.fontSizeLG,
@@ -855,7 +855,7 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
               ),
             ),
             const SizedBox(height: DesignTokens.spaceSM),
-            Text(
+            const Text(
               'Run a comprehensive security check on your account',
               style: TextStyle(
                 color: DesignTokens.textSecondary,
@@ -913,14 +913,14 @@ class _SecurityFeaturesScreenState extends ConsumerState<SecurityFeaturesScreen>
             ),
             title: Text(
               alert.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: DesignTokens.fontWeightMedium,
                 color: DesignTokens.textPrimary,
               ),
             ),
             subtitle: Text(
               alert.description,
-              style: TextStyle(
+              style: const TextStyle(
                 color: DesignTokens.textSecondary,
                 fontSize: DesignTokens.fontSizeSM,
               ),
