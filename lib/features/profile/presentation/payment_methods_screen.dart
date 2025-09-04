@@ -128,7 +128,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _getPaymentMethodColor(method.type).withOpacity(0.1),
+                  color: _getPaymentMethodColor(method.type).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -244,7 +244,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
           Icon(
             Icons.payment_outlined,
             size: 120,
-            color: AppColors.gray.withOpacity(0.5),
+            color: AppColors.gray.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 24),
           Text(
@@ -516,7 +516,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
               height: 4,
               margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: AppColors.gray.withOpacity(0.3),
+                color: AppColors.gray.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -663,12 +663,12 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? type['color'] : AppColors.gray.withOpacity(0.3),
+            color: isSelected ? type['color'] : AppColors.gray.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
           color: isSelected 
-              ? type['color'].withOpacity(0.1)
+              ? type['color'].withValues(alpha: 0.1)
               : Colors.transparent,
         ),
         child: Row(

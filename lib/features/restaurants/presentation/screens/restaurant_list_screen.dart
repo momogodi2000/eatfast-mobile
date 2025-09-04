@@ -203,7 +203,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: DesignTokens.errorColor.withOpacity(0.5),
+              color: DesignTokens.errorColor.withValues(alpha: 0.5),
             ),
             const SizedBox(height: DesignTokens.spaceMD),
             Text(

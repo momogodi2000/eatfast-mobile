@@ -89,7 +89,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: DesignTokens.errorColor.withOpacity(0.5),
+              color: DesignTokens.errorColor.withValues(alpha: 0.5),
             ),
             const SizedBox(height: DesignTokens.spaceMD),
             Text(
@@ -187,7 +187,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -211,7 +211,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
                   vertical: DesignTokens.spaceXS,
                 ),
                 decoration: BoxDecoration(
-                  color: _getStatusColor(order.status).withOpacity(0.1),
+                  color: _getStatusColor(order.status).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                 ),
                 child: Text(
@@ -288,7 +288,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
         color: DesignTokens.white,
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         border: Border.all(
-          color: DesignTokens.successColor.withOpacity(0.3),
+          color: DesignTokens.successColor.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -299,7 +299,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
               Container(
                 padding: const EdgeInsets.all(DesignTokens.spaceSM),
                 decoration: BoxDecoration(
-                  color: DesignTokens.successColor.withOpacity(0.1),
+                  color: DesignTokens.successColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -349,7 +349,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
           
           LinearProgressIndicator(
             value: 0.7, // Mock progress
-            backgroundColor: DesignTokens.lightGrey.withOpacity(0.3),
+            backgroundColor: DesignTokens.lightGrey.withValues(alpha: 0.3),
             color: DesignTokens.successColor,
           ),
           

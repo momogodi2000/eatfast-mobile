@@ -218,7 +218,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: DesignTokens.primaryColor.withOpacity(0.1),
+              color: DesignTokens.primaryColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -371,10 +371,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         Container(
           padding: const EdgeInsets.all(DesignTokens.spaceMD),
           decoration: BoxDecoration(
-            color: DesignTokens.infoColor.withOpacity(0.1),
+            color: DesignTokens.infoColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
             border: Border.all(
-              color: DesignTokens.infoColor.withOpacity(0.3),
+              color: DesignTokens.infoColor.withValues(alpha: 0.3),
             ),
           ),
           child: Row(

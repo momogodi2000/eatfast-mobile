@@ -38,7 +38,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: DesignTokens.white.withOpacity(0.2),
+                color: DesignTokens.white.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -144,7 +144,7 @@ class _HomeContent extends ConsumerWidget {
               gradient: LinearGradient(
                 colors: [
                   DesignTokens.primaryColor,
-                  DesignTokens.primaryColor.withOpacity(0.8),
+                  DesignTokens.primaryColor.withValues(alpha: 0.8),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -165,7 +165,7 @@ class _HomeContent extends ConsumerWidget {
                 Text(
                   'Que souhaitez-vous déguster aujourd\'hui ?',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: DesignTokens.white.withOpacity(0.9),
+                    color: DesignTokens.white.withValues(alpha: 0.9),
                   ),
                 ),
               ],
@@ -177,10 +177,10 @@ class _HomeContent extends ConsumerWidget {
           // Search Bar
           Container(
             decoration: BoxDecoration(
-              color: DesignTokens.lightGrey.withOpacity(0.1),
+              color: DesignTokens.lightGrey.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
               border: Border.all(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
               ),
             ),
             child: TextField(
@@ -261,7 +261,7 @@ class _HomeContent extends ConsumerWidget {
                           width: 60,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: DesignTokens.primaryColor.withOpacity(0.1),
+                            color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -338,7 +338,7 @@ class _HomeContent extends ConsumerWidget {
           borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -349,7 +349,7 @@ class _HomeContent extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(DesignTokens.spaceMD),
               decoration: BoxDecoration(
-                color: DesignTokens.primaryColor.withOpacity(0.1),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -393,14 +393,14 @@ class _ProfileContent extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(DesignTokens.spaceLG),
             decoration: BoxDecoration(
-              color: DesignTokens.primaryColor.withOpacity(0.1),
+              color: DesignTokens.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
             ),
             child: Column(
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundColor: DesignTokens.primaryColor.withOpacity(0.2),
+                  backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.2),
                   child: const Icon(
                     Icons.person,
                     size: 50,

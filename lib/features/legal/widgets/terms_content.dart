@@ -193,7 +193,7 @@ Version : 1.0
         Container(
           padding: const EdgeInsets.all(DesignTokens.spaceLG),
           decoration: BoxDecoration(
-            color: DesignTokens.primaryColor.withOpacity(0.1),
+            color: DesignTokens.primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
           ),
           child: Column(

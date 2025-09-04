@@ -76,7 +76,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
           borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -100,7 +100,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(
                       height: 100,
-                      color: DesignTokens.lightGrey.withOpacity(0.3),
+                      color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                       child: const Center(
                         child: Icon(
                           Icons.restaurant,
@@ -111,7 +111,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
                     ),
                     errorWidget: (context, url, error) => Container(
                       height: 100,
-                      color: DesignTokens.lightGrey.withOpacity(0.3),
+                      color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                       child: const Center(
                         child: Icon(
                           Icons.restaurant,

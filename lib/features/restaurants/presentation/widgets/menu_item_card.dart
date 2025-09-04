@@ -58,7 +58,7 @@ class MenuItemCard extends StatelessWidget {
         placeholder: (context, url) => Container(
           width: 80,
           height: 80,
-          color: DesignTokens.lightGrey.withOpacity(0.3),
+          color: DesignTokens.lightGrey.withValues(alpha: 0.3),
           child: const Center(
             child: CircularProgressIndicator(strokeWidth: 2),
           ),
@@ -66,7 +66,7 @@ class MenuItemCard extends StatelessWidget {
         errorWidget: (context, url, error) => Container(
           width: 80,
           height: 80,
-          color: DesignTokens.lightGrey.withOpacity(0.3),
+          color: DesignTokens.lightGrey.withValues(alpha: 0.3),
           child: const Icon(
             Icons.fastfood,
             size: 32,
@@ -103,7 +103,7 @@ class MenuItemCard extends StatelessWidget {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: DesignTokens.warningColor.withOpacity(0.2),
+                  color: DesignTokens.warningColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
                 child: const Text(
@@ -123,7 +123,7 @@ class MenuItemCard extends StatelessWidget {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: DesignTokens.successColor.withOpacity(0.2),
+                  color: DesignTokens.successColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
                 child: const Text(
@@ -199,7 +199,7 @@ class MenuItemCard extends StatelessWidget {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: _getTagColor(tag).withOpacity(0.1),
+                  color: _getTagColor(tag).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                 ),
                 child: Text(
@@ -229,7 +229,7 @@ class MenuItemCard extends StatelessWidget {
               vertical: 2,
             ),
             decoration: BoxDecoration(
-              color: DesignTokens.errorColor.withOpacity(0.1),
+              color: DesignTokens.errorColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
             ),
             child: const Text(

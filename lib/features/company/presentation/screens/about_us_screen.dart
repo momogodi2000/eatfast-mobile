@@ -104,7 +104,7 @@ class _AboutUsScreenState extends State<AboutUsScreen>
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              DesignTokens.primaryColor.withOpacity(0.7),
+                              DesignTokens.primaryColor.withValues(alpha: 0.7),
                             ],
                           ),
                         ),
@@ -206,7 +206,7 @@ Innovation - Technologie au service de la tradition
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -220,7 +220,7 @@ Innovation - Technologie au service de la tradition
               Container(
                 padding: const EdgeInsets.all(DesignTokens.spaceSM),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                 ),
                 child: Icon(
@@ -261,8 +261,8 @@ Innovation - Technologie au service de la tradition
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            DesignTokens.primaryColor.withOpacity(0.1),
-            DesignTokens.secondaryColor.withOpacity(0.1),
+            DesignTokens.primaryColor.withValues(alpha: 0.1),
+            DesignTokens.secondaryColor.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
@@ -477,7 +477,7 @@ Innovation - Technologie au service de la tradition
         children: [
           Icon(
             Icons.format_quote,
-            color: DesignTokens.primaryColor.withOpacity(0.5),
+            color: DesignTokens.primaryColor.withValues(alpha: 0.5),
             size: DesignTokens.iconLG,
           ),
           const SizedBox(height: DesignTokens.spaceXS),

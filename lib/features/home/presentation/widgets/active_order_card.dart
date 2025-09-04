@@ -26,7 +26,7 @@ class ActiveOrderCard extends ConsumerWidget {
         gradient: LinearGradient(
           colors: [
             _getStatusColor(order.status),
-            _getStatusColor(order.status).withOpacity(0.8),
+            _getStatusColor(order.status).withValues(alpha: 0.8),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -34,7 +34,7 @@ class ActiveOrderCard extends ConsumerWidget {
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         boxShadow: [
           BoxShadow(
-            color: _getStatusColor(order.status).withOpacity(0.3),
+            color: _getStatusColor(order.status).withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -66,7 +66,7 @@ class ActiveOrderCard extends ConsumerWidget {
                   vertical: DesignTokens.spaceXS,
                 ),
                 decoration: BoxDecoration(
-                  color: DesignTokens.white.withOpacity(0.2),
+                  color: DesignTokens.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                 ),
                 child: Text(
@@ -86,7 +86,7 @@ class ActiveOrderCard extends ConsumerWidget {
           Text(
             order.restaurantName,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: DesignTokens.white.withOpacity(0.9),
+              color: DesignTokens.white.withValues(alpha: 0.9),
               fontWeight: DesignTokens.fontWeightMedium,
             ),
           ),
@@ -98,7 +98,7 @@ class ActiveOrderCard extends ConsumerWidget {
               Text(
                 '${order.itemCount} article(s)',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: DesignTokens.white.withOpacity(0.8),
+                  color: DesignTokens.white.withValues(alpha: 0.8),
                 ),
               ),
               const Text(
@@ -110,7 +110,7 @@ class ActiveOrderCard extends ConsumerWidget {
               Text(
                 '${order.total.toInt()} FCFA',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: DesignTokens.white.withOpacity(0.8),
+                  color: DesignTokens.white.withValues(alpha: 0.8),
                   fontWeight: DesignTokens.fontWeightMedium,
                 ),
               ),
@@ -123,14 +123,14 @@ class ActiveOrderCard extends ConsumerWidget {
               children: [
                 Icon(
                   Icons.schedule,
-                  color: DesignTokens.white.withOpacity(0.8),
+                  color: DesignTokens.white.withValues(alpha: 0.8),
                   size: 16,
                 ),
                 const SizedBox(width: DesignTokens.spaceXS),
                 Text(
                   _formatDeliveryTime(order.estimatedDeliveryTime!),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: DesignTokens.white.withOpacity(0.8),
+                    color: DesignTokens.white.withValues(alpha: 0.8),
                   ),
                 ),
               ],

@@ -72,7 +72,7 @@ class CareersScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                 ),
                 child: Column(
@@ -113,7 +113,7 @@ class CareersScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(DesignTokens.spaceXS),
                   decoration: BoxDecoration(
-                    color: DesignTokens.primaryColor.withOpacity(0.1),
+                    color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                   ),
                   child: Icon(

@@ -131,9 +131,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    DesignTokens.primaryColor.withOpacity(0.1),
+                    DesignTokens.primaryColor.withValues(alpha: 0.1),
                     DesignTokens.white,
-                    DesignTokens.secondaryColor.withOpacity(0.1),
+                    DesignTokens.secondaryColor.withValues(alpha: 0.1),
                   ],
                   stops: const [0.0, 0.5, 1.0],
                 ),
@@ -160,7 +160,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: DesignTokens.primaryColor.withOpacity(0.3),
+                                      color: DesignTokens.primaryColor.withValues(alpha: 0.3),
                                       blurRadius: 20,
                                       spreadRadius: 5,
                                     ),
@@ -340,12 +340,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         color: DesignTokens.white,
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         border: Border.all(
-          color: color.withOpacity(0.2),
+          color: color.withValues(alpha: 0.2),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -356,7 +356,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Container(
             padding: const EdgeInsets.all(DesignTokens.spaceSM),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
             ),
             child: Icon(

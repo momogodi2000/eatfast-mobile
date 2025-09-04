@@ -38,7 +38,7 @@ class OrderStatusTimeline extends StatelessWidget {
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -83,7 +83,7 @@ class OrderStatusTimeline extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(DesignTokens.spaceMD),
               decoration: BoxDecoration(
-                color: DesignTokens.infoColor.withOpacity(0.1),
+                color: DesignTokens.infoColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
               ),
               child: Row(
@@ -224,7 +224,7 @@ class OrderStatusTimeline extends StatelessWidget {
         color: DesignTokens.white,
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         border: Border.all(
-          color: DesignTokens.errorColor.withOpacity(0.3),
+          color: DesignTokens.errorColor.withValues(alpha: 0.3),
         ),
       ),
       child: Column(

@@ -27,7 +27,7 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
         borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -138,7 +138,7 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
               placeholder: (context, url) => Container(
                 width: 50,
                 height: 50,
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Icon(
                   Icons.fastfood,
                   size: 20,
@@ -148,7 +148,7 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
               errorWidget: (context, url, error) => Container(
                 width: 50,
                 height: 50,
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Icon(
                   Icons.fastfood,
                   size: 20,
@@ -213,7 +213,7 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
                       vertical: DesignTokens.spaceXS,
                     ),
                     decoration: BoxDecoration(
-                      color: DesignTokens.infoColor.withOpacity(0.1),
+                      color: DesignTokens.infoColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
                     ),
                     child: Row(

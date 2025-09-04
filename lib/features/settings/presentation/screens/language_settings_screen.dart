@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/l10n/app_localizations.dart';
-import '../../../../core/l10n/language_provider.dart';
+import '../../../../core/services/localization/language_service.dart';
+import '../../../../core/services/localization/localization_helpers.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// Language settings screen for changing app language
@@ -10,12 +10,11 @@ class LanguageSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocale = ref.watch(languageProvider);
-    final l10n = AppLocalizations.of(context);
-
+    final currentLanguage = ref.watch(languageProvider);
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.language),
+        title: LocalizedText('language'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -30,8 +29,8 @@ class LanguageSettingsScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              Text(
-                l10n.changeLanguage,
+              LocalizedText(
+                'changeLanguage',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: DesignTokens.fontWeightBold,
                   color: DesignTokens.textPrimary,
@@ -40,8 +39,8 @@ class LanguageSettingsScreen extends ConsumerWidget {
               
               const SizedBox(height: DesignTokens.spaceMD),
               
-              Text(
-                'Select your preferred language',
+              LocalizedText(
+                'selectLanguage',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: DesignTokens.textSecondary,
                 ),
@@ -53,10 +52,10 @@ class LanguageSettingsScreen extends ConsumerWidget {
               _buildLanguageOption(
                 context: context,
                 ref: ref,
-                locale: const Locale('fr', ''),
-                title: l10n.french,
+                language: AppLanguage.french,
+                title: context.tr('french'),
                 subtitle: 'Français',
-                isSelected: currentLocale.languageCode == 'fr',
+                isSelected: currentLanguage == AppLanguage.french,
               ),
               
               const SizedBox(height: DesignTokens.spaceMD),
@@ -64,10 +63,10 @@ class LanguageSettingsScreen extends ConsumerWidget {
               _buildLanguageOption(
                 context: context,
                 ref: ref,
-                locale: const Locale('en', ''),
-                title: l10n.english,
+                language: AppLanguage.english,
+                title: context.tr('english'),
                 subtitle: 'English',
-                isSelected: currentLocale.languageCode == 'en',
+                isSelected: currentLanguage == AppLanguage.english,
               ),
               
               const Spacer(),
@@ -91,8 +90,8 @@ class LanguageSettingsScreen extends ConsumerWidget {
                     ),
                     const SizedBox(width: DesignTokens.spaceXS),
                     Expanded(
-                      child: Text(
-                        'The app will restart to apply the new language.',
+                      child: LocalizedText(
+                        'app_restart_language',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: DesignTokens.infoColor,
                         ),
@@ -111,7 +110,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
   Widget _buildLanguageOption({
     required BuildContext context,
     required WidgetRef ref,
-    required Locale locale,
+    required AppLanguage language,
     required String title,
     required String subtitle,
     required bool isSelected,
@@ -131,12 +130,12 @@ class LanguageSettingsScreen extends ConsumerWidget {
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         onTap: () async {
           if (!isSelected) {
-            await ref.read(languageProvider.notifier).changeLanguage(locale);
+            await ref.read(languageProvider.notifier).changeLanguage(language);
             
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Language changed to ${locale.languageCode == 'fr' ? 'Français' : 'English'}'),
+                  content: Text('Language changed to ${language == AppLanguage.french ? 'Français' : 'English'}'),
                   backgroundColor: DesignTokens.successColor,
                 ),
               );
@@ -158,7 +157,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  locale.languageCode == 'fr' ? Icons.language : Icons.translate,
+                  language == AppLanguage.french ? Icons.language : Icons.translate,
                   color: isSelected
                       ? DesignTokens.primaryColor
                       : DesignTokens.textSecondary,

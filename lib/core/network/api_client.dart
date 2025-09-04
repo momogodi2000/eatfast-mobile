@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:developer' as developer;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 /// API client for making HTTP requests
@@ -146,11 +147,11 @@ class AuthInterceptor extends Interceptor {
 class ErrorHandlingInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // Log error details
-    print('API Error: ${err.message}');
+    // Log error details using dart:developer for better debugging
+    developer.log('API Error: ${err.message}');
     if (err.response != null) {
-      print('Status Code: ${err.response?.statusCode}');
-      print('Response Data: ${err.response?.data}');
+      developer.log('Status Code: ${err.response?.statusCode}');
+      developer.log('Response Data: ${err.response?.data}');
     }
 
     super.onError(err, handler);

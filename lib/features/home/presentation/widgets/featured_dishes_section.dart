@@ -99,7 +99,7 @@ class FeaturedDishesSection extends ConsumerWidget {
           borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -123,7 +123,7 @@ class FeaturedDishesSection extends ConsumerWidget {
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(
                       height: 120,
-                      color: DesignTokens.lightGrey.withOpacity(0.3),
+                      color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                       child: const Center(
                         child: Icon(
                           Icons.fastfood,
@@ -134,7 +134,7 @@ class FeaturedDishesSection extends ConsumerWidget {
                     ),
                     errorWidget: (context, url, error) => Container(
                       height: 120,
-                      color: DesignTokens.lightGrey.withOpacity(0.3),
+                      color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                       child: const Center(
                         child: Icon(
                           Icons.fastfood,
@@ -178,7 +178,7 @@ class FeaturedDishesSection extends ConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: DesignTokens.white.withOpacity(0.9),
+                          color: DesignTokens.white.withValues(alpha: 0.9),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(

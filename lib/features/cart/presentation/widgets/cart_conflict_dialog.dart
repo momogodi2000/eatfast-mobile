@@ -26,7 +26,7 @@ class CartConflictDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(DesignTokens.spaceXS),
             decoration: BoxDecoration(
-              color: DesignTokens.warningColor.withOpacity(0.1),
+              color: DesignTokens.warningColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -70,10 +70,10 @@ class CartConflictDialog extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(DesignTokens.spaceMD),
             decoration: BoxDecoration(
-              color: DesignTokens.primaryColor.withOpacity(0.05),
+              color: DesignTokens.primaryColor.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
               border: Border.all(
-                color: DesignTokens.primaryColor.withOpacity(0.2),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.2),
               ),
             ),
             child: Column(
@@ -114,10 +114,10 @@ class CartConflictDialog extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(DesignTokens.spaceMD),
             decoration: BoxDecoration(
-              color: DesignTokens.errorColor.withOpacity(0.05),
+              color: DesignTokens.errorColor.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
               border: Border.all(
-                color: DesignTokens.errorColor.withOpacity(0.2),
+                color: DesignTokens.errorColor.withValues(alpha: 0.2),
               ),
             ),
             child: Column(

@@ -235,7 +235,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               end: Alignment.bottomCenter,
               colors: [
                 DesignTokens.primaryColor,
-                DesignTokens.primaryColor.withOpacity(0.8),
+                DesignTokens.primaryColor.withValues(alpha: 0.8),
               ],
             ),
           ),
@@ -261,7 +261,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: DesignTokens.black.withOpacity(0.2),
+                              color: DesignTokens.black.withValues(alpha: 0.2),
                               blurRadius: 10,
                               offset: const Offset(0, 5),
                             ),
@@ -331,7 +331,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 Text(
                   user.email?.isNotEmpty == true ? user.email! : user.phone ?? 'Non renseigné',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: DesignTokens.white.withOpacity(0.9),
+                    color: DesignTokens.white.withValues(alpha: 0.9),
                   ),
                 ),
               ],
@@ -452,7 +452,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         boxShadow: [
           BoxShadow(
-            color: DesignTokens.black.withOpacity(0.05),
+            color: DesignTokens.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -522,7 +522,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: DesignTokens.primaryColor.withOpacity(0.1),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
               ),
               child: Icon(

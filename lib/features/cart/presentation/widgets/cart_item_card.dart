@@ -83,7 +83,7 @@ class CartItemCard extends StatelessWidget {
         placeholder: (context, url) => Container(
           width: 60,
           height: 60,
-          color: DesignTokens.lightGrey.withOpacity(0.3),
+          color: DesignTokens.lightGrey.withValues(alpha: 0.3),
           child: const Center(
             child: CircularProgressIndicator(strokeWidth: 2),
           ),
@@ -91,7 +91,7 @@ class CartItemCard extends StatelessWidget {
         errorWidget: (context, url, error) => Container(
           width: 60,
           height: 60,
-          color: DesignTokens.lightGrey.withOpacity(0.3),
+          color: DesignTokens.lightGrey.withValues(alpha: 0.3),
           child: const Icon(
             Icons.fastfood,
             size: 24,
@@ -199,13 +199,13 @@ class CartItemCard extends StatelessWidget {
         padding: const EdgeInsets.all(DesignTokens.spaceSM),
         decoration: BoxDecoration(
           color: cartItem.specialInstructions?.isNotEmpty == true 
-              ? DesignTokens.infoColor.withOpacity(0.1)
-              : DesignTokens.lightGrey.withOpacity(0.1),
+              ? DesignTokens.infoColor.withValues(alpha: 0.1)
+              : DesignTokens.lightGrey.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
           border: Border.all(
             color: cartItem.specialInstructions?.isNotEmpty == true
-                ? DesignTokens.infoColor.withOpacity(0.3)
-                : DesignTokens.lightGrey.withOpacity(0.3),
+                ? DesignTokens.infoColor.withValues(alpha: 0.3)
+                : DesignTokens.lightGrey.withValues(alpha: 0.3),
           ),
         ),
         child: Row(
@@ -267,7 +267,7 @@ class CartItemCard extends StatelessWidget {
                 vertical: DesignTokens.spaceXS,
               ),
               decoration: BoxDecoration(
-                color: DesignTokens.primaryColor.withOpacity(0.1),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
               ),
               child: Text(

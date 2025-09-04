@@ -87,8 +87,8 @@ class AppShimmerLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: baseColor ?? DesignTokens.lightGrey.withOpacity(0.3),
-      highlightColor: highlightColor ?? DesignTokens.white.withOpacity(0.8),
+      baseColor: baseColor ?? DesignTokens.lightGrey.withValues(alpha: 0.3),
+      highlightColor: highlightColor ?? DesignTokens.white.withValues(alpha: 0.8),
       child: child,
     );
   }
@@ -257,7 +257,7 @@ class AppLoadingOverlay extends StatelessWidget {
         child,
         if (isLoading)
           Container(
-            color: backgroundColor ?? DesignTokens.black.withOpacity(0.5),
+            color: backgroundColor ?? DesignTokens.black.withValues(alpha: 0.5),
             child: Center(
               child: Container(
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),

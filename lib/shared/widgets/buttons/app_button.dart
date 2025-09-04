@@ -179,13 +179,13 @@ class AppButton extends StatelessWidget {
   Color _getShadowColor(AppButtonStyle style) {
     switch (style) {
       case AppButtonStyle.primary:
-        return DesignTokens.primaryColor.withOpacity(0.3);
+        return DesignTokens.primaryColor.withValues(alpha: 0.3);
       case AppButtonStyle.secondary:
-        return DesignTokens.secondaryColor.withOpacity(0.3);
+        return DesignTokens.secondaryColor.withValues(alpha: 0.3);
       case AppButtonStyle.danger:
-        return DesignTokens.errorColor.withOpacity(0.3);
+        return DesignTokens.errorColor.withValues(alpha: 0.3);
       case AppButtonStyle.success:
-        return DesignTokens.successColor.withOpacity(0.3);
+        return DesignTokens.successColor.withValues(alpha: 0.3);
       case AppButtonStyle.outline:
       case AppButtonStyle.text:
         return Colors.transparent;

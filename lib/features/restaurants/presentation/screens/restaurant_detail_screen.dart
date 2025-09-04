@@ -68,7 +68,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
           Icon(
             Icons.error_outline,
             size: 64,
-            color: DesignTokens.errorColor.withOpacity(0.5),
+            color: DesignTokens.errorColor.withValues(alpha: 0.5),
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           Text(
@@ -154,13 +154,13 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
               imageUrl: restaurant.imageUrl,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Center(
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
               ),
               errorWidget: (context, url, error) => Container(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Icon(
                   Icons.restaurant,
                   size: 64,
@@ -175,7 +175,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.7),
+                    Colors.black.withValues(alpha: 0.7),
                   ],
                 ),
               ),
@@ -214,7 +214,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
                       Text(
                         '(${restaurant.reviewCount} avis)',
                         style: TextStyle(
-                          color: DesignTokens.white.withOpacity(0.8),
+                          color: DesignTokens.white.withValues(alpha: 0.8),
                         ),
                       ),
                       const Spacer(),
@@ -306,7 +306,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
                   vertical: DesignTokens.spaceXS,
                 ),
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                 ),
                 child: Text(
@@ -332,7 +332,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
         vertical: DesignTokens.spaceXS,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
       ),
       child: Row(
@@ -658,14 +658,14 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
                         height: 200,
-                        color: DesignTokens.lightGrey.withOpacity(0.3),
+                        color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                         child: const Center(
                           child: CircularProgressIndicator(strokeWidth: 2),
                         ),
                       ),
                       errorWidget: (context, url, error) => Container(
                         height: 200,
-                        color: DesignTokens.lightGrey.withOpacity(0.3),
+                        color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                         child: const Icon(
                           Icons.fastfood,
                           size: 64,
@@ -723,7 +723,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                             vertical: DesignTokens.spaceXS,
                           ),
                           decoration: BoxDecoration(
-                            color: DesignTokens.successColor.withOpacity(0.1),
+                            color: DesignTokens.successColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                           ),
                           child: Text(

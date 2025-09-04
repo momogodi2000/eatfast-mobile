@@ -79,7 +79,7 @@ class CartScreen extends ConsumerWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: DesignTokens.errorColor.withOpacity(0.5),
+              color: DesignTokens.errorColor.withValues(alpha: 0.5),
             ),
             const SizedBox(height: DesignTokens.spaceMD),
             Text(
@@ -187,7 +187,7 @@ class CartScreen extends ConsumerWidget {
         color: DesignTokens.white,
         border: Border(
           bottom: BorderSide(
-            color: DesignTokens.borderColor.withOpacity(0.3),
+            color: DesignTokens.borderColor.withValues(alpha: 0.3),
           ),
         ),
       ),
@@ -196,7 +196,7 @@ class CartScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.all(DesignTokens.spaceSM),
             decoration: BoxDecoration(
-              color: DesignTokens.primaryColor.withOpacity(0.1),
+              color: DesignTokens.primaryColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -266,7 +266,7 @@ class CartScreen extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(DesignTokens.spaceSM),
               decoration: BoxDecoration(
-                color: DesignTokens.warningColor.withOpacity(0.1),
+                color: DesignTokens.warningColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
               ),
               child: Row(
@@ -349,7 +349,7 @@ class CartScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(DesignTokens.spaceSM),
               margin: const EdgeInsets.only(bottom: DesignTokens.spaceSM),
               decoration: BoxDecoration(
-                color: DesignTokens.errorColor.withOpacity(0.1),
+                color: DesignTokens.errorColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
               ),
               child: Text(

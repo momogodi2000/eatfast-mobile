@@ -65,13 +65,13 @@ class RestaurantCard extends StatelessWidget {
               height: 180,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Center(
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
               ),
               errorWidget: (context, url, error) => Container(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -106,7 +106,7 @@ class RestaurantCard extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Colors.transparent,
-                  Colors.black.withOpacity(0.7),
+                  Colors.black.withValues(alpha: 0.7),
                 ],
               ),
             ),
@@ -170,7 +170,7 @@ class RestaurantCard extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(DesignTokens.spaceSM),
                     decoration: BoxDecoration(
-                      color: DesignTokens.white.withOpacity(0.9),
+                      color: DesignTokens.white.withValues(alpha: 0.9),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -216,7 +216,7 @@ class RestaurantCard extends StatelessWidget {
                         vertical: DesignTokens.spaceXS,
                       ),
                       decoration: BoxDecoration(
-                        color: DesignTokens.white.withOpacity(0.9),
+                        color: DesignTokens.white.withValues(alpha: 0.9),
                         borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                       ),
                       child: Row(
@@ -249,7 +249,7 @@ class RestaurantCard extends StatelessWidget {
                         vertical: DesignTokens.spaceXS,
                       ),
                       decoration: BoxDecoration(
-                        color: DesignTokens.black.withOpacity(0.6),
+                        color: DesignTokens.black.withValues(alpha: 0.6),
                         borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                       ),
                       child: Text(
@@ -305,7 +305,7 @@ class RestaurantCard extends StatelessWidget {
                         vertical: DesignTokens.spaceXXS,
                       ),
                       decoration: BoxDecoration(
-                        color: DesignTokens.primaryColor.withOpacity(0.1),
+                        color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                       ),
                       child: Text(

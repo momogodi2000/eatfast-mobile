@@ -136,8 +136,8 @@ class _AddressManagementScreenState
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: address.isDefault
-                          ? AppColors.primary.withOpacity(0.1)
-                          : AppColors.gray.withOpacity(0.1),
+                          ? AppColors.primary.withValues(alpha: 0.1)
+                          : AppColors.gray.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
@@ -466,7 +466,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
               height: 4,
               margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: AppColors.gray.withOpacity(0.3),
+                color: AppColors.gray.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -525,7 +525,7 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),

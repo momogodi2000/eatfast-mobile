@@ -96,7 +96,7 @@ class TermsContent extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(DesignTokens.spaceMD),
             decoration: BoxDecoration(
-              color: DesignTokens.lightGrey.withOpacity(0.3),
+              color: DesignTokens.lightGrey.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
             ),
             child: Column(

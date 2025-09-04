@@ -5,8 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'core/constants/app_constants.dart';
 import 'core/router/route_names.dart';
 import 'core/theme/app_theme.dart';
-import 'core/l10n/app_localizations.dart';
-import 'core/l10n/language_provider.dart';
+import 'core/services/localization/language_service.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/legal/presentation/screens/terms_conditions_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -39,21 +38,23 @@ class EatFastApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocale = ref.watch(languageProvider);
+    final currentLanguage = ref.watch(languageProvider);
     
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      locale: currentLocale,
+      locale: currentLanguage.locale,
       localizationsDelegates: const [
-        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('fr', ''),
+      ],
       routerConfig: _router,
     );
   }
