@@ -92,7 +92,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     children: [
                       CircleAvatar(
                         radius: 60,
-                        backgroundColor: DesignTokens.primaryColor.withOpacity(0.2),
+                        backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.2),
                         backgroundImage: _selectedAvatar != null
                             ? NetworkImage(_selectedAvatar!)
                             : null,
@@ -399,23 +399,27 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       if (image != null) {
         // TODO: Upload image to server and get URL
         // For now, just show success message
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Image sélectionnée. Sauvegardez pour appliquer.'),
-          ),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Image sélectionnée. Sauvegardez pour appliquer.'),
+            ),
+          );
+        }
         
         setState(() {
           _selectedAvatar = image.path; // This would be the server URL in real implementation
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erreur lors de la sélection de l\'image'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erreur lors de la sélection de l\'image'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

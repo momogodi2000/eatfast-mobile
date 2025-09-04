@@ -421,12 +421,14 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
 
     if (success) {
       _promoCodeController.clear();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Code promo appliqué avec succès!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Code promo appliqué avec succès!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
     }
   }
 
@@ -441,12 +443,14 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
     );
 
     if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Code ${promo.code} appliqué!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Code ${promo.code} appliqué!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
     }
   }
 
