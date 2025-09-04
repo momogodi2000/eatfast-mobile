@@ -31,18 +31,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       // Simulate API call
       Future.delayed(const Duration(seconds: 2), () {
-        setState(() {
-          _isLoading = false;
-        });
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Instructions de réinitialisation envoyées par email'),
-            backgroundColor: DesignTokens.successColor,
-          ),
-        );
-        
-        context.pop();
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Instructions de réinitialisation envoyées par email'),
+              backgroundColor: DesignTokens.successColor,
+            ),
+          );
+          
+          context.pop();
+        }
       });
     }
   }
@@ -145,7 +147,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const Text('Vous vous souvenez de votre mot de passe ?'),
                   TextButton(
                     onPressed: () => context.go(RouteNames.login),
-                    child: const Text('Se connecter'),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      minimumSize: const Size(0, 36), // Ensure minimum touch target
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: const Text(
+                      'Se connecter',
+                      style: TextStyle(
+                        fontSize: DesignTokens.fontSizeMD,
+                        fontWeight: DesignTokens.fontWeightMedium,
+                        color: DesignTokens.primaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),

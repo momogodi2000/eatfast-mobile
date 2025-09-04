@@ -37,7 +37,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   /// Login with email and password
   Future<void> loginWithEmail(String email, String password) async {
     state = const AuthState.loading();
-    
+
     try {
       // Check if account is locked
       if (await SecureStorageService.isAccountLocked()) {
@@ -50,28 +50,31 @@ class AuthNotifier extends StateNotifier<AuthState> {
       }
 
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
-      
-      // Mock authentication - replace with real API call
-      if (email.isNotEmpty && password.length >= 6) {
+
+      // For demo purposes, accept any valid email format with password >= 6 chars
+      final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+      if (emailRegex.hasMatch(email) && password.length >= 6) {
         // Reset failed attempts on successful login
         await SecureStorageService.resetFailedLoginAttempts();
 
         final user = User(
-          id: 'user_123',
-          name: 'John Doe',
+          id: 'user_${DateTime.now().millisecondsSinceEpoch}',
+          name: 'Demo User',
           email: email,
           phone: '+237698765432',
+          profilePicture: null,
+          addresses: const [],
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
         );
-        
+
         final authResponse = AuthResponse(
           user: user,
-          token: 'mock_token_123456789',
-          refreshToken: 'mock_refresh_token_123456789',
+          token: 'demo_token_${DateTime.now().millisecondsSinceEpoch}',
+          refreshToken: 'demo_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
           expiresAt: DateTime.now().add(const Duration(hours: 24)),
         );
-        
+
         await _saveAuthData(authResponse);
         state = AuthState.authenticated(user: user);
       } else {

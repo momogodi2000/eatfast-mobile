@@ -234,8 +234,8 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                           ),
                           decoration: BoxDecoration(
                             color: favorite.favorite.type == FavoriteType.restaurant
-                                ? Colors.blue.withOpacity(0.1)
-                                : Colors.orange.withOpacity(0.1),
+                                ? Colors.blue.withValues(alpha: 0.1)
+                                : Colors.orange.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(

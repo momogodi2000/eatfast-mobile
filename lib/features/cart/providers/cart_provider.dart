@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/result.dart';
 import '../domain/models/cart.dart';
 import '../domain/repositories/cart_repository.dart';
 import '../data/cart_repository_impl.dart';
@@ -133,7 +132,6 @@ class CartNotifier extends StateNotifier<CartState> {
 
   void dismissConflict() {
     if (state is CartConflictingRestaurant) {
-      final currentState = state as CartConflictingRestaurant;
       // Restore the loaded state with the current cart
       _loadCart();
     }

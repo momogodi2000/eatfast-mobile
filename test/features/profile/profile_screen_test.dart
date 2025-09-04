@@ -5,7 +5,7 @@ import 'package:mockito/mockito.dart';
 
 import '../../../lib/features/profile/presentation/screens/profile_screen.dart';
 import '../../../lib/features/profile/providers/profile_provider.dart';
-import '../../../lib/core/auth/models/app_user.dart';
+import '../../../lib/features/auth/domain/models.dart';
 import '../../../lib/features/profile/domain/models.dart';
 
 // Mock class for testing
@@ -66,12 +66,11 @@ void main() {
       // Arrange
       final user = User(
         id: '1',
-        fullName: 'John Doe',
+        name: 'John Doe',
         email: 'john@example.com',
-        phoneNumber: '+237123456789',
-        avatarUrl: null,
-        isEmailVerified: true,
-        isPhoneVerified: true,
+        phone: '+237123456789',
+        profilePicture: null,
+        addresses: const [],
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
