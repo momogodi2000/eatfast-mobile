@@ -1,0 +1,16 @@
+{
+  "appTitle": "Eat Fast",
+  "welcome": "Bienvenue",
+  "error_generic": "Une erreur s'est produite",
+  "retry": "Réessayer",
+  "loading": "Chargement...",
+  "login": "Connexion",
+  "register": "S'inscrire",
+  "email": "Email",
+  "password": "Mot de passe",
+  "forgotPassword": "Mot de passe oublié",
+  "home": "Accueil",
+  "restaurants": "Restaurants",
+  "orders": "Commandes",
+  "profile": "Profil"
+}

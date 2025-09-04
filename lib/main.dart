@@ -4,8 +4,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'core/constants/app_constants.dart';
 import 'core/router/route_names.dart';
+import 'core/router/route_guard.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/localization/language_service.dart';
+import 'core/l10n/app_localizations.dart';
+import 'core/auth/models/app_user.dart';
+import 'core/auth/providers/auth_provider.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/legal/presentation/screens/terms_conditions_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -15,6 +19,8 @@ import 'features/auth/presentation/screens/register_screen.dart';
 import 'features/auth/presentation/screens/forgot_password_screen.dart';
 import 'features/auth/presentation/screens/otp_verification_screen.dart';
 import 'features/company/presentation/screens/about_us_screen.dart';
+import 'features/company/presentation/screens/our_team_screen.dart';
+import 'features/company/presentation/screens/contact_us_screen.dart';
 import 'features/home/presentation/screens/home_screen.dart';
 import 'features/restaurants/presentation/screens/restaurant_list_screen.dart';
 import 'features/restaurants/presentation/screens/restaurant_detail_screen.dart';
@@ -23,7 +29,13 @@ import 'features/cart/presentation/screens/checkout_screen.dart';
 import 'features/orders/presentation/screens/order_tracking_screen.dart';
 import 'features/orders/presentation/screens/order_history_screen.dart';
 import 'features/settings/presentation/screens/language_settings_screen.dart';
+import 'features/settings/presentation/screens/settings_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
+import 'features/profile/presentation/screens/edit_profile_screen.dart';
+// Role-specific screens
+import 'features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
+import 'features/driver/presentation/screens/driver_dashboard_screen.dart';
+import 'features/admin/presentation/screens/admin_dashboard_screen.dart';
 
 void main() {
   runApp(
@@ -39,6 +51,7 @@ class EatFastApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLanguage = ref.watch(languageProvider);
+    final authState = ref.watch(authProvider);
     
     return MaterialApp.router(
       title: AppConstants.appName,
@@ -47,23 +60,66 @@ class EatFastApp extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme,
       locale: currentLanguage.locale,
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('fr', ''),
-      ],
-      routerConfig: _router,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: _createRouter(authState),
     );
   }
 }
 
-// Router configuration
-final _router = GoRouter(
-  initialLocation: RouteNames.splash,
-  routes: [
+// Router configuration with auth guards
+GoRouter _createRouter(AuthState authState) {
+  return GoRouter(
+    initialLocation: RouteNames.splash,
+    redirect: (context, state) {
+      // Handle auth redirects
+      final path = state.fullPath;
+      
+      // Allow access to public routes
+      final publicRoutes = [
+        RouteNames.splash,
+        RouteNames.terms,
+        RouteNames.onboarding,
+        RouteNames.welcome,
+        RouteNames.login,
+        RouteNames.register,
+        RouteNames.forgotPassword,
+        RouteNames.otpVerification,
+        RouteNames.aboutUs,
+      ];
+      
+      if (publicRoutes.contains(path)) return null;
+      
+      // Check auth for protected routes
+      if (path == '/restaurant-dashboard') {
+        return RouteGuard.checkAuth(
+          authState: authState,
+          requiredRole: UserRole.restaurantOwner,
+        );
+      }
+      
+      if (path == '/driver-dashboard') {
+        return RouteGuard.checkAuth(
+          authState: authState,
+          requiredRole: UserRole.driver,
+        );
+      }
+      
+      if (path == '/admin-dashboard') {
+        return RouteGuard.checkAuth(
+          authState: authState,
+          requiredRole: UserRole.admin,
+        );
+      }
+      
+      // For other protected routes, just check authentication
+      return RouteGuard.checkAuth(authState: authState);
+    },
+    routes: [
     // Splash Screen
     GoRoute(
       path: RouteNames.splash,
@@ -118,25 +174,15 @@ final _router = GoRouter(
       builder: (context, state) => const AboutUsScreen(),
     ),
     
-    GoRoute(
-      path: RouteNames.ourTeam,
-      builder: (context, state) => const Scaffold(
-        body: Center(
-          child: Text('Our Team Screen - Coming Soon'),
-        ),
+      GoRoute(
+        path: RouteNames.ourTeam,
+        builder: (context, state) => const OurTeamScreen(),
       ),
-    ),
-    
-    GoRoute(
-      path: RouteNames.contactUs,
-      builder: (context, state) => const Scaffold(
-        body: Center(
-          child: Text('Contact Us Screen - Coming Soon'),
-        ),
-      ),
-    ),
-    
-    // Home Screen
+      
+      GoRoute(
+        path: RouteNames.contactUs,
+        builder: (context, state) => const ContactUsScreen(),
+      ),    // Home Screen
     GoRoute(
       path: RouteNames.home,
       builder: (context, state) => const HomeScreen(),
@@ -192,29 +238,46 @@ final _router = GoRouter(
       builder: (context, state) => const ProfileScreen(),
     ),
     
-    GoRoute(
-      path: RouteNames.editProfile,
-      builder: (context, state) => const Scaffold(
-        body: Center(
-          child: Text('Edit Profile Screen - Coming Soon'),
+      GoRoute(
+        path: RouteNames.editProfile,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      
+      GoRoute(
+        path: RouteNames.settings,
+        builder: (context, state) => const SettingsScreen(),
+      ),      // Role-specific Dashboard Routes (Protected)
+      GoRoute(
+        path: '/restaurant-dashboard',
+        builder: (context, state) => RestaurantDashboardScreen(
+          restaurantId: authState.user?.id ?? 'demo_restaurant',
         ),
       ),
-    ),
-    
-    GoRoute(
-      path: RouteNames.settings,
-      builder: (context, state) => const Scaffold(
-        body: Center(
-          child: Text('Settings Screen - Coming Soon'),
+      
+      GoRoute(
+        path: '/driver-dashboard',
+        builder: (context, state) => DriverDashboardScreen(
+          driverId: authState.user?.id ?? 'demo_driver',
         ),
       ),
-    ),
-    
-    // Language Settings
-    GoRoute(
-      path: RouteNames.languageSettings,
-      builder: (context, state) => const LanguageSettingsScreen(),
-    ),
-  ],
-);
+      
+      GoRoute(
+        path: '/admin-dashboard',
+        builder: (context, state) => const AdminDashboardScreen(),
+      ),
+      
+      // Language Settings
+      GoRoute(
+        path: RouteNames.languageSettings,
+        builder: (context, state) => const LanguageSettingsScreen(),
+      ),
+      
+      // Unauthorized Access
+      GoRoute(
+        path: '/unauthorized',
+        builder: (context, state) => const UnauthorizedScreen(),
+      ),
+    ],
+  );
+}
 
