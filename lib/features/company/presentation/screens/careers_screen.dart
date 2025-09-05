@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// Careers Screen
@@ -72,7 +71,7 @@ class CareersScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                 ),
                 child: Column(
@@ -113,7 +112,7 @@ class CareersScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(DesignTokens.spaceXS),
                   decoration: BoxDecoration(
-                    color: DesignTokens.primaryColor.withOpacity(0.1),
+                    color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                   ),
                   child: Icon(
@@ -178,7 +177,7 @@ class CareersScreen extends StatelessWidget {
             
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.schedule,
                   size: DesignTokens.iconSM,
                   color: DesignTokens.textSecondary,
@@ -193,7 +192,7 @@ class CareersScreen extends StatelessWidget {
                 
                 const SizedBox(width: DesignTokens.spaceMD),
                 
-                Icon(
+                const Icon(
                   Icons.location_on,
                   size: DesignTokens.iconSM,
                   color: DesignTokens.textSecondary,

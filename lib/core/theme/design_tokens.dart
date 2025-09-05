@@ -31,13 +31,20 @@ class DesignTokens {
   static const Color backgroundPrimary = Color(0xFFFFFFFF);
   static const Color backgroundSecondary = Color(0xFFF8F9FA);
   static const Color backgroundTertiary = Color(0xFFF1F3F4);
+  static const Color backgroundGrey = Color(0xFFF5F5F5);
   static const Color surfaceColor = Color(0xFFFFFFFF);
+  
+  // Shadow Colors
+  static const Color shadowColor = Color(0x1A000000);
   
   // Text Colors
   static const Color textPrimary = Color(0xFF1A1A1A);
   static const Color textSecondary = Color(0xFF6C757D);
   static const Color textTertiary = Color(0xFF9E9E9E);
   static const Color textOnPrimary = Color(0xFFFFFFFF);
+  
+  // Border Colors
+  static const Color borderColor = Color(0xFFE0E0E0);
   
   // Spacing System (8dp grid)
   static const double spaceXXS = 4.0;
@@ -74,6 +81,7 @@ class DesignTokens {
   static const Duration animationVerySlow = Duration(milliseconds: 800);
   
   // Typography Sizes
+  static const double fontSizeXXS = 10.0;
   static const double fontSizeXS = 12.0;
   static const double fontSizeSM = 14.0;
   static const double fontSizeMD = 16.0;
@@ -83,6 +91,7 @@ class DesignTokens {
   static const double fontSizeXXXL = 32.0;
   
   // Font Weights
+  static const FontWeight fontWeightNormal = FontWeight.w400;
   static const FontWeight fontWeightRegular = FontWeight.w400;
   static const FontWeight fontWeightMedium = FontWeight.w500;
   static const FontWeight fontWeightSemiBold = FontWeight.w600;

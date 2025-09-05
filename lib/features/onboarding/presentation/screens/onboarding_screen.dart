@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../providers/onboarding_provider.dart';
@@ -194,7 +195,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         child: Text(
                           AppConstants.skipButton,
                           style: TextStyle(
-                            color: DesignTokens.white.withOpacity(0.8),
+                            color: DesignTokens.white.withValues(alpha: 0.8),
                             fontSize: DesignTokens.fontSizeMD,
                             fontWeight: DesignTokens.fontWeightMedium,
                           ),
@@ -213,7 +214,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             decoration: BoxDecoration(
                               color: index == currentPage
                                   ? DesignTokens.white
-                                  : DesignTokens.white.withOpacity(0.4),
+                                  : DesignTokens.white.withValues(alpha: 0.4),
                               borderRadius: BorderRadius.circular(4),
                             ),
                           ),
@@ -236,9 +237,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         TextButton.icon(
                           onPressed: _previousPage,
                           icon: const Icon(Icons.arrow_back),
-                          label: Text(AppConstants.previousButton),
+                          label: const Text(AppConstants.previousButton),
                           style: TextButton.styleFrom(
-                            foregroundColor: DesignTokens.white.withOpacity(0.8),
+                            foregroundColor: DesignTokens.white.withValues(alpha: 0.8),
                           ),
                         )
                       else
@@ -290,7 +291,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               end: Alignment.bottomRight,
               colors: [
                 page.backgroundColor,
-                page.backgroundColor.withOpacity(0.8),
+                page.backgroundColor.withValues(alpha: 0.8),
               ],
             ),
           ),
@@ -311,7 +312,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         width: MediaQuery.of(context).size.width * 0.6,
                         height: MediaQuery.of(context).size.width * 0.6,
                         decoration: BoxDecoration(
-                          color: DesignTokens.white.withOpacity(0.2),
+                          color: DesignTokens.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                         ),
                         child: Center(
@@ -365,7 +366,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Text(
                           page.subtitle,
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: DesignTokens.white.withOpacity(0.9),
+                            color: DesignTokens.white.withValues(alpha: 0.9),
                             fontWeight: DesignTokens.fontWeightMedium,
                           ),
                           textAlign: TextAlign.center,
@@ -377,7 +378,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Text(
                           page.description,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: DesignTokens.white.withOpacity(0.8),
+                            color: DesignTokens.white.withValues(alpha: 0.8),
                             height: 1.6,
                           ),
                           textAlign: TextAlign.center,

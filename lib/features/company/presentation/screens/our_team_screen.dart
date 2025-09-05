@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_constants.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// Our Team Screen
@@ -69,7 +69,7 @@ class OurTeamScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                 ),
                 child: Column(
@@ -117,7 +117,7 @@ class OurTeamScreen extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(DesignTokens.radiusMD),
                   topRight: Radius.circular(DesignTokens.radiusMD),
@@ -126,7 +126,7 @@ class OurTeamScreen extends StatelessWidget {
               child: Center(
                 child: CircleAvatar(
                   radius: 40,
-                  backgroundColor: DesignTokens.primaryColor.withOpacity(0.1),
+                  backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   child: Text(
                     member.initials,
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(

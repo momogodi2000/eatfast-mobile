@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../widgets/terms_content.dart';
@@ -157,10 +158,10 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                     width: double.infinity,
                     padding: const EdgeInsets.all(DesignTokens.spaceLG),
                     decoration: BoxDecoration(
-                      color: DesignTokens.primaryColor.withOpacity(0.1),
+                      color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                       border: Border(
                         bottom: BorderSide(
-                          color: DesignTokens.primaryColor.withOpacity(0.3),
+                          color: DesignTokens.primaryColor.withValues(alpha: 0.3),
                           width: 1,
                         ),
                       ),
@@ -237,7 +238,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                   padding: const EdgeInsets.all(DesignTokens.spaceLG),
                   decoration: BoxDecoration(
                     color: DesignTokens.white,
-                    border: Border(
+                    border: const Border(
                       top: BorderSide(
                         color: DesignTokens.lightGrey,
                         width: 1,
@@ -245,7 +246,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: DesignTokens.black.withOpacity(0.1),
+                        color: DesignTokens.black.withValues(alpha: 0.1),
                         blurRadius: 10,
                         offset: const Offset(0, -2),
                       ),
@@ -262,16 +263,16 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                             vertical: DesignTokens.spaceXS,
                           ),
                           decoration: BoxDecoration(
-                            color: DesignTokens.warningColor.withOpacity(0.1),
+                            color: DesignTokens.warningColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                             border: Border.all(
-                              color: DesignTokens.warningColor.withOpacity(0.3),
+                              color: DesignTokens.warningColor.withValues(alpha: 0.3),
                             ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.arrow_downward,
                                 size: DesignTokens.iconSM,
                                 color: DesignTokens.warningColor,
@@ -299,13 +300,13 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                               padding: const EdgeInsets.all(DesignTokens.spaceMD),
                               decoration: BoxDecoration(
                                 color: _hasReadToBottom
-                                    ? DesignTokens.successColor.withOpacity(0.1)
-                                    : DesignTokens.lightGrey.withOpacity(0.5),
+                                    ? DesignTokens.successColor.withValues(alpha: 0.1)
+                                    : DesignTokens.lightGrey.withValues(alpha: 0.5),
                                 borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
                                 border: Border.all(
                                   color: _hasReadToBottom
-                                      ? DesignTokens.successColor.withOpacity(0.3)
-                                      : DesignTokens.mediumGrey.withOpacity(0.3),
+                                      ? DesignTokens.successColor.withValues(alpha: 0.3)
+                                      : DesignTokens.mediumGrey.withValues(alpha: 0.3),
                                 ),
                               ),
                               child: Row(
@@ -350,18 +351,18 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                               vertical: DesignTokens.spaceMD,
                             ),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 AppConstants.continueButton,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: DesignTokens.fontSizeMD,
                                   fontWeight: DesignTokens.fontWeightSemiBold,
                                 ),
                               ),
-                              const SizedBox(width: DesignTokens.spaceXS),
-                              const Icon(Icons.arrow_forward),
+                              SizedBox(width: DesignTokens.spaceXS),
+                              Icon(Icons.arrow_forward),
                             ],
                           ),
                         ),

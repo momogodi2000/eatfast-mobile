@@ -92,7 +92,7 @@ class ContactUsScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),
                 decoration: BoxDecoration(
-                  color: DesignTokens.lightGrey.withOpacity(0.3),
+                  color: DesignTokens.lightGrey.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                 ),
                 child: Column(
@@ -151,7 +151,7 @@ class ContactUsScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(DesignTokens.spaceLG),
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                 ),
                 child: Column(
@@ -209,7 +209,7 @@ class ContactUsScreen extends StatelessWidget {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            color: DesignTokens.primaryColor.withOpacity(0.1),
+            color: DesignTokens.primaryColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
           ),
           child: Icon(
@@ -245,10 +245,10 @@ class ContactUsScreen extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
               border: Border.all(
-                color: color.withOpacity(0.3),
+                color: color.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),

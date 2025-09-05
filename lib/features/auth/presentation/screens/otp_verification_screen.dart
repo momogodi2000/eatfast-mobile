@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
-import '../../../../core/constants/app_constants.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// OTP Verification Screen
@@ -40,10 +40,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   void dispose() {
-    for (var controller in _controllers) {
+    for (final controller in _controllers) {
       controller.dispose();
     }
-    for (var focusNode in _focusNodes) {
+    for (final focusNode in _focusNodes) {
       focusNode.dispose();
     }
     _timer?.cancel();
@@ -79,14 +79,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
 
     // Check if all fields are filled
-    bool allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
+    final bool allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
     if (allFilled) {
       _onVerifyPressed();
     }
   }
 
   void _onVerifyPressed() {
-    String otp = _controllers.map((controller) => controller.text).join();
+    final String otp = _controllers.map((controller) => controller.text).join();
     
     if (otp.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +152,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: DesignTokens.primaryColor.withOpacity(0.1),
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -200,7 +200,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(6, (index) {
-                  return Container(
+                  return SizedBox(
                     width: 50,
                     height: 60,
                     child: TextField(

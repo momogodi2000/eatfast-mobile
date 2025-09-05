@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/router/route_names.dart';
+import '../widgets/active_order_card.dart';
+import '../widgets/popular_restaurants_section.dart';
+import '../widgets/featured_dishes_section.dart';
+import '../../../restaurants/presentation/screens/restaurant_list_screen.dart';
+import '../../../orders/presentation/screens/order_history_screen.dart';
 
 /// Home Screen - Main application screen
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedIndex = 0;
 
   @override
@@ -27,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: DesignTokens.white.withOpacity(0.2),
+                color: DesignTokens.white.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -61,7 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.person_outline,
               color: DesignTokens.white,
             ),
-            onPressed: () => context.go(RouteNames.profile),
+            onPressed: () {
+              setState(() {
+                _selectedIndex = 3;
+              });
+            },
           ),
         ],
       ),
@@ -69,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _selectedIndex,
         children: const [
           _HomeContent(),
-          _RestaurantsContent(),
-          _OrdersContent(),
+          RestaurantListScreen(),
+          OrderHistoryScreen(),
           _ProfileContent(),
         ],
       ),
@@ -111,11 +122,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _HomeContent extends StatelessWidget {
+class _HomeContent extends ConsumerWidget {
   const _HomeContent();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(DesignTokens.spaceLG),
       child: Column(
@@ -129,7 +140,7 @@ class _HomeContent extends StatelessWidget {
               gradient: LinearGradient(
                 colors: [
                   DesignTokens.primaryColor,
-                  DesignTokens.primaryColor.withOpacity(0.8),
+                  DesignTokens.primaryColor.withValues(alpha: 0.8),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -150,7 +161,7 @@ class _HomeContent extends StatelessWidget {
                 Text(
                   'Que souhaitez-vous déguster aujourd\'hui ?',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: DesignTokens.white.withOpacity(0.9),
+                    color: DesignTokens.white.withValues(alpha: 0.9),
                   ),
                 ),
               ],
@@ -162,24 +173,56 @@ class _HomeContent extends StatelessWidget {
           // Search Bar
           Container(
             decoration: BoxDecoration(
-              color: DesignTokens.lightGrey.withOpacity(0.1),
+              color: DesignTokens.lightGrey.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
               border: Border.all(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
+                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
               ),
             ),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Rechercher des plats, restaurants...',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(Icons.search),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.all(DesignTokens.spaceMD),
+                contentPadding: EdgeInsets.all(DesignTokens.spaceMD),
               ),
               onTap: () {
-                // TODO: Navigate to search
+                context.go('/restaurants?search=true');
               },
               readOnly: true,
             ),
+          ),
+          
+          const SizedBox(height: DesignTokens.spaceXL),
+          
+          // Active Order Card
+          const ActiveOrderCard(),
+          
+          const SizedBox(height: DesignTokens.spaceXL),
+          
+          // Quick Actions
+          Row(
+            children: [
+              Expanded(
+                child: _buildQuickActionCard(
+                  context,
+                  icon: Icons.restaurant,
+                  title: 'Restaurants',
+                  subtitle: 'Parcourir tous',
+                  onTap: () => context.go('/restaurants'),
+                ),
+              ),
+              const SizedBox(width: DesignTokens.spaceMD),
+              Expanded(
+                child: _buildQuickActionCard(
+                  context,
+                  icon: Icons.local_offer,
+                  title: 'Offres',
+                  subtitle: 'Promotions',
+                  onTap: () => context.go('/restaurants?filter=promotions'),
+                ),
+              ),
+            ],
           ),
           
           const SizedBox(height: DesignTokens.spaceXL),
@@ -201,32 +244,37 @@ class _HomeContent extends StatelessWidget {
               itemCount: AppConstants.foodCategories.length,
               itemBuilder: (context, index) {
                 final category = AppConstants.foodCategories[index];
-                return Container(
-                  width: 80,
-                  margin: const EdgeInsets.only(right: DesignTokens.spaceMD),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: DesignTokens.primaryColor.withOpacity(0.1),
-                          shape: BoxShape.circle,
+                return GestureDetector(
+                  onTap: () {
+                    context.go('/restaurants?category=${Uri.encodeComponent(category)}');
+                  },
+                  child: Container(
+                    width: 80,
+                    margin: const EdgeInsets.only(right: DesignTokens.spaceMD),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            _getCategoryIcon(category),
+                            color: DesignTokens.primaryColor,
+                          ),
                         ),
-                        child: Icon(
-                          _getCategoryIcon(category),
-                          color: DesignTokens.primaryColor,
+                        const SizedBox(height: DesignTokens.spaceXS),
+                        Text(
+                          category,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodySmall,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      const SizedBox(height: DesignTokens.spaceXS),
-                      Text(
-                        category,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodySmall,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -235,42 +283,13 @@ class _HomeContent extends StatelessWidget {
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          // Popular Dishes
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Plats Populaires',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: DesignTokens.fontWeightBold,
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  // TODO: Navigate to all dishes
-                },
-                child: const Text('Voir tout'),
-              ),
-            ],
-          ),
+          // Popular Restaurants
+          const PopularRestaurantsSection(),
           
-          const SizedBox(height: DesignTokens.spaceMD),
+          const SizedBox(height: DesignTokens.spaceXL),
           
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: DesignTokens.spaceMD,
-              mainAxisSpacing: DesignTokens.spaceMD,
-              childAspectRatio: 0.8,
-            ),
-            itemCount: AppConstants.popularDishes.length,
-            itemBuilder: (context, index) {
-              final dish = AppConstants.popularDishes.entries.toList()[index];
-              return _buildDishCard(context, dish.key, dish.value);
-            },
-          ),
+          // Featured Dishes
+          const FeaturedDishesSection(),
         ],
       ),
     );
@@ -299,120 +318,62 @@ class _HomeContent extends StatelessWidget {
     }
   }
 
-  Widget _buildDishCard(BuildContext context, String dishName, String imagePath) {
-    return Card(
-      elevation: 2,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
+  Widget _buildQuickActionCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(DesignTokens.spaceLG),
+        decoration: BoxDecoration(
+          color: DesignTokens.white,
+          borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(DesignTokens.spaceMD),
               decoration: BoxDecoration(
-                color: DesignTokens.lightGrey.withOpacity(0.3),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(DesignTokens.radiusMD),
-                  topRight: Radius.circular(DesignTokens.radiusMD),
-                ),
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.cover,
-                  onError: (exception, stackTrace) {
-                    // Handle image loading error
-                  },
-                ),
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(DesignTokens.radiusMD),
-                    topRight: Radius.circular(DesignTokens.radiusMD),
-                  ),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.1),
-                    ],
-                  ),
-                ),
+              child: Icon(
+                icon,
+                color: DesignTokens.primaryColor,
+                size: 24,
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(DesignTokens.spaceMD),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  dishName,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: DesignTokens.fontWeightSemiBold,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: DesignTokens.spaceXS),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.star,
-                      color: DesignTokens.warningColor,
-                      size: 16,
-                    ),
-                    const SizedBox(width: DesignTokens.spaceXXS),
-                    Text(
-                      '4.5',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const Spacer(),
-                    Text(
-                      '2500 FCFA',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: DesignTokens.primaryColor,
-                        fontWeight: DesignTokens.fontWeightBold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            const SizedBox(height: DesignTokens.spaceSM),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: DesignTokens.fontWeightSemiBold,
+              ),
             ),
-          ),
-        ],
+            Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: DesignTokens.textSecondary,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _RestaurantsContent extends StatelessWidget {
-  const _RestaurantsContent();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Restaurants\n(À implémenter en Phase 3)',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
-
-class _OrdersContent extends StatelessWidget {
-  const _OrdersContent();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Historique des commandes\n(À implémenter en Phase 3)',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
 
 class _ProfileContent extends StatelessWidget {
   const _ProfileContent();
@@ -428,14 +389,14 @@ class _ProfileContent extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(DesignTokens.spaceLG),
             decoration: BoxDecoration(
-              color: DesignTokens.primaryColor.withOpacity(0.1),
+              color: DesignTokens.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
             ),
             child: Column(
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundColor: DesignTokens.primaryColor.withOpacity(0.2),
+                  backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.2),
                   child: const Icon(
                     Icons.person,
                     size: 50,

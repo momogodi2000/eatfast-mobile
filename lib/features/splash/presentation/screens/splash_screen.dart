@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../providers/splash_provider.dart';
@@ -115,10 +116,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     Future.delayed(const Duration(milliseconds: AppConstants.splashDuration), () {
       if (mounted) {
         ref.read(splashProvider.notifier).checkFirstTimeUser().then((isFirstTime) {
-          if (isFirstTime) {
-            context.go(RouteNames.terms);
-          } else {
-            context.go(RouteNames.home);
+          if (mounted) {
+            if (isFirstTime) {
+              context.go(RouteNames.terms);
+            } else {
+              context.go(RouteNames.home);
+            }
           }
         });
       }
@@ -153,9 +156,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 begin: _backgroundGradientAnimation.value,
                 end: Alignment.bottomRight,
                 colors: [
-                  DesignTokens.primaryColor.withOpacity(0.8),
-                  DesignTokens.secondaryColor.withOpacity(0.6),
-                  DesignTokens.accentColor.withOpacity(0.4),
+                  DesignTokens.primaryColor.withValues(alpha: 0.8),
+                  DesignTokens.secondaryColor.withValues(alpha: 0.6),
+                  DesignTokens.accentColor.withValues(alpha: 0.4),
                 ],
                 stops: const [0.0, 0.6, 1.0],
               ),
@@ -176,7 +179,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: DesignTokens.black.withOpacity(0.2),
+                            color: DesignTokens.black.withValues(alpha: 0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),
@@ -226,7 +229,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                               letterSpacing: 2.0,
                               shadows: [
                                 Shadow(
-                                  color: DesignTokens.black.withOpacity(0.3),
+                                  color: DesignTokens.black.withValues(alpha: 0.3),
                                   blurRadius: 10,
                                   offset: const Offset(0, 2),
                                 ),
@@ -242,12 +245,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       Text(
                         AppConstants.appTagline,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: DesignTokens.white.withOpacity(0.9),
+                          color: DesignTokens.white.withValues(alpha: 0.9),
                           fontWeight: DesignTokens.fontWeightMedium,
                           fontStyle: FontStyle.italic,
                           shadows: [
                             Shadow(
-                              color: DesignTokens.black.withOpacity(0.3),
+                              color: DesignTokens.black.withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -269,7 +272,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     child: CircularProgressIndicator(
                       strokeWidth: 3.0,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        DesignTokens.white.withOpacity(0.8),
+                        DesignTokens.white.withValues(alpha: 0.8),
                       ),
                     ),
                   ),

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for:*)",
+      "Bash(mkdir:*)",
+      "Bash(flutter pub:*)",
+      "Bash(flutter build:*)",
+      "Bash(dart run build_runner build:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter test:*)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\features\\auth\\providers/**)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
+      "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\features\\auth\\providers/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
