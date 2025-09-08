@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/loyalty_provider.dart';
 import '../../domain/models/loyalty.dart';
-import '../widgets/recent_loyalty_transactions.dart';
 import 'package:intl/intl.dart';
 
 class LoyaltyHistoryScreen extends ConsumerStatefulWidget {

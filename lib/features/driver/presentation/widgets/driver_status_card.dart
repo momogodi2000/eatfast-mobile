@@ -17,7 +17,6 @@ class DriverStatusCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Card(
       elevation: 2,

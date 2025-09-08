@@ -465,7 +465,6 @@ class _FilterBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filterState = ref.watch(rewardsFilterProvider);
-    final loyaltyState = ref.watch(loyaltyProvider);
 
     return Container(
       decoration: const BoxDecoration(

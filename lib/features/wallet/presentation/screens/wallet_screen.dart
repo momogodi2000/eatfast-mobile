@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/wallet_provider.dart';
-import '../../domain/models/wallet.dart';
 import '../widgets/wallet_balance_card.dart';
 import '../widgets/wallet_quick_actions.dart';
 import '../widgets/transaction_list.dart';
