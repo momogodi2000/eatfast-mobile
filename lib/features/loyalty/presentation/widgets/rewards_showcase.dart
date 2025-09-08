@@ -106,13 +106,13 @@ class _RewardCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: canAfford 
-                ? Theme.of(context).primaryColor.withOpacity(0.3)
+                ? Theme.of(context).primaryColor.withValues(alpha: 0.3)
                 : Colors.grey[300]!,
             width: canAfford ? 2 : 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -125,7 +125,7 @@ class _RewardCard extends StatelessWidget {
               width: double.infinity,
               height: 80,
               decoration: BoxDecoration(
-                color: _getRewardTypeColor().withOpacity(0.1),
+                color: _getRewardTypeColor().withValues(alpha: 0.1),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
               ),
               child: Center(

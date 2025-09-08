@@ -28,7 +28,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.8),
+                    Theme.of(context).primaryColor.withValues(alpha: 0.8),
                   ],
                 ),
                 borderRadius: const BorderRadius.vertical(
@@ -40,7 +40,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                   Text(
                     'Votre Niveau Actuel',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 16,
                     ),
                   ),
@@ -57,7 +57,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                   Text(
                     loyaltyState.currentTier.description,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                     Text(
                       'Prochain niveau: ${loyaltyState.currentTier.nextTier!.displayName}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 12,
                       ),
                     ),
@@ -84,7 +84,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                     Text(
                       'Niveau Maximum Atteint! 🎉',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -127,7 +127,7 @@ class TierBenefitsScreen extends ConsumerWidget {
                 gradient: LinearGradient(
                   colors: [
                     Colors.blue[50]!,
-                    Colors.blue[100]!.withOpacity(0.5),
+                    Colors.blue[100]!.withValues(alpha: 0.5),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(16),
@@ -265,7 +265,7 @@ class _TierCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -286,7 +286,7 @@ class _TierCard extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Icon(
@@ -315,7 +315,7 @@ class _TierCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: const Text(
@@ -333,7 +333,7 @@ class _TierCard extends StatelessWidget {
                       Text(
                         tier.description,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           fontSize: 14,
                         ),
                       ),
@@ -343,7 +343,7 @@ class _TierCard extends StatelessWidget {
                             ? 'Point de départ'
                             : '${tier.pointsRequired} points requis',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
@@ -354,19 +354,19 @@ class _TierCard extends StatelessWidget {
                 if (isAchieved && !isCurrentTier)
                   Icon(
                     Icons.check_circle,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     size: 20,
                   )
                 else if (isNextTier)
                   Icon(
                     Icons.arrow_forward,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     size: 20,
                   )
                 else if (!isAchieved)
                   Icon(
                     Icons.lock,
-                    color: Colors.white.withOpacity(0.6),
+                    color: Colors.white.withValues(alpha: 0.6),
                     size: 20,
                   ),
               ],

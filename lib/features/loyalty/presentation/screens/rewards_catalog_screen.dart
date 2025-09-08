@@ -48,7 +48,7 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
               gradient: LinearGradient(
                 colors: [
                   Theme.of(context).primaryColor,
-                  Theme.of(context).primaryColor.withOpacity(0.8),
+                  Theme.of(context).primaryColor.withValues(alpha: 0.8),
                 ],
               ),
               borderRadius: const BorderRadius.vertical(
@@ -60,7 +60,7 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
                 Text(
                   'Points Disponibles',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     fontSize: 14,
                   ),
                 ),
@@ -331,7 +331,7 @@ class _RewardTile extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: canAfford 
-                    ? Theme.of(context).primaryColor.withOpacity(0.3)
+                    ? Theme.of(context).primaryColor.withValues(alpha: 0.3)
                     : Colors.grey[300]!,
                 width: canAfford ? 2 : 1,
               ),
@@ -343,7 +343,7 @@ class _RewardTile extends StatelessWidget {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: _getRewardTypeColor().withOpacity(0.1),
+                    color: _getRewardTypeColor().withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
@@ -399,7 +399,7 @@ class _RewardTile extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: _getRewardTypeColor().withOpacity(0.1),
+                              color: _getRewardTypeColor().withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -611,7 +611,7 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: _getRewardTypeColor().withOpacity(0.1),
+                    color: _getRewardTypeColor().withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
@@ -637,7 +637,7 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: _getRewardTypeColor().withOpacity(0.1),
+                          color: _getRewardTypeColor().withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(

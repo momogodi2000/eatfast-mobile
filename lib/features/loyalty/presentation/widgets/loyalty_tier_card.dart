@@ -105,7 +105,7 @@ class LoyaltyTierCard extends StatelessWidget {
             Container(
               height: 6,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(3),
               ),
               child: FractionallySizedBox(
