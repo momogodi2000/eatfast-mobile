@@ -1,452 +1,254 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
+import 'package:logging/logging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../api/api_client.dart';
-import '../../constants/api_constants.dart';
-import '../../../features/restaurants/domain/models/restaurant.dart';
-import '../../../features/restaurants/domain/models/menu_item.dart';
-import '../../../features/orders/domain/models/order.dart';
-import '../../../features/cart/domain/models/cart.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Guest service for unauthenticated users
-/// Replaces all "visitor" functionality with "guest" as per backend
+import '../../network/api_client.dart';
+import '../../result.dart';
+import '../../error/error_handler.dart';
+import '../../error/app_error.dart';
+import '../../../features/guest/domain/models/guest_models.dart';
+import '../../../features/guest/domain/models/guest_cart_response.dart';
+
+/// Service for handling guest user functionality (orders without registration)
 class GuestService {
-  static final GuestService _instance = GuestService._internal();
-  factory GuestService() => _instance;
-  
-  final ApiClient _apiClient = ApiClient();
-  final _storage = const FlutterSecureStorage();
-  
-  GuestService._internal();
-  
-  String? _guestSessionId;
-  
-  /// Create guest session
-  Future<String?> createGuestSession() async {
-    try {
-      final response = await _apiClient.post(ApiConstants.guestSession);
-      
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final sessionId = response.data['sessionId'] as String;
-        _guestSessionId = sessionId;
-        
-        // Store session ID locally
-        await _storage.write(key: 'guest_session_id', value: sessionId);
-        
-        return sessionId;
-      }
-      
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-  
-  /// Get current guest session ID
+  final ApiClient _apiClient;
+  final Logger _logger = Logger('GuestService');
+
+  GuestService(this._apiClient);
+
+  /// Get guest session ID
   Future<String?> getGuestSessionId() async {
-    if (_guestSessionId != null) return _guestSessionId;
-    
-    _guestSessionId = await _storage.read(key: 'guest_session_id');
-    return _guestSessionId;
-  }
-  
-  /// Browse restaurants as guest
-  Future<GuestRestaurantListResponse> browseRestaurants({
-    String? city,
-    String? cuisine,
-    String? search,
-    int page = 1,
-    int limit = 20,
-  }) async {
     try {
-      final response = await _apiClient.get(
-        ApiConstants.guestRestaurants,
-        queryParameters: {
-          if (city != null) 'city': city,
-          if (cuisine != null) 'cuisine': cuisine,
-          if (search != null) 'search': search,
-          'page': page.toString(),
-          'limit': limit.toString(),
-        },
-      );
-      
-      if (response.statusCode == 200) {
-        final data = response.data;
-        final restaurants = (data['restaurants'] as List)
-            .map((json) => Restaurant.fromJson(json))
-            .toList();
-        
-        return GuestRestaurantListResponse(
-          restaurants: restaurants,
-          pagination: GuestPaginationInfo.fromJson(data['pagination']),
-          success: true,
-        );
-      } else {
-        return GuestRestaurantListResponse(
-          restaurants: [],
-          pagination: GuestPaginationInfo.empty(),
-          success: false,
-          error: response.data['error'] ?? 'Failed to load restaurants',
-        );
-      }
+      const storage = FlutterSecureStorage();
+      return await storage.read(key: 'guest_session_id');
     } catch (e) {
-      return GuestRestaurantListResponse(
-        restaurants: [],
-        pagination: GuestPaginationInfo.empty(),
-        success: false,
-        error: _handleError(e),
-      );
+      _logger.warning('Failed to get guest session ID', e);
+      return null;
     }
   }
-  
-  /// Browse menu for a restaurant as guest
-  Future<GuestMenuResponse> browseMenu(String restaurantId, {
-    String? category,
-    String? search,
-  }) async {
-    try {
-      final response = await _apiClient.get(
-        '${ApiConstants.guestMenu}/$restaurantId/menu',
-        queryParameters: {
-          if (category != null) 'category': category,
-          if (search != null) 'search': search,
-        },
-      );
-      
-      if (response.statusCode == 200) {
-        final data = response.data;
-        final restaurant = Restaurant.fromJson(data['restaurant']);
-        final menuItems = (data['menu'] as List)
-            .map((json) => MenuItem.fromJson(json))
-            .toList();
-        
-        return GuestMenuResponse(
-          restaurant: restaurant,
-          menuItems: menuItems,
-          success: true,
-        );
-      } else {
-        return GuestMenuResponse(
-          menuItems: [],
-          success: false,
-          error: response.data['error'] ?? 'Failed to load menu',
-        );
-      }
-    } catch (e) {
-      return GuestMenuResponse(
-        menuItems: [],
-        success: false,
-        error: _handleError(e),
-      );
-    }
-  }
-  
-  /// Add item to guest cart
-  Future<bool> addToCart({
-    required String menuId,
-    required int quantity,
-    Map<String, dynamic>? options,
-  }) async {
-    try {
-      final sessionId = await getGuestSessionId();
-      
-      final response = await _apiClient.post(
-        '${ApiConstants.guestCart}/add',
-        data: {
-          if (sessionId != null) 'sessionId': sessionId,
-          'menuId': menuId,
-          'quantity': quantity,
-          'options': options ?? {},
-        },
-      );
-      
-      return response.statusCode == 200;
-    } catch (e) {
-      return false;
-    }
-  }
-  
-  /// Update cart item quantity
-  Future<bool> updateCartItem(String itemId, int quantity) async {
-    try {
-      final response = await _apiClient.put(
-        '${ApiConstants.guestCart}/items/$itemId',
-        data: {'quantity': quantity},
-      );
-      
-      return response.statusCode == 200;
-    } catch (e) {
-      return false;
-    }
-  }
-  
-  /// Remove item from cart
-  Future<bool> removeFromCart(String itemId) async {
-    try {
-      final response = await _apiClient.delete(
-        '${ApiConstants.guestCart}/items/$itemId',
-      );
-      
-      return response.statusCode == 200;
-    } catch (e) {
-      return false;
-    }
-  }
-  
-  /// Get current guest cart
+
+  /// Get guest cart
   Future<GuestCartResponse> getCart() async {
     try {
-      final response = await _apiClient.get(ApiConstants.guestCart);
-      
-      if (response.statusCode == 200) {
-        final data = response.data;
-        final cartItems = (data['items'] as List)
-            .map((json) => CartItem.fromJson(json))
-            .toList();
-        
+      final sessionId = await getGuestSessionId();
+      if (sessionId == null) {
         return GuestCartResponse(
-          items: cartItems,
-          total: (data['total'] as num).toDouble(),
-          success: true,
-        );
-      } else {
-        return GuestCartResponse(
-          items: [],
-          total: 0.0,
           success: false,
-          error: response.data['error'] ?? 'Failed to load cart',
+          message: 'No guest session',
+          items: [],
         );
       }
+
+      final response = await _apiClient.get(
+        '/public/guest/cart',
+        queryParameters: {'sessionId': sessionId},
+      );
+
+      return GuestCartResponse.fromJson(response.data);
     } catch (e) {
+      _logger.warning('Failed to get guest cart', e);
       return GuestCartResponse(
-        items: [],
-        total: 0.0,
         success: false,
-        error: _handleError(e),
+        message: 'Failed to get cart',
+        items: [],
       );
     }
   }
-  
-  /// Set guest personal information
-  Future<bool> setGuestInfo({
-    required String firstName,
-    required String lastName,
+
+  /// Clear guest session data
+  Future<void> clearGuestSession() async {
+    try {
+      const storage = FlutterSecureStorage();
+      await storage.delete(key: 'guest_session_id');
+      await storage.delete(key: 'guest_info');
+      _logger.info('Guest session cleared');
+    } catch (e) {
+      _logger.warning('Failed to clear guest session', e);
+    }
+  }
+
+  /// Create a guest order without user registration
+  Future<Result<GuestOrderResponse, AppError>> createGuestOrder(
+    GuestOrderRequest request,
+  ) async {
+    try {
+      _logger.info('Creating guest order for ${request.guestName}');
+      
+      final response = await _apiClient.post(
+        '/public/guest/orders', // Backend guest order endpoint
+        data: request.toJson(),
+      );
+
+      final guestOrderResponse = GuestOrderResponse.fromJson(response.data);
+      
+      if (guestOrderResponse.success && guestOrderResponse.data != null) {
+        _logger.info('Guest order created successfully: ${guestOrderResponse.data!.orderId}');
+        return Result.success(guestOrderResponse);
+      } else {
+        final error = AppError.serverError(
+          message: guestOrderResponse.error ?? 'Failed to create guest order',
+          errorCode: 'GUEST_ORDER_CREATION_FAILED',
+        );
+        return Result.failure(error);
+      }
+    } catch (e, stackTrace) {
+      _logger.severe('Failed to create guest order', e, stackTrace);
+      final error = ErrorHandler.handleError(e, stackTrace);
+      return Result.failure(error);
+    }
+  }
+
+  /// Track a guest order using order ID and guest info
+  Future<Result<GuestOrderTracking, AppError>> trackGuestOrder({
+    required String orderId,
+    required String guestPhone,
+  }) async {
+    try {
+      _logger.info('Tracking guest order: $orderId');
+      
+      final response = await _apiClient.get(
+        '/public/guest/orders/$orderId/track',
+        queryParameters: {
+          'phone': guestPhone,
+        },
+      );
+
+      if (response.data['success'] == true && response.data['data'] != null) {
+        final tracking = GuestOrderTracking.fromJson(response.data['data']);
+        _logger.info('Guest order tracking retrieved: $orderId');
+        return Result.success(tracking);
+      } else {
+        final error = AppError.notFoundError(
+          message: response.data['error'] ?? 'Order not found',
+          resource: 'guest_order',
+        );
+        return Result.failure(error);
+      }
+    } catch (e, stackTrace) {
+      _logger.severe('Failed to track guest order: $orderId', e, stackTrace);
+      final error = ErrorHandler.handleError(e, stackTrace);
+      return Result.failure(error);
+    }
+  }
+
+  /// Validate guest phone number format (Cameroon format)
+  bool validateGuestPhone(String phone) {
+    // Cameroon phone number format: +237[67]XXXXXXXX
+    final phoneRegex = RegExp(r'^\+237[67]\d{8}$');
+    return phoneRegex.hasMatch(phone);
+  }
+
+  /// Format phone number to Cameroon standard
+  String formatPhoneNumber(String phone) {
+    // Remove all non-digits
+    String cleaned = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    
+    // If it starts with 237, add +
+    if (cleaned.startsWith('237') && cleaned.length == 11) {
+      return '+$cleaned';
+    }
+    
+    // If it starts with 6 or 7, add +237
+    if ((cleaned.startsWith('6') || cleaned.startsWith('7')) && cleaned.length == 9) {
+      return '+237$cleaned';
+    }
+    
+    // Return original if can't format
+    return phone;
+  }
+
+  /// Get available payment methods for guest orders
+  List<GuestPaymentMethod> getAvailablePaymentMethods() {
+    return [
+      GuestPaymentMethod.cash,
+      GuestPaymentMethod.campay, // Changed from creditCard to campay
+      GuestPaymentMethod.mtnMoney,
+      GuestPaymentMethod.orangeMoney,
+    ];
+  }
+}
+
+/// Guest order builder for easier order creation
+class GuestOrderBuilder {
+  String? _restaurantId;
+  String? _guestName;
+  String? _guestPhone;
+  String? _guestEmail;
+  String? _deliveryAddress;
+  GuestOrderCoordinates? _coordinates;
+  GuestPaymentMethod? _paymentMethod;
+  String? _specialInstructions;
+  DateTime? _scheduledDeliveryTime;
+  final List<GuestOrderItem> _items = [];
+
+  GuestOrderBuilder setRestaurant(String restaurantId) {
+    _restaurantId = restaurantId;
+    return this;
+  }
+
+  GuestOrderBuilder setGuest({
+    required String name,
     required String phone,
-    required String email,
-    required String deliveryAddress,
+    String? email,
+  }) {
+    _guestName = name;
+    _guestPhone = phone;
+    _guestEmail = email;
+    return this;
+  }
+
+  GuestOrderBuilder setDeliveryAddress({
+    required String address,
     required double lat,
     required double lng,
-  }) async {
-    try {
-      final response = await _apiClient.post(
-        ApiConstants.guestInfo,
-        data: {
-          'firstName': firstName,
-          'lastName': lastName,
-          'phone': phone,
-          'email': email,
-          'deliveryAddress': deliveryAddress,
-          'coordinates': {
-            'lat': lat,
-            'lng': lng,
-          },
-        },
-      );
-      
-      return response.statusCode == 200;
-    } catch (e) {
-      return false;
+  }) {
+    _deliveryAddress = address;
+    _coordinates = GuestOrderCoordinates(lat: lat, lng: lng);
+    return this;
+  }
+
+  GuestOrderBuilder addItem({
+    required String menuId,
+    required int quantity,
+    String? customizations,
+  }) {
+    _items.add(GuestOrderItem(
+      menuId: menuId,
+      quantity: quantity,
+      customizations: customizations,
+    ));
+    return this;
+  }
+
+  /// Build the guest order request
+  GuestOrderRequest build() {
+    if (_restaurantId == null ||
+        _guestName == null ||
+        _guestPhone == null ||
+        _deliveryAddress == null ||
+        _coordinates == null ||
+        _items.isEmpty) {
+      throw ArgumentError('Missing required fields for guest order');
     }
-  }
-  
-  /// Create guest order and proceed to payment
-  Future<GuestOrderResponse> createGuestOrder({
-    required String paymentMethod,
-    String? specialInstructions,
-    DateTime? scheduledDeliveryTime,
-  }) async {
-    try {
-      final response = await _apiClient.post(
-        ApiConstants.guestOrders,
-        data: {
-          'paymentMethod': paymentMethod,
-          if (specialInstructions != null) 'specialInstructions': specialInstructions,
-          if (scheduledDeliveryTime != null) 
-            'scheduledDeliveryTime': scheduledDeliveryTime.toIso8601String(),
-        },
-      );
-      
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final order = Order.fromJson(response.data['order']);
-        final paymentUrl = response.data['paymentUrl'] as String?;
-        
-        return GuestOrderResponse(
-          order: order,
-          paymentUrl: paymentUrl,
-          success: true,
-        );
-      } else {
-        return GuestOrderResponse(
-          success: false,
-          error: response.data['error'] ?? 'Failed to create order',
-        );
-      }
-    } catch (e) {
-      return GuestOrderResponse(
-        success: false,
-        error: _handleError(e),
-      );
-    }
-  }
-  
-  /// Track guest order
-  Future<GuestOrderTrackingResponse> trackOrder(String orderId) async {
-    try {
-      final response = await _apiClient.get('${ApiConstants.guestOrders}/$orderId/track');
-      
-      if (response.statusCode == 200) {
-        final order = Order.fromJson(response.data['order']);
-        final trackingInfo = response.data['tracking'] as Map<String, dynamic>?;
-        
-        return GuestOrderTrackingResponse(
-          order: order,
-          trackingInfo: trackingInfo,
-          success: true,
-        );
-      } else {
-        return GuestOrderTrackingResponse(
-          success: false,
-          error: response.data['error'] ?? 'Order not found',
-        );
-      }
-    } catch (e) {
-      return GuestOrderTrackingResponse(
-        success: false,
-        error: _handleError(e),
-      );
-    }
-  }
-  
-  /// Clear guest session
-  Future<void> clearGuestSession() async {
-    _guestSessionId = null;
-    await _storage.delete(key: 'guest_session_id');
-  }
-  
-  String _handleError(dynamic error) {
-    if (error.response != null) {
-      final data = error.response.data;
-      if (data is Map<String, dynamic> && data.containsKey('error')) {
-        return data['error'];
-      }
-      return 'Server error: ${error.response.statusCode}';
-    }
-    return 'Network error occurred';
-  }
-}
 
-// Response models for guest service
-
-class GuestRestaurantListResponse {
-  final List<Restaurant> restaurants;
-  final GuestPaginationInfo pagination;
-  final bool success;
-  final String? error;
-  
-  GuestRestaurantListResponse({
-    required this.restaurants,
-    required this.pagination,
-    required this.success,
-    this.error,
-  });
-}
-
-class GuestMenuResponse {
-  final Restaurant? restaurant;
-  final List<MenuItem> menuItems;
-  final bool success;
-  final String? error;
-  
-  GuestMenuResponse({
-    this.restaurant,
-    required this.menuItems,
-    required this.success,
-    this.error,
-  });
-}
-
-class GuestCartResponse {
-  final List<CartItem> items;
-  final double total;
-  final bool success;
-  final String? error;
-  
-  GuestCartResponse({
-    required this.items,
-    required this.total,
-    required this.success,
-    this.error,
-  });
-}
-
-class GuestOrderResponse {
-  final Order? order;
-  final String? paymentUrl;
-  final bool success;
-  final String? error;
-  
-  GuestOrderResponse({
-    this.order,
-    this.paymentUrl,
-    required this.success,
-    this.error,
-  });
-}
-
-class GuestOrderTrackingResponse {
-  final Order? order;
-  final Map<String, dynamic>? trackingInfo;
-  final bool success;
-  final String? error;
-  
-  GuestOrderTrackingResponse({
-    this.order,
-    this.trackingInfo,
-    required this.success,
-    this.error,
-  });
-}
-
-class GuestPaginationInfo {
-  final int total;
-  final int page;
-  final int limit;
-  final int totalPages;
-  
-  GuestPaginationInfo({
-    required this.total,
-    required this.page,
-    required this.limit,
-    required this.totalPages,
-  });
-  
-  factory GuestPaginationInfo.fromJson(Map<String, dynamic> json) {
-    return GuestPaginationInfo(
-      total: json['total'] ?? 0,
-      page: json['page'] ?? 1,
-      limit: json['limit'] ?? 20,
-      totalPages: json['totalPages'] ?? 0,
-    );
-  }
-  
-  factory GuestPaginationInfo.empty() {
-    return GuestPaginationInfo(
-      total: 0,
-      page: 1,
-      limit: 20,
-      totalPages: 0,
+    return GuestOrderRequest(
+      restaurantId: _restaurantId!,
+      items: _items,
+      deliveryAddress: _deliveryAddress!,
+      deliveryCoordinates: _coordinates!,
+      guestName: _guestName!,
+      guestPhone: _guestPhone!,
+      guestEmail: _guestEmail,
+      paymentMethod: _paymentMethod?.name ?? 'cash',
+      specialInstructions: _specialInstructions,
+      scheduledDeliveryTime: _scheduledDeliveryTime,
     );
   }
 }
 
-// Provider for guest service
-final guestServiceProvider = Provider<GuestService>((ref) => GuestService());
+/// Provider for the GuestService
+final guestServiceProvider = Provider<GuestService>((ref) {
+  final apiClient = ref.watch(apiClientProvider);
+  return GuestService(apiClient);
+});

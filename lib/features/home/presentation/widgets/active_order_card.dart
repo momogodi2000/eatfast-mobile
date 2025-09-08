@@ -167,41 +167,51 @@ class ActiveOrderCard extends ConsumerWidget {
 
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
+      case OrderStatus.accepted:
       case OrderStatus.preparing:
         return DesignTokens.infoColor;
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
+      case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:
+      case OrderStatus.completed:
         return DesignTokens.successColor;
       case OrderStatus.cancelled:
+      case OrderStatus.rejected:
       case OrderStatus.refunded:
+      case OrderStatus.expired:
         return DesignTokens.errorColor;
     }
   }
 
   IconData _getStatusIcon(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return Icons.schedule;
       case OrderStatus.confirmed:
+      case OrderStatus.accepted:
         return Icons.check_circle_outline;
       case OrderStatus.preparing:
         return Icons.restaurant;
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
         return Icons.check_circle;
+      case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
         return Icons.local_shipping;
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return Icons.delivery_dining;
       case OrderStatus.delivered:
+      case OrderStatus.completed:
         return Icons.done_all;
       case OrderStatus.cancelled:
+      case OrderStatus.rejected:
       case OrderStatus.refunded:
+      case OrderStatus.expired:
         return Icons.cancel;
     }
   }

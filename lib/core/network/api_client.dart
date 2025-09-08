@@ -160,8 +160,14 @@ class ErrorHandlingInterceptor extends Interceptor {
 
 /// Provider for API client
 final apiClientProvider = Provider<ApiClient>((ref) {
+  const bool kDebugMode = true; // Set to false for production
+  // Use conditional expression with a constant condition to avoid dead code warning
+  final baseUrl = !kDebugMode 
+    ? 'https://api.eatfast.cm/api' // Production backend URL
+    : 'http://localhost:3000/api'; // Development backend URL
+    
   return ApiClient(
-    baseUrl: 'https://eat-fast-backend-express-js.onrender.com/api',
+    baseUrl: baseUrl,
     headers: {
       'X-App-Version': '1.0.0',
       'X-Platform': 'mobile',

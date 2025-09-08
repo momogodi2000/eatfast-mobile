@@ -254,19 +254,24 @@ class OrderCard extends StatelessWidget {
 
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
+      case OrderStatus.accepted:
       case OrderStatus.preparing:
         return DesignTokens.infoColor;
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
+      case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:
+      case OrderStatus.completed:
         return DesignTokens.successColor;
       case OrderStatus.cancelled:
+      case OrderStatus.rejected:
       case OrderStatus.refunded:
+      case OrderStatus.expired:
         return DesignTokens.errorColor;
     }
   }

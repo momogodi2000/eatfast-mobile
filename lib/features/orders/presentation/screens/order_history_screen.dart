@@ -64,17 +64,21 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen>
         children: [
           _buildOrdersList(ordersState, null),
           _buildOrdersList(ordersState, [
-            OrderStatus.pending,
+            OrderStatus.created,
             OrderStatus.confirmed,
+            OrderStatus.accepted,
             OrderStatus.preparing,
-            OrderStatus.ready,
+            OrderStatus.readyForPickup,
+            OrderStatus.assignedDriver,
             OrderStatus.pickedUp,
-            OrderStatus.onTheWay,
+            OrderStatus.inTransit,
           ]),
-          _buildOrdersList(ordersState, [OrderStatus.delivered]),
+          _buildOrdersList(ordersState, [OrderStatus.delivered, OrderStatus.completed]),
           _buildOrdersList(ordersState, [
             OrderStatus.cancelled,
+            OrderStatus.rejected,
             OrderStatus.refunded,
+            OrderStatus.expired,
           ]),
         ],
       ),
@@ -170,10 +174,10 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen>
     if (statusFilter == null) {
       message = 'Aucune commande trouvée.\nCommencez par explorer nos restaurants !';
       icon = Icons.receipt_long_outlined;
-    } else if (statusFilter.contains(OrderStatus.delivered)) {
+    } else if (statusFilter.contains(OrderStatus.delivered) || statusFilter.contains(OrderStatus.completed)) {
       message = 'Aucune commande livrée.\nVos prochaines livraisons apparaîtront ici.';
       icon = Icons.done_all;
-    } else if (statusFilter.contains(OrderStatus.cancelled)) {
+    } else if (statusFilter.contains(OrderStatus.cancelled) || statusFilter.contains(OrderStatus.rejected)) {
       message = 'Aucune commande annulée.';
       icon = Icons.cancel_outlined;
     } else {

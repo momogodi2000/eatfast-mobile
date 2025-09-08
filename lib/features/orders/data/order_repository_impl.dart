@@ -42,7 +42,7 @@ class OrderRepositoryImpl implements OrderRepository {
         restaurantId: cart.restaurantId!,
         restaurantName: cart.restaurantName!,
         items: List.from(cart.items),
-        status: OrderStatus.pending,
+        status: OrderStatus.created,
         subtotal: cart.subtotal,
         deliveryFee: cart.deliveryFee,
         tax: cart.tax,
@@ -55,7 +55,7 @@ class OrderRepositoryImpl implements OrderRepository {
         statusUpdates: [
           OrderStatusUpdate(
             id: '${orderId}_status_1',
-            status: OrderStatus.pending,
+            status: OrderStatus.created,
             timestamp: now,
             message: 'Commande reçue et en attente de confirmation',
             updatedBy: 'system',
@@ -181,13 +181,13 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final newOrder = originalOrder.copyWith(
         id: newOrderId,
-        status: OrderStatus.pending,
+        status: OrderStatus.created,
         estimatedDeliveryTime: now.add(const Duration(minutes: 35)),
         actualDeliveryTime: null,
         statusUpdates: [
           OrderStatusUpdate(
             id: '${newOrderId}_status_1',
-            status: OrderStatus.pending,
+            status: OrderStatus.created,
             timestamp: now,
             message: 'Nouvelle commande (recomande)',
             updatedBy: 'system',
@@ -289,9 +289,9 @@ class OrderRepositoryImpl implements OrderRepository {
         message: 'Le restaurant prépare votre commande');
     });
 
-    // Simulate ready after 10 minutes
+    // Simulate ready for pickup after 10 minutes
     Timer(const Duration(minutes: 10), () {
-      updateOrderStatus(order.id, OrderStatus.ready, 
+      updateOrderStatus(order.id, OrderStatus.readyForPickup, 
         message: 'Commande prête pour la livraison');
     });
 
@@ -301,9 +301,9 @@ class OrderRepositoryImpl implements OrderRepository {
         message: 'Commande récupérée par le livreur');
     });
 
-    // Simulate on the way after 15 minutes
+    // Simulate in transit after 15 minutes
     Timer(const Duration(minutes: 15), () {
-      updateOrderStatus(order.id, OrderStatus.onTheWay, 
+      updateOrderStatus(order.id, OrderStatus.inTransit, 
         message: 'Le livreur est en route');
     });
 

@@ -17,12 +17,13 @@ class OrderStatusTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeStatuses = [
-      OrderStatus.pending,
+      OrderStatus.created,
       OrderStatus.confirmed,
       OrderStatus.preparing,
-      OrderStatus.ready,
+      OrderStatus.readyForPickup,
+      OrderStatus.assignedDriver,
       OrderStatus.pickedUp,
-      OrderStatus.onTheWay,
+      OrderStatus.inTransit,
       OrderStatus.delivered,
     ];
 
@@ -274,63 +275,78 @@ class OrderStatusTimeline extends StatelessWidget {
 
   int _getStatusIndex(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return 0;
       case OrderStatus.confirmed:
         return 1;
-      case OrderStatus.preparing:
+      case OrderStatus.accepted:
         return 2;
-      case OrderStatus.ready:
+      case OrderStatus.preparing:
         return 3;
-      case OrderStatus.pickedUp:
+      case OrderStatus.readyForPickup:
         return 4;
-      case OrderStatus.onTheWay:
+      case OrderStatus.assignedDriver:
         return 5;
-      case OrderStatus.delivered:
+      case OrderStatus.pickedUp:
         return 6;
-      case OrderStatus.cancelled:
-      case OrderStatus.refunded:
+      case OrderStatus.inTransit:
+        return 7;
+      case OrderStatus.delivered:
+        return 8;
+      case OrderStatus.completed:
+        return 9;
+      default:
         return -1;
     }
   }
 
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
+      case OrderStatus.accepted:
       case OrderStatus.preparing:
         return DesignTokens.infoColor;
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
+      case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:
+      case OrderStatus.completed:
         return DesignTokens.successColor;
       case OrderStatus.cancelled:
+      case OrderStatus.rejected:
       case OrderStatus.refunded:
+      case OrderStatus.expired:
         return DesignTokens.errorColor;
     }
   }
 
   IconData _getStatusIcon(OrderStatus status) {
     switch (status) {
-      case OrderStatus.pending:
+      case OrderStatus.created:
         return Icons.schedule;
       case OrderStatus.confirmed:
+      case OrderStatus.accepted:
         return Icons.check;
       case OrderStatus.preparing:
         return Icons.restaurant;
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
         return Icons.check_circle;
+      case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
         return Icons.local_shipping;
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return Icons.delivery_dining;
       case OrderStatus.delivered:
+      case OrderStatus.completed:
         return Icons.done_all;
       case OrderStatus.cancelled:
+      case OrderStatus.rejected:
       case OrderStatus.refunded:
+      case OrderStatus.expired:
         return Icons.cancel;
     }
   }

@@ -152,6 +152,10 @@ socket_io_client: ^2.0.3+1
 flutter_stripe: ^10.1.1
 ```
 
+./build_release.sh apk
+./build_release.sh full
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites

@@ -75,15 +75,20 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
     };
 
 const _$OrderStatusEnumMap = {
-  OrderStatus.pending: 'pending',
+  OrderStatus.created: 'created',
   OrderStatus.confirmed: 'confirmed',
+  OrderStatus.accepted: 'accepted',
+  OrderStatus.rejected: 'rejected',
   OrderStatus.preparing: 'preparing',
-  OrderStatus.ready: 'ready',
+  OrderStatus.readyForPickup: 'ready_for_pickup',
+  OrderStatus.assignedDriver: 'assigned_driver',
   OrderStatus.pickedUp: 'picked_up',
-  OrderStatus.onTheWay: 'on_the_way',
+  OrderStatus.inTransit: 'in_transit',
   OrderStatus.delivered: 'delivered',
+  OrderStatus.completed: 'completed',
   OrderStatus.cancelled: 'cancelled',
   OrderStatus.refunded: 'refunded',
+  OrderStatus.expired: 'expired',
 };
 
 _$OrderStatusUpdateImpl _$$OrderStatusUpdateImplFromJson(

@@ -224,10 +224,12 @@ class RestaurantCard extends ConsumerWidget {
                   ),
                   
                   // Address
-                  if (restaurant.address.street.isNotEmpty) ...[
+                  if (restaurant.address?.street != null && restaurant.address!.street.isNotEmpty) ...[
                     const SizedBox(height: 4),
                     Text(
-                      '${restaurant.address.street}, ${restaurant.address.city}',
+                      restaurant.address?.city != null
+                        ? '${restaurant.address!.street}, ${restaurant.address!.city}'
+                        : restaurant.address!.street,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: AppColors.textSecondary,
                       ),

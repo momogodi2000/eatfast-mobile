@@ -11,30 +11,78 @@ class Restaurant with _$Restaurant {
     String? description,
     String? logo,
     String? coverImage,
-    String? imageUrl, // Added for backend compatibility
-    required RestaurantAddress address,
-    required RestaurantContact contact,
-    required List<OperatingHours> operatingHours,
-    required List<String> cuisineTypes,
-    List<String>? specialties, // Added for backend
+    
+    // Backend matching fields
+    required String cuisineType, // Changed from List<String> cuisineTypes to match backend
+    Map<String, dynamic>? openingHours, // Changed from List<OperatingHours> to match backend JSON
+    List<String>? images, // Changed from single logo/coverImage to match backend array
+    String? city, // Added city field to match backend enum
+    @Default(false) bool isVerified, // Verification status
+    String? ownerId, // Added owner ID field
+    double? commissionRate, // For restaurant owners
+    double? totalEarnings, // For restaurant owners
+    List<String>? deliveryZones, // Added missing backend field
+    
+    // Keep existing mobile-specific fields for compatibility
+    RestaurantAddress? address, // Made optional since backend uses different structure
+    RestaurantContact? contact, // Made optional
+    List<String>? specialties,
     @Default([]) List<String> features, // ["Delivery", "Takeaway"]
-    List<String>? paymentMethods, // Added for backend
+    List<String>? paymentMethods,
     required String priceRange, // "$", "$$", "$$$", "$$$$"
     @Default(0.0) double rating,
     @Default(0) int reviewCount,
-    required String status, // "ACTIVE", "INACTIVE", "PENDING"
+    required RestaurantStatus status, // Changed to enum for better type safety
     @Default(true) bool isOpen,
-    @Default(false) bool isPromoted, // Added for backend
-    @Default(false) bool isVerified, // Added for backend
+    @Default(false) bool isPromoted,
     @Default(30) int estimatedDeliveryTime,
     @Default(0.0) double deliveryFee,
-    @Default(2000.0) double minimumOrder, // Added for backend
+    @Default(2000.0) double minimumOrder,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Restaurant;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) =>
       _$RestaurantFromJson(json);
+}
+
+// Extension methods for backward compatibility
+extension RestaurantCompat on Restaurant {
+  /// Backward compatibility: Convert single cuisineType to List for UI
+  List<String> get cuisineTypes => [cuisineType];
+  
+  /// Backward compatibility: Get first image as imageUrl, or use logo/coverImage
+  String? get imageUrl {
+    if (images != null && images!.isNotEmpty) {
+      return images!.first;
+    }
+    return coverImage ?? logo;
+  }
+}
+
+// Restaurant status enum matching backend
+enum RestaurantStatus {
+  @JsonValue('active')
+  active,
+  @JsonValue('inactive') 
+  inactive,
+  @JsonValue('pending')
+  pending,
+  @JsonValue('suspended')
+  suspended;
+
+  String get displayName {
+    switch (this) {
+      case RestaurantStatus.active:
+        return 'Actif';
+      case RestaurantStatus.inactive:
+        return 'Inactif';
+      case RestaurantStatus.pending:
+        return 'En Attente';
+      case RestaurantStatus.suspended:
+        return 'Suspendu';
+    }
+  }
 }
 
 @freezed

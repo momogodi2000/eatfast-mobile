@@ -13,17 +13,24 @@ _$RestaurantImpl _$$RestaurantImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       logo: json['logo'] as String?,
       coverImage: json['coverImage'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      address:
-          RestaurantAddress.fromJson(json['address'] as Map<String, dynamic>),
-      contact:
-          RestaurantContact.fromJson(json['contact'] as Map<String, dynamic>),
-      operatingHours: (json['operatingHours'] as List<dynamic>)
-          .map((e) => OperatingHours.fromJson(e as Map<String, dynamic>))
+      cuisineType: json['cuisineType'] as String,
+      openingHours: json['openingHours'] as Map<String, dynamic>?,
+      images:
+          (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      city: json['city'] as String?,
+      isVerified: json['isVerified'] as bool? ?? false,
+      ownerId: json['ownerId'] as String?,
+      commissionRate: (json['commissionRate'] as num?)?.toDouble(),
+      totalEarnings: (json['totalEarnings'] as num?)?.toDouble(),
+      deliveryZones: (json['deliveryZones'] as List<dynamic>?)
+          ?.map((e) => e as String)
           .toList(),
-      cuisineTypes: (json['cuisineTypes'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      address: json['address'] == null
+          ? null
+          : RestaurantAddress.fromJson(json['address'] as Map<String, dynamic>),
+      contact: json['contact'] == null
+          ? null
+          : RestaurantContact.fromJson(json['contact'] as Map<String, dynamic>),
       specialties: (json['specialties'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -37,10 +44,9 @@ _$RestaurantImpl _$$RestaurantImplFromJson(Map<String, dynamic> json) =>
       priceRange: json['priceRange'] as String,
       rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
       reviewCount: (json['reviewCount'] as num?)?.toInt() ?? 0,
-      status: json['status'] as String,
+      status: $enumDecode(_$RestaurantStatusEnumMap, json['status']),
       isOpen: json['isOpen'] as bool? ?? true,
       isPromoted: json['isPromoted'] as bool? ?? false,
-      isVerified: json['isVerified'] as bool? ?? false,
       estimatedDeliveryTime:
           (json['estimatedDeliveryTime'] as num?)?.toInt() ?? 30,
       deliveryFee: (json['deliveryFee'] as num?)?.toDouble() ?? 0.0,
@@ -60,27 +66,39 @@ Map<String, dynamic> _$$RestaurantImplToJson(_$RestaurantImpl instance) =>
       'description': instance.description,
       'logo': instance.logo,
       'coverImage': instance.coverImage,
-      'imageUrl': instance.imageUrl,
+      'cuisineType': instance.cuisineType,
+      'openingHours': instance.openingHours,
+      'images': instance.images,
+      'city': instance.city,
+      'isVerified': instance.isVerified,
+      'ownerId': instance.ownerId,
+      'commissionRate': instance.commissionRate,
+      'totalEarnings': instance.totalEarnings,
+      'deliveryZones': instance.deliveryZones,
       'address': instance.address,
       'contact': instance.contact,
-      'operatingHours': instance.operatingHours,
-      'cuisineTypes': instance.cuisineTypes,
       'specialties': instance.specialties,
       'features': instance.features,
       'paymentMethods': instance.paymentMethods,
       'priceRange': instance.priceRange,
       'rating': instance.rating,
       'reviewCount': instance.reviewCount,
-      'status': instance.status,
+      'status': _$RestaurantStatusEnumMap[instance.status]!,
       'isOpen': instance.isOpen,
       'isPromoted': instance.isPromoted,
-      'isVerified': instance.isVerified,
       'estimatedDeliveryTime': instance.estimatedDeliveryTime,
       'deliveryFee': instance.deliveryFee,
       'minimumOrder': instance.minimumOrder,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
     };
+
+const _$RestaurantStatusEnumMap = {
+  RestaurantStatus.active: 'active',
+  RestaurantStatus.inactive: 'inactive',
+  RestaurantStatus.pending: 'pending',
+  RestaurantStatus.suspended: 'suspended',
+};
 
 _$RestaurantAddressImpl _$$RestaurantAddressImplFromJson(
         Map<String, dynamic> json) =>

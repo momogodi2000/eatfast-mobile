@@ -10,42 +10,71 @@ class ApiEndpoints {
   static const String register = '$_apiBase/auth/register';
   static const String logout = '$_apiBase/auth/logout';
   static const String refreshToken = '$_apiBase/auth/refresh';
-  static const String currentUser = '$_apiBase/auth/me';
+  static const String revokeToken = '$_apiBase/auth/logout';
+  static const String getCurrentUser = '$_apiBase/auth/me';
+  static const String currentUser = '$_apiBase/auth/me'; // Alias for backward compatibility
 
-  // Password management
-  static const String requestPasswordReset = '$_apiBase/auth/forgot-password';
-  static const String resetPassword = '$_apiBase/auth/reset-password';
+  // Password management endpoints (matching backend exactly)
+  static const String requestPasswordReset = '$_apiBase/auth/password/reset-request';
+  static const String verifyResetCode = '$_apiBase/auth/password/verify-code';
+  static const String resetPassword = '$_apiBase/auth/password/reset';
   static const String changePassword = '$_apiBase/auth/change-password';
 
-  // OTP & Verification
+  // OTP & SMS verification endpoints (matching backend exactly)
+  static const String sendOtp = '$_apiBase/auth/send-otp';
   static const String verifyOtp = '$_apiBase/auth/verify-otp';
   static const String resendOtp = '$_apiBase/auth/resend-otp';
-  static const String verifyEmail = '$_apiBase/auth/verify-email';
   static const String verifyPhone = '$_apiBase/auth/verify-phone';
+  
+  // Social login endpoints
+  static const String socialLogin = '$_apiBase/auth/social-login';
 
-  // Social login
-  static const String socialLogin = '$_apiBase/auth/social';
+  // Email verification endpoint
+  static const String verifyEmail = '$_apiBase/auth/verify-email';
 
-  // Client/User endpoints
-  static const String clientProfile = '$_apiBase/client/profile';
-  static const String clientAddresses = '$_apiBase/client/addresses';
-  static const String clientOrders = '$_apiBase/client/orders';
-  static const String clientCart = '$_apiBase/client/cart';
-  static const String clientFavorites = '$_apiBase/client/favorite-restaurants';
-  static const String clientLoyalty = '$_apiBase/client/loyalty';
-  static const String clientWallet = '$_apiBase/client/wallet';
-  static const String clientPaymentMethods = '$_apiBase/client/payment-methods';
+  // Two-factor authentication endpoints
+  static const String enable2FA = '$_apiBase/auth/2fa/enable';
+  static const String disable2FA = '$_apiBase/auth/2fa/disable';
+  static const String verify2FA = '$_apiBase/auth/2fa/verify';
 
-  // Restaurant endpoints
-  static const String restaurants = '$_apiBase/restaurants';
-  static const String restaurantSearch = '$_apiBase/restaurants/search';
-  static const String restaurantMenu = '$_apiBase/restaurants/{id}/menu';
-  static const String restaurantReviews = '$_apiBase/restaurants/{id}/reviews';
+  // OAuth endpoints
+  static const String googleOAuth = '$_apiBase/auth/oauth/google';
+  static const String appleOAuth = '$_apiBase/auth/oauth/apple';
 
-  // Order endpoints
-  static const String placeOrder = '$_apiBase/client/orders';
+  // Client/User endpoints (matching backend exactly)
+  static const String searchRestaurants = '$_apiBase/client/restaurants/search';
+  static const String getRestaurantDetails = '$_apiBase/client/restaurants/{restaurantId}';
+  
+  // Order management endpoints
+  static const String createOrder = '$_apiBase/client/orders';
+  static const String getUserOrders = '$_apiBase/client/orders/history';
   static const String trackOrder = '$_apiBase/client/orders/{id}/track';
-  static const String rateOrder = '$_apiBase/client/orders/{id}/rate';
+  static const String getOrderTimeline = '$_apiBase/client/orders/{id}/timeline';
+  static const String cancelOrder = '$_apiBase/client/orders/{id}/cancel';
+  static const String rateOrder = '$_apiBase/client/orders/{orderId}/rate';
+  
+  // Cart endpoints
+  static const String cart = '$_apiBase/client/cart';
+  
+  // Loyalty program endpoints
+  static const String getLoyaltyStatus = '$_apiBase/client/loyalty/status';
+  static const String redeemPoints = '$_apiBase/client/loyalty/redeem';
+  
+  // Favorites endpoints
+  static const String toggleFavorite = '$_apiBase/client/favorites/toggle';
+  static const String getFavorites = '$_apiBase/client/favorites';
+  
+  // Wallet endpoints (matching backend exactly)
+  static const String getWallet = '$_apiBase/client/wallet';
+  static const String getWalletTransactions = '$_apiBase/client/wallet/transactions';
+  static const String topupWallet = '$_apiBase/client/wallet/topup';
+  static const String withdrawFromWallet = '$_apiBase/client/wallet/withdraw';
+  
+  // Review endpoints
+  static const String reviews = '$_apiBase/client/reviews';
+  
+  // Subscription endpoints
+  static const String subscription = '$_apiBase/client/subscription';
 
   // Admin endpoints
   static const String adminDashboard = '$_apiBase/admin/dashboard';
@@ -77,13 +106,9 @@ class ApiEndpoints {
     return result;
   }
 
-  /// Build full restaurant menu endpoint
-  static String getRestaurantMenu(String restaurantId) =>
-      replacePath(restaurantMenu, {'id': restaurantId});
-
-  /// Build full restaurant reviews endpoint  
-  static String getRestaurantReviews(String restaurantId) =>
-      replacePath(restaurantReviews, {'id': restaurantId});
+  /// Build restaurant details endpoint
+  static String buildRestaurantDetails(String restaurantId) =>
+      replacePath(getRestaurantDetails, {'restaurantId': restaurantId});
 
   /// Build full order tracking endpoint
   static String getOrderTracking(String orderId) =>

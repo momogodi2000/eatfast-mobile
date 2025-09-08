@@ -24,34 +24,46 @@ mixin _$Restaurant {
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get logo => throw _privateConstructorUsedError;
-  String? get coverImage => throw _privateConstructorUsedError;
-  String? get imageUrl =>
-      throw _privateConstructorUsedError; // Added for backend compatibility
-  RestaurantAddress get address => throw _privateConstructorUsedError;
-  RestaurantContact get contact => throw _privateConstructorUsedError;
-  List<OperatingHours> get operatingHours => throw _privateConstructorUsedError;
-  List<String> get cuisineTypes => throw _privateConstructorUsedError;
-  List<String>? get specialties =>
-      throw _privateConstructorUsedError; // Added for backend
+  String? get coverImage =>
+      throw _privateConstructorUsedError; // Backend matching fields
+  String get cuisineType =>
+      throw _privateConstructorUsedError; // Changed from List<String> cuisineTypes to match backend
+  Map<String, dynamic>? get openingHours =>
+      throw _privateConstructorUsedError; // Changed from List<OperatingHours> to match backend JSON
+  List<String>? get images =>
+      throw _privateConstructorUsedError; // Changed from single logo/coverImage to match backend array
+  String? get city =>
+      throw _privateConstructorUsedError; // Added city field to match backend enum
+  bool get isVerified =>
+      throw _privateConstructorUsedError; // Verification status
+  String? get ownerId =>
+      throw _privateConstructorUsedError; // Added owner ID field
+  double? get commissionRate =>
+      throw _privateConstructorUsedError; // For restaurant owners
+  double? get totalEarnings =>
+      throw _privateConstructorUsedError; // For restaurant owners
+  List<String>? get deliveryZones =>
+      throw _privateConstructorUsedError; // Added missing backend field
+// Keep existing mobile-specific fields for compatibility
+  RestaurantAddress? get address =>
+      throw _privateConstructorUsedError; // Made optional since backend uses different structure
+  RestaurantContact? get contact =>
+      throw _privateConstructorUsedError; // Made optional
+  List<String>? get specialties => throw _privateConstructorUsedError;
   List<String> get features =>
       throw _privateConstructorUsedError; // ["Delivery", "Takeaway"]
-  List<String>? get paymentMethods =>
-      throw _privateConstructorUsedError; // Added for backend
+  List<String>? get paymentMethods => throw _privateConstructorUsedError;
   String get priceRange =>
       throw _privateConstructorUsedError; // "$", "$$", "$$$", "$$$$"
   double get rating => throw _privateConstructorUsedError;
   int get reviewCount => throw _privateConstructorUsedError;
-  String get status =>
-      throw _privateConstructorUsedError; // "ACTIVE", "INACTIVE", "PENDING"
+  RestaurantStatus get status =>
+      throw _privateConstructorUsedError; // Changed to enum for better type safety
   bool get isOpen => throw _privateConstructorUsedError;
-  bool get isPromoted =>
-      throw _privateConstructorUsedError; // Added for backend
-  bool get isVerified =>
-      throw _privateConstructorUsedError; // Added for backend
+  bool get isPromoted => throw _privateConstructorUsedError;
   int get estimatedDeliveryTime => throw _privateConstructorUsedError;
   double get deliveryFee => throw _privateConstructorUsedError;
-  double get minimumOrder =>
-      throw _privateConstructorUsedError; // Added for backend
+  double get minimumOrder => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -77,29 +89,34 @@ abstract class $RestaurantCopyWith<$Res> {
       String? description,
       String? logo,
       String? coverImage,
-      String? imageUrl,
-      RestaurantAddress address,
-      RestaurantContact contact,
-      List<OperatingHours> operatingHours,
-      List<String> cuisineTypes,
+      String cuisineType,
+      Map<String, dynamic>? openingHours,
+      List<String>? images,
+      String? city,
+      bool isVerified,
+      String? ownerId,
+      double? commissionRate,
+      double? totalEarnings,
+      List<String>? deliveryZones,
+      RestaurantAddress? address,
+      RestaurantContact? contact,
       List<String>? specialties,
       List<String> features,
       List<String>? paymentMethods,
       String priceRange,
       double rating,
       int reviewCount,
-      String status,
+      RestaurantStatus status,
       bool isOpen,
       bool isPromoted,
-      bool isVerified,
       int estimatedDeliveryTime,
       double deliveryFee,
       double minimumOrder,
       DateTime? createdAt,
       DateTime? updatedAt});
 
-  $RestaurantAddressCopyWith<$Res> get address;
-  $RestaurantContactCopyWith<$Res> get contact;
+  $RestaurantAddressCopyWith<$Res>? get address;
+  $RestaurantContactCopyWith<$Res>? get contact;
 }
 
 /// @nodoc
@@ -122,11 +139,17 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
     Object? description = freezed,
     Object? logo = freezed,
     Object? coverImage = freezed,
-    Object? imageUrl = freezed,
-    Object? address = null,
-    Object? contact = null,
-    Object? operatingHours = null,
-    Object? cuisineTypes = null,
+    Object? cuisineType = null,
+    Object? openingHours = freezed,
+    Object? images = freezed,
+    Object? city = freezed,
+    Object? isVerified = null,
+    Object? ownerId = freezed,
+    Object? commissionRate = freezed,
+    Object? totalEarnings = freezed,
+    Object? deliveryZones = freezed,
+    Object? address = freezed,
+    Object? contact = freezed,
     Object? specialties = freezed,
     Object? features = null,
     Object? paymentMethods = freezed,
@@ -136,7 +159,6 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
     Object? status = null,
     Object? isOpen = null,
     Object? isPromoted = null,
-    Object? isVerified = null,
     Object? estimatedDeliveryTime = null,
     Object? deliveryFee = null,
     Object? minimumOrder = null,
@@ -164,26 +186,50 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
           ? _value.coverImage
           : coverImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      cuisineType: null == cuisineType
+          ? _value.cuisineType
+          : cuisineType // ignore: cast_nullable_to_non_nullable
+              as String,
+      openingHours: freezed == openingHours
+          ? _value.openingHours
+          : openingHours // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      images: freezed == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: null == address
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      ownerId: freezed == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      commissionRate: freezed == commissionRate
+          ? _value.commissionRate
+          : commissionRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      totalEarnings: freezed == totalEarnings
+          ? _value.totalEarnings
+          : totalEarnings // ignore: cast_nullable_to_non_nullable
+              as double?,
+      deliveryZones: freezed == deliveryZones
+          ? _value.deliveryZones
+          : deliveryZones // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as RestaurantAddress,
-      contact: null == contact
+              as RestaurantAddress?,
+      contact: freezed == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
-              as RestaurantContact,
-      operatingHours: null == operatingHours
-          ? _value.operatingHours
-          : operatingHours // ignore: cast_nullable_to_non_nullable
-              as List<OperatingHours>,
-      cuisineTypes: null == cuisineTypes
-          ? _value.cuisineTypes
-          : cuisineTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as RestaurantContact?,
       specialties: freezed == specialties
           ? _value.specialties
           : specialties // ignore: cast_nullable_to_non_nullable
@@ -211,7 +257,7 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as RestaurantStatus,
       isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
@@ -219,10 +265,6 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
       isPromoted: null == isPromoted
           ? _value.isPromoted
           : isPromoted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isVerified: null == isVerified
-          ? _value.isVerified
-          : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
       estimatedDeliveryTime: null == estimatedDeliveryTime
           ? _value.estimatedDeliveryTime
@@ -251,8 +293,12 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $RestaurantAddressCopyWith<$Res> get address {
-    return $RestaurantAddressCopyWith<$Res>(_value.address, (value) {
+  $RestaurantAddressCopyWith<$Res>? get address {
+    if (_value.address == null) {
+      return null;
+    }
+
+    return $RestaurantAddressCopyWith<$Res>(_value.address!, (value) {
       return _then(_value.copyWith(address: value) as $Val);
     });
   }
@@ -261,8 +307,12 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $RestaurantContactCopyWith<$Res> get contact {
-    return $RestaurantContactCopyWith<$Res>(_value.contact, (value) {
+  $RestaurantContactCopyWith<$Res>? get contact {
+    if (_value.contact == null) {
+      return null;
+    }
+
+    return $RestaurantContactCopyWith<$Res>(_value.contact!, (value) {
       return _then(_value.copyWith(contact: value) as $Val);
     });
   }
@@ -282,21 +332,26 @@ abstract class _$$RestaurantImplCopyWith<$Res>
       String? description,
       String? logo,
       String? coverImage,
-      String? imageUrl,
-      RestaurantAddress address,
-      RestaurantContact contact,
-      List<OperatingHours> operatingHours,
-      List<String> cuisineTypes,
+      String cuisineType,
+      Map<String, dynamic>? openingHours,
+      List<String>? images,
+      String? city,
+      bool isVerified,
+      String? ownerId,
+      double? commissionRate,
+      double? totalEarnings,
+      List<String>? deliveryZones,
+      RestaurantAddress? address,
+      RestaurantContact? contact,
       List<String>? specialties,
       List<String> features,
       List<String>? paymentMethods,
       String priceRange,
       double rating,
       int reviewCount,
-      String status,
+      RestaurantStatus status,
       bool isOpen,
       bool isPromoted,
-      bool isVerified,
       int estimatedDeliveryTime,
       double deliveryFee,
       double minimumOrder,
@@ -304,9 +359,9 @@ abstract class _$$RestaurantImplCopyWith<$Res>
       DateTime? updatedAt});
 
   @override
-  $RestaurantAddressCopyWith<$Res> get address;
+  $RestaurantAddressCopyWith<$Res>? get address;
   @override
-  $RestaurantContactCopyWith<$Res> get contact;
+  $RestaurantContactCopyWith<$Res>? get contact;
 }
 
 /// @nodoc
@@ -327,11 +382,17 @@ class __$$RestaurantImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? logo = freezed,
     Object? coverImage = freezed,
-    Object? imageUrl = freezed,
-    Object? address = null,
-    Object? contact = null,
-    Object? operatingHours = null,
-    Object? cuisineTypes = null,
+    Object? cuisineType = null,
+    Object? openingHours = freezed,
+    Object? images = freezed,
+    Object? city = freezed,
+    Object? isVerified = null,
+    Object? ownerId = freezed,
+    Object? commissionRate = freezed,
+    Object? totalEarnings = freezed,
+    Object? deliveryZones = freezed,
+    Object? address = freezed,
+    Object? contact = freezed,
     Object? specialties = freezed,
     Object? features = null,
     Object? paymentMethods = freezed,
@@ -341,7 +402,6 @@ class __$$RestaurantImplCopyWithImpl<$Res>
     Object? status = null,
     Object? isOpen = null,
     Object? isPromoted = null,
-    Object? isVerified = null,
     Object? estimatedDeliveryTime = null,
     Object? deliveryFee = null,
     Object? minimumOrder = null,
@@ -369,26 +429,50 @@ class __$$RestaurantImplCopyWithImpl<$Res>
           ? _value.coverImage
           : coverImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      cuisineType: null == cuisineType
+          ? _value.cuisineType
+          : cuisineType // ignore: cast_nullable_to_non_nullable
+              as String,
+      openingHours: freezed == openingHours
+          ? _value._openingHours
+          : openingHours // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      images: freezed == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: null == address
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      ownerId: freezed == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      commissionRate: freezed == commissionRate
+          ? _value.commissionRate
+          : commissionRate // ignore: cast_nullable_to_non_nullable
+              as double?,
+      totalEarnings: freezed == totalEarnings
+          ? _value.totalEarnings
+          : totalEarnings // ignore: cast_nullable_to_non_nullable
+              as double?,
+      deliveryZones: freezed == deliveryZones
+          ? _value._deliveryZones
+          : deliveryZones // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as RestaurantAddress,
-      contact: null == contact
+              as RestaurantAddress?,
+      contact: freezed == contact
           ? _value.contact
           : contact // ignore: cast_nullable_to_non_nullable
-              as RestaurantContact,
-      operatingHours: null == operatingHours
-          ? _value._operatingHours
-          : operatingHours // ignore: cast_nullable_to_non_nullable
-              as List<OperatingHours>,
-      cuisineTypes: null == cuisineTypes
-          ? _value._cuisineTypes
-          : cuisineTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as RestaurantContact?,
       specialties: freezed == specialties
           ? _value._specialties
           : specialties // ignore: cast_nullable_to_non_nullable
@@ -416,7 +500,7 @@ class __$$RestaurantImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as RestaurantStatus,
       isOpen: null == isOpen
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
@@ -424,10 +508,6 @@ class __$$RestaurantImplCopyWithImpl<$Res>
       isPromoted: null == isPromoted
           ? _value.isPromoted
           : isPromoted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isVerified: null == isVerified
-          ? _value.isVerified
-          : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
       estimatedDeliveryTime: null == estimatedDeliveryTime
           ? _value.estimatedDeliveryTime
@@ -462,11 +542,17 @@ class _$RestaurantImpl implements _Restaurant {
       this.description,
       this.logo,
       this.coverImage,
-      this.imageUrl,
-      required this.address,
-      required this.contact,
-      required final List<OperatingHours> operatingHours,
-      required final List<String> cuisineTypes,
+      required this.cuisineType,
+      final Map<String, dynamic>? openingHours,
+      final List<String>? images,
+      this.city,
+      this.isVerified = false,
+      this.ownerId,
+      this.commissionRate,
+      this.totalEarnings,
+      final List<String>? deliveryZones,
+      this.address,
+      this.contact,
       final List<String>? specialties,
       final List<String> features = const [],
       final List<String>? paymentMethods,
@@ -476,14 +562,14 @@ class _$RestaurantImpl implements _Restaurant {
       required this.status,
       this.isOpen = true,
       this.isPromoted = false,
-      this.isVerified = false,
       this.estimatedDeliveryTime = 30,
       this.deliveryFee = 0.0,
       this.minimumOrder = 2000.0,
       this.createdAt,
       this.updatedAt})
-      : _operatingHours = operatingHours,
-        _cuisineTypes = cuisineTypes,
+      : _openingHours = openingHours,
+        _images = images,
+        _deliveryZones = deliveryZones,
         _specialties = specialties,
         _features = features,
         _paymentMethods = paymentMethods;
@@ -501,30 +587,71 @@ class _$RestaurantImpl implements _Restaurant {
   final String? logo;
   @override
   final String? coverImage;
+// Backend matching fields
   @override
-  final String? imageUrl;
-// Added for backend compatibility
+  final String cuisineType;
+// Changed from List<String> cuisineTypes to match backend
+  final Map<String, dynamic>? _openingHours;
+// Changed from List<String> cuisineTypes to match backend
   @override
-  final RestaurantAddress address;
-  @override
-  final RestaurantContact contact;
-  final List<OperatingHours> _operatingHours;
-  @override
-  List<OperatingHours> get operatingHours {
-    if (_operatingHours is EqualUnmodifiableListView) return _operatingHours;
+  Map<String, dynamic>? get openingHours {
+    final value = _openingHours;
+    if (value == null) return null;
+    if (_openingHours is EqualUnmodifiableMapView) return _openingHours;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_operatingHours);
+    return EqualUnmodifiableMapView(value);
   }
 
-  final List<String> _cuisineTypes;
+// Changed from List<OperatingHours> to match backend JSON
+  final List<String>? _images;
+// Changed from List<OperatingHours> to match backend JSON
   @override
-  List<String> get cuisineTypes {
-    if (_cuisineTypes is EqualUnmodifiableListView) return _cuisineTypes;
+  List<String>? get images {
+    final value = _images;
+    if (value == null) return null;
+    if (_images is EqualUnmodifiableListView) return _images;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_cuisineTypes);
+    return EqualUnmodifiableListView(value);
   }
 
+// Changed from single logo/coverImage to match backend array
+  @override
+  final String? city;
+// Added city field to match backend enum
+  @override
+  @JsonKey()
+  final bool isVerified;
+// Verification status
+  @override
+  final String? ownerId;
+// Added owner ID field
+  @override
+  final double? commissionRate;
+// For restaurant owners
+  @override
+  final double? totalEarnings;
+// For restaurant owners
+  final List<String>? _deliveryZones;
+// For restaurant owners
+  @override
+  List<String>? get deliveryZones {
+    final value = _deliveryZones;
+    if (value == null) return null;
+    if (_deliveryZones is EqualUnmodifiableListView) return _deliveryZones;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+// Added missing backend field
+// Keep existing mobile-specific fields for compatibility
+  @override
+  final RestaurantAddress? address;
+// Made optional since backend uses different structure
+  @override
+  final RestaurantContact? contact;
+// Made optional
   final List<String>? _specialties;
+// Made optional
   @override
   List<String>? get specialties {
     final value = _specialties;
@@ -534,9 +661,7 @@ class _$RestaurantImpl implements _Restaurant {
     return EqualUnmodifiableListView(value);
   }
 
-// Added for backend
   final List<String> _features;
-// Added for backend
   @override
   @JsonKey()
   List<String> get features {
@@ -557,7 +682,6 @@ class _$RestaurantImpl implements _Restaurant {
     return EqualUnmodifiableListView(value);
   }
 
-// Added for backend
   @override
   final String priceRange;
 // "$", "$$", "$$$", "$$$$"
@@ -568,19 +692,14 @@ class _$RestaurantImpl implements _Restaurant {
   @JsonKey()
   final int reviewCount;
   @override
-  final String status;
-// "ACTIVE", "INACTIVE", "PENDING"
+  final RestaurantStatus status;
+// Changed to enum for better type safety
   @override
   @JsonKey()
   final bool isOpen;
   @override
   @JsonKey()
   final bool isPromoted;
-// Added for backend
-  @override
-  @JsonKey()
-  final bool isVerified;
-// Added for backend
   @override
   @JsonKey()
   final int estimatedDeliveryTime;
@@ -590,7 +709,6 @@ class _$RestaurantImpl implements _Restaurant {
   @override
   @JsonKey()
   final double minimumOrder;
-// Added for backend
   @override
   final DateTime? createdAt;
   @override
@@ -598,7 +716,7 @@ class _$RestaurantImpl implements _Restaurant {
 
   @override
   String toString() {
-    return 'Restaurant(id: $id, name: $name, description: $description, logo: $logo, coverImage: $coverImage, imageUrl: $imageUrl, address: $address, contact: $contact, operatingHours: $operatingHours, cuisineTypes: $cuisineTypes, specialties: $specialties, features: $features, paymentMethods: $paymentMethods, priceRange: $priceRange, rating: $rating, reviewCount: $reviewCount, status: $status, isOpen: $isOpen, isPromoted: $isPromoted, isVerified: $isVerified, estimatedDeliveryTime: $estimatedDeliveryTime, deliveryFee: $deliveryFee, minimumOrder: $minimumOrder, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Restaurant(id: $id, name: $name, description: $description, logo: $logo, coverImage: $coverImage, cuisineType: $cuisineType, openingHours: $openingHours, images: $images, city: $city, isVerified: $isVerified, ownerId: $ownerId, commissionRate: $commissionRate, totalEarnings: $totalEarnings, deliveryZones: $deliveryZones, address: $address, contact: $contact, specialties: $specialties, features: $features, paymentMethods: $paymentMethods, priceRange: $priceRange, rating: $rating, reviewCount: $reviewCount, status: $status, isOpen: $isOpen, isPromoted: $isPromoted, estimatedDeliveryTime: $estimatedDeliveryTime, deliveryFee: $deliveryFee, minimumOrder: $minimumOrder, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -613,14 +731,23 @@ class _$RestaurantImpl implements _Restaurant {
             (identical(other.logo, logo) || other.logo == logo) &&
             (identical(other.coverImage, coverImage) ||
                 other.coverImage == coverImage) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            (identical(other.cuisineType, cuisineType) ||
+                other.cuisineType == cuisineType) &&
+            const DeepCollectionEquality()
+                .equals(other._openingHours, _openingHours) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified) &&
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
+            (identical(other.commissionRate, commissionRate) ||
+                other.commissionRate == commissionRate) &&
+            (identical(other.totalEarnings, totalEarnings) ||
+                other.totalEarnings == totalEarnings) &&
+            const DeepCollectionEquality()
+                .equals(other._deliveryZones, _deliveryZones) &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.contact, contact) || other.contact == contact) &&
-            const DeepCollectionEquality()
-                .equals(other._operatingHours, _operatingHours) &&
-            const DeepCollectionEquality()
-                .equals(other._cuisineTypes, _cuisineTypes) &&
             const DeepCollectionEquality()
                 .equals(other._specialties, _specialties) &&
             const DeepCollectionEquality().equals(other._features, _features) &&
@@ -635,8 +762,6 @@ class _$RestaurantImpl implements _Restaurant {
             (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
             (identical(other.isPromoted, isPromoted) ||
                 other.isPromoted == isPromoted) &&
-            (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified) &&
             (identical(other.estimatedDeliveryTime, estimatedDeliveryTime) ||
                 other.estimatedDeliveryTime == estimatedDeliveryTime) &&
             (identical(other.deliveryFee, deliveryFee) ||
@@ -658,11 +783,17 @@ class _$RestaurantImpl implements _Restaurant {
         description,
         logo,
         coverImage,
-        imageUrl,
+        cuisineType,
+        const DeepCollectionEquality().hash(_openingHours),
+        const DeepCollectionEquality().hash(_images),
+        city,
+        isVerified,
+        ownerId,
+        commissionRate,
+        totalEarnings,
+        const DeepCollectionEquality().hash(_deliveryZones),
         address,
         contact,
-        const DeepCollectionEquality().hash(_operatingHours),
-        const DeepCollectionEquality().hash(_cuisineTypes),
         const DeepCollectionEquality().hash(_specialties),
         const DeepCollectionEquality().hash(_features),
         const DeepCollectionEquality().hash(_paymentMethods),
@@ -672,7 +803,6 @@ class _$RestaurantImpl implements _Restaurant {
         status,
         isOpen,
         isPromoted,
-        isVerified,
         estimatedDeliveryTime,
         deliveryFee,
         minimumOrder,
@@ -703,21 +833,26 @@ abstract class _Restaurant implements Restaurant {
       final String? description,
       final String? logo,
       final String? coverImage,
-      final String? imageUrl,
-      required final RestaurantAddress address,
-      required final RestaurantContact contact,
-      required final List<OperatingHours> operatingHours,
-      required final List<String> cuisineTypes,
+      required final String cuisineType,
+      final Map<String, dynamic>? openingHours,
+      final List<String>? images,
+      final String? city,
+      final bool isVerified,
+      final String? ownerId,
+      final double? commissionRate,
+      final double? totalEarnings,
+      final List<String>? deliveryZones,
+      final RestaurantAddress? address,
+      final RestaurantContact? contact,
       final List<String>? specialties,
       final List<String> features,
       final List<String>? paymentMethods,
       required final String priceRange,
       final double rating,
       final int reviewCount,
-      required final String status,
+      required final RestaurantStatus status,
       final bool isOpen,
       final bool isPromoted,
-      final bool isVerified,
       final int estimatedDeliveryTime,
       final double deliveryFee,
       final double minimumOrder,
@@ -736,23 +871,40 @@ abstract class _Restaurant implements Restaurant {
   @override
   String? get logo;
   @override
-  String? get coverImage;
+  String? get coverImage; // Backend matching fields
   @override
-  String? get imageUrl; // Added for backend compatibility
+  String
+      get cuisineType; // Changed from List<String> cuisineTypes to match backend
   @override
-  RestaurantAddress get address;
+  Map<String, dynamic>?
+      get openingHours; // Changed from List<OperatingHours> to match backend JSON
   @override
-  RestaurantContact get contact;
+  List<String>?
+      get images; // Changed from single logo/coverImage to match backend array
   @override
-  List<OperatingHours> get operatingHours;
+  String? get city; // Added city field to match backend enum
   @override
-  List<String> get cuisineTypes;
+  bool get isVerified; // Verification status
   @override
-  List<String>? get specialties; // Added for backend
+  String? get ownerId; // Added owner ID field
+  @override
+  double? get commissionRate; // For restaurant owners
+  @override
+  double? get totalEarnings; // For restaurant owners
+  @override
+  List<String>? get deliveryZones; // Added missing backend field
+// Keep existing mobile-specific fields for compatibility
+  @override
+  RestaurantAddress?
+      get address; // Made optional since backend uses different structure
+  @override
+  RestaurantContact? get contact; // Made optional
+  @override
+  List<String>? get specialties;
   @override
   List<String> get features; // ["Delivery", "Takeaway"]
   @override
-  List<String>? get paymentMethods; // Added for backend
+  List<String>? get paymentMethods;
   @override
   String get priceRange; // "$", "$$", "$$$", "$$$$"
   @override
@@ -760,19 +912,17 @@ abstract class _Restaurant implements Restaurant {
   @override
   int get reviewCount;
   @override
-  String get status; // "ACTIVE", "INACTIVE", "PENDING"
+  RestaurantStatus get status; // Changed to enum for better type safety
   @override
   bool get isOpen;
   @override
-  bool get isPromoted; // Added for backend
-  @override
-  bool get isVerified; // Added for backend
+  bool get isPromoted;
   @override
   int get estimatedDeliveryTime;
   @override
   double get deliveryFee;
   @override
-  double get minimumOrder; // Added for backend
+  double get minimumOrder;
   @override
   DateTime? get createdAt;
   @override

@@ -14,11 +14,14 @@ class AppConstants {
   static const String companyWhatsApp = '+237 6XX XXX XXX';
   static const String companyAddress = 'Yaoundé, Cameroun';
   
-  // API Configuration
-  static const String baseUrl = 'https://api.eatfast.cm';
+  // API Configuration (matching backend)
+  static const String baseUrl = 'http://localhost:3000'; // Development URL - update for production
   static const String apiVersion = 'v1';
   static const int connectionTimeout = 30000;
   static const int receiveTimeout = 30000;
+  
+  // Production URL (uncomment for production build)
+  // static const String baseUrl = 'https://api.eatfast.cm';
   
   // Storage Keys
   static const String keyIsFirstTime = 'is_first_time';

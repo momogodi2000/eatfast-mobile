@@ -29,15 +29,15 @@ class ApiConstants {
   static const String oauthGoogle = '/oauth/google';
   static const String oauthApple = '/oauth/apple';
   
-  // Guest endpoints - matching backend exactly
-  static const String guestSession = '/guest/session';
-  static const String guestRestaurants = '/guest/restaurants';
-  static const String guestMenu = '/guest/restaurants'; // + /{id}/menu
-  static const String guestCart = '/guest/cart';
-  static const String guestCartAdd = '/guest/cart/add';
-  static const String guestCartItems = '/guest/cart/items';
-  static const String guestInfo = '/guest/info';
-  static const String guestOrders = '/guest/orders';
+  // Guest endpoints - matching backend exactly (public routes)
+  static const String guestSession = '/public/guest/session';
+  static const String guestRestaurants = '/public/restaurants';
+  static const String guestMenu = '/public/restaurants/{id}/menu';
+  static const String guestCart = '/public/guest/cart';
+  static const String guestCartAdd = '/public/guest/cart/add';
+  static const String guestCartItems = '/public/guest/cart/items';
+  static const String guestInfo = '/public/guest/info';
+  static const String guestOrders = '/public/guest/orders';
   
   // Client endpoints (authenticated users)
   static const String clientProfile = '/client/profile';
@@ -49,8 +49,8 @@ class ApiConstants {
   
   // Restaurant endpoints - matching backend exactly
   static const String restaurants = '/public/restaurants'; // Public restaurant browsing
-  static const String restaurantDetails = '/public/restaurants'; // + /{id}
-  static const String restaurantMenu = '/public/restaurants'; // + /{id}/menu
+  static const String restaurantDetails = '/public/restaurants/{id}'; // Fixed with ID parameter
+  static const String restaurantMenu = '/public/restaurants/{id}/menu'; // Fixed with ID parameter
   
   // Order endpoints - matching backend exactly
   static const String orders = '/client/orders';
@@ -97,6 +97,20 @@ class ApiConstants {
   static const String uploadFile = '/shared/upload';
   static const String notifications = '/shared/notifications';
   static const String users = '/users';
+  
+  // Additional guest endpoints
+  static const String guestOrderTracking = '/public/guest/orders/{id}/track';
+  static const String guestDeliveryFee = '/public/guest/delivery-fee/{restaurantId}';
+  static const String guestConvert = '/public/guest/orders/{id}/convert';
+  
+  // Utility method to replace path parameters
+  static String replacePathParams(String endpoint, Map<String, String> params) {
+    String result = endpoint;
+    params.forEach((key, value) {
+      result = result.replaceAll('{$key}', value);
+    });
+    return result;
+  }
   
   // Socket.IO events - matching backend exactly
   static const String socketConnect = 'connect';

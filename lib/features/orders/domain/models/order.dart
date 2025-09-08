@@ -39,17 +39,19 @@ class Order with _$Order {
 
   int get itemCount => items.fold(0, (sum, item) => sum + item.quantity);
   
-  bool get canBeCancelled => status == OrderStatus.pending || status == OrderStatus.confirmed;
+  bool get canBeCancelled => status == OrderStatus.created || status == OrderStatus.confirmed;
   
   bool get isDelivered => status == OrderStatus.delivered;
   
   bool get isActive => [
-    OrderStatus.pending,
+    OrderStatus.created,
     OrderStatus.confirmed,
+    OrderStatus.accepted,
     OrderStatus.preparing,
-    OrderStatus.ready,
+    OrderStatus.readyForPickup,
+    OrderStatus.assignedDriver,
     OrderStatus.pickedUp,
-    OrderStatus.onTheWay,
+    OrderStatus.inTransit,
   ].contains(status);
 }
 
@@ -68,70 +70,100 @@ class OrderStatusUpdate with _$OrderStatusUpdate {
 }
 
 enum OrderStatus {
-  @JsonValue('pending')
-  pending,
+  @JsonValue('created')
+  created,
   @JsonValue('confirmed')
   confirmed,
+  @JsonValue('accepted')
+  accepted,
+  @JsonValue('rejected')
+  rejected,
   @JsonValue('preparing')
   preparing,
-  @JsonValue('ready')
-  ready,
+  @JsonValue('ready_for_pickup')
+  readyForPickup,
+  @JsonValue('assigned_driver')
+  assignedDriver,
   @JsonValue('picked_up')
   pickedUp,
-  @JsonValue('on_the_way')
-  onTheWay,
+  @JsonValue('in_transit')
+  inTransit,
   @JsonValue('delivered')
   delivered,
+  @JsonValue('completed')
+  completed,
   @JsonValue('cancelled')
   cancelled,
   @JsonValue('refunded')
   refunded,
+  @JsonValue('expired')
+  expired,
 }
 
 extension OrderStatusExtension on OrderStatus {
   String get displayName {
     switch (this) {
-      case OrderStatus.pending:
-        return 'En attente';
+      case OrderStatus.created:
+        return 'Créée';
       case OrderStatus.confirmed:
         return 'Confirmée';
+      case OrderStatus.accepted:
+        return 'Acceptée';
+      case OrderStatus.rejected:
+        return 'Rejetée';
       case OrderStatus.preparing:
         return 'En préparation';
-      case OrderStatus.ready:
-        return 'Prête';
+      case OrderStatus.readyForPickup:
+        return 'Prête pour récupération';
+      case OrderStatus.assignedDriver:
+        return 'Livreur assigné';
       case OrderStatus.pickedUp:
         return 'Récupérée';
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return 'En route';
       case OrderStatus.delivered:
         return 'Livrée';
+      case OrderStatus.completed:
+        return 'Terminée';
       case OrderStatus.cancelled:
         return 'Annulée';
       case OrderStatus.refunded:
         return 'Remboursée';
+      case OrderStatus.expired:
+        return 'Expirée';
     }
   }
 
   String get description {
     switch (this) {
-      case OrderStatus.pending:
-        return 'Votre commande est en attente de confirmation';
+      case OrderStatus.created:
+        return 'Votre commande a été créée';
       case OrderStatus.confirmed:
         return 'Le restaurant a confirmé votre commande';
+      case OrderStatus.accepted:
+        return 'Le restaurant a accepté votre commande';
+      case OrderStatus.rejected:
+        return 'Le restaurant a rejeté votre commande';
       case OrderStatus.preparing:
         return 'Votre commande est en cours de préparation';
-      case OrderStatus.ready:
+      case OrderStatus.readyForPickup:
         return 'Votre commande est prête pour la livraison';
+      case OrderStatus.assignedDriver:
+        return 'Un livreur a été assigné à votre commande';
       case OrderStatus.pickedUp:
         return 'Le livreur a récupéré votre commande';
-      case OrderStatus.onTheWay:
+      case OrderStatus.inTransit:
         return 'Votre commande est en route';
       case OrderStatus.delivered:
         return 'Votre commande a été livrée';
+      case OrderStatus.completed:
+        return 'Votre commande est terminée';
       case OrderStatus.cancelled:
         return 'Votre commande a été annulée';
       case OrderStatus.refunded:
         return 'Votre commande a été remboursée';
+      case OrderStatus.expired:
+        return 'Votre commande a expiré';
     }
   }
 }

@@ -356,7 +356,9 @@ class RestaurantCard extends StatelessWidget {
               
               Expanded(
                 child: Text(
-                  '${restaurant.address.district}, ${restaurant.address.city}',
+                  restaurant.address?.district != null && restaurant.address?.city != null 
+                    ? '${restaurant.address!.district}, ${restaurant.address!.city}'
+                    : restaurant.city ?? 'Ville non disponible',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: DesignTokens.textTertiary,
                   ),
