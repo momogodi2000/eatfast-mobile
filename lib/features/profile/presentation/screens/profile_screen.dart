@@ -128,12 +128,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                     }
                   } catch (e) {
                     if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Erreur de capture d\'image: $e'),
-                          backgroundColor: DesignTokens.errorColor,
-                        ),
-                      );
+                      if (mounted) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Erreur de capture d\'image: $e'),
+                              backgroundColor: DesignTokens.errorColor,
+                            ),
+                          );
+                        }
+                      }
                     }
                   }
                 },

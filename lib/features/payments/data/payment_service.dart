@@ -392,7 +392,7 @@ class PaymentService {
 
   String _formatCameroonPhone(String phone) {
     // Remove any spaces or special characters
-    String cleaned = phone.replaceAll(RegExp(r'\D'), '');
+    final String cleaned = phone.replaceAll(RegExp(r'\D'), '');
     
     // Add country code if missing
     if (cleaned.startsWith('6') && cleaned.length == 9) {

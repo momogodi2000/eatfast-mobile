@@ -64,15 +64,15 @@ class PointsSummaryCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.stars,
                       color: Colors.white,
                       size: 16,
                     ),
                     const SizedBox(width: 4),
-                    Text(
+                    const Text(
                       'Actifs',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

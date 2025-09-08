@@ -104,6 +104,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
     // Simulate API call
     Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      
       setState(() {
         _isLoading = false;
       });

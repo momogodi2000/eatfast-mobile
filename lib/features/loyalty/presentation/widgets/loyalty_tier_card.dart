@@ -120,9 +120,9 @@ class LoyaltyTierCard extends StatelessWidget {
               ),
             ),
           ] else
-            Text(
+            const Text(
               'Niveau Maximum Atteint! 🎉',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

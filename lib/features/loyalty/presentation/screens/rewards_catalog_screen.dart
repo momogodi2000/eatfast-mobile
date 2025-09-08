@@ -241,13 +241,17 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
           final success = await ref.read(loyaltyProvider.notifier).redeemPoints(request);
           
           if (success && mounted) {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Récompense ${reward.name} échangée avec succès!'),
-                backgroundColor: Colors.green,
-              ),
-            );
+            if (mounted) {
+              Navigator.of(context).pop();
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Récompense ${reward.name} échangée avec succès!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            }
           }
         },
       ),
@@ -261,7 +265,7 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
   }
 
   List<Widget> _buildActiveFilterChips(BuildContext context, RewardsFilterState filterState) {
-    List<Widget> chips = [];
+    final List<Widget> chips = [];
 
     if (filterState.selectedType != null) {
       chips.add(
