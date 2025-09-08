@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/services/restaurant/restaurant_service.dart';
 import '../domain/models/restaurant.dart';
 import '../domain/models/menu_item.dart' hide MenuCategory;
-import '../../../core/services/restaurant/restaurant_service.dart' show MenuCategory;
 
 // Restaurant list provider with filters
 final restaurantListProvider = StateNotifierProvider.family<RestaurantListNotifier, RestaurantListState, RestaurantFilter?>(

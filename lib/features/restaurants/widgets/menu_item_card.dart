@@ -73,11 +73,11 @@ class _MenuItemCardState extends State<MenuItemCard> {
                       // Badges
                       Column(
                         children: [
-                          if (widget.menuItem.dietaryTags.contains('vegetarian'))
+                          if (widget.menuItem.dietaryTags.contains(DietaryTag.vegetarian))
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: AppColors.success.withOpacity(0.1),
+                                color: AppColors.success.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
@@ -89,12 +89,12 @@ class _MenuItemCardState extends State<MenuItemCard> {
                                 ),
                               ),
                             ),
-                          if (widget.menuItem.dietaryTags.contains('spicy')) ...[
+                          if (widget.menuItem.dietaryTags.contains(DietaryTag.spicy)) ...[
                             const SizedBox(height: 2),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: AppColors.error.withOpacity(0.1),
+                                color: AppColors.error.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
