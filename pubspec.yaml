@@ -1,8 +1,29 @@
 name: eatfast_mobile
-description: "Eat Fast - Food Delivery App for Cameroon"
+description: "Eat Fast - Fast and reliable food delivery app for Cameroon. Order from your favorite restaurants with real-time tracking, secure payments, and exceptional customer service."
 publish_to: 'none'
 
 version: 1.0.0+1
+
+# App Store Metadata
+# Update these values before submitting to app stores
+app_store_metadata:
+  android:
+    package_name: "com.eatfast.mobile"
+    min_sdk_version: 21
+    target_sdk_version: 34
+  ios:
+    bundle_id: "com.eatfast.mobile"
+    minimum_os_version: "12.0"
+  web:
+    base_href: "/"
+
+# Android specific configuration
+android:
+  namespace: "com.eatfast.mobile"
+
+# iOS specific configuration
+ios:
+  bundle_id: "com.eatfast.mobile"
 
 environment:
   sdk: ^3.8.1
@@ -99,6 +120,10 @@ dev_dependencies:
   mockito: ^5.4.4
   integration_test:
     sdk: flutter
+  
+  # App Optimization
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -149,5 +174,36 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
+# For details regarding fonts from package dependencies,
+# see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+    background_color: "#ffffff"
+    theme_color: "#ffffff"
+  windows:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/logo/eatfast_logo.png
+  branding: assets/logo/eatfast_text.png
+  color_dark: "#1a1a1a"
+  image_dark: assets/logo/eatfast_logo_dark.png
+  branding_dark: assets/logo/eatfast_text_dark.png
+
+  android_12:
+    image: assets/logo/eatfast_logo_android12.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/logo/eatfast_logo_android12_dark.png
+    icon_background_color_dark: "#1a1a1a"
+
+  web: false

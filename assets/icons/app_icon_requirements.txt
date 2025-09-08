@@ -1,0 +1,27 @@
+# App Icon Requirements
+# =====================
+#
+# For the best results, provide PNG files in the following sizes:
+#
+# Android:
+# - mdpi: 48x48 px
+# - hdpi: 72x72 px
+# - xhdpi: 96x96 px
+# - xxhdpi: 144x144 px
+# - xxxhdpi: 192x192 px
+#
+# iOS:
+# - 20x20 pt (40x40, 60x60 px)
+# - 29x29 pt (58x58, 87x87 px)
+# - 40x40 pt (80x80, 120x120 px)
+# - 60x60 pt (120x120, 180x180 px)
+# - 76x76 pt (152x152 px)
+# - 83.5x83.5 pt (167x167 px)
+# - 1024x1024 px (App Store)
+#
+# Web:
+# - 192x192 px
+# - 512x512 px
+#
+# The flutter_launcher_icons package will automatically generate
+# all these sizes from your single 1024x1024 source icon.

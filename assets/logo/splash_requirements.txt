@@ -1,0 +1,26 @@
+# Splash Screen Assets
+# =====================
+#
+# Required files for flutter_native_splash:
+#
+# 1. Main logo: assets/logo/eatfast_logo.png
+#    - Recommended: 512x512 PNG with transparent background
+#    - Will be centered on splash screen
+#
+# 2. Branding text: assets/logo/eatfast_text.png (optional)
+#    - Recommended: PNG with transparent background
+#    - Will be placed below the logo
+#
+# 3. Dark mode variants:
+#    - assets/logo/eatfast_logo_dark.png
+#    - assets/logo/eatfast_text_dark.png
+#
+# 4. Android 12+ specific:
+#    - assets/logo/eatfast_logo_android12.png
+#    - assets/logo/eatfast_logo_android12_dark.png
+#
+# Colors:
+# - Light background: #ffffff
+# - Dark background: #1a1a1a
+#
+# The package will automatically generate platform-specific splash screens.

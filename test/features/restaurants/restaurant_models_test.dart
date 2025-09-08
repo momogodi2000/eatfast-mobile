@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/features/restaurants/domain/models/restaurant.dart';
-import 'package:eatfast_mobile/features/restaurants/domain/models/menu_item.dart';
-import 'package:eatfast_mobile/features/restaurants/domain/models/restaurant_review.dart';
+import '../../../lib/features/restaurants/domain/models/restaurant.dart';
+import '../../../lib/features/restaurants/domain/models/menu_item.dart';
 
 void main() {
   group('Restaurant Models Tests', () {

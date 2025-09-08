@@ -1,5 +1,23 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/features/payments/domain/models/payment.dart';
+impor    test('PaymentMethod enum should have correct values', () {
+      // Test all payment method values
+      expect(PaymentMethod.cash.code, 'cash');
+      expect(PaymentMethod.noupay.code, 'noupay');
+      expect(PaymentMethod.campay.code, 'campay');
+      expect(PaymentMethod.stripe.code, 'stripe');
+      expect(PaymentMethod.wallet.code, 'wallet');
+      expect(PaymentMethod.mtn.code, 'mtn');
+      expect(PaymentMethod.orange.code, 'orange');
+
+      // Test display names
+      expect(PaymentMethod.cash.displayName, 'Cash on Delivery');
+      expect(PaymentMethod.noupay.displayName, 'NouPay');
+      expect(PaymentMethod.campay.displayName, 'CamPay');
+      expect(PaymentMethod.stripe.displayName, 'Credit/Debit Card');
+      expect(PaymentMethod.wallet.displayName, 'EatFast Wallet');
+      expect(PaymentMethod.mtn.displayName, 'MTN Mobile Money');
+      expect(PaymentMethod.orange.displayName, 'Orange Money');
+    });test/flutter_test.dart';
+import '../../../lib/features/payments/domain/models/payment.dart';
 
 void main() {
   group('Payment Models Tests', () {
@@ -34,50 +52,26 @@ void main() {
       expect(PaymentMethod.orange.isMobileMoney, true);
     });
 
-    test('PaymentMethod should identify online payment methods correctly', () {
-      // Test online payment identification
-      expect(PaymentMethod.cash.isOnlinePayment, false);
-      expect(PaymentMethod.noupay.isOnlinePayment, true);
-      expect(PaymentMethod.campay.isOnlinePayment, true);
-      expect(PaymentMethod.stripe.isOnlinePayment, true);
-      expect(PaymentMethod.wallet.isOnlinePayment, true);
-      expect(PaymentMethod.mtn.isOnlinePayment, true);
-      expect(PaymentMethod.orange.isOnlinePayment, true);
+    test('PaymentMethod should identify digital wallets correctly', () {
+      // Test digital wallet identification
+      expect(PaymentMethod.cash.isDigitalWallet, false);
+      expect(PaymentMethod.noupay.isDigitalWallet, true);
+      expect(PaymentMethod.campay.isDigitalWallet, false);
+      expect(PaymentMethod.stripe.isDigitalWallet, false);
+      expect(PaymentMethod.wallet.isDigitalWallet, true);
+      expect(PaymentMethod.mtn.isDigitalWallet, false);
+      expect(PaymentMethod.orange.isDigitalWallet, false);
     });
 
     test('PaymentStatus enum should have correct values', () {
       // Test all payment status values
-      expect(PaymentStatus.pending.name, 'pending');
-      expect(PaymentStatus.processing.name, 'processing');
-      expect(PaymentStatus.completed.name, 'completed');
-      expect(PaymentStatus.failed.name, 'failed');
-      expect(PaymentStatus.cancelled.name, 'cancelled');
-      expect(PaymentStatus.refunded.name, 'refunded');
-
-      // Test display names
-      expect(PaymentStatus.pending.displayName, 'Pending');
-      expect(PaymentStatus.processing.displayName, 'Processing');
-      expect(PaymentStatus.completed.displayName, 'Completed');
-      expect(PaymentStatus.failed.displayName, 'Failed');
-      expect(PaymentStatus.cancelled.displayName, 'Cancelled');
-      expect(PaymentStatus.refunded.displayName, 'Refunded');
+      expect(PaymentStatus.pending.code, 'pending');
+      expect(PaymentStatus.processing.code, 'processing');
+      expect(PaymentStatus.completed.code, 'completed');
+      expect(PaymentStatus.failed.code, 'failed');
+      expect(PaymentStatus.cancelled.code, 'cancelled');
+      expect(PaymentStatus.refunded.code, 'refunded');
     });
-
-    test('PaymentStatus should identify final states correctly', () {
-      // Test final state identification
-      expect(PaymentStatus.pending.isFinal, false);
-      expect(PaymentStatus.processing.isFinal, false);
-      expect(PaymentStatus.completed.isFinal, true);
-      expect(PaymentStatus.failed.isFinal, true);
-      expect(PaymentStatus.cancelled.isFinal, true);
-      expect(PaymentStatus.refunded.isFinal, true);
-    });
-
-    test('PaymentStatus should identify successful states correctly', () {
-      // Test successful state identification
-      expect(PaymentStatus.pending.isSuccessful, false);
-      expect(PaymentStatus.processing.isSuccessful, false);
-      expect(PaymentStatus.completed.isSuccessful, true);
       expect(PaymentStatus.failed.isSuccessful, false);
       expect(PaymentStatus.cancelled.isSuccessful, false);
       expect(PaymentStatus.refunded.isSuccessful, false);

@@ -349,8 +349,6 @@ class LiveOrdersPreview extends StatelessWidget {
   }
 
   void _showRejectDialog(BuildContext context, LiveOrder order) {
-    String reason = '';
-    
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -369,7 +367,6 @@ class LiveOrdersPreview extends StatelessWidget {
             const Text('Pourquoi rejetez-vous cette commande?'),
             const SizedBox(height: DesignTokens.spaceMD),
             TextField(
-              onChanged: (value) => reason = value,
               decoration: InputDecoration(
                 hintText: 'Raison du rejet...',
                 border: OutlineInputBorder(
@@ -389,7 +386,6 @@ class LiveOrdersPreview extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               // TODO: Call reject order with reason
-              print('Rejecting order ${order.orderId} with reason: $reason');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: DesignTokens.errorColor,
