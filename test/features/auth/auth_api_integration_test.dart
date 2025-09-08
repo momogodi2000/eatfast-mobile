@@ -38,7 +38,7 @@ void main() {
 
     test('LoginRequest model should create correctly', () {
       // Arrange & Act
-      final request = LoginRequest(
+      const request = LoginRequest(
         email: 'test@example.com',
         password: 'password123',
         rememberMe: true,
@@ -54,7 +54,7 @@ void main() {
 
     test('RegisterRequest model should create correctly', () {
       // Arrange & Act
-      final request = RegisterRequest(
+      const request = RegisterRequest(
         firstName: 'Jane',
         lastName: 'Smith',
         email: 'jane@example.com',

@@ -140,7 +140,7 @@ class LoadingIndicator extends StatelessWidget {
           const SizedBox(height: DesignTokens.spaceMD),
           Text(
             message!,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: DesignTokens.textSecondary,
             ),
