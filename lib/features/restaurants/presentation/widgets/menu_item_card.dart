@@ -51,7 +51,7 @@ class MenuItemCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
       child: CachedNetworkImage(
-        imageUrl: menuItem.imageUrl,
+        imageUrl: menuItem.imageUrl ?? '',
         width: 80,
         height: 80,
         fit: BoxFit.cover,
@@ -143,7 +143,7 @@ class MenuItemCard extends StatelessWidget {
         
         // Description
         Text(
-          menuItem.description,
+          menuItem.description ?? 'No description available',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: DesignTokens.textSecondary,
             height: 1.3,

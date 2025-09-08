@@ -73,10 +73,28 @@ class CartItemCard extends StatelessWidget {
   }
 
   Widget _buildItemImage() {
+    final imageUrl = cartItem.menuItem.imageUrl;
+    
+    if (imageUrl == null || imageUrl.isEmpty) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+        child: Container(
+          width: 60,
+          height: 60,
+          color: DesignTokens.lightGrey.withValues(alpha: 0.3),
+          child: const Icon(
+            Icons.fastfood,
+            size: 24,
+            color: DesignTokens.textTertiary,
+          ),
+        ),
+      );
+    }
+    
     return ClipRRect(
       borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
       child: CachedNetworkImage(
-        imageUrl: cartItem.menuItem.imageUrl,
+        imageUrl: imageUrl,
         width: 60,
         height: 60,
         fit: BoxFit.cover,

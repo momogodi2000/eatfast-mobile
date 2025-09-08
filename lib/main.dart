@@ -15,6 +15,7 @@ import 'features/legal/presentation/screens/terms_conditions_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'features/onboarding/presentation/screens/welcome_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
+import 'features/auth/presentation/screens/login_api_screen.dart';
 import 'features/auth/presentation/screens/register_screen.dart';
 import 'features/auth/presentation/screens/forgot_password_screen.dart';
 import 'features/auth/presentation/screens/otp_verification_screen.dart';
@@ -31,6 +32,7 @@ import 'features/orders/presentation/screens/order_history_screen.dart';
 import 'features/settings/presentation/screens/language_settings_screen.dart';
 import 'features/settings/presentation/screens/settings_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
+import 'features/profile/presentation/screens/profile_api_screen.dart';
 import 'features/profile/presentation/screens/edit_profile_screen.dart';
 // Role-specific screens
 import 'features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
@@ -105,7 +107,7 @@ GoRouter _createRouter(AuthState authState) {
       if (path == '/driver-dashboard') {
         return RouteGuard.checkAuth(
           authState: authState,
-          requiredRole: UserRole.driver,
+          requiredRole: UserRole.deliveryAgent,
         );
       }
       
@@ -148,6 +150,12 @@ GoRouter _createRouter(AuthState authState) {
     GoRoute(
       path: RouteNames.login,
       builder: (context, state) => const LoginScreen(),
+    ),
+    
+    // New API-based login (for testing/integration)
+    GoRoute(
+      path: '/login-api',
+      builder: (context, state) => const LoginApiScreen(),
     ),
     
     GoRoute(
@@ -197,6 +205,7 @@ GoRouter _createRouter(AuthState authState) {
       },
     ),
     
+    
     GoRoute(
       path: '/restaurants/:restaurantId',
       builder: (context, state) {
@@ -206,6 +215,7 @@ GoRouter _createRouter(AuthState authState) {
         );
       },
     ),
+    
     
     // Cart Routes
     GoRoute(
@@ -236,6 +246,12 @@ GoRouter _createRouter(AuthState authState) {
     GoRoute(
       path: RouteNames.profile,
       builder: (context, state) => const ProfileScreen(),
+    ),
+    
+    // New API-based Profile (for testing/integration)
+    GoRoute(
+      path: '/profile-api',
+      builder: (context, state) => const ProfileApiScreen(),
     ),
     
       GoRoute(
@@ -279,5 +295,32 @@ GoRouter _createRouter(AuthState authState) {
       ),
     ],
   );
+}
+
+// Simple unauthorized access screen
+class UnauthorizedScreen extends StatelessWidget {
+  const UnauthorizedScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Unauthorized Access')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.lock_outline, size: 64, color: Colors.red),
+            SizedBox(height: 16),
+            Text(
+              'Unauthorized Access',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text('You do not have permission to access this page.'),
+          ],
+        ),
+      ),
+    );
+  }
 }
 

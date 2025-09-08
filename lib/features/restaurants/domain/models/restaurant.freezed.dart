@@ -22,22 +22,36 @@ Restaurant _$RestaurantFromJson(Map<String, dynamic> json) {
 mixin _$Restaurant {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get logo => throw _privateConstructorUsedError;
+  String? get coverImage => throw _privateConstructorUsedError;
+  String? get imageUrl =>
+      throw _privateConstructorUsedError; // Added for backend compatibility
+  RestaurantAddress get address => throw _privateConstructorUsedError;
+  RestaurantContact get contact => throw _privateConstructorUsedError;
+  List<OperatingHours> get operatingHours => throw _privateConstructorUsedError;
   List<String> get cuisineTypes => throw _privateConstructorUsedError;
+  List<String>? get specialties =>
+      throw _privateConstructorUsedError; // Added for backend
+  List<String> get features =>
+      throw _privateConstructorUsedError; // ["Delivery", "Takeaway"]
+  List<String>? get paymentMethods =>
+      throw _privateConstructorUsedError; // Added for backend
+  String get priceRange =>
+      throw _privateConstructorUsedError; // "$", "$$", "$$$", "$$$$"
   double get rating => throw _privateConstructorUsedError;
   int get reviewCount => throw _privateConstructorUsedError;
-  String get priceRange => throw _privateConstructorUsedError;
+  String get status =>
+      throw _privateConstructorUsedError; // "ACTIVE", "INACTIVE", "PENDING"
+  bool get isOpen => throw _privateConstructorUsedError;
+  bool get isPromoted =>
+      throw _privateConstructorUsedError; // Added for backend
+  bool get isVerified =>
+      throw _privateConstructorUsedError; // Added for backend
   int get estimatedDeliveryTime => throw _privateConstructorUsedError;
   double get deliveryFee => throw _privateConstructorUsedError;
-  bool get isOpen => throw _privateConstructorUsedError;
-  RestaurantAddress get address => throw _privateConstructorUsedError;
-  List<String> get operatingHours => throw _privateConstructorUsedError;
-  String get phoneNumber => throw _privateConstructorUsedError;
-  List<String> get specialties => throw _privateConstructorUsedError;
-  bool get isFavorite => throw _privateConstructorUsedError;
-  bool get isPromoted => throw _privateConstructorUsedError;
-  List<String> get paymentMethods => throw _privateConstructorUsedError;
+  double get minimumOrder =>
+      throw _privateConstructorUsedError; // Added for backend
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -60,26 +74,32 @@ abstract class $RestaurantCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String description,
-      String imageUrl,
+      String? description,
+      String? logo,
+      String? coverImage,
+      String? imageUrl,
+      RestaurantAddress address,
+      RestaurantContact contact,
+      List<OperatingHours> operatingHours,
       List<String> cuisineTypes,
+      List<String>? specialties,
+      List<String> features,
+      List<String>? paymentMethods,
+      String priceRange,
       double rating,
       int reviewCount,
-      String priceRange,
+      String status,
+      bool isOpen,
+      bool isPromoted,
+      bool isVerified,
       int estimatedDeliveryTime,
       double deliveryFee,
-      bool isOpen,
-      RestaurantAddress address,
-      List<String> operatingHours,
-      String phoneNumber,
-      List<String> specialties,
-      bool isFavorite,
-      bool isPromoted,
-      List<String> paymentMethods,
+      double minimumOrder,
       DateTime? createdAt,
       DateTime? updatedAt});
 
   $RestaurantAddressCopyWith<$Res> get address;
+  $RestaurantContactCopyWith<$Res> get contact;
 }
 
 /// @nodoc
@@ -99,22 +119,27 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? description = null,
-    Object? imageUrl = null,
+    Object? description = freezed,
+    Object? logo = freezed,
+    Object? coverImage = freezed,
+    Object? imageUrl = freezed,
+    Object? address = null,
+    Object? contact = null,
+    Object? operatingHours = null,
     Object? cuisineTypes = null,
+    Object? specialties = freezed,
+    Object? features = null,
+    Object? paymentMethods = freezed,
+    Object? priceRange = null,
     Object? rating = null,
     Object? reviewCount = null,
-    Object? priceRange = null,
+    Object? status = null,
+    Object? isOpen = null,
+    Object? isPromoted = null,
+    Object? isVerified = null,
     Object? estimatedDeliveryTime = null,
     Object? deliveryFee = null,
-    Object? isOpen = null,
-    Object? address = null,
-    Object? operatingHours = null,
-    Object? phoneNumber = null,
-    Object? specialties = null,
-    Object? isFavorite = null,
-    Object? isPromoted = null,
-    Object? paymentMethods = null,
+    Object? minimumOrder = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -127,18 +152,54 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      coverImage: freezed == coverImage
+          ? _value.coverImage
+          : coverImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as RestaurantAddress,
+      contact: null == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as RestaurantContact,
+      operatingHours: null == operatingHours
+          ? _value.operatingHours
+          : operatingHours // ignore: cast_nullable_to_non_nullable
+              as List<OperatingHours>,
       cuisineTypes: null == cuisineTypes
           ? _value.cuisineTypes
           : cuisineTypes // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      specialties: freezed == specialties
+          ? _value.specialties
+          : specialties // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      paymentMethods: freezed == paymentMethods
+          ? _value.paymentMethods
+          : paymentMethods // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      priceRange: null == priceRange
+          ? _value.priceRange
+          : priceRange // ignore: cast_nullable_to_non_nullable
+              as String,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -147,10 +208,22 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
           ? _value.reviewCount
           : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
-      priceRange: null == priceRange
-          ? _value.priceRange
-          : priceRange // ignore: cast_nullable_to_non_nullable
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String,
+      isOpen: null == isOpen
+          ? _value.isOpen
+          : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPromoted: null == isPromoted
+          ? _value.isPromoted
+          : isPromoted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
       estimatedDeliveryTime: null == estimatedDeliveryTime
           ? _value.estimatedDeliveryTime
           : estimatedDeliveryTime // ignore: cast_nullable_to_non_nullable
@@ -159,38 +232,10 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
           ? _value.deliveryFee
           : deliveryFee // ignore: cast_nullable_to_non_nullable
               as double,
-      isOpen: null == isOpen
-          ? _value.isOpen
-          : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as RestaurantAddress,
-      operatingHours: null == operatingHours
-          ? _value.operatingHours
-          : operatingHours // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      specialties: null == specialties
-          ? _value.specialties
-          : specialties // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPromoted: null == isPromoted
-          ? _value.isPromoted
-          : isPromoted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      paymentMethods: null == paymentMethods
-          ? _value.paymentMethods
-          : paymentMethods // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      minimumOrder: null == minimumOrder
+          ? _value.minimumOrder
+          : minimumOrder // ignore: cast_nullable_to_non_nullable
+              as double,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -211,6 +256,16 @@ class _$RestaurantCopyWithImpl<$Res, $Val extends Restaurant>
       return _then(_value.copyWith(address: value) as $Val);
     });
   }
+
+  /// Create a copy of Restaurant
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RestaurantContactCopyWith<$Res> get contact {
+    return $RestaurantContactCopyWith<$Res>(_value.contact, (value) {
+      return _then(_value.copyWith(contact: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -224,27 +279,34 @@ abstract class _$$RestaurantImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-      String description,
-      String imageUrl,
+      String? description,
+      String? logo,
+      String? coverImage,
+      String? imageUrl,
+      RestaurantAddress address,
+      RestaurantContact contact,
+      List<OperatingHours> operatingHours,
       List<String> cuisineTypes,
+      List<String>? specialties,
+      List<String> features,
+      List<String>? paymentMethods,
+      String priceRange,
       double rating,
       int reviewCount,
-      String priceRange,
+      String status,
+      bool isOpen,
+      bool isPromoted,
+      bool isVerified,
       int estimatedDeliveryTime,
       double deliveryFee,
-      bool isOpen,
-      RestaurantAddress address,
-      List<String> operatingHours,
-      String phoneNumber,
-      List<String> specialties,
-      bool isFavorite,
-      bool isPromoted,
-      List<String> paymentMethods,
+      double minimumOrder,
       DateTime? createdAt,
       DateTime? updatedAt});
 
   @override
   $RestaurantAddressCopyWith<$Res> get address;
+  @override
+  $RestaurantContactCopyWith<$Res> get contact;
 }
 
 /// @nodoc
@@ -262,22 +324,27 @@ class __$$RestaurantImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? description = null,
-    Object? imageUrl = null,
+    Object? description = freezed,
+    Object? logo = freezed,
+    Object? coverImage = freezed,
+    Object? imageUrl = freezed,
+    Object? address = null,
+    Object? contact = null,
+    Object? operatingHours = null,
     Object? cuisineTypes = null,
+    Object? specialties = freezed,
+    Object? features = null,
+    Object? paymentMethods = freezed,
+    Object? priceRange = null,
     Object? rating = null,
     Object? reviewCount = null,
-    Object? priceRange = null,
+    Object? status = null,
+    Object? isOpen = null,
+    Object? isPromoted = null,
+    Object? isVerified = null,
     Object? estimatedDeliveryTime = null,
     Object? deliveryFee = null,
-    Object? isOpen = null,
-    Object? address = null,
-    Object? operatingHours = null,
-    Object? phoneNumber = null,
-    Object? specialties = null,
-    Object? isFavorite = null,
-    Object? isPromoted = null,
-    Object? paymentMethods = null,
+    Object? minimumOrder = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -290,18 +357,54 @@ class __$$RestaurantImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
+              as String?,
+      logo: freezed == logo
+          ? _value.logo
+          : logo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      coverImage: freezed == coverImage
+          ? _value.coverImage
+          : coverImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as RestaurantAddress,
+      contact: null == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as RestaurantContact,
+      operatingHours: null == operatingHours
+          ? _value._operatingHours
+          : operatingHours // ignore: cast_nullable_to_non_nullable
+              as List<OperatingHours>,
       cuisineTypes: null == cuisineTypes
           ? _value._cuisineTypes
           : cuisineTypes // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      specialties: freezed == specialties
+          ? _value._specialties
+          : specialties // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      features: null == features
+          ? _value._features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      paymentMethods: freezed == paymentMethods
+          ? _value._paymentMethods
+          : paymentMethods // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      priceRange: null == priceRange
+          ? _value.priceRange
+          : priceRange // ignore: cast_nullable_to_non_nullable
+              as String,
       rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
@@ -310,10 +413,22 @@ class __$$RestaurantImplCopyWithImpl<$Res>
           ? _value.reviewCount
           : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
-      priceRange: null == priceRange
-          ? _value.priceRange
-          : priceRange // ignore: cast_nullable_to_non_nullable
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String,
+      isOpen: null == isOpen
+          ? _value.isOpen
+          : isOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPromoted: null == isPromoted
+          ? _value.isPromoted
+          : isPromoted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
       estimatedDeliveryTime: null == estimatedDeliveryTime
           ? _value.estimatedDeliveryTime
           : estimatedDeliveryTime // ignore: cast_nullable_to_non_nullable
@@ -322,38 +437,10 @@ class __$$RestaurantImplCopyWithImpl<$Res>
           ? _value.deliveryFee
           : deliveryFee // ignore: cast_nullable_to_non_nullable
               as double,
-      isOpen: null == isOpen
-          ? _value.isOpen
-          : isOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as RestaurantAddress,
-      operatingHours: null == operatingHours
-          ? _value._operatingHours
-          : operatingHours // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      phoneNumber: null == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      specialties: null == specialties
-          ? _value._specialties
-          : specialties // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isPromoted: null == isPromoted
-          ? _value.isPromoted
-          : isPromoted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      paymentMethods: null == paymentMethods
-          ? _value._paymentMethods
-          : paymentMethods // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      minimumOrder: null == minimumOrder
+          ? _value.minimumOrder
+          : minimumOrder // ignore: cast_nullable_to_non_nullable
+              as double,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -372,27 +459,33 @@ class _$RestaurantImpl implements _Restaurant {
   const _$RestaurantImpl(
       {required this.id,
       required this.name,
-      required this.description,
-      required this.imageUrl,
-      required final List<String> cuisineTypes,
-      required this.rating,
-      required this.reviewCount,
-      required this.priceRange,
-      required this.estimatedDeliveryTime,
-      required this.deliveryFee,
-      required this.isOpen,
+      this.description,
+      this.logo,
+      this.coverImage,
+      this.imageUrl,
       required this.address,
-      required final List<String> operatingHours,
-      required this.phoneNumber,
-      final List<String> specialties = const [],
-      this.isFavorite = false,
+      required this.contact,
+      required final List<OperatingHours> operatingHours,
+      required final List<String> cuisineTypes,
+      final List<String>? specialties,
+      final List<String> features = const [],
+      final List<String>? paymentMethods,
+      required this.priceRange,
+      this.rating = 0.0,
+      this.reviewCount = 0,
+      required this.status,
+      this.isOpen = true,
       this.isPromoted = false,
-      final List<String> paymentMethods = const [],
+      this.isVerified = false,
+      this.estimatedDeliveryTime = 30,
+      this.deliveryFee = 0.0,
+      this.minimumOrder = 2000.0,
       this.createdAt,
       this.updatedAt})
-      : _cuisineTypes = cuisineTypes,
-        _operatingHours = operatingHours,
+      : _operatingHours = operatingHours,
+        _cuisineTypes = cuisineTypes,
         _specialties = specialties,
+        _features = features,
         _paymentMethods = paymentMethods;
 
   factory _$RestaurantImpl.fromJson(Map<String, dynamic> json) =>
@@ -403,9 +496,26 @@ class _$RestaurantImpl implements _Restaurant {
   @override
   final String name;
   @override
-  final String description;
+  final String? description;
   @override
-  final String imageUrl;
+  final String? logo;
+  @override
+  final String? coverImage;
+  @override
+  final String? imageUrl;
+// Added for backend compatibility
+  @override
+  final RestaurantAddress address;
+  @override
+  final RestaurantContact contact;
+  final List<OperatingHours> _operatingHours;
+  @override
+  List<OperatingHours> get operatingHours {
+    if (_operatingHours is EqualUnmodifiableListView) return _operatingHours;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_operatingHours);
+  }
+
   final List<String> _cuisineTypes;
   @override
   List<String> get cuisineTypes {
@@ -414,54 +524,73 @@ class _$RestaurantImpl implements _Restaurant {
     return EqualUnmodifiableListView(_cuisineTypes);
   }
 
+  final List<String>? _specialties;
   @override
-  final double rating;
-  @override
-  final int reviewCount;
-  @override
-  final String priceRange;
-  @override
-  final int estimatedDeliveryTime;
-  @override
-  final double deliveryFee;
-  @override
-  final bool isOpen;
-  @override
-  final RestaurantAddress address;
-  final List<String> _operatingHours;
-  @override
-  List<String> get operatingHours {
-    if (_operatingHours is EqualUnmodifiableListView) return _operatingHours;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_operatingHours);
-  }
-
-  @override
-  final String phoneNumber;
-  final List<String> _specialties;
-  @override
-  @JsonKey()
-  List<String> get specialties {
+  List<String>? get specialties {
+    final value = _specialties;
+    if (value == null) return null;
     if (_specialties is EqualUnmodifiableListView) return _specialties;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_specialties);
+    return EqualUnmodifiableListView(value);
   }
 
+// Added for backend
+  final List<String> _features;
+// Added for backend
   @override
   @JsonKey()
-  final bool isFavorite;
+  List<String> get features {
+    if (_features is EqualUnmodifiableListView) return _features;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_features);
+  }
+
+// ["Delivery", "Takeaway"]
+  final List<String>? _paymentMethods;
+// ["Delivery", "Takeaway"]
+  @override
+  List<String>? get paymentMethods {
+    final value = _paymentMethods;
+    if (value == null) return null;
+    if (_paymentMethods is EqualUnmodifiableListView) return _paymentMethods;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+// Added for backend
+  @override
+  final String priceRange;
+// "$", "$$", "$$$", "$$$$"
+  @override
+  @JsonKey()
+  final double rating;
+  @override
+  @JsonKey()
+  final int reviewCount;
+  @override
+  final String status;
+// "ACTIVE", "INACTIVE", "PENDING"
+  @override
+  @JsonKey()
+  final bool isOpen;
   @override
   @JsonKey()
   final bool isPromoted;
-  final List<String> _paymentMethods;
+// Added for backend
   @override
   @JsonKey()
-  List<String> get paymentMethods {
-    if (_paymentMethods is EqualUnmodifiableListView) return _paymentMethods;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_paymentMethods);
-  }
-
+  final bool isVerified;
+// Added for backend
+  @override
+  @JsonKey()
+  final int estimatedDeliveryTime;
+  @override
+  @JsonKey()
+  final double deliveryFee;
+  @override
+  @JsonKey()
+  final double minimumOrder;
+// Added for backend
   @override
   final DateTime? createdAt;
   @override
@@ -469,7 +598,7 @@ class _$RestaurantImpl implements _Restaurant {
 
   @override
   String toString() {
-    return 'Restaurant(id: $id, name: $name, description: $description, imageUrl: $imageUrl, cuisineTypes: $cuisineTypes, rating: $rating, reviewCount: $reviewCount, priceRange: $priceRange, estimatedDeliveryTime: $estimatedDeliveryTime, deliveryFee: $deliveryFee, isOpen: $isOpen, address: $address, operatingHours: $operatingHours, phoneNumber: $phoneNumber, specialties: $specialties, isFavorite: $isFavorite, isPromoted: $isPromoted, paymentMethods: $paymentMethods, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Restaurant(id: $id, name: $name, description: $description, logo: $logo, coverImage: $coverImage, imageUrl: $imageUrl, address: $address, contact: $contact, operatingHours: $operatingHours, cuisineTypes: $cuisineTypes, specialties: $specialties, features: $features, paymentMethods: $paymentMethods, priceRange: $priceRange, rating: $rating, reviewCount: $reviewCount, status: $status, isOpen: $isOpen, isPromoted: $isPromoted, isVerified: $isVerified, estimatedDeliveryTime: $estimatedDeliveryTime, deliveryFee: $deliveryFee, minimumOrder: $minimumOrder, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -481,33 +610,39 @@ class _$RestaurantImpl implements _Restaurant {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.logo, logo) || other.logo == logo) &&
+            (identical(other.coverImage, coverImage) ||
+                other.coverImage == coverImage) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.contact, contact) || other.contact == contact) &&
+            const DeepCollectionEquality()
+                .equals(other._operatingHours, _operatingHours) &&
             const DeepCollectionEquality()
                 .equals(other._cuisineTypes, _cuisineTypes) &&
+            const DeepCollectionEquality()
+                .equals(other._specialties, _specialties) &&
+            const DeepCollectionEquality().equals(other._features, _features) &&
+            const DeepCollectionEquality()
+                .equals(other._paymentMethods, _paymentMethods) &&
+            (identical(other.priceRange, priceRange) ||
+                other.priceRange == priceRange) &&
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.reviewCount, reviewCount) ||
                 other.reviewCount == reviewCount) &&
-            (identical(other.priceRange, priceRange) ||
-                other.priceRange == priceRange) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
+            (identical(other.isPromoted, isPromoted) ||
+                other.isPromoted == isPromoted) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified) &&
             (identical(other.estimatedDeliveryTime, estimatedDeliveryTime) ||
                 other.estimatedDeliveryTime == estimatedDeliveryTime) &&
             (identical(other.deliveryFee, deliveryFee) ||
                 other.deliveryFee == deliveryFee) &&
-            (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
-            (identical(other.address, address) || other.address == address) &&
-            const DeepCollectionEquality()
-                .equals(other._operatingHours, _operatingHours) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            const DeepCollectionEquality()
-                .equals(other._specialties, _specialties) &&
-            (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite) &&
-            (identical(other.isPromoted, isPromoted) ||
-                other.isPromoted == isPromoted) &&
-            const DeepCollectionEquality()
-                .equals(other._paymentMethods, _paymentMethods) &&
+            (identical(other.minimumOrder, minimumOrder) ||
+                other.minimumOrder == minimumOrder) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -521,21 +656,26 @@ class _$RestaurantImpl implements _Restaurant {
         id,
         name,
         description,
+        logo,
+        coverImage,
         imageUrl,
+        address,
+        contact,
+        const DeepCollectionEquality().hash(_operatingHours),
         const DeepCollectionEquality().hash(_cuisineTypes),
+        const DeepCollectionEquality().hash(_specialties),
+        const DeepCollectionEquality().hash(_features),
+        const DeepCollectionEquality().hash(_paymentMethods),
+        priceRange,
         rating,
         reviewCount,
-        priceRange,
+        status,
+        isOpen,
+        isPromoted,
+        isVerified,
         estimatedDeliveryTime,
         deliveryFee,
-        isOpen,
-        address,
-        const DeepCollectionEquality().hash(_operatingHours),
-        phoneNumber,
-        const DeepCollectionEquality().hash(_specialties),
-        isFavorite,
-        isPromoted,
-        const DeepCollectionEquality().hash(_paymentMethods),
+        minimumOrder,
         createdAt,
         updatedAt
       ]);
@@ -560,22 +700,27 @@ abstract class _Restaurant implements Restaurant {
   const factory _Restaurant(
       {required final String id,
       required final String name,
-      required final String description,
-      required final String imageUrl,
-      required final List<String> cuisineTypes,
-      required final double rating,
-      required final int reviewCount,
-      required final String priceRange,
-      required final int estimatedDeliveryTime,
-      required final double deliveryFee,
-      required final bool isOpen,
+      final String? description,
+      final String? logo,
+      final String? coverImage,
+      final String? imageUrl,
       required final RestaurantAddress address,
-      required final List<String> operatingHours,
-      required final String phoneNumber,
-      final List<String> specialties,
-      final bool isFavorite,
+      required final RestaurantContact contact,
+      required final List<OperatingHours> operatingHours,
+      required final List<String> cuisineTypes,
+      final List<String>? specialties,
+      final List<String> features,
+      final List<String>? paymentMethods,
+      required final String priceRange,
+      final double rating,
+      final int reviewCount,
+      required final String status,
+      final bool isOpen,
       final bool isPromoted,
-      final List<String> paymentMethods,
+      final bool isVerified,
+      final int estimatedDeliveryTime,
+      final double deliveryFee,
+      final double minimumOrder,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$RestaurantImpl;
 
@@ -587,37 +732,47 @@ abstract class _Restaurant implements Restaurant {
   @override
   String get name;
   @override
-  String get description;
+  String? get description;
   @override
-  String get imageUrl;
+  String? get logo;
+  @override
+  String? get coverImage;
+  @override
+  String? get imageUrl; // Added for backend compatibility
+  @override
+  RestaurantAddress get address;
+  @override
+  RestaurantContact get contact;
+  @override
+  List<OperatingHours> get operatingHours;
   @override
   List<String> get cuisineTypes;
+  @override
+  List<String>? get specialties; // Added for backend
+  @override
+  List<String> get features; // ["Delivery", "Takeaway"]
+  @override
+  List<String>? get paymentMethods; // Added for backend
+  @override
+  String get priceRange; // "$", "$$", "$$$", "$$$$"
   @override
   double get rating;
   @override
   int get reviewCount;
   @override
-  String get priceRange;
+  String get status; // "ACTIVE", "INACTIVE", "PENDING"
+  @override
+  bool get isOpen;
+  @override
+  bool get isPromoted; // Added for backend
+  @override
+  bool get isVerified; // Added for backend
   @override
   int get estimatedDeliveryTime;
   @override
   double get deliveryFee;
   @override
-  bool get isOpen;
-  @override
-  RestaurantAddress get address;
-  @override
-  List<String> get operatingHours;
-  @override
-  String get phoneNumber;
-  @override
-  List<String> get specialties;
-  @override
-  bool get isFavorite;
-  @override
-  bool get isPromoted;
-  @override
-  List<String> get paymentMethods;
+  double get minimumOrder; // Added for backend
   @override
   DateTime? get createdAt;
   @override
@@ -639,11 +794,12 @@ RestaurantAddress _$RestaurantAddressFromJson(Map<String, dynamic> json) {
 mixin _$RestaurantAddress {
   String get street => throw _privateConstructorUsedError;
   String get city => throw _privateConstructorUsedError;
-  String get district => throw _privateConstructorUsedError;
-  String get postalCode => throw _privateConstructorUsedError;
-  double get latitude => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
-  String? get landmark => throw _privateConstructorUsedError;
+  String? get country => throw _privateConstructorUsedError;
+  String? get district =>
+      throw _privateConstructorUsedError; // Added for backend
+  String? get landmark =>
+      throw _privateConstructorUsedError; // Added for backend
+  RestaurantCoordinates get coordinates => throw _privateConstructorUsedError;
 
   /// Serializes this RestaurantAddress to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -664,11 +820,12 @@ abstract class $RestaurantAddressCopyWith<$Res> {
   $Res call(
       {String street,
       String city,
-      String district,
-      String postalCode,
-      double latitude,
-      double longitude,
-      String? landmark});
+      String? country,
+      String? district,
+      String? landmark,
+      RestaurantCoordinates coordinates});
+
+  $RestaurantCoordinatesCopyWith<$Res> get coordinates;
 }
 
 /// @nodoc
@@ -688,11 +845,10 @@ class _$RestaurantAddressCopyWithImpl<$Res, $Val extends RestaurantAddress>
   $Res call({
     Object? street = null,
     Object? city = null,
-    Object? district = null,
-    Object? postalCode = null,
-    Object? latitude = null,
-    Object? longitude = null,
+    Object? country = freezed,
+    Object? district = freezed,
     Object? landmark = freezed,
+    Object? coordinates = null,
   }) {
     return _then(_value.copyWith(
       street: null == street
@@ -703,27 +859,33 @@ class _$RestaurantAddressCopyWithImpl<$Res, $Val extends RestaurantAddress>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String,
-      district: null == district
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as String,
-      postalCode: null == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String?,
       landmark: freezed == landmark
           ? _value.landmark
           : landmark // ignore: cast_nullable_to_non_nullable
               as String?,
+      coordinates: null == coordinates
+          ? _value.coordinates
+          : coordinates // ignore: cast_nullable_to_non_nullable
+              as RestaurantCoordinates,
     ) as $Val);
+  }
+
+  /// Create a copy of RestaurantAddress
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RestaurantCoordinatesCopyWith<$Res> get coordinates {
+    return $RestaurantCoordinatesCopyWith<$Res>(_value.coordinates, (value) {
+      return _then(_value.copyWith(coordinates: value) as $Val);
+    });
   }
 }
 
@@ -738,11 +900,13 @@ abstract class _$$RestaurantAddressImplCopyWith<$Res>
   $Res call(
       {String street,
       String city,
-      String district,
-      String postalCode,
-      double latitude,
-      double longitude,
-      String? landmark});
+      String? country,
+      String? district,
+      String? landmark,
+      RestaurantCoordinates coordinates});
+
+  @override
+  $RestaurantCoordinatesCopyWith<$Res> get coordinates;
 }
 
 /// @nodoc
@@ -760,11 +924,10 @@ class __$$RestaurantAddressImplCopyWithImpl<$Res>
   $Res call({
     Object? street = null,
     Object? city = null,
-    Object? district = null,
-    Object? postalCode = null,
-    Object? latitude = null,
-    Object? longitude = null,
+    Object? country = freezed,
+    Object? district = freezed,
     Object? landmark = freezed,
+    Object? coordinates = null,
   }) {
     return _then(_$RestaurantAddressImpl(
       street: null == street
@@ -775,26 +938,22 @@ class __$$RestaurantAddressImplCopyWithImpl<$Res>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String,
-      district: null == district
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
-              as String,
-      postalCode: null == postalCode
-          ? _value.postalCode
-          : postalCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      latitude: null == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double,
-      longitude: null == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String?,
       landmark: freezed == landmark
           ? _value.landmark
           : landmark // ignore: cast_nullable_to_non_nullable
               as String?,
+      coordinates: null == coordinates
+          ? _value.coordinates
+          : coordinates // ignore: cast_nullable_to_non_nullable
+              as RestaurantCoordinates,
     ));
   }
 }
@@ -805,11 +964,10 @@ class _$RestaurantAddressImpl implements _RestaurantAddress {
   const _$RestaurantAddressImpl(
       {required this.street,
       required this.city,
-      required this.district,
-      required this.postalCode,
-      required this.latitude,
-      required this.longitude,
-      this.landmark});
+      this.country,
+      this.district,
+      this.landmark,
+      required this.coordinates});
 
   factory _$RestaurantAddressImpl.fromJson(Map<String, dynamic> json) =>
       _$$RestaurantAddressImplFromJson(json);
@@ -819,19 +977,19 @@ class _$RestaurantAddressImpl implements _RestaurantAddress {
   @override
   final String city;
   @override
-  final String district;
+  final String? country;
   @override
-  final String postalCode;
-  @override
-  final double latitude;
-  @override
-  final double longitude;
+  final String? district;
+// Added for backend
   @override
   final String? landmark;
+// Added for backend
+  @override
+  final RestaurantCoordinates coordinates;
 
   @override
   String toString() {
-    return 'RestaurantAddress(street: $street, city: $city, district: $district, postalCode: $postalCode, latitude: $latitude, longitude: $longitude, landmark: $landmark)';
+    return 'RestaurantAddress(street: $street, city: $city, country: $country, district: $district, landmark: $landmark, coordinates: $coordinates)';
   }
 
   @override
@@ -841,22 +999,19 @@ class _$RestaurantAddressImpl implements _RestaurantAddress {
             other is _$RestaurantAddressImpl &&
             (identical(other.street, street) || other.street == street) &&
             (identical(other.city, city) || other.city == city) &&
+            (identical(other.country, country) || other.country == country) &&
             (identical(other.district, district) ||
                 other.district == district) &&
-            (identical(other.postalCode, postalCode) ||
-                other.postalCode == postalCode) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
             (identical(other.landmark, landmark) ||
-                other.landmark == landmark));
+                other.landmark == landmark) &&
+            (identical(other.coordinates, coordinates) ||
+                other.coordinates == coordinates));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, street, city, district,
-      postalCode, latitude, longitude, landmark);
+  int get hashCode => Object.hash(
+      runtimeType, street, city, country, district, landmark, coordinates);
 
   /// Create a copy of RestaurantAddress
   /// with the given fields replaced by the non-null parameter values.
@@ -877,13 +1032,13 @@ class _$RestaurantAddressImpl implements _RestaurantAddress {
 
 abstract class _RestaurantAddress implements RestaurantAddress {
   const factory _RestaurantAddress(
-      {required final String street,
-      required final String city,
-      required final String district,
-      required final String postalCode,
-      required final double latitude,
-      required final double longitude,
-      final String? landmark}) = _$RestaurantAddressImpl;
+          {required final String street,
+          required final String city,
+          final String? country,
+          final String? district,
+          final String? landmark,
+          required final RestaurantCoordinates coordinates}) =
+      _$RestaurantAddressImpl;
 
   factory _RestaurantAddress.fromJson(Map<String, dynamic> json) =
       _$RestaurantAddressImpl.fromJson;
@@ -893,21 +1048,591 @@ abstract class _RestaurantAddress implements RestaurantAddress {
   @override
   String get city;
   @override
-  String get district;
+  String? get country;
   @override
-  String get postalCode;
+  String? get district; // Added for backend
   @override
-  double get latitude;
+  String? get landmark; // Added for backend
   @override
-  double get longitude;
-  @override
-  String? get landmark;
+  RestaurantCoordinates get coordinates;
 
   /// Create a copy of RestaurantAddress
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RestaurantAddressImplCopyWith<_$RestaurantAddressImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RestaurantCoordinates _$RestaurantCoordinatesFromJson(
+    Map<String, dynamic> json) {
+  return _RestaurantCoordinates.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RestaurantCoordinates {
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+
+  /// Serializes this RestaurantCoordinates to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RestaurantCoordinates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RestaurantCoordinatesCopyWith<RestaurantCoordinates> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RestaurantCoordinatesCopyWith<$Res> {
+  factory $RestaurantCoordinatesCopyWith(RestaurantCoordinates value,
+          $Res Function(RestaurantCoordinates) then) =
+      _$RestaurantCoordinatesCopyWithImpl<$Res, RestaurantCoordinates>;
+  @useResult
+  $Res call({double latitude, double longitude});
+}
+
+/// @nodoc
+class _$RestaurantCoordinatesCopyWithImpl<$Res,
+        $Val extends RestaurantCoordinates>
+    implements $RestaurantCoordinatesCopyWith<$Res> {
+  _$RestaurantCoordinatesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RestaurantCoordinates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_value.copyWith(
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RestaurantCoordinatesImplCopyWith<$Res>
+    implements $RestaurantCoordinatesCopyWith<$Res> {
+  factory _$$RestaurantCoordinatesImplCopyWith(
+          _$RestaurantCoordinatesImpl value,
+          $Res Function(_$RestaurantCoordinatesImpl) then) =
+      __$$RestaurantCoordinatesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({double latitude, double longitude});
+}
+
+/// @nodoc
+class __$$RestaurantCoordinatesImplCopyWithImpl<$Res>
+    extends _$RestaurantCoordinatesCopyWithImpl<$Res,
+        _$RestaurantCoordinatesImpl>
+    implements _$$RestaurantCoordinatesImplCopyWith<$Res> {
+  __$$RestaurantCoordinatesImplCopyWithImpl(_$RestaurantCoordinatesImpl _value,
+      $Res Function(_$RestaurantCoordinatesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RestaurantCoordinates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? latitude = null,
+    Object? longitude = null,
+  }) {
+    return _then(_$RestaurantCoordinatesImpl(
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RestaurantCoordinatesImpl implements _RestaurantCoordinates {
+  const _$RestaurantCoordinatesImpl(
+      {required this.latitude, required this.longitude});
+
+  factory _$RestaurantCoordinatesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RestaurantCoordinatesImplFromJson(json);
+
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+
+  @override
+  String toString() {
+    return 'RestaurantCoordinates(latitude: $latitude, longitude: $longitude)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RestaurantCoordinatesImpl &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, latitude, longitude);
+
+  /// Create a copy of RestaurantCoordinates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RestaurantCoordinatesImplCopyWith<_$RestaurantCoordinatesImpl>
+      get copyWith => __$$RestaurantCoordinatesImplCopyWithImpl<
+          _$RestaurantCoordinatesImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RestaurantCoordinatesImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RestaurantCoordinates implements RestaurantCoordinates {
+  const factory _RestaurantCoordinates(
+      {required final double latitude,
+      required final double longitude}) = _$RestaurantCoordinatesImpl;
+
+  factory _RestaurantCoordinates.fromJson(Map<String, dynamic> json) =
+      _$RestaurantCoordinatesImpl.fromJson;
+
+  @override
+  double get latitude;
+  @override
+  double get longitude;
+
+  /// Create a copy of RestaurantCoordinates
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RestaurantCoordinatesImplCopyWith<_$RestaurantCoordinatesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+RestaurantContact _$RestaurantContactFromJson(Map<String, dynamic> json) {
+  return _RestaurantContact.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RestaurantContact {
+  String? get phone => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get website => throw _privateConstructorUsedError;
+
+  /// Serializes this RestaurantContact to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RestaurantContact
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RestaurantContactCopyWith<RestaurantContact> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RestaurantContactCopyWith<$Res> {
+  factory $RestaurantContactCopyWith(
+          RestaurantContact value, $Res Function(RestaurantContact) then) =
+      _$RestaurantContactCopyWithImpl<$Res, RestaurantContact>;
+  @useResult
+  $Res call({String? phone, String? email, String? website});
+}
+
+/// @nodoc
+class _$RestaurantContactCopyWithImpl<$Res, $Val extends RestaurantContact>
+    implements $RestaurantContactCopyWith<$Res> {
+  _$RestaurantContactCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RestaurantContact
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phone = freezed,
+    Object? email = freezed,
+    Object? website = freezed,
+  }) {
+    return _then(_value.copyWith(
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      website: freezed == website
+          ? _value.website
+          : website // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RestaurantContactImplCopyWith<$Res>
+    implements $RestaurantContactCopyWith<$Res> {
+  factory _$$RestaurantContactImplCopyWith(_$RestaurantContactImpl value,
+          $Res Function(_$RestaurantContactImpl) then) =
+      __$$RestaurantContactImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? phone, String? email, String? website});
+}
+
+/// @nodoc
+class __$$RestaurantContactImplCopyWithImpl<$Res>
+    extends _$RestaurantContactCopyWithImpl<$Res, _$RestaurantContactImpl>
+    implements _$$RestaurantContactImplCopyWith<$Res> {
+  __$$RestaurantContactImplCopyWithImpl(_$RestaurantContactImpl _value,
+      $Res Function(_$RestaurantContactImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RestaurantContact
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phone = freezed,
+    Object? email = freezed,
+    Object? website = freezed,
+  }) {
+    return _then(_$RestaurantContactImpl(
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      website: freezed == website
+          ? _value.website
+          : website // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RestaurantContactImpl implements _RestaurantContact {
+  const _$RestaurantContactImpl({this.phone, this.email, this.website});
+
+  factory _$RestaurantContactImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RestaurantContactImplFromJson(json);
+
+  @override
+  final String? phone;
+  @override
+  final String? email;
+  @override
+  final String? website;
+
+  @override
+  String toString() {
+    return 'RestaurantContact(phone: $phone, email: $email, website: $website)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RestaurantContactImpl &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.website, website) || other.website == website));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, phone, email, website);
+
+  /// Create a copy of RestaurantContact
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RestaurantContactImplCopyWith<_$RestaurantContactImpl> get copyWith =>
+      __$$RestaurantContactImplCopyWithImpl<_$RestaurantContactImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RestaurantContactImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RestaurantContact implements RestaurantContact {
+  const factory _RestaurantContact(
+      {final String? phone,
+      final String? email,
+      final String? website}) = _$RestaurantContactImpl;
+
+  factory _RestaurantContact.fromJson(Map<String, dynamic> json) =
+      _$RestaurantContactImpl.fromJson;
+
+  @override
+  String? get phone;
+  @override
+  String? get email;
+  @override
+  String? get website;
+
+  /// Create a copy of RestaurantContact
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RestaurantContactImplCopyWith<_$RestaurantContactImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OperatingHours _$OperatingHoursFromJson(Map<String, dynamic> json) {
+  return _OperatingHours.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OperatingHours {
+  String get day =>
+      throw _privateConstructorUsedError; // "monday", "tuesday", etc.
+  String get open => throw _privateConstructorUsedError; // "09:00"
+  String get close => throw _privateConstructorUsedError; // "22:00"
+  bool get isClosed => throw _privateConstructorUsedError;
+
+  /// Serializes this OperatingHours to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of OperatingHours
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $OperatingHoursCopyWith<OperatingHours> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OperatingHoursCopyWith<$Res> {
+  factory $OperatingHoursCopyWith(
+          OperatingHours value, $Res Function(OperatingHours) then) =
+      _$OperatingHoursCopyWithImpl<$Res, OperatingHours>;
+  @useResult
+  $Res call({String day, String open, String close, bool isClosed});
+}
+
+/// @nodoc
+class _$OperatingHoursCopyWithImpl<$Res, $Val extends OperatingHours>
+    implements $OperatingHoursCopyWith<$Res> {
+  _$OperatingHoursCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of OperatingHours
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? day = null,
+    Object? open = null,
+    Object? close = null,
+    Object? isClosed = null,
+  }) {
+    return _then(_value.copyWith(
+      day: null == day
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
+              as String,
+      close: null == close
+          ? _value.close
+          : close // ignore: cast_nullable_to_non_nullable
+              as String,
+      isClosed: null == isClosed
+          ? _value.isClosed
+          : isClosed // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OperatingHoursImplCopyWith<$Res>
+    implements $OperatingHoursCopyWith<$Res> {
+  factory _$$OperatingHoursImplCopyWith(_$OperatingHoursImpl value,
+          $Res Function(_$OperatingHoursImpl) then) =
+      __$$OperatingHoursImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String day, String open, String close, bool isClosed});
+}
+
+/// @nodoc
+class __$$OperatingHoursImplCopyWithImpl<$Res>
+    extends _$OperatingHoursCopyWithImpl<$Res, _$OperatingHoursImpl>
+    implements _$$OperatingHoursImplCopyWith<$Res> {
+  __$$OperatingHoursImplCopyWithImpl(
+      _$OperatingHoursImpl _value, $Res Function(_$OperatingHoursImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperatingHours
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? day = null,
+    Object? open = null,
+    Object? close = null,
+    Object? isClosed = null,
+  }) {
+    return _then(_$OperatingHoursImpl(
+      day: null == day
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
+              as String,
+      close: null == close
+          ? _value.close
+          : close // ignore: cast_nullable_to_non_nullable
+              as String,
+      isClosed: null == isClosed
+          ? _value.isClosed
+          : isClosed // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OperatingHoursImpl implements _OperatingHours {
+  const _$OperatingHoursImpl(
+      {required this.day,
+      required this.open,
+      required this.close,
+      this.isClosed = false});
+
+  factory _$OperatingHoursImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OperatingHoursImplFromJson(json);
+
+  @override
+  final String day;
+// "monday", "tuesday", etc.
+  @override
+  final String open;
+// "09:00"
+  @override
+  final String close;
+// "22:00"
+  @override
+  @JsonKey()
+  final bool isClosed;
+
+  @override
+  String toString() {
+    return 'OperatingHours(day: $day, open: $open, close: $close, isClosed: $isClosed)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OperatingHoursImpl &&
+            (identical(other.day, day) || other.day == day) &&
+            (identical(other.open, open) || other.open == open) &&
+            (identical(other.close, close) || other.close == close) &&
+            (identical(other.isClosed, isClosed) ||
+                other.isClosed == isClosed));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, day, open, close, isClosed);
+
+  /// Create a copy of OperatingHours
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OperatingHoursImplCopyWith<_$OperatingHoursImpl> get copyWith =>
+      __$$OperatingHoursImplCopyWithImpl<_$OperatingHoursImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OperatingHoursImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OperatingHours implements OperatingHours {
+  const factory _OperatingHours(
+      {required final String day,
+      required final String open,
+      required final String close,
+      final bool isClosed}) = _$OperatingHoursImpl;
+
+  factory _OperatingHours.fromJson(Map<String, dynamic> json) =
+      _$OperatingHoursImpl.fromJson;
+
+  @override
+  String get day; // "monday", "tuesday", etc.
+  @override
+  String get open; // "09:00"
+  @override
+  String get close; // "22:00"
+  @override
+  bool get isClosed;
+
+  /// Create a copy of OperatingHours
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OperatingHoursImplCopyWith<_$OperatingHoursImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -925,6 +1650,7 @@ mixin _$RestaurantFilter {
   double? get maxDeliveryFee => throw _privateConstructorUsedError;
   String? get priceRange => throw _privateConstructorUsedError;
   bool? get isOpen => throw _privateConstructorUsedError;
+  bool? get hasPromotion => throw _privateConstructorUsedError;
   RestaurantSortBy get sortBy => throw _privateConstructorUsedError;
   SortOrder get sortOrder => throw _privateConstructorUsedError;
 
@@ -953,6 +1679,7 @@ abstract class $RestaurantFilterCopyWith<$Res> {
       double? maxDeliveryFee,
       String? priceRange,
       bool? isOpen,
+      bool? hasPromotion,
       RestaurantSortBy sortBy,
       SortOrder sortOrder});
 }
@@ -980,6 +1707,7 @@ class _$RestaurantFilterCopyWithImpl<$Res, $Val extends RestaurantFilter>
     Object? maxDeliveryFee = freezed,
     Object? priceRange = freezed,
     Object? isOpen = freezed,
+    Object? hasPromotion = freezed,
     Object? sortBy = null,
     Object? sortOrder = null,
   }) {
@@ -1016,6 +1744,10 @@ class _$RestaurantFilterCopyWithImpl<$Res, $Val extends RestaurantFilter>
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
               as bool?,
+      hasPromotion: freezed == hasPromotion
+          ? _value.hasPromotion
+          : hasPromotion // ignore: cast_nullable_to_non_nullable
+              as bool?,
       sortBy: null == sortBy
           ? _value.sortBy
           : sortBy // ignore: cast_nullable_to_non_nullable
@@ -1045,6 +1777,7 @@ abstract class _$$RestaurantFilterImplCopyWith<$Res>
       double? maxDeliveryFee,
       String? priceRange,
       bool? isOpen,
+      bool? hasPromotion,
       RestaurantSortBy sortBy,
       SortOrder sortOrder});
 }
@@ -1070,6 +1803,7 @@ class __$$RestaurantFilterImplCopyWithImpl<$Res>
     Object? maxDeliveryFee = freezed,
     Object? priceRange = freezed,
     Object? isOpen = freezed,
+    Object? hasPromotion = freezed,
     Object? sortBy = null,
     Object? sortOrder = null,
   }) {
@@ -1106,6 +1840,10 @@ class __$$RestaurantFilterImplCopyWithImpl<$Res>
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
               as bool?,
+      hasPromotion: freezed == hasPromotion
+          ? _value.hasPromotion
+          : hasPromotion // ignore: cast_nullable_to_non_nullable
+              as bool?,
       sortBy: null == sortBy
           ? _value.sortBy
           : sortBy // ignore: cast_nullable_to_non_nullable
@@ -1130,6 +1868,7 @@ class _$RestaurantFilterImpl implements _RestaurantFilter {
       this.maxDeliveryFee,
       this.priceRange,
       this.isOpen,
+      this.hasPromotion,
       this.sortBy = RestaurantSortBy.rating,
       this.sortOrder = SortOrder.descending})
       : _cuisineTypes = cuisineTypes;
@@ -1162,6 +1901,8 @@ class _$RestaurantFilterImpl implements _RestaurantFilter {
   @override
   final bool? isOpen;
   @override
+  final bool? hasPromotion;
+  @override
   @JsonKey()
   final RestaurantSortBy sortBy;
   @override
@@ -1170,7 +1911,7 @@ class _$RestaurantFilterImpl implements _RestaurantFilter {
 
   @override
   String toString() {
-    return 'RestaurantFilter(searchQuery: $searchQuery, cuisineTypes: $cuisineTypes, minRating: $minRating, maxRating: $maxRating, maxDeliveryTime: $maxDeliveryTime, maxDeliveryFee: $maxDeliveryFee, priceRange: $priceRange, isOpen: $isOpen, sortBy: $sortBy, sortOrder: $sortOrder)';
+    return 'RestaurantFilter(searchQuery: $searchQuery, cuisineTypes: $cuisineTypes, minRating: $minRating, maxRating: $maxRating, maxDeliveryTime: $maxDeliveryTime, maxDeliveryFee: $maxDeliveryFee, priceRange: $priceRange, isOpen: $isOpen, hasPromotion: $hasPromotion, sortBy: $sortBy, sortOrder: $sortOrder)';
   }
 
   @override
@@ -1193,6 +1934,8 @@ class _$RestaurantFilterImpl implements _RestaurantFilter {
             (identical(other.priceRange, priceRange) ||
                 other.priceRange == priceRange) &&
             (identical(other.isOpen, isOpen) || other.isOpen == isOpen) &&
+            (identical(other.hasPromotion, hasPromotion) ||
+                other.hasPromotion == hasPromotion) &&
             (identical(other.sortBy, sortBy) || other.sortBy == sortBy) &&
             (identical(other.sortOrder, sortOrder) ||
                 other.sortOrder == sortOrder));
@@ -1210,6 +1953,7 @@ class _$RestaurantFilterImpl implements _RestaurantFilter {
       maxDeliveryFee,
       priceRange,
       isOpen,
+      hasPromotion,
       sortBy,
       sortOrder);
 
@@ -1240,6 +1984,7 @@ abstract class _RestaurantFilter implements RestaurantFilter {
       final double? maxDeliveryFee,
       final String? priceRange,
       final bool? isOpen,
+      final bool? hasPromotion,
       final RestaurantSortBy sortBy,
       final SortOrder sortOrder}) = _$RestaurantFilterImpl;
 
@@ -1262,6 +2007,8 @@ abstract class _RestaurantFilter implements RestaurantFilter {
   String? get priceRange;
   @override
   bool? get isOpen;
+  @override
+  bool? get hasPromotion;
   @override
   RestaurantSortBy get sortBy;
   @override

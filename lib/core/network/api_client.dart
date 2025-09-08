@@ -161,7 +161,7 @@ class ErrorHandlingInterceptor extends Interceptor {
 /// Provider for API client
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClient(
-    baseUrl: 'https://api.eatfast.cm', // Replace with actual API URL
+    baseUrl: 'https://eat-fast-backend-express-js.onrender.com/api',
     headers: {
       'X-App-Version': '1.0.0',
       'X-Platform': 'mobile',

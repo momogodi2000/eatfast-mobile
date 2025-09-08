@@ -60,7 +60,7 @@ class RestaurantCard extends StatelessWidget {
               topRight: Radius.circular(DesignTokens.radiusLG),
             ),
             child: CachedNetworkImage(
-              imageUrl: restaurant.imageUrl,
+              imageUrl: restaurant.imageUrl ?? '',
               width: double.infinity,
               height: 180,
               fit: BoxFit.cover,
@@ -279,7 +279,7 @@ class RestaurantCard extends StatelessWidget {
         children: [
           // Description
           Text(
-            restaurant.description,
+            restaurant.description ?? 'No description available',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: DesignTokens.textSecondary,
               height: 1.4,

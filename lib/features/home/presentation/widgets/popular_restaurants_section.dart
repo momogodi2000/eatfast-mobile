@@ -94,7 +94,7 @@ class PopularRestaurantsSection extends ConsumerWidget {
               child: Stack(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: restaurant.imageUrl,
+                    imageUrl: restaurant.imageUrl ?? '',
                     height: 100,
                     width: double.infinity,
                     fit: BoxFit.cover,

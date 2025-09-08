@@ -455,8 +455,6 @@ abstract class $CartItemCopyWith<$Res> {
       String? specialInstructions,
       double itemTotal,
       DateTime? addedAt});
-
-  $MenuItemCopyWith<$Res> get menuItem;
 }
 
 /// @nodoc
@@ -513,16 +511,6 @@ class _$CartItemCopyWithImpl<$Res, $Val extends CartItem>
               as DateTime?,
     ) as $Val);
   }
-
-  /// Create a copy of CartItem
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MenuItemCopyWith<$Res> get menuItem {
-    return $MenuItemCopyWith<$Res>(_value.menuItem, (value) {
-      return _then(_value.copyWith(menuItem: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -541,9 +529,6 @@ abstract class _$$CartItemImplCopyWith<$Res>
       String? specialInstructions,
       double itemTotal,
       DateTime? addedAt});
-
-  @override
-  $MenuItemCopyWith<$Res> get menuItem;
 }
 
 /// @nodoc

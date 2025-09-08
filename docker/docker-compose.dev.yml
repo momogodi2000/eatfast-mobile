@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  eatfast-mobile-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    volumes:
+      - ../lib:/app/lib
+      - ../assets:/app/assets
+      - ../web:/app/web
+      - ../pubspec.yaml:/app/pubspec.yaml
+      - flutter_pub_cache:/root/.pub-cache
+    environment:
+      - FLUTTER_WEB_PORT=3000
+      - FLUTTER_WEB_HOSTNAME=0.0.0.0
+      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com/api
+      - ENVIRONMENT=development
+    stdin_open: true
+    tty: true
+    command: flutter run -d web-server --web-hostname 0.0.0.0 --web-port 3000 --hot
+
+  # Optional: Add hot reload server
+  flutter-hot-reload:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../:/app
+      - flutter_pub_cache:/root/.pub-cache
+    environment:
+      - FLUTTER_WEB_PORT=3001
+      - API_BASE_URL=http://localhost:5000/api
+      - ENVIRONMENT=development
+    command: flutter run -d web-server --web-hostname 0.0.0.0 --web-port 3001 --hot
+
+volumes:
+  flutter_pub_cache:

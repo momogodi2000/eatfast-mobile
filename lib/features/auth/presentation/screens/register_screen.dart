@@ -5,7 +5,8 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/utils/validators.dart';
-import '../../providers/auth_provider.dart';
+import '../../../../core/auth/providers/auth_provider.dart';
+import '../../providers/auth_state.dart';
 
 /// Registration Screen
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -60,10 +61,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
       }
 
       ref.read(authProvider.notifier).register(
-        name: _nameController.text.trim(),
+        firstName: _nameController.text.trim().split(' ')[0],
+        lastName: _nameController.text.trim().split(' ').length > 1 ? _nameController.text.trim().split(' ')[1] : '',
         email: _emailController.text.trim(),
         phone: _phoneController.text.trim(),
         password: _passwordController.text,
+        city: 'Douala', // Default city
       );
     }
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/router/route_names.dart';
-import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/theme/design_tokens.dart' as app_design_tokens;
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
 import '../../domain/models/restaurant.dart';
 import '../../providers/restaurant_provider.dart';
@@ -76,11 +76,11 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
     final favoriteRestaurants = ref.watch(favoriteRestaurantsProvider);
 
     return Scaffold(
-      backgroundColor: DesignTokens.backgroundPrimary,
+      backgroundColor: app_design_tokens.DesignTokens.backgroundPrimary,
       appBar: AppBar(
         title: const Text('Restaurants'),
-        backgroundColor: DesignTokens.primaryColor,
-        foregroundColor: DesignTokens.white,
+        backgroundColor: app_design_tokens.DesignTokens.primaryColor,
+        foregroundColor: app_design_tokens.DesignTokens.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -90,7 +90,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
           IconButton(
             icon: Icon(
               Icons.tune,
-              color: _currentFilter != null ? DesignTokens.accentColor : DesignTokens.white,
+              color: _currentFilter != null ? app_design_tokens.DesignTokens.accentColor : app_design_tokens.DesignTokens.white,
             ),
             onPressed: _showFilterBottomSheet,
           ),
@@ -156,8 +156,8 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(DesignTokens.spaceMD),
-      color: DesignTokens.backgroundSecondary,
+      padding: const EdgeInsets.all(app_design_tokens.DesignTokens.spaceMD),
+      color: app_design_tokens.DesignTokens.backgroundSecondary,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -167,7 +167,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               Text(
                 'Filtres actifs',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: DesignTokens.textSecondary,
+                  color: app_design_tokens.DesignTokens.textSecondary,
                 ),
               ),
               TextButton(
@@ -180,10 +180,10 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               ),
             ],
           ),
-          const SizedBox(height: DesignTokens.spaceSM),
+          SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
           Wrap(
-            spacing: DesignTokens.spaceSM,
-            runSpacing: DesignTokens.spaceSM,
+            spacing: app_design_tokens.DesignTokens.spaceSM,
+            runSpacing: app_design_tokens.DesignTokens.spaceSM,
             children: activeFilters,
           ),
         ],
@@ -202,22 +202,22 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: DesignTokens.errorColor.withValues(alpha: 0.5),
+              color: app_design_tokens.DesignTokens.errorColor.withValues(alpha: 0.5),
             ),
-            const SizedBox(height: DesignTokens.spaceMD),
+            SizedBox(height: app_design_tokens.DesignTokens.spaceMD),
             Text(
               'Erreur de chargement',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: DesignTokens.spaceSM),
+            SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
             Text(
               message,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: DesignTokens.textSecondary,
+                color: app_design_tokens.DesignTokens.textSecondary,
               ),
             ),
-            const SizedBox(height: DesignTokens.spaceLG),
+            SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
             ElevatedButton.icon(
               onPressed: () {
                 ref.read(restaurantListProvider(_currentFilter).notifier).loadRestaurants(refresh: true);
@@ -237,12 +237,12 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               },
               child: ListView.builder(
                 controller: _scrollController,
-                padding: const EdgeInsets.all(DesignTokens.spaceMD),
+                padding: EdgeInsets.all(app_design_tokens.DesignTokens.spaceMD),
                 itemCount: restaurants.length,
                 itemBuilder: (context, index) {
                   final restaurant = restaurants[index];
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: DesignTokens.spaceMD),
+                    padding: EdgeInsets.only(bottom: app_design_tokens.DesignTokens.spaceMD),
                     child: RestaurantCard(
                       restaurant: restaurant,
                       isFavorite: favoriteRestaurants.contains(restaurant.id),
@@ -261,27 +261,27 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.restaurant_outlined,
             size: 80,
-            color: DesignTokens.textTertiary,
+            color: app_design_tokens.DesignTokens.textTertiary,
           ),
-          const SizedBox(height: DesignTokens.spaceLG),
+          SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
           Text(
             'Aucun restaurant trouvé',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: DesignTokens.textSecondary,
+              color: app_design_tokens.DesignTokens.textSecondary,
             ),
           ),
-          const SizedBox(height: DesignTokens.spaceSM),
+          SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
           Text(
             'Essayez d\'ajuster vos filtres ou recherchez dans une autre zone',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: DesignTokens.textTertiary,
+              color: app_design_tokens.DesignTokens.textTertiary,
             ),
           ),
-          const SizedBox(height: DesignTokens.spaceLG),
+          SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
           ElevatedButton(
             onPressed: () {
               setState(() {

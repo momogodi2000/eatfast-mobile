@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/models/favorite.dart';
+import '../../restaurants/domain/models/restaurant.dart';
 
 class FavoritesState {
   final List<FavoriteItem> favorites;
@@ -255,6 +256,20 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
       );
       return false;
     }
+  }
+
+  Future<void> toggleRestaurantFavorite(Restaurant restaurant) async {
+    await toggleFavorite(
+      itemId: restaurant.id,
+      type: FavoriteType.restaurant,
+      name: restaurant.name,
+      description: restaurant.description ?? '',
+      imageUrl: restaurant.imageUrl ?? 'assets/images/placeholder.png', // Provide a default image
+      rating: restaurant.rating,
+      reviewCount: restaurant.reviewCount,
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+    );
   }
 
   Future<bool> removeFavorite(String favoriteId) async {

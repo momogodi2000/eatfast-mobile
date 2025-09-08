@@ -1,55 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/restaurant_repository_impl.dart';
+import '../../../core/services/restaurant/restaurant_service.dart';
 import '../domain/models/restaurant.dart';
-import '../domain/models/menu_item.dart';
-import '../domain/repositories/restaurant_repository.dart';
-
-// Repository provider
-final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
-  return RestaurantRepositoryImpl();
-});
+import '../domain/models/menu_item.dart' hide MenuCategory;
+import '../../../core/services/restaurant/restaurant_service.dart' show MenuCategory;
 
 // Restaurant list provider with filters
 final restaurantListProvider = StateNotifierProvider.family<RestaurantListNotifier, RestaurantListState, RestaurantFilter?>(
-  (ref, filter) => RestaurantListNotifier(ref.watch(restaurantRepositoryProvider), filter),
+  (ref, filter) => RestaurantListNotifier(ref.watch(restaurantServiceProvider), filter),
 );
 
 // Restaurant detail provider
 final restaurantDetailProvider = FutureProvider.family<Restaurant?, String>((ref, restaurantId) async {
-  final repository = ref.watch(restaurantRepositoryProvider);
-  final result = await repository.getRestaurantById(restaurantId);
+  final service = ref.watch(restaurantServiceProvider);
+  final response = await service.getRestaurantDetails(restaurantId);
   
-  return result.when(
-    success: (restaurant) => restaurant,
-    failure: (_) => null,
-  );
+  if (response.success && response.restaurant != null) {
+    return response.restaurant;
+  }
+  return null;
 });
 
 // Menu categories provider
 final menuCategoriesProvider = FutureProvider.family<List<MenuCategory>, String>((ref, restaurantId) async {
-  final repository = ref.watch(restaurantRepositoryProvider);
-  final result = await repository.getMenuCategories(restaurantId);
+  final service = ref.watch(restaurantServiceProvider);
+  final response = await service.getMenuCategories(restaurantId);
   
-  return result.when(
-    success: (categories) => categories,
-    failure: (_) => <MenuCategory>[],
-  );
+  if (response.success) {
+    return response.categories;
+  }
+  return <MenuCategory>[];
 });
 
 // Menu items provider
 final menuItemsProvider = FutureProvider.family<List<MenuItem>, MenuItemsParams>((ref, params) async {
-  final repository = ref.watch(restaurantRepositoryProvider);
-  final result = await repository.getMenuItems(params.restaurantId, categoryId: params.categoryId);
+  final service = ref.watch(restaurantServiceProvider);
+  final response = await service.getRestaurantMenu(params.restaurantId, category: params.categoryId);
   
-  return result.when(
-    success: (items) => items,
-    failure: (_) => <MenuItem>[],
-  );
+  if (response.success) {
+    return response.menuItems;
+  }
+  return <MenuItem>[];
 });
 
 // Search provider
 final restaurantSearchProvider = StateNotifierProvider<RestaurantSearchNotifier, RestaurantSearchState>(
-  (ref) => RestaurantSearchNotifier(ref.watch(restaurantRepositoryProvider)),
+  (ref) => RestaurantSearchNotifier(ref.watch(restaurantServiceProvider)),
 );
 
 // Favorite restaurants provider
@@ -58,10 +53,10 @@ final favoriteRestaurantsProvider = StateNotifierProvider<FavoriteRestaurantsNot
 );
 
 class RestaurantListNotifier extends StateNotifier<RestaurantListState> {
-  final RestaurantRepository _repository;
+  final RestaurantService _service;
   final RestaurantFilter? _filter;
 
-  RestaurantListNotifier(this._repository, this._filter) : super(const RestaurantListState.initial()) {
+  RestaurantListNotifier(this._service, this._filter) : super(const RestaurantListState.initial()) {
     loadRestaurants();
   }
 
@@ -70,16 +65,20 @@ class RestaurantListNotifier extends StateNotifier<RestaurantListState> {
 
     state = const RestaurantListState.loading();
 
-    final result = await _repository.getRestaurants(
+    final response = await _service.getRestaurants(
       page: 1,
       limit: 20,
-      filter: _filter,
+      search: _filter?.searchQuery,
+      cuisineTypes: _filter?.cuisineTypes,
+      minRating: _filter?.minRating,
+      maxDeliveryFee: _filter?.maxDeliveryFee,
     );
 
-    state = result.when(
-      success: (restaurants) => RestaurantListState.loaded(restaurants),
-      failure: (error) => RestaurantListState.error(error),
-    );
+    if (response.success) {
+      state = RestaurantListState.loaded(response.restaurants);
+    } else {
+      state = RestaurantListState.error(response.error ?? 'Failed to load restaurants');
+    }
   }
 
   Future<void> loadMoreRestaurants() async {
@@ -88,32 +87,28 @@ class RestaurantListNotifier extends StateNotifier<RestaurantListState> {
     final currentState = state as RestaurantListLoaded;
     final currentPage = (currentState.restaurants.length / 20).ceil() + 1;
 
-    final result = await _repository.getRestaurants(
+    final response = await _service.getRestaurants(
       page: currentPage,
       limit: 20,
-      filter: _filter,
+      search: _filter?.searchQuery,
+      cuisineTypes: _filter?.cuisineTypes,
+      minRating: _filter?.minRating,
+      maxDeliveryFee: _filter?.maxDeliveryFee,
     );
 
-    result.when(
-      success: (newRestaurants) {
-        if (newRestaurants.isNotEmpty) {
-          state = RestaurantListState.loaded([
-            ...currentState.restaurants,
-            ...newRestaurants,
-          ]);
-        }
-      },
-      failure: (_) {
-        // Keep current state on error
-      },
-    );
+    if (response.success && response.restaurants.isNotEmpty) {
+      state = RestaurantListState.loaded([
+        ...currentState.restaurants,
+        ...response.restaurants,
+      ]);
+    }
   }
 }
 
 class RestaurantSearchNotifier extends StateNotifier<RestaurantSearchState> {
-  final RestaurantRepository _repository;
+  final RestaurantService _service;
 
-  RestaurantSearchNotifier(this._repository) : super(const RestaurantSearchState.initial());
+  RestaurantSearchNotifier(this._service) : super(const RestaurantSearchState.initial());
 
   Future<void> searchRestaurants(String query, {RestaurantFilter? filter}) async {
     if (query.trim().isEmpty) {
@@ -123,12 +118,18 @@ class RestaurantSearchNotifier extends StateNotifier<RestaurantSearchState> {
 
     state = const RestaurantSearchState.loading();
 
-    final result = await _repository.searchRestaurants(query, filter: filter);
-
-    state = result.when(
-      success: (restaurants) => RestaurantSearchState.loaded(restaurants),
-      failure: (error) => RestaurantSearchState.error(error),
+    final response = await _service.getRestaurants(
+      search: query,
+      cuisineTypes: filter?.cuisineTypes,
+      minRating: filter?.minRating,
+      maxDeliveryFee: filter?.maxDeliveryFee,
     );
+
+    if (response.success) {
+      state = RestaurantSearchState.loaded(response.restaurants);
+    } else {
+      state = RestaurantSearchState.error(response.error ?? 'Search failed');
+    }
   }
 
   void clearSearch() {

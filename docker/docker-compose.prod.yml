@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  eatfast-mobile-web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.prod
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com/api
+      - ENVIRONMENT=production
+      - APP_VERSION=${APP_VERSION:-1.0.0}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.eatfast-mobile.rule=Host(`mobile.eatfast.cm`)"
+      - "traefik.http.routers.eatfast-mobile.entrypoints=websecure"
+      - "traefik.http.routers.eatfast-mobile.tls.certresolver=lets-encrypt"
+
+  # Reverse proxy for HTTPS (optional - can be replaced with Cloudflare/AWS ALB)
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.lets-encrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.lets-encrypt.acme.email=${ACME_EMAIL:-admin@eatfast.cm}"
+      - "--certificatesresolvers.lets-encrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # Traefik dashboard
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "letsencrypt:/letsencrypt"
+    restart: unless-stopped
+
+  # Optional: Monitoring with Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+
+volumes:
+  letsencrypt:
+  prometheus_data:

@@ -4,7 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
 import '../../domain/models/restaurant.dart';
-import '../../domain/models/menu_item.dart';
+import '../../domain/models/menu_item.dart' hide MenuCategory;
+import '../../../../core/services/restaurant/restaurant_service.dart' show MenuCategory;
 import '../../providers/restaurant_provider.dart';
 import '../widgets/menu_item_card.dart';
 
@@ -150,7 +151,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
           fit: StackFit.expand,
           children: [
             CachedNetworkImage(
-              imageUrl: restaurant.imageUrl,
+              imageUrl: restaurant.imageUrl ?? '',
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
                 color: DesignTokens.lightGrey.withValues(alpha: 0.3),
@@ -267,7 +268,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            restaurant.description,
+            restaurant.description ?? 'Aucune description disponible',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               height: 1.5,
             ),
@@ -490,20 +491,21 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
           const SizedBox(height: DesignTokens.spaceXL),
           
           _buildInfoSection('Contact', [
-            restaurant.phoneNumber,
+            restaurant.contact.phone ?? 'No phone number available',
           ]),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          _buildInfoSection('Horaires', restaurant.operatingHours),
+          _buildInfoSection('Horaires', restaurant.operatingHours.map((hours) => 
+            '${hours.day}: ${hours.isClosed ? 'Fermé' : '${hours.open} - ${hours.close}'}').toList()),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          _buildInfoSection('Spécialités', restaurant.specialties),
+          _buildInfoSection('Spécialités', restaurant.specialties?.toList() ?? ['Information non disponible']),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          _buildInfoSection('Moyens de paiement', restaurant.paymentMethods),
+          _buildInfoSection('Moyens de paiement', restaurant.paymentMethods?.toList() ?? ['Information non disponible']),
         ],
       ),
     );
@@ -651,7 +653,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
                     child: CachedNetworkImage(
-                      imageUrl: menuItem.imageUrl,
+                      imageUrl: menuItem.imageUrl ?? '',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -702,7 +704,7 @@ class MenuItemDetailBottomSheet extends StatelessWidget {
                   
                   // Description
                   Text(
-                    menuItem.description,
+                    menuItem.description ?? 'No description available',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       height: 1.5,
                     ),

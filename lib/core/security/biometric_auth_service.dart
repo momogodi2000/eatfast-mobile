@@ -4,16 +4,20 @@ import 'package:local_auth/local_auth.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'secure_storage_service.dart';
 
 /// Biometric authentication service
 /// Handles fingerprint, face recognition, and device security
 class BiometricAuthService {
-  static final LocalAuthentication _localAuth = LocalAuthentication();
-  static final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+  final SecureStorageService _secureStorage;
+  final LocalAuthentication _localAuth = LocalAuthentication();
+  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+
+  BiometricAuthService(this._secureStorage);
 
   /// Check if biometric authentication is available
-  static Future<bool> isAvailable() async {
+  Future<bool> isAvailable() async {
     try {
       final bool isAvailable = await _localAuth.isDeviceSupported();
       final bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
@@ -29,7 +33,7 @@ class BiometricAuthService {
   }
 
   /// Get available biometric types
-  static Future<List<BiometricType>> getAvailableBiometrics() async {
+  Future<List<BiometricType>> getAvailableBiometrics() async {
     try {
       return await _localAuth.getAvailableBiometrics();
     } catch (e) {
@@ -38,7 +42,7 @@ class BiometricAuthService {
   }
 
   /// Authenticate using biometrics
-  static Future<bool> authenticate({
+  Future<bool> authenticate({
     required String reason,
     bool useErrorDialogs = true,
     bool stickyAuth = true,
@@ -60,7 +64,7 @@ class BiometricAuthService {
   }
 
   /// Setup biometric login
-  static Future<bool> setupBiometricLogin({
+  Future<bool> setupBiometricLogin({
     required String email,
     required String password,
   }) async {
@@ -78,13 +82,13 @@ class BiometricAuthService {
       final hashedPassword = _hashPassword(password);
 
       // Store credentials securely
-      await SecureStorageService.storeUserCredentials(
+      await _secureStorage.storeUserCredentials(
         email: email,
         hashedPassword: hashedPassword,
       );
 
       // Enable biometric login
-      await SecureStorageService.setBiometricLoginEnabled(true);
+      await _secureStorage.setBiometricLoginEnabled(true);
 
       // Store biometric setup data
       final biometricData = {
@@ -92,7 +96,7 @@ class BiometricAuthService {
         'deviceFingerprint': await getDeviceFingerprint(),
       };
       
-      await SecureStorageService.storeBiometricCredentials(biometricData);
+      await _secureStorage.storeBiometricCredentials(biometricData);
 
       return true;
     } catch (e) {
@@ -101,9 +105,9 @@ class BiometricAuthService {
   }
 
   /// Authenticate with biometrics and get stored credentials
-  static Future<Map<String, String>?> authenticateAndGetCredentials() async {
+  Future<Map<String, String>?> authenticateAndGetCredentials() async {
     try {
-      final isEnabled = await SecureStorageService.isBiometricLoginEnabled();
+      final isEnabled = await _secureStorage.isBiometricLoginEnabled();
       if (!isEnabled) {
         return null;
       }
@@ -118,7 +122,7 @@ class BiometricAuthService {
       }
 
       // Get stored credentials
-      final credentials = await SecureStorageService.getUserCredentials();
+      final credentials = await _secureStorage.getUserCredentials();
       if (credentials == null) {
         return null;
       }
@@ -133,13 +137,13 @@ class BiometricAuthService {
   }
 
   /// Disable biometric login
-  static Future<void> disableBiometricLogin() async {
-    await SecureStorageService.setBiometricLoginEnabled(false);
+  Future<void> disableBiometricLogin() async {
+    await _secureStorage.setBiometricLoginEnabled(false);
     // Note: We don't delete stored credentials in case user wants to re-enable
   }
 
   /// Generate device fingerprint
-  static Future<String> getDeviceFingerprint() async {
+  Future<String> getDeviceFingerprint() async {
     try {
       String fingerprint = '';
 
@@ -168,13 +172,13 @@ class BiometricAuthService {
   }
 
   /// Verify device fingerprint matches stored one
-  static Future<bool> verifyDeviceFingerprint() async {
+  Future<bool> verifyDeviceFingerprint() async {
     try {
-      final storedFingerprint = await SecureStorageService.getDeviceFingerprint();
+      final storedFingerprint = await _secureStorage.getDeviceFingerprint();
       if (storedFingerprint == null) {
         // First time - store current fingerprint
         final currentFingerprint = await getDeviceFingerprint();
-        await SecureStorageService.storeDeviceFingerprint(currentFingerprint);
+        await _secureStorage.storeDeviceFingerprint(currentFingerprint);
         return true;
       }
 
@@ -199,12 +203,12 @@ class BiometricAuthService {
   }
 
   /// Check if biometric login is configured and available
-  static Future<bool> canUseBiometricLogin() async {
-    final isAvailable = await BiometricAuthService.isAvailable();
-    final isEnabled = await SecureStorageService.isBiometricLoginEnabled();
-    final hasCredentials = await SecureStorageService.getUserCredentials() != null;
+  Future<bool> canUseBiometricLogin() async {
+    final isAvailableResult = await isAvailable();
+    final isEnabled = await _secureStorage.isBiometricLoginEnabled();
+    final hasCredentials = await _secureStorage.getUserCredentials() != null;
     
-    return isAvailable && isEnabled && hasCredentials;
+    return isAvailableResult && isEnabled && hasCredentials;
   }
 
   /// Get user-friendly biometric type string
@@ -223,3 +227,9 @@ class BiometricAuthService {
     }
   }
 }
+
+/// Provider for BiometricAuthService
+final biometricAuthServiceProvider = Provider<BiometricAuthService>((ref) {
+  final secureStorage = ref.watch(secureStorageServiceProvider);
+  return BiometricAuthService(secureStorage);
+});

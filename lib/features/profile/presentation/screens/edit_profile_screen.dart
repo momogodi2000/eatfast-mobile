@@ -247,7 +247,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         
                         _buildInfoRow(
                           'Dernière connexion',
-                          _formatDate(user.lastLoginAt),
+                          _formatDate(user.lastLoginAt ?? DateTime.now()),
                           Icons.access_time,
                         ),
                       ],
@@ -433,7 +433,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     try {
       final currentUser = ref.read(authProvider).user!;
       final updatedUser = currentUser.copyWith(
-        name: _nameController.text.trim(),
+        firstName: _nameController.text.trim().split(' ').first,
+        lastName: _nameController.text.trim().split(' ').skip(1).join(' '),
         email: _emailController.text.trim(),
         phone: _phoneController.text.trim().isEmpty 
             ? null 
@@ -441,7 +442,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         avatar: _selectedAvatar,
       );
 
-      await ref.read(authProvider.notifier).updateUser(updatedUser);
+      await ref.read(authProvider.notifier).updateProfile(updatedUser);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

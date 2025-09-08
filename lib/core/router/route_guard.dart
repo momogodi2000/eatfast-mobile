@@ -39,7 +39,7 @@ class RouteGuard {
     switch (userRole) {
       case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.driver:
+      case UserRole.deliveryAgent:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
@@ -55,7 +55,7 @@ class RouteGuard {
     switch (role) {
       case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.driver:
+      case UserRole.deliveryAgent:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';

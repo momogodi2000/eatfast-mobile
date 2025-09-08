@@ -8,22 +8,27 @@ class Restaurant with _$Restaurant {
   const factory Restaurant({
     required String id,
     required String name,
-    required String description,
-    required String imageUrl,
-    required List<String> cuisineTypes,
-    required double rating,
-    required int reviewCount,
-    required String priceRange,
-    required int estimatedDeliveryTime,
-    required double deliveryFee,
-    required bool isOpen,
+    String? description,
+    String? logo,
+    String? coverImage,
+    String? imageUrl, // Added for backend compatibility
     required RestaurantAddress address,
-    required List<String> operatingHours,
-    required String phoneNumber,
-    @Default([]) List<String> specialties,
-    @Default(false) bool isFavorite,
-    @Default(false) bool isPromoted,
-    @Default([]) List<String> paymentMethods,
+    required RestaurantContact contact,
+    required List<OperatingHours> operatingHours,
+    required List<String> cuisineTypes,
+    List<String>? specialties, // Added for backend
+    @Default([]) List<String> features, // ["Delivery", "Takeaway"]
+    List<String>? paymentMethods, // Added for backend
+    required String priceRange, // "$", "$$", "$$$", "$$$$"
+    @Default(0.0) double rating,
+    @Default(0) int reviewCount,
+    required String status, // "ACTIVE", "INACTIVE", "PENDING"
+    @Default(true) bool isOpen,
+    @Default(false) bool isPromoted, // Added for backend
+    @Default(false) bool isVerified, // Added for backend
+    @Default(30) int estimatedDeliveryTime,
+    @Default(0.0) double deliveryFee,
+    @Default(2000.0) double minimumOrder, // Added for backend
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Restaurant;
@@ -37,15 +42,50 @@ class RestaurantAddress with _$RestaurantAddress {
   const factory RestaurantAddress({
     required String street,
     required String city,
-    required String district,
-    required String postalCode,
-    required double latitude,
-    required double longitude,
-    String? landmark,
+    String? country,
+    String? district, // Added for backend
+    String? landmark, // Added for backend
+    required RestaurantCoordinates coordinates,
   }) = _RestaurantAddress;
 
   factory RestaurantAddress.fromJson(Map<String, dynamic> json) =>
       _$RestaurantAddressFromJson(json);
+}
+
+@freezed
+class RestaurantCoordinates with _$RestaurantCoordinates {
+  const factory RestaurantCoordinates({
+    required double latitude,
+    required double longitude,
+  }) = _RestaurantCoordinates;
+
+  factory RestaurantCoordinates.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantCoordinatesFromJson(json);
+}
+
+@freezed
+class RestaurantContact with _$RestaurantContact {
+  const factory RestaurantContact({
+    String? phone,
+    String? email,
+    String? website,
+  }) = _RestaurantContact;
+
+  factory RestaurantContact.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantContactFromJson(json);
+}
+
+@freezed
+class OperatingHours with _$OperatingHours {
+  const factory OperatingHours({
+    required String day, // "monday", "tuesday", etc.
+    required String open, // "09:00"
+    required String close, // "22:00"
+    @Default(false) bool isClosed,
+  }) = _OperatingHours;
+
+  factory OperatingHours.fromJson(Map<String, dynamic> json) =>
+      _$OperatingHoursFromJson(json);
 }
 
 @freezed
@@ -59,6 +99,7 @@ class RestaurantFilter with _$RestaurantFilter {
     double? maxDeliveryFee,
     String? priceRange,
     bool? isOpen,
+    bool? hasPromotion,
     @Default(RestaurantSortBy.rating) RestaurantSortBy sortBy,
     @Default(SortOrder.descending) SortOrder sortOrder,
   }) = _RestaurantFilter;

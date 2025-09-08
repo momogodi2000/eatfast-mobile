@@ -1,97 +1,223 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+// Temporary manual implementation until build_runner is fixed
+class MenuItem {
+  const MenuItem({
+    required this.id,
+    required this.restaurantId,
+    this.categoryId,
+    required this.name,
+    this.description,
+    required this.price,
+    this.imageUrl,
+    required this.category,
+    this.allergens = const [],
+    this.ingredients = const [],
+    this.options = const [],
+    this.dietaryTags = const [],
+    this.isAvailable = true,
+    this.isActive = true,
+    this.isPopular = false,
+    this.isRecommended = false,
+    this.preparationTime = 0,
+    this.calories = 0,
+    this.nutritionalInfo,
+    this.isVegetarian = false,
+    this.isVegan = false,
+    this.featured = false,
+    this.popularityScore = 0,
+    this.discount = 0.0,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-part 'menu_item.freezed.dart';
-part 'menu_item.g.dart';
+  final String id;
+  final String restaurantId;
+  final String? categoryId;
+  final String name;
+  final String? description;
+  final double price;
+  final String? imageUrl;
+  final String category;
+  final List<String> allergens;
+  final List<String> ingredients;
+  final List<MenuItemCustomization> options;
+  final List<DietaryTag> dietaryTags;
+  final bool isAvailable;
+  final bool isActive;
+  final bool isPopular;
+  final bool isRecommended;
+  final int preparationTime;
+  final int calories;
+  final String? nutritionalInfo;
+  final bool isVegetarian;
+  final bool isVegan;
+  final bool featured;
+  final int popularityScore;
+  final double discount;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
-@freezed
-class MenuItem with _$MenuItem {
-  const factory MenuItem({
-    required String id,
-    required String restaurantId,
-    required String name,
-    required String description,
-    required double price,
-    required String imageUrl,
-    required String categoryId,
-    @Default([]) List<String> allergens,
-    @Default([]) List<DietaryTag> dietaryTags,
-    @Default([]) List<MenuItemCustomization> customizations,
-    @Default(true) bool isAvailable,
-    @Default(0) int preparationTime,
-    @Default(0) double calories,
-    String? nutritionalInfo,
-    @Default(false) bool isPopular,
-    @Default(false) bool isRecommended,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) = _MenuItem;
+  factory MenuItem.fromJson(Map<String, dynamic> json) {
+    return MenuItem(
+      id: json['id'] as String,
+      restaurantId: json['restaurantId'] as String,
+      categoryId: json['categoryId'] as String?,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      price: (json['price'] as num).toDouble(),
+      imageUrl: json['imageUrl'] as String?,
+      category: json['category'] as String,
+      allergens: (json['allergens'] as List<dynamic>?)?.cast<String>() ?? [],
+      ingredients: (json['ingredients'] as List<dynamic>?)?.cast<String>() ?? [],
+      options: (json['options'] as List<dynamic>?)?.map((e) => MenuItemCustomization.fromJson(e as Map<String, dynamic>)).toList() ?? [],
+      dietaryTags: (json['dietaryTags'] as List<dynamic>?)?.map((e) => DietaryTag.values.firstWhere((tag) => tag.name == e)).toList() ?? [],
+      isAvailable: json['isAvailable'] as bool? ?? true,
+      isActive: json['isActive'] as bool? ?? true,
+      isPopular: json['isPopular'] as bool? ?? false,
+      isRecommended: json['isRecommended'] as bool? ?? false,
+      preparationTime: json['preparationTime'] as int? ?? 0,
+      calories: json['calories'] as int? ?? 0,
+      nutritionalInfo: json['nutritionalInfo'] as String?,
+      isVegetarian: json['isVegetarian'] as bool? ?? false,
+      isVegan: json['isVegan'] as bool? ?? false,
+      featured: json['featured'] as bool? ?? false,
+      popularityScore: json['popularityScore'] as int? ?? 0,
+      discount: (json['discount'] as num?)?.toDouble() ?? 0.0,
+      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt'] as String) : null,
+      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt'] as String) : null,
+    );
+  }
 
-  factory MenuItem.fromJson(Map<String, dynamic> json) =>
-      _$MenuItemFromJson(json);
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'restaurantId': restaurantId,
+      'categoryId': categoryId,
+      'name': name,
+      'description': description,
+      'price': price,
+      'imageUrl': imageUrl,
+      'category': category,
+      'allergens': allergens,
+      'ingredients': ingredients,
+      'options': options.map((e) => e.toJson()).toList(),
+      'dietaryTags': dietaryTags.map((e) => e.name).toList(),
+      'isAvailable': isAvailable,
+      'isActive': isActive,
+      'isPopular': isPopular,
+      'isRecommended': isRecommended,
+      'preparationTime': preparationTime,
+      'calories': calories,
+      'nutritionalInfo': nutritionalInfo,
+      'isVegetarian': isVegetarian,
+      'isVegan': isVegan,
+      'featured': featured,
+      'popularityScore': popularityScore,
+      'discount': discount,
+      'createdAt': createdAt?.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+    };
+  }
 }
 
-@freezed
-class MenuCategory with _$MenuCategory {
-  const factory MenuCategory({
-    required String id,
-    required String restaurantId,
-    required String name,
-    required String description,
-    @Default('') String imageUrl,
-    @Default(0) int sortOrder,
-    @Default(true) bool isAvailable,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) = _MenuCategory;
+class MenuCategory {
+  final String id;
+  final String name;
+  final String description;
+  final int displayOrder;
 
-  factory MenuCategory.fromJson(Map<String, dynamic> json) =>
-      _$MenuCategoryFromJson(json);
+  MenuCategory({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.displayOrder,
+  });
+
+  factory MenuCategory.fromJson(Map<String, dynamic> json) {
+    return MenuCategory(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String? ?? '',
+      displayOrder: json['displayOrder'] as int? ?? 0,
+    );
+  }
 }
 
-@freezed
-class MenuItemCustomization with _$MenuItemCustomization {
-  const factory MenuItemCustomization({
-    required String id,
-    required String name,
-    required String type, // 'single', 'multiple', 'quantity'
-    required bool isRequired,
-    @Default([]) List<CustomizationOption> options,
-  }) = _MenuItemCustomization;
+class MenuItemCustomization {
+  const MenuItemCustomization({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.isRequired,
+    this.options = const [],
+  });
 
-  factory MenuItemCustomization.fromJson(Map<String, dynamic> json) =>
-      _$MenuItemCustomizationFromJson(json);
+  final String id;
+  final String name;
+  final String type;
+  final bool isRequired;
+  final List<CustomizationOption> options;
+
+  factory MenuItemCustomization.fromJson(Map<String, dynamic> json) {
+    return MenuItemCustomization(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      type: json['type'] as String,
+      isRequired: json['isRequired'] as bool,
+      options: (json['options'] as List<dynamic>?)?.map((e) => CustomizationOption.fromJson(e as Map<String, dynamic>)).toList() ?? [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'type': type,
+      'isRequired': isRequired,
+      'options': options.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
-@freezed
-class CustomizationOption with _$CustomizationOption {
-  const factory CustomizationOption({
-    required String id,
-    required String name,
-    required double additionalPrice,
-    @Default(true) bool isAvailable,
-  }) = _CustomizationOption;
+class CustomizationOption {
+  const CustomizationOption({
+    required this.id,
+    required this.name,
+    required this.additionalPrice,
+    this.isAvailable = true,
+  });
 
-  factory CustomizationOption.fromJson(Map<String, dynamic> json) =>
-      _$CustomizationOptionFromJson(json);
+  final String id;
+  final String name;
+  final double additionalPrice;
+  final bool isAvailable;
+
+  factory CustomizationOption.fromJson(Map<String, dynamic> json) {
+    return CustomizationOption(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      additionalPrice: (json['additionalPrice'] as num).toDouble(),
+      isAvailable: json['isAvailable'] as bool? ?? true,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'additionalPrice': additionalPrice,
+      'isAvailable': isAvailable,
+    };
+  }
 }
 
 enum DietaryTag {
-  @JsonValue('vegetarian')
   vegetarian,
-  @JsonValue('vegan')
   vegan,
-  @JsonValue('gluten_free')
   glutenFree,
-  @JsonValue('dairy_free')
   dairyFree,
-  @JsonValue('halal')
   halal,
-  @JsonValue('kosher')
   kosher,
-  @JsonValue('spicy')
   spicy,
-  @JsonValue('healthy')
   healthy,
-  @JsonValue('organic')
   organic,
 }

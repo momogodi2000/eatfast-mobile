@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
-import '../../../auth/providers/auth_provider.dart';
+import '../../../../core/auth/providers/auth_provider.dart';
+import '../../../auth/providers/auth_state.dart';
 import '../../providers/profile_provider.dart';
 
 /// Profile Screen - Main profile view and management
@@ -160,7 +161,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
-    final profileState = ref.watch(profileProvider);
 
     if (authState is! AuthAuthenticated) {
       return const Scaffold(

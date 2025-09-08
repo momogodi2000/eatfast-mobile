@@ -5,7 +5,8 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/utils/validators.dart';
-import '../../providers/auth_provider.dart';
+import '../../../../core/auth/providers/auth_provider.dart';
+import '../../providers/auth_state.dart';
 
 /// Login Screen with email/password and phone options
 class LoginScreen extends ConsumerStatefulWidget {
@@ -81,13 +82,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   void _login() {
     if (_formKey.currentState?.validate() ?? false) {
       if (_isEmailLogin) {
-        ref.read(authProvider.notifier).loginWithEmail(
-          _emailController.text.trim(),
-          _passwordController.text,
+        ref.read(authProvider.notifier).login(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
         );
       } else {
         ref.read(authProvider.notifier).loginWithPhone(
-          _phoneController.text.trim(),
+          phone: _phoneController.text.trim(),
+          password: _passwordController.text,
         );
       }
     }

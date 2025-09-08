@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # Flutter build environment for mobile app
+  flutter-build:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: export-stage
+    volumes:
+      - ../build:/app/build
+    environment:
+      - FLUTTER_BUILD_MODE=release
+      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com/api
+    profiles:
+      - build
+
+  # Development environment with hot reload
+  flutter-dev:
+    image: cirrusci/flutter:stable
+    working_dir: /app
+    volumes:
+      - ../:/app
+      - flutter-pub-cache:/root/.pub-cache
+    ports:
+      - "8080:8080"
+    environment:
+      - FLUTTER_BUILD_MODE=debug
+      - API_BASE_URL=http://localhost:3000/api
+    command: >
+      sh -c "flutter pub get && 
+             flutter run -d web-server --web-port=8080 --web-hostname=0.0.0.0"
+    profiles:
+      - dev
+
+  # Testing environment
+  flutter-test:
+    image: cirrusci/flutter:stable
+    working_dir: /app
+    volumes:
+      - ../:/app
+      - flutter-pub-cache:/root/.pub-cache
+    environment:
+      - FLUTTER_BUILD_MODE=test
+      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com/api
+    command: >
+      sh -c "flutter pub get && 
+             flutter test --coverage"
+    profiles:
+      - test
+
+  # Code analysis
+  flutter-analyze:
+    image: cirrusci/flutter:stable
+    working_dir: /app
+    volumes:
+      - ../:/app
+      - flutter-pub-cache:/root/.pub-cache
+    command: >
+      sh -c "flutter pub get && 
+             flutter analyze && 
+             flutter format --dry-run --set-exit-if-changed ."
+    profiles:
+      - analyze
+
+volumes:
+  flutter-pub-cache:

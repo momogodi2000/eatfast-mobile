@@ -1,42 +1,60 @@
-/// User model representing a user in the system
+/// User model representing a user in the system - matches backend User model
 class User {
   final String id;
-  final String fullName;
   final String email;
-  final String phoneNumber;
+  final String firstName;
+  final String lastName;
+  final String phone;
+  final String role;
+  final String? city;
   final String? avatarUrl;
   final bool isEmailVerified;
   final bool isPhoneVerified;
+  final bool is2FAEnabled;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Map<String, dynamic>? metadata;
+  final String? lastLoginAt;
+  final Map<String, dynamic>? preferences;
 
   const User({
     required this.id,
-    required this.fullName,
     required this.email,
-    required this.phoneNumber,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.role,
+    this.city,
     this.avatarUrl,
     this.isEmailVerified = false,
     this.isPhoneVerified = false,
+    this.is2FAEnabled = false,
     required this.createdAt,
     required this.updatedAt,
-    this.metadata,
+    this.lastLoginAt,
+    this.preferences,
   });
 
-  /// Create User from JSON
+  /// Get full name
+  String get fullName => '$firstName $lastName'.trim();
+
+  /// Create User from JSON - matches backend response format
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
-      fullName: json['fullName'] as String? ?? json['full_name'] as String? ?? '',
       email: json['email'] as String,
-      phoneNumber: json['phoneNumber'] as String? ?? json['phone_number'] as String? ?? '',
+      firstName: json['firstName'] as String? ?? json['first_name'] as String? ?? '',
+      lastName: json['lastName'] as String? ?? json['last_name'] as String? ?? '',
+      phone: json['phone'] as String? ?? json['phoneNumber'] as String? ?? '',
+      role: json['role'] as String? ?? 'customer',
+      city: json['city'] as String?,
       avatarUrl: json['avatarUrl'] as String? ?? json['avatar_url'] as String?,
       isEmailVerified: json['isEmailVerified'] as bool? ?? json['email_verified'] as bool? ?? false,
       isPhoneVerified: json['isPhoneVerified'] as bool? ?? json['phone_verified'] as bool? ?? false,
-      createdAt: DateTime.parse(json['createdAt'] as String? ?? json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String? ?? json['updated_at'] as String),
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      is2FAEnabled: json['is2FAEnabled'] as bool? ?? json['is_2fa_enabled'] as bool? ?? false,
+      createdAt: DateTime.parse(json['createdAt'] as String? ?? json['created_at'] as String? ?? DateTime.now().toIso8601String()),
+      updatedAt: DateTime.parse(json['updatedAt'] as String? ?? json['updated_at'] as String? ?? DateTime.now().toIso8601String()),
+      lastLoginAt: json['lastLoginAt'] as String? ?? json['last_login_at'] as String?,
+      preferences: json['preferences'] as Map<String, dynamic>?,
     );
   }
 
@@ -44,79 +62,94 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'fullName': fullName,
       'email': email,
-      'phoneNumber': phoneNumber,
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+      'role': role,
+      'city': city,
       'avatarUrl': avatarUrl,
       'isEmailVerified': isEmailVerified,
       'isPhoneVerified': isPhoneVerified,
+      'is2FAEnabled': is2FAEnabled,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
-      'metadata': metadata,
+      'lastLoginAt': lastLoginAt,
+      'preferences': preferences,
     };
   }
 
   /// Create a copy with updated values
   User copyWith({
     String? id,
-    String? fullName,
     String? email,
-    String? phoneNumber,
+    String? firstName,
+    String? lastName,
+    String? phone,
+    String? role,
+    String? city,
     String? avatarUrl,
     bool? isEmailVerified,
     bool? isPhoneVerified,
+    bool? is2FAEnabled,
     DateTime? createdAt,
     DateTime? updatedAt,
-    Map<String, dynamic>? metadata,
+    String? lastLoginAt,
+    Map<String, dynamic>? preferences,
   }) {
     return User(
       id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
       email: email ?? this.email,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phone: phone ?? this.phone,
+      role: role ?? this.role,
+      city: city ?? this.city,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       isPhoneVerified: isPhoneVerified ?? this.isPhoneVerified,
+      is2FAEnabled: is2FAEnabled ?? this.is2FAEnabled,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      metadata: metadata ?? this.metadata,
+      lastLoginAt: lastLoginAt ?? this.lastLoginAt,
+      preferences: preferences ?? this.preferences,
     );
   }
 
   /// Get initials from full name
   String get initials {
-    final parts = fullName.trim().split(' ');
-    if (parts.isEmpty) return '';
-    if (parts.length == 1) {
-      return parts[0].substring(0, 1).toUpperCase();
+    if (firstName.isEmpty && lastName.isEmpty) return '';
+    if (lastName.isEmpty) {
+      return firstName.substring(0, 1).toUpperCase();
     }
-    return '${parts[0].substring(0, 1)}${parts[1].substring(0, 1)}'.toUpperCase();
-  }
-
-  /// Get first name from full name
-  String get firstName {
-    final parts = fullName.trim().split(' ');
-    return parts.isNotEmpty ? parts[0] : '';
-  }
-
-  /// Get last name from full name
-  String get lastName {
-    final parts = fullName.trim().split(' ');
-    return parts.length > 1 ? parts.sublist(1).join(' ') : '';
+    return '${firstName.substring(0, 1)}${lastName.substring(0, 1)}'.toUpperCase();
   }
 
   /// Check if user profile is complete
   bool get isProfileComplete {
-    return fullName.isNotEmpty && 
+    return firstName.isNotEmpty && 
+           lastName.isNotEmpty &&
            email.isNotEmpty && 
-           phoneNumber.isNotEmpty &&
+           phone.isNotEmpty &&
            isEmailVerified &&
            isPhoneVerified;
   }
 
+  /// Check if user is customer
+  bool get isCustomer => role == 'customer';
+  
+  /// Check if user is restaurant owner
+  bool get isRestaurantOwner => role == 'restaurant_owner';
+  
+  /// Check if user is delivery agent/driver
+  bool get isDriver => role == 'delivery_agent';
+  
+  /// Check if user is admin
+  bool get isAdmin => role == 'admin';
+
   @override
   String toString() {
-    return 'User(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber)';
+    return 'User(id: $id, fullName: $fullName, email: $email, phone: $phone, role: $role)';
   }
 
   @override
