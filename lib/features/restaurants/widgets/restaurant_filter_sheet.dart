@@ -64,7 +64,7 @@ class _RestaurantFilterSheetState extends State<RestaurantFilterSheet> {
             height: 4,
             width: 40,
             decoration: BoxDecoration(
-              color: AppColors.textSecondary.withOpacity(0.3),
+              color: AppColors.textSecondary.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -200,7 +200,7 @@ class _RestaurantFilterSheetState extends State<RestaurantFilterSheet> {
               _currentFilter = _currentFilter.copyWith(cuisineTypes: currentCuisines);
             });
           },
-          selectedColor: AppColors.primary.withOpacity(0.2),
+          selectedColor: AppColors.primary.withValues(alpha: 0.2),
           labelStyle: AppTextStyles.bodyMedium.copyWith(
             color: isSelected ? AppColors.primary : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
@@ -226,7 +226,7 @@ class _RestaurantFilterSheetState extends State<RestaurantFilterSheet> {
               );
             });
           },
-          selectedColor: AppColors.primary.withOpacity(0.2),
+          selectedColor: AppColors.primary.withValues(alpha: 0.2),
           labelStyle: AppTextStyles.bodyMedium.copyWith(
             color: isSelected ? AppColors.primary : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
@@ -246,7 +246,7 @@ class _RestaurantFilterSheetState extends State<RestaurantFilterSheet> {
             max: 5.0,
             divisions: 10,
             activeColor: AppColors.primary,
-            inactiveColor: AppColors.primary.withOpacity(0.3),
+            inactiveColor: AppColors.primary.withValues(alpha: 0.3),
             onChanged: (value) {
               setState(() {
                 _currentFilter = _currentFilter.copyWith(
@@ -289,7 +289,7 @@ class _RestaurantFilterSheetState extends State<RestaurantFilterSheet> {
               );
             });
           },
-          selectedColor: AppColors.primary.withOpacity(0.2),
+          selectedColor: AppColors.primary.withValues(alpha: 0.2),
           labelStyle: AppTextStyles.bodyMedium.copyWith(
             color: isSelected ? AppColors.primary : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,

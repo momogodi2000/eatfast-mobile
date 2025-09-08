@@ -112,7 +112,7 @@ class RestaurantCard extends ConsumerWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
@@ -153,7 +153,7 @@ class RestaurantCard extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.success.withOpacity(0.1),
+                          color: AppColors.success.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Row(
@@ -246,7 +246,7 @@ class RestaurantCard extends ConsumerWidget {
                           style: AppTextStyles.bodySmall.copyWith(
                             color: index < restaurant.priceRange.length
                                 ? AppColors.success
-                                : AppColors.textSecondary.withOpacity(0.3),
+                                : AppColors.textSecondary.withValues(alpha: 0.3),
                             fontWeight: FontWeight.bold,
                           ),
                         );

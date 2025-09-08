@@ -47,7 +47,7 @@ class _PaymentMethodTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : Colors.white,
+          color: isSelected ? Theme.of(context).primaryColor.withValues(alpha: 0.1) : Colors.white,
           border: Border.all(
             color: isSelected 
                 ? Theme.of(context).primaryColor 

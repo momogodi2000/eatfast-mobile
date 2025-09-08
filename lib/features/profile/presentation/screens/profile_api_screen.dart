@@ -309,7 +309,7 @@ class _ProfileApiScreenState extends ConsumerState<ProfileApiScreen>
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: DesignTokens.primaryColor.withOpacity(0.2),
+                        color: DesignTokens.primaryColor.withValues(alpha: 0.2),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -418,8 +418,8 @@ class _ProfileApiScreenState extends ConsumerState<ProfileApiScreen>
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: isVerified 
-            ? DesignTokens.successColor.withOpacity(0.1)
-            : DesignTokens.warningColor.withOpacity(0.1),
+            ? DesignTokens.successColor.withValues(alpha: 0.1)
+            : DesignTokens.warningColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isVerified 
@@ -462,14 +462,14 @@ class _ProfileApiScreenState extends ConsumerState<ProfileApiScreen>
           colors: [
             Color(int.parse('0xFF${user.loyaltyLevelColor.substring(1)}')),
             Color(int.parse('0xFF${user.loyaltyLevelColor.substring(1)}'))
-                .withOpacity(0.7),
+                .withValues(alpha: 0.7),
           ],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: Color(int.parse('0xFF${user.loyaltyLevelColor.substring(1)}'))
-                .withOpacity(0.3),
+                .withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -508,7 +508,7 @@ class _ProfileApiScreenState extends ConsumerState<ProfileApiScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -654,7 +654,7 @@ class _ProfileApiScreenState extends ConsumerState<ProfileApiScreen>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: DesignTokens.primaryColor.withOpacity(0.1),
+                    color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(

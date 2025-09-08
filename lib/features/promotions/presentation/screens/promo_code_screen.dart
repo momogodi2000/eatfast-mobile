@@ -114,10 +114,10 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
+                      color: Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: Colors.green.withOpacity(0.3),
+                        color: Colors.green.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -240,7 +240,7 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 4,
                   offset: const Offset(0, -2),
                 ),
@@ -293,8 +293,8 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: isDisabled 
-                          ? Colors.grey.withOpacity(0.2)
-                          : DesignTokens.primaryColor.withOpacity(0.1),
+                          ? Colors.grey.withValues(alpha: 0.2)
+                          : DesignTokens.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -316,8 +316,8 @@ class _PromoCodeScreenState extends ConsumerState<PromoCodeScreen> {
                     ),
                     decoration: BoxDecoration(
                       color: isDisabled 
-                          ? Colors.grey.withOpacity(0.2)
-                          : Colors.green.withOpacity(0.1),
+                          ? Colors.grey.withValues(alpha: 0.2)
+                          : Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
