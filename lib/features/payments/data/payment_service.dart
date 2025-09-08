@@ -53,7 +53,7 @@ class PaymentService {
     String currency = 'XAF',
   }) async {
     if (!AppConfig.enableCamPayPayments) {
-      throw PaymentException(
+      throw const PaymentException(
         'CamPay payments are not enabled',
         code: 'PAYMENT_METHOD_DISABLED',
       );
@@ -125,7 +125,7 @@ class PaymentService {
     String currency = 'XAF',
   }) async {
     if (!AppConfig.enableMobileMoneyPayments) {
-      throw PaymentException(
+      throw const PaymentException(
         'Mobile Money payments are not enabled',
         code: 'PAYMENT_METHOD_DISABLED',
       );
@@ -168,7 +168,7 @@ class PaymentService {
     Map<String, dynamic>? billingDetails,
   }) async {
     if (!AppConfig.enableStripePayments) {
-      throw PaymentException(
+      throw const PaymentException(
         'Card payments are not enabled',
         code: 'PAYMENT_METHOD_DISABLED',
       );
@@ -209,7 +209,7 @@ class PaymentService {
     String currency = 'XAF',
   }) async {
     if (!AppConfig.enableWalletPayments) {
-      throw PaymentException(
+      throw const PaymentException(
         'Wallet payments are not enabled',
         code: 'PAYMENT_METHOD_DISABLED',
       );

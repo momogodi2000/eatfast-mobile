@@ -180,7 +180,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               ),
             ],
           ),
-          SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
+          const SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
           Wrap(
             spacing: app_design_tokens.DesignTokens.spaceSM,
             runSpacing: app_design_tokens.DesignTokens.spaceSM,
@@ -204,12 +204,12 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               size: 64,
               color: app_design_tokens.DesignTokens.errorColor.withValues(alpha: 0.5),
             ),
-            SizedBox(height: app_design_tokens.DesignTokens.spaceMD),
+            const SizedBox(height: app_design_tokens.DesignTokens.spaceMD),
             Text(
               'Erreur de chargement',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
+            const SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
             Text(
               message,
               textAlign: TextAlign.center,
@@ -217,7 +217,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
                 color: app_design_tokens.DesignTokens.textSecondary,
               ),
             ),
-            SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
+            const SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
             ElevatedButton.icon(
               onPressed: () {
                 ref.read(restaurantListProvider(_currentFilter).notifier).loadRestaurants(refresh: true);
@@ -237,12 +237,12 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               },
               child: ListView.builder(
                 controller: _scrollController,
-                padding: EdgeInsets.all(app_design_tokens.DesignTokens.spaceMD),
+                padding: const EdgeInsets.all(app_design_tokens.DesignTokens.spaceMD),
                 itemCount: restaurants.length,
                 itemBuilder: (context, index) {
                   final restaurant = restaurants[index];
                   return Padding(
-                    padding: EdgeInsets.only(bottom: app_design_tokens.DesignTokens.spaceMD),
+                    padding: const EdgeInsets.only(bottom: app_design_tokens.DesignTokens.spaceMD),
                     child: RestaurantCard(
                       restaurant: restaurant,
                       isFavorite: favoriteRestaurants.contains(restaurant.id),
@@ -261,19 +261,19 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.restaurant_outlined,
             size: 80,
             color: app_design_tokens.DesignTokens.textTertiary,
           ),
-          SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
+          const SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
           Text(
             'Aucun restaurant trouvé',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: app_design_tokens.DesignTokens.textSecondary,
             ),
           ),
-          SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
+          const SizedBox(height: app_design_tokens.DesignTokens.spaceSM),
           Text(
             'Essayez d\'ajuster vos filtres ou recherchez dans une autre zone',
             textAlign: TextAlign.center,
@@ -281,7 +281,7 @@ class _RestaurantListScreenState extends ConsumerState<RestaurantListScreen> {
               color: app_design_tokens.DesignTokens.textTertiary,
             ),
           ),
-          SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
+          const SizedBox(height: app_design_tokens.DesignTokens.spaceLG),
           ElevatedButton(
             onPressed: () {
               setState(() {

@@ -55,7 +55,7 @@ class ProfileApiRepositoryImpl implements ProfileApiRepository {
       // Validate file size (max 5MB)
       final fileSize = await imageFile.length();
       if (fileSize > 5 * 1024 * 1024) {
-        return Result.failure(core_failure.Failure.validationError(
+        return Result.failure(const core_failure.Failure.validationError(
           'La taille de l\'image ne doit pas dépasser 5MB'
         ));
       }
@@ -64,7 +64,7 @@ class ProfileApiRepositoryImpl implements ProfileApiRepository {
       final fileName = imageFile.path.split('/').last;
       final extension = fileName.split('.').last.toLowerCase();
       if (!['jpg', 'jpeg', 'png', 'webp'].contains(extension)) {
-        return Result.failure(core_failure.Failure.validationError(
+        return Result.failure(const core_failure.Failure.validationError(
           'Format d\'image non supporté. Utilisez JPG, PNG ou WebP'
         ));
       }
