@@ -6,6 +6,7 @@ if "%1"=="apk" (
     echo Building APK...
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build apk --release --split-per-abi
     echo APK built successfully!
     echo Output: build\app\outputs\flutter-apk\
@@ -17,6 +18,7 @@ if "%1"=="appbundle" (
     echo Building App Bundle...
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build appbundle --release
     echo App Bundle built successfully!
     echo Output: build\app\outputs\bundle\release\

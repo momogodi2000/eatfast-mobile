@@ -33,7 +33,7 @@ class GuestService {
     try {
       final sessionId = await getGuestSessionId();
       if (sessionId == null) {
-        return GuestCartResponse(
+        return const GuestCartResponse(
           success: false,
           message: 'No guest session',
           items: [],
@@ -48,7 +48,7 @@ class GuestService {
       return GuestCartResponse.fromJson(response.data);
     } catch (e) {
       _logger.warning('Failed to get guest cart', e);
-      return GuestCartResponse(
+      return const GuestCartResponse(
         success: false,
         message: 'Failed to get cart',
         items: [],
@@ -142,7 +142,7 @@ class GuestService {
   /// Format phone number to Cameroon standard
   String formatPhoneNumber(String phone) {
     // Remove all non-digits
-    String cleaned = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    final cleaned = phone.replaceAll(RegExp(r'[^0-9]'), '');
     
     // If it starts with 237, add +
     if (cleaned.startsWith('237') && cleaned.length == 11) {

@@ -5,6 +5,7 @@ build_apk() {
     echo "Building APK..."
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build apk --release --split-per-abi
     echo "APK built successfully!"
     echo "Output: build/app/outputs/flutter-apk/"
@@ -15,6 +16,7 @@ build_appbundle() {
     echo "Building App Bundle..."
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build appbundle --release
     echo "App Bundle built successfully!"
     echo "Output: build/app/outputs/bundle/release/"
@@ -25,6 +27,7 @@ build_ios() {
     echo "Building iOS..."
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build ios --release
     echo "iOS build completed!"
     echo "Output: build/ios/iphoneos/"
@@ -35,6 +38,7 @@ build_web() {
     echo "Building Web..."
     flutter clean
     flutter pub get
+    flutter packages pub run build_runner build --delete-conflicting-outputs
     flutter build web --release
     echo "Web build completed!"
     echo "Output: build/web/"

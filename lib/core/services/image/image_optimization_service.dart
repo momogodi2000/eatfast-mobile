@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:crypto/crypto.dart';
@@ -172,8 +171,8 @@ class ImageOptimizationService {
         final sizeFactor = targetReduction < 1 ? targetReduction : 1.0;
         
         // Resize if needed
-        int newWidth = (image.width * sizeFactor).round();
-        int newHeight = (image.height * sizeFactor).round();
+        final newWidth = (image.width * sizeFactor).round();
+        final newHeight = (image.height * sizeFactor).round();
         
         final resized = img.copyResize(image, width: newWidth, height: newHeight);
         compressedBytes = Uint8List.fromList(img.encodeJpg(resized, quality: currentQuality));
@@ -314,7 +313,7 @@ class ImageOptimizationService {
   String _generateFileName(String originalPath, int width, int height, int quality) {
     final originalName = originalPath.split('/').last.split('.').first;
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    return '${originalName}_${width}x${height}_q$quality\_$timestamp.jpg';
+    return '${originalName}_${width}x${height}_q${quality}_$timestamp.jpg';
   }
 
   /// Generate cache key for image URL
