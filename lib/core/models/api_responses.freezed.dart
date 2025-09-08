@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ApiResponse<T> {
   bool get success => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson)
   T? get data => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
@@ -35,11 +34,7 @@ abstract class $ApiResponseCopyWith<T, $Res> {
           ApiResponse<T> value, $Res Function(ApiResponse<T>) then) =
       _$ApiResponseCopyWithImpl<T, $Res, ApiResponse<T>>;
   @useResult
-  $Res call(
-      {bool success,
-      String? message,
-      @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson) T? data,
-      String? error});
+  $Res call({bool success, String? message, T? data, String? error});
 }
 
 /// @nodoc
@@ -91,11 +86,7 @@ abstract class _$$ApiResponseImplCopyWith<T, $Res>
       __$$ApiResponseImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call(
-      {bool success,
-      String? message,
-      @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson) T? data,
-      String? error});
+  $Res call({bool success, String? message, T? data, String? error});
 }
 
 /// @nodoc
@@ -141,17 +132,13 @@ class __$$ApiResponseImplCopyWithImpl<T, $Res>
 
 class _$ApiResponseImpl<T> implements _ApiResponse<T> {
   const _$ApiResponseImpl(
-      {required this.success,
-      this.message,
-      @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson) this.data,
-      this.error});
+      {required this.success, this.message, this.data, this.error});
 
   @override
   final bool success;
   @override
   final String? message;
   @override
-  @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson)
   final T? data;
   @override
   final String? error;
@@ -190,7 +177,7 @@ abstract class _ApiResponse<T> implements ApiResponse<T> {
   const factory _ApiResponse(
       {required final bool success,
       final String? message,
-      @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson) final T? data,
+      final T? data,
       final String? error}) = _$ApiResponseImpl<T>;
 
   @override
@@ -198,7 +185,6 @@ abstract class _ApiResponse<T> implements ApiResponse<T> {
   @override
   String? get message;
   @override
-  @JsonKey(fromJson: _dataFromJson, toJson: _dataToJson)
   T? get data;
   @override
   String? get error;
