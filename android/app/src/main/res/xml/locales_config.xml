@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Supported locales for EatFast -->
+    <locale android:name="fr"/>  <!-- French (primary for Cameroon) -->
+    <locale android:name="en"/>  <!-- English (secondary) -->
+    <locale android:name="fr-CM"/>  <!-- French (Cameroon specific) -->
+    <locale android:name="en-CM"/>  <!-- English (Cameroon specific) -->
+</locale-config>

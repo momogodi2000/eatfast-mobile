@@ -1,0 +1,38 @@
+groups:
+  - name: eatfast_mobile_alerts
+    rules:
+      - alert: AppDown
+        expr: up{job="eatfast-mobile-web"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "EatFast Mobile Web app is down"
+          description: "The EatFast Mobile web application has been down for more than 5 minutes."
+
+      - alert: HighResponseTime
+        expr: avg(rate(nginx_http_request_duration_seconds_sum[5m])) > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "Average response time is above 2 seconds for the last 10 minutes."
+
+      - alert: HighErrorRate
+        expr: (rate(nginx_http_requests_total{status=~"5.."}[5m]) / rate(nginx_http_requests_total[5m])) * 100 > 5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is above 5% for the last 5 minutes."
+
+      - alert: LowDiskSpace
+        expr: (node_filesystem_free_bytes / node_filesystem_size_bytes) * 100 < 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space"
+          description: "Disk space is below 10%."

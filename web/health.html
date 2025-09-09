@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EatFast Mobile - Health Check</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .health-container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .status {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .info {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .timestamp {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="health-container">
+        <div class="status">✅</div>
+        <h1>EatFast Mobile</h1>
+        <div class="info">Status: Healthy</div>
+        <div class="info">Environment: Production</div>
+        <div class="info">Version: 1.0.0</div>
+        <div class="timestamp">Last checked: <span id="timestamp"></span></div>
+    </div>
+    
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        
+        // Auto-refresh every 30 seconds
+        setTimeout(() => {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>

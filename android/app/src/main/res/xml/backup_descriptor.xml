@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude sensitive data from backup -->
+    <exclude domain="sharedpref" path="FlutterSecureStorage"/>
+    <exclude domain="database" path="user_auth.db"/>
+    <exclude domain="file" path="sensitive/"/>
+    
+    <!-- Include important user data -->
+    <include domain="sharedpref" path="user_preferences"/>
+    <include domain="database" path="favorites.db"/>
+    <include domain="file" path="profile_images/"/>
+</full-backup-content>

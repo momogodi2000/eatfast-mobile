@@ -15,13 +15,13 @@ class AppConstants {
   static const String companyAddress = 'Yaoundé, Cameroun';
   
   // API Configuration (matching backend)
-  static const String baseUrl = 'http://localhost:3000'; // Development URL - update for production
+  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com'; // Production URL
   static const String apiVersion = 'v1';
-  static const int connectionTimeout = 30000;
-  static const int receiveTimeout = 30000;
+  static const int connectionTimeout = 60000; // Increased for Render's cold start
+  static const int receiveTimeout = 60000;
   
-  // Production URL (uncomment for production build)
-  // static const String baseUrl = 'https://api.eatfast.cm';
+  // Development URL (use this for local development)
+  // static const String baseUrl = 'http://localhost:3000';
   
   // Storage Keys
   static const String keyIsFirstTime = 'is_first_time';

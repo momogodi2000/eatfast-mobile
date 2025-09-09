@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Eatfast Mobile</string>
+	<string>EatFast</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>eatfast_mobile</string>
+	<string>EatFast</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,5 +45,89 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- App metadata -->
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	
+	<!-- Privacy permissions descriptions -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>EatFast needs location access to show nearby restaurants and estimate delivery times.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>EatFast needs location access to track deliveries and provide accurate arrival times.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>EatFast needs camera access to take photos for your profile and food reviews.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>EatFast needs photo library access to select images for your profile and food reviews.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>EatFast needs microphone access for voice messages and support calls.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>EatFast needs contact access to help you invite friends to group orders.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>EatFast needs music access to enhance your dining experience.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>EatFast uses Face ID for secure and convenient authentication.</string>
+	
+	<!-- App Transport Security -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>eat-fast-backend-express-js.onrender.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	
+	<!-- Supported URL schemes -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.eatfast.cameroon.url</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>eatfast</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Background modes -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>background-fetch</string>
+		<string>background-processing</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	
+	<!-- App capabilities -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	
+	<!-- Status bar configuration -->
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

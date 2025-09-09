@@ -9,9 +9,11 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com/api
+      - API_BASE_URL=https://eat-fast-backend-express-js.onrender.com
       - ENVIRONMENT=production
       - APP_VERSION=${APP_VERSION:-1.0.0}
+      - FLUTTER_WEB_USE_SKIA=true
+      - FLUTTER_WEB_RENDERER=html
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/health"]

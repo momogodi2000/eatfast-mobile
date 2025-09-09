@@ -1,13 +1,17 @@
 @echo off
 REM Eat Fast Mobile App - Build Scripts for Windows
 
+REM Set production API URL
+echo Setting backend URL to production...
+powershell -Command "(Get-Content lib\core\config\api_endpoints.dart) | ForEach-Object { $_ -replace 'baseUrl = .*', 'baseUrl = \"https://eat-fast-backend-express-js.onrender.com\";' } | Set-Content lib\core\config\api_endpoints.dart"
+
 REM Build APK for Android
 if "%1"=="apk" (
     echo Building APK...
     flutter clean
     flutter pub get
     flutter packages pub run build_runner build --delete-conflicting-outputs
-    flutter build apk --release --split-per-abi
+    flutter build apk --release --split-per-abi --obfuscate --split-debug-info=./symbols
     echo APK built successfully!
     echo Output: build\app\outputs\flutter-apk\
     goto end
@@ -19,7 +23,7 @@ if "%1"=="appbundle" (
     flutter clean
     flutter pub get
     flutter packages pub run build_runner build --delete-conflicting-outputs
-    flutter build appbundle --release
+    flutter build appbundle --release --obfuscate --split-debug-info=./symbols
     echo App Bundle built successfully!
     echo Output: build\app\outputs\bundle\release\
     goto end

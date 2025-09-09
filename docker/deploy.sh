@@ -48,12 +48,12 @@ case $ENVIRONMENT in
         ;;
     staging)
         COMPOSE_FILE="docker-compose.prod.yml"
-        API_BASE_URL="https://eat-fast-backend-express-js.onrender.com/api"
+        API_BASE_URL="https://eat-fast-backend-express-js.onrender.com"
         PORT=80
         ;;
     production)
         COMPOSE_FILE="docker-compose.prod.yml"
-        API_BASE_URL="https://eat-fast-backend-express-js.onrender.com/api"
+        API_BASE_URL="https://eat-fast-backend-express-js.onrender.com"
         PORT=80
         ;;
 esac
