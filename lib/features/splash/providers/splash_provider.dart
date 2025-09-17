@@ -39,7 +39,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
       // - Initialize local database
       // - Check authentication token
       // - Load user preferences
-      // - Initialize Firebase
+      // - Initialize notification service (local only)
       
     } catch (e) {
       state = SplashState.error(message: 'Failed to initialize app: ${e.toString()}');

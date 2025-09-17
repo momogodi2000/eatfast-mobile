@@ -202,6 +202,77 @@ class PaymentService {
     }
   }
 
+  /// Process NouPay/Nopia payment
+  Future<PaymentResponse> processNouPayPayment({
+    required String orderId,
+    required double amount,
+    required String phoneNumber,
+    String currency = 'XAF',
+  }) async {
+    if (!AppConfig.enableNouPayPayments) {
+      throw const PaymentException(
+        'NouPay payments are not enabled',
+        code: 'PAYMENT_METHOD_DISABLED',
+      );
+    }
+
+    try {
+      final response = await _apiClient.post(
+        ApiConstants.paymentNoupayInitiate,
+        data: {
+          'orderId': orderId,
+          'amount': amount,
+          'currency': currency,
+          'phoneNumber': _formatCameroonPhone(phoneNumber),
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return PaymentResponse.fromJson(response.data);
+      } else {
+        throw PaymentException(
+          'NouPay payment failed: ${response.statusMessage}',
+          code: 'NOUPAY_PAYMENT_FAILED',
+        );
+      }
+    } on DioException catch (e) {
+      throw PaymentException(
+        _handleDioError(e),
+        code: 'NOUPAY_NETWORK_ERROR',
+      );
+    }
+  }
+
+  /// Confirm NouPay payment with reference
+  Future<PaymentResponse> confirmNouPayPayment({
+    required String paymentId,
+    required String reference,
+  }) async {
+    try {
+      final response = await _apiClient.post(
+        ApiConstants.paymentNoupayConfirm,
+        data: {
+          'paymentId': paymentId,
+          'reference': reference,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return PaymentResponse.fromJson(response.data);
+      } else {
+        throw PaymentException(
+          'NouPay confirmation failed: ${response.statusMessage}',
+          code: 'NOUPAY_CONFIRMATION_FAILED',
+        );
+      }
+    } on DioException catch (e) {
+      throw PaymentException(
+        _handleDioError(e),
+        code: 'NOUPAY_CONFIRMATION_ERROR',
+      );
+    }
+  }
+
   /// Process wallet payment
   Future<PaymentResponse> processWalletPayment({
     required String orderId,

@@ -42,7 +42,7 @@ class TipNotifier extends StateNotifier<TipState> {
     _initializeTipOptions();
   }
 
-  // Mock data
+  // TODO: Replace with actual API call to tips endpoint
   final List<Tip> _mockTips = [
     Tip(
       id: '1',

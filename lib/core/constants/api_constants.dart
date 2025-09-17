@@ -61,6 +61,10 @@ class ApiConstants {
   static const String paymentMethods = '/client/payment-methods';
   static const String paymentCampayInitiate = '/payments/campay/initiate';
   static const String paymentCampayConfirm = '/payments/campay/confirm';
+  static const String paymentNoupayInitiate = '/payments/noupay/initiate';
+  static const String paymentNoupayConfirm = '/payments/noupay/confirm';
+  static const String paymentStripeInitiate = '/payments/stripe/initiate';
+  static const String paymentStripeConfirm = '/payments/stripe/confirm';
   static const String paymentStatus = '/payments/status';
   static const String createPaymentIntent = '/payments/intent';
   static const String confirmPayment = '/payments/confirm';
@@ -93,9 +97,46 @@ class ApiConstants {
   static const String publicStats = '/public/stats';
   static const String publicHealth = '/public/health';
   
-  // Shared endpoints
+  // Shared endpoints - aligned with backend implementation
   static const String uploadFile = '/shared/upload';
-  static const String notifications = '/shared/notifications';
+
+  // Notification endpoints - backend uses nodemailer for email + WhatsApp Business API
+  static const String notificationPreferences = '/mvp/notifications/preferences';
+  static const String notificationHistory = '/mvp/notifications/history';
+  static const String notificationRegisterPush = '/mvp/notifications/register-subscription';
+  static const String notificationTest = '/mvp/notifications/test';
+  static const String notificationMarkRead = '/mvp/notifications/{notificationId}/read';
+
+  // WhatsApp Business API endpoints - directly from backend
+  static const String whatsappOrderStatus = '/messaging/whatsapp/orders/{orderId}/status';
+  static const String whatsappDeliveryLocation = '/messaging/whatsapp/deliveries/{deliveryId}/location';
+  static const String whatsappOrderReceipt = '/messaging/whatsapp/orders/{orderId}/receipt';
+  static const String whatsappUserLink = '/messaging/whatsapp/users/{userId}/link';
+  static const String whatsappUserLanguage = '/messaging/whatsapp/users/{userId}/language';
+  static const String whatsappUserStatus = '/messaging/whatsapp/users/{userId}/status';
+  static const String whatsappCustomMessage = '/messaging/whatsapp/contacts/{contactId}/message';
+
+  // Scheduled orders - from backend shared routes
+  static const String scheduledOrderCreate = '/shared/scheduled-orders/create';
+  static const String scheduledOrderList = '/shared/scheduled-orders/list';
+  static const String scheduledOrderUpdate = '/shared/scheduled-orders/{orderId}';
+  static const String scheduledOrderCancel = '/shared/scheduled-orders/{orderId}';
+
+  // Loyalty program - from backend shared routes
+  static const String loyaltyStatus = '/shared/mvp/loyalty/status';
+  static const String loyaltyHistory = '/shared/mvp/loyalty/history';
+  static const String loyaltyRedeem = '/shared/mvp/loyalty/redeem';
+  static const String loyaltyConfig = '/shared/mvp/loyalty/config';
+  static const String loyaltyDashboard = '/shared/mvp/loyalty/dashboard';
+
+  // Social & Referral - from backend shared routes
+  static const String socialReferralCreate = '/shared/mvp/social/referral/create';
+  static const String socialReferralProcess = '/shared/mvp/social/referral/process';
+  static const String socialShareCreate = '/shared/mvp/social/share/create';
+  static const String socialShareClick = '/shared/mvp/social/share/{shareId}/click';
+  static const String socialStats = '/shared/mvp/social/stats';
+  static const String socialPlatforms = '/shared/mvp/social/platforms';
+
   static const String users = '/users';
   
   // Additional guest endpoints

@@ -78,9 +78,7 @@ dependencies:
   image: ^4.1.7  # For image optimization service
   path_provider: ^2.1.3  # For cache manager and image service
   
-  # Push Notifications
-  firebase_core: ^2.31.0
-  firebase_messaging: ^14.9.2
+  # Local Notifications (backend sends email notifications)
   flutter_local_notifications: ^17.1.2
   
   # Real-time Communication

@@ -41,7 +41,7 @@ class FavoritesState {
 class FavoritesNotifier extends StateNotifier<FavoritesState> {
   FavoritesNotifier() : super(const FavoritesState());
 
-  // Mock data
+  // TODO: Replace with actual API call to favorites endpoint
   final List<FavoriteItem> _mockFavorites = [
     FavoriteItem(
       favorite: Favorite(

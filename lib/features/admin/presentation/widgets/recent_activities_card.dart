@@ -8,7 +8,7 @@ class RecentActivitiesCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
-    // Mock data for recent activities
+    // TODO: Replace with actual API call to admin activities endpoint
     final activities = [
       _Activity(
         type: ActivityType.newUser,
