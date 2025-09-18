@@ -87,8 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         );
       } else {
         ref.read(authProvider.notifier).loginWithPhone(
-          phone: _phoneController.text.trim(),
-          password: _passwordController.text,
+          phoneNumber: _phoneController.text.trim(),
         );
       }
     }

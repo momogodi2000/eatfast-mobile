@@ -75,6 +75,11 @@ class ApiConstants {
   static const String driverOrders = '/driver/orders';
   static const String driverLocation = '/driver/location';
   static const String driverEarnings = '/driver/earnings';
+  static const String availableOrders = '/driver/available-orders';
+  static const String driverActiveDelivery = '/driver/active-delivery';
+  static const String driverStatus = '/driver/status';
+  static const String acceptOrder = '/driver/orders/accept';
+  static const String driverStatistics = '/driver/statistics';
   
   // Restaurant Owner endpoints - matching backend exactly
   static const String restaurantOwnerProfile = '/restaurant/profile';

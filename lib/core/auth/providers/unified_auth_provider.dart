@@ -3,6 +3,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../services/auth/unified_auth_service.dart';
+import '../models/app_user.dart';
 
 /// Main auth state provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -328,7 +329,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 /// Authentication state
 class AuthState {
   final AuthStatus status;
-  final AuthUser? user;
+  final AppUser? user;
   final String? error;
   final String? twoFactorUserId;
   final List<String> twoFactorMethods;
@@ -343,7 +344,7 @@ class AuthState {
 
   AuthState copyWith({
     AuthStatus? status,
-    AuthUser? user,
+    AppUser? user,
     String? error,
     String? twoFactorUserId,
     List<String>? twoFactorMethods,
@@ -379,7 +380,7 @@ final isAuthenticatedProvider = Provider<bool>((ref) {
   return authState.isAuthenticated;
 });
 
-final currentUserProvider = Provider<AuthUser?>((ref) {
+final currentUserProvider = Provider<AppUser?>((ref) {
   final authState = ref.watch(authProvider);
   return authState.user;
 });
@@ -396,12 +397,12 @@ final isAdminProvider = Provider<bool>((ref) {
 
 final isRestaurantProvider = Provider<bool>((ref) {
   final role = ref.watch(currentUserRoleProvider);
-  return role == UserRole.restaurant;
+  return role == UserRole.restaurantOwner;
 });
 
 final isDriverProvider = Provider<bool>((ref) {
   final role = ref.watch(currentUserRoleProvider);
-  return role == UserRole.driver;
+  return role == UserRole.deliveryDriver;
 });
 
 final isCustomerProvider = Provider<bool>((ref) {
@@ -411,5 +412,5 @@ final isCustomerProvider = Provider<bool>((ref) {
 
 final isGuestProvider = Provider<bool>((ref) {
   final role = ref.watch(currentUserRoleProvider);
-  return role == UserRole.guest || role == null;
+  return role == null;
 });

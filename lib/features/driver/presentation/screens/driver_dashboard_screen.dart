@@ -10,6 +10,8 @@ import '../widgets/quick_stats_row.dart';
 import '../../domain/models/driver_profile.dart';
 import '../../domain/models/driver_earnings.dart';
 import '../../domain/models/delivery_order.dart';
+import '../../domain/providers/driver_providers.dart';
+import '../../data/driver_service.dart';
 
 class DriverDashboardScreen extends ConsumerStatefulWidget {
   final String driverId;
@@ -61,10 +63,58 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
     }
   }
 
-  // Mock data initialization method
-  void _initializeMockData() {
-    // This method would initialize mock data for development/testing
-    // Comment out or remove in production
+  Future<void> _refreshData() async {
+    await _loadDriverData();
+  }
+
+  void _toggleOnlineStatus(bool isOnline) async {
+    try {
+      await ref.read(driverServiceProvider).updateDriverStatus(
+        driverId: widget.driverId,
+        isOnline: isOnline,
+      );
+      // Refresh driver profile after status change
+      await ref.read(driverProfileProvider.notifier).fetchDriverProfile(widget.driverId);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
+  void _toggleAvailability(bool isAvailable) {
+    // This would typically update driver availability status
+    // Implementation depends on backend API
+  }
+
+  void _navigateToCustomer() {
+    // Navigate to customer location
+  }
+
+  void _contactCustomer() {
+    // Contact customer via phone/chat
+  }
+
+  void _contactRestaurant() {
+    // Contact restaurant via phone/chat
+  }
+
+  void _markPickedUp() {
+    // Mark order as picked up
+  }
+
+  void _markDelivered() {
+    // Mark order as delivered
+  }
+
+  void _showLocationSettings() {
+    // Show location settings dialog
+  }
+
+  void _reportIssue() {
+    // Report issue with current delivery
   }
 
   @override
@@ -100,7 +150,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
           ),
         ),
       ),
-      floatingActionButton: isOnline ? _buildFloatingActionButton() : null,
+      floatingActionButton: _buildFloatingActionButton(),
       bottomNavigationBar: _buildBottomNavigation(),
     );
   }
@@ -139,7 +189,8 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
           icon: Stack(
             children: [
               const Icon(Icons.location_on, color: DesignTokens.white),
-              if (!isOnline)
+              // Show offline indicator if driver is offline
+              if (ref.watch(driverProfileProvider)?.isOnline == false)
                 Positioned(
                   right: 0,
                   top: 0,
@@ -225,35 +276,40 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
   }
 
   Widget _buildDriverStatusCard() {
+    final driver = ref.watch(driverProfileProvider);
+    if (driver == null) return const SizedBox.shrink();
+
     return DriverStatusCard(
-      driver: mockDriver.copyWith(
-        isOnline: isOnline,
-        isAvailable: isAvailable,
-      ),
-      onToggleOnline: () => _toggleOnlineStatus(!isOnline),
-      onToggleAvailable: () => _toggleAvailability(!isAvailable),
+      driver: driver,
+      onToggleOnline: () => _toggleOnlineStatus(!driver.isOnline),
+      onToggleAvailable: () => _toggleAvailability(!driver.isAvailable),
     );
   }
 
   Widget _buildQuickStats() {
+    final driver = ref.watch(driverProfileProvider);
+    if (driver == null) return const SizedBox.shrink();
+
     return QuickStatsRow(
-      driver: mockDriver,
+      driver: driver,
       onViewPerformance: () => context.push('/driver/${widget.driverId}/performance'),
     );
   }
 
   Widget _buildEarningsSummary() {
+    final earnings = ref.watch(driverEarningsProvider);
+    if (earnings == null) return const SizedBox.shrink();
+
     return EarningsSummaryCard(
-      earnings: mockEarnings,
+      earnings: earnings,
       onViewDetails: () => context.push('/driver/${widget.driverId}/earnings'),
     );
   }
 
   Widget _buildActiveDeliverySection() {
-    // Check if driver has active delivery
-    final hasActiveDelivery = mockActiveOrder != null;
+    final activeOrder = ref.watch(activeDeliveryProvider);
 
-    if (!hasActiveDelivery) {
+    if (activeOrder == null) {
       return const SizedBox.shrink();
     }
 
@@ -280,7 +336,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         ),
         const SizedBox(height: 12),
         ActiveDeliveryCard(
-          order: mockActiveOrder!,
+          order: activeOrder,
           onNavigate: () => _navigateToCustomer(),
           onCallCustomer: () => _contactCustomer(),
           onCallRestaurant: () => _contactRestaurant(),
@@ -290,7 +346,9 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         ),
       ],
     );
-  }  Widget _buildAvailableOrdersSection() {
+  }
+
+  Widget _buildAvailableOrdersSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -304,7 +362,8 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
                 color: DesignTokens.textPrimary,
               ),
             ),
-            if (isOnline && isAvailable)
+            if (ref.watch(driverProfileProvider)?.isOnline == true &&
+                ref.watch(driverProfileProvider)?.isAvailable == true)
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: DesignTokens.spaceXS,
@@ -341,7 +400,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         ),
         const SizedBox(height: DesignTokens.spaceMD),
         AvailableOrdersList(
-          orders: mockOrders,
+          orders: ref.watch(availableOrdersProvider),
           onAcceptOrder: (orderId) => _acceptOrder(orderId),
           onRejectOrder: (orderId) => _rejectOrder(orderId, 'Raison du refus'),
           onOrderTap: (order) => context.push('/driver/order/${order.orderId}'),
@@ -454,36 +513,6 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
     );
   }
 
-  Future<void> _refreshData() async {
-    // TODO: Implement data refresh
-    await Future.delayed(const Duration(seconds: 1));
-  }
-
-  void _toggleOnlineStatus(bool value) {
-    setState(() {
-      isOnline = value;
-      if (!value) {
-        isAvailable = false;
-      }
-    });
-    
-    // TODO: Update status on server
-    _showStatusChangeSnackbar(value ? 'En ligne' : 'Hors ligne');
-  }
-
-  void _toggleAvailability(bool value) {
-    if (!isOnline && value) {
-      _showSnackbar('Vous devez être en ligne pour être disponible');
-      return;
-    }
-    
-    setState(() {
-      isAvailable = value;
-    });
-    
-    // TODO: Update availability on server
-    _showStatusChangeSnackbar(value ? 'Disponible' : 'Indisponible');
-  }
 
   void _showStatusChangeSnackbar(String status) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -505,59 +534,6 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
     );
   }
 
-  void _showLocationSettings() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(DesignTokens.radiusXL),
-          topRight: Radius.circular(DesignTokens.radiusXL),
-        ),
-      ),
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(DesignTokens.spaceLG),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: DesignTokens.lightGrey,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: DesignTokens.spaceLG),
-            const Icon(
-              Icons.location_on,
-              size: 48,
-              color: DesignTokens.primaryColor,
-            ),
-            const SizedBox(height: DesignTokens.spaceMD),
-            Text(
-              'Partage de localisation',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: DesignTokens.fontWeightBold,
-              ),
-            ),
-            const SizedBox(height: DesignTokens.spaceXS),
-            const Text(
-              'Votre localisation est partagée pour vous assigner des commandes proches',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: DesignTokens.spaceLG),
-            SwitchListTile(
-              title: const Text('Partage de localisation'),
-              subtitle: const Text('Requis pour recevoir des commandes'),
-              value: isOnline,
-              onChanged: _toggleOnlineStatus,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void _handleMenuAction(String action) {
     switch (action) {
       case 'profile':
@@ -573,36 +549,6 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
         context.push('/driver/${widget.driverId}/settings');
         break;
     }
-  }
-
-  void _contactCustomer() {
-    // TODO: Implement customer contact
-    debugPrint('Contact customer');
-  }
-
-  void _navigateToCustomer() {
-    // TODO: Implement navigation to customer location
-    debugPrint('Navigate to customer location');
-  }
-
-  void _contactRestaurant() {
-    // TODO: Implement restaurant contact functionality
-    debugPrint('Contact restaurant');
-  }
-
-  void _markPickedUp() {
-    // TODO: Implement mark as picked up functionality
-    debugPrint('Mark order as picked up');
-  }
-
-  void _markDelivered() {
-    // TODO: Implement mark as delivered functionality
-    debugPrint('Mark order as delivered');
-  }
-
-  void _reportIssue() {
-    // TODO: Implement issue reporting
-    debugPrint('Report issue');
   }
 
   void _acceptOrder(String orderId) {

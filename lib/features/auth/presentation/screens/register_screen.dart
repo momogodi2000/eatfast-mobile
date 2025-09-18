@@ -6,6 +6,7 @@ import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/auth/providers/unified_auth_provider.dart';
+import '../../../../core/auth/models/app_user.dart';
 
 /// Registration Screen
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -60,12 +61,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
       }
 
       ref.read(authProvider.notifier).register(
-        firstName: _nameController.text.trim().split(' ')[0],
-        lastName: _nameController.text.trim().split(' ').length > 1 ? _nameController.text.trim().split(' ')[1] : '',
+        name: _nameController.text.trim(),
         email: _emailController.text.trim(),
-        phone: _phoneController.text.trim(),
         password: _passwordController.text,
-        city: 'Douala', // Default city
+        confirmPassword: _confirmPasswordController.text,
+        phone: _phoneController.text.trim(),
+        role: UserRole.customer,
       );
     }
   }
@@ -86,14 +87,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
 
     // Listen to auth state changes
     ref.listen<AuthState>(authProvider, (previous, next) {
-      if (next is AuthAuthenticated) {
+      if (next.isAuthenticated) {
         context.go(RouteNames.home);
-      } else if (next is AuthOtpSent) {
-        context.go('${RouteNames.otpVerification}?phone=${next.phoneNumber}');
-      } else if (next is AuthError) {
+      } else if (next.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.message),
+            content: Text(next.error!),
             backgroundColor: DesignTokens.errorColor,
           ),
         );

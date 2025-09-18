@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import '../../domain/models/payment.dart';
-import '../../data/unified_payment_service.dart';
+import '../../../../core/services/payment/unified_payment_service.dart';
 
 class EnhancedPaymentSelector extends StatefulWidget {
   final double amount;

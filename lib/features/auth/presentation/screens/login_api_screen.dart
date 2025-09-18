@@ -56,14 +56,11 @@ class _LoginApiScreenState extends ConsumerState<LoginApiScreen> {
           case UserRole.admin:
             context.go('/admin-dashboard');
             break;
-          case UserRole.restaurant:
+          case UserRole.restaurantOwner:
             context.go('/restaurant-dashboard');
             break;
-          case UserRole.driver:
+          case UserRole.deliveryDriver:
             context.go('/driver-dashboard');
-            break;
-          case UserRole.guest:
-            context.go('/home');
             break;
         }
       }
@@ -196,18 +193,7 @@ class _LoginApiScreenState extends ConsumerState<LoginApiScreen> {
                 const SizedBox(height: DesignTokens.spaceLG),
                 
                 // Login Button
-                authState.when(
-                  initial: () => _buildLoginButton(false),
-                  loading: () => _buildLoginButton(true),
-                  authenticated: (_) => _buildLoginButton(false),
-                  unauthenticated: () => _buildLoginButton(false),
-                  error: (_, __) => _buildLoginButton(false),
-                  loggingIn: () => _buildLoginButton(true),
-                  registering: () => _buildLoginButton(true),
-                  resettingPassword: () => _buildLoginButton(false),
-                  verifyingOtp: () => _buildLoginButton(false),
-                  changingPassword: () => _buildLoginButton(false),
-                ),
+                _buildLoginButton(authState.isLoading),
                 
                 const SizedBox(height: DesignTokens.spaceMD),
                 

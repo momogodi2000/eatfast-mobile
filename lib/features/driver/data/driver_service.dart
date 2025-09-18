@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/driver_profile.dart';
-import '../models/driver_earnings.dart';
-import '../models/delivery_order.dart';
+import '../domain/models/driver_profile.dart';
+import '../domain/models/driver_earnings.dart';
+import '../domain/models/delivery_order.dart';
 import '../../../../core/services/api/api_client.dart';
 import '../../../../core/constants/api_constants.dart';
 

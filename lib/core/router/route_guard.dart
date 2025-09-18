@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../services/auth/unified_auth_service.dart';
 import '../auth/providers/unified_auth_provider.dart';
+import '../auth/models/app_user.dart';
 
 /// Route guard that checks authentication and role permissions
 class RouteGuard {
@@ -37,15 +37,13 @@ class RouteGuard {
   /// Get appropriate route based on user role when unauthorized
   static String _getUnauthorizedRoute(UserRole? userRole) {
     switch (userRole) {
-      case UserRole.restaurant:
+      case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.driver:
+      case UserRole.deliveryDriver:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
-        return '/home';
-      case UserRole.guest:
         return '/home';
       case null:
         return '/home';
@@ -55,15 +53,13 @@ class RouteGuard {
   /// Get default route after successful login based on user role
   static String getDefaultRouteForRole(UserRole role) {
     switch (role) {
-      case UserRole.restaurant:
+      case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.driver:
+      case UserRole.deliveryDriver:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
-        return '/home';
-      case UserRole.guest:
         return '/home';
     }
   }

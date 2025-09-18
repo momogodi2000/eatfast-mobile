@@ -6,8 +6,7 @@ import 'package:dio/dio.dart';
 import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../domain/models/guest_models.dart';
-import '../../payments/data/unified_payment_service.dart';
-import '../../payments/domain/models/payment.dart';
+import '../../../core/services/payment/unified_payment_service.dart';
 
 class GuestService {
   static final GuestService _instance = GuestService._internal();
