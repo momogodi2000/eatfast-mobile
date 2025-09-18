@@ -283,6 +283,42 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  /// Login with phone number (OTP-based)
+  Future<void> loginWithPhone({
+    required String phoneNumber,
+    bool rememberMe = false,
+  }) async {
+    state = state.copyWith(
+      status: AuthStatus.loading,
+      error: null,
+    );
+
+    try {
+      // First send OTP
+      final otpSent = await _authService.sendOtp(
+        phoneOrEmail: phoneNumber,
+        type: OtpType.login,
+      );
+
+      if (otpSent) {
+        state = state.copyWith(
+          status: AuthStatus.unauthenticated,
+          error: 'OTP sent to $phoneNumber. Please verify to continue.',
+        );
+      } else {
+        state = state.copyWith(
+          status: AuthStatus.unauthenticated,
+          error: 'Failed to send OTP. Please try again.',
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        status: AuthStatus.unauthenticated,
+        error: 'Phone login error: $e',
+      );
+    }
+  }
+
   /// Clear error
   void clearError() {
     state = state.copyWith(error: null);

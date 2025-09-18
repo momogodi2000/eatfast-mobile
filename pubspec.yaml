@@ -138,7 +138,7 @@ flutter:
     - assets/logo/
     - assets/animations/
     - assets/icons/
-    - assets/avartar/
+    - assets/avatar/
 
   # fonts:
     # - family: Poppins
@@ -194,16 +194,14 @@ flutter_launcher_icons:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/logo/eatfast_logo.png
-  branding: assets/logo/eatfast_text.png
+  image: assets/logo/eat-fast-logo.png
   color_dark: "#1a1a1a"
-  image_dark: assets/logo/eatfast_logo_dark.png
-  branding_dark: assets/logo/eatfast_text_dark.png
+  image_dark: assets/logo/eat-fast-logo.png
 
   android_12:
-    image: assets/logo/eatfast_logo_android12.png
+    image: assets/logo/eat-fast-logo.png
     icon_background_color: "#ffffff"
-    image_dark: assets/logo/eatfast_logo_android12_dark.png
+    image_dark: assets/logo/eat-fast-logo.png
     icon_background_color_dark: "#1a1a1a"
 
   web: false

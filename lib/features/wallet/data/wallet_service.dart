@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/network/api_client.dart';
+import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../domain/models/wallet.dart';
 
@@ -271,6 +271,5 @@ class PaginationInfo {
 
 /// Provider for wallet service
 final walletServiceProvider = Provider<WalletService>((ref) {
-  final apiClient = ref.watch(apiClientProvider);
-  return WalletService(apiClient);
+  return WalletService(ApiClient());
 });

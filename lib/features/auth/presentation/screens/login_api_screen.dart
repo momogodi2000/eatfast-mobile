@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
-import '../../providers/auth_api_provider.dart';
-import '../../domain/auth_user.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
+import '../../../../core/auth/models/app_user.dart';
 
 /// New API-based Login Screen
 class LoginApiScreen extends ConsumerStatefulWidget {
@@ -32,9 +32,9 @@ class _LoginApiScreenState extends ConsumerState<LoginApiScreen> {
 
   void _handleLogin() {
     if (_formKey.currentState?.validate() ?? false) {
-      ref.read(authApiProvider.notifier).login(
-        _emailController.text.trim(),
-        _passwordController.text,
+      ref.read(authProvider.notifier).login(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
         rememberMe: _rememberMe,
       );
     }
@@ -42,47 +42,41 @@ class _LoginApiScreenState extends ConsumerState<LoginApiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authApiProvider);
+    final authState = ref.watch(authProvider);
 
     // Listen for state changes
-    ref.listen<AuthApiState>(authApiProvider, (previous, next) {
-      next.when(
-        initial: () {},
-        loading: () {},
-        authenticated: (user) {
-          // Navigation logic based on user role
-          switch (user.role) {
-            case 'client':
-              context.go('/home');
-              break;
-            case 'admin':
-              context.go('/admin-dashboard');
-              break;
-            case 'restaurant_owner':
-              context.go('/restaurant-dashboard');
-              break;
-            case 'driver':
-              context.go('/driver-dashboard');
-              break;
-            default:
-              context.go('/home');
-          }
-        },
-        unauthenticated: () {},
-        error: (message, code) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              backgroundColor: DesignTokens.errorColor,
-            ),
-          );
-        },
-        loggingIn: () {},
-        registering: () {},
-        resettingPassword: () {},
-        verifyingOtp: () {},
-        changingPassword: () {},
-      );
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      if (next.isAuthenticated && next.user != null) {
+        // Navigation logic based on user role
+        final user = next.user!;
+        switch (user.role) {
+          case UserRole.customer:
+            context.go('/home');
+            break;
+          case UserRole.admin:
+            context.go('/admin-dashboard');
+            break;
+          case UserRole.restaurant:
+            context.go('/restaurant-dashboard');
+            break;
+          case UserRole.driver:
+            context.go('/driver-dashboard');
+            break;
+          case UserRole.guest:
+            context.go('/home');
+            break;
+        }
+      }
+
+      // Show error if any
+      if (next.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.error!),
+            backgroundColor: DesignTokens.errorColor,
+          ),
+        );
+      }
     });
 
     return Scaffold(

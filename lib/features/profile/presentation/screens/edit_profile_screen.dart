@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/design_tokens.dart';
-import '../../../../core/auth/providers/auth_provider.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {

@@ -5,8 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
-import '../../../../core/auth/providers/auth_provider.dart';
-import '../../../auth/providers/auth_state.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../providers/profile_provider.dart';
 
 /// Profile Screen - Main profile view and management

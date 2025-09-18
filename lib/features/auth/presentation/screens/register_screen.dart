@@ -5,8 +5,7 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/utils/validators.dart';
-import '../../../../core/auth/providers/auth_provider.dart';
-import '../../providers/auth_state.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 
 /// Registration Screen
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -190,7 +189,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
               }
               return null;
             },
-            enabled: authState is! AuthLoading,
+            enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           
@@ -203,7 +202,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ),
             keyboardType: TextInputType.emailAddress,
             validator: Validators.validateEmail,
-            enabled: authState is! AuthLoading,
+            enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           
@@ -217,7 +216,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ),
             keyboardType: TextInputType.phone,
             validator: Validators.validatePhone,
-            enabled: authState is! AuthLoading,
+            enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           
@@ -240,7 +239,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ),
             obscureText: _obscurePassword,
             validator: Validators.validatePassword,
-            enabled: authState is! AuthLoading,
+            enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           
@@ -263,7 +262,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ),
             obscureText: _obscureConfirmPassword,
             validator: _validateConfirmPassword,
-            enabled: authState is! AuthLoading,
+            enabled: !authState.isLoading,
           ),
         ],
       ),
@@ -332,7 +331,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
   }
 
   Widget _buildRegisterButton(AuthState authState) {
-    final isLoading = authState is AuthLoading;
+    final isLoading = authState.isLoading;
     
     return SizedBox(
       width: double.infinity,

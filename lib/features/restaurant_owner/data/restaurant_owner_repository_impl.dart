@@ -2,19 +2,14 @@ import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import '../../../core/result.dart';
-import '../../../core/network/api_client.dart';
+import '../../../core/services/api/api_client.dart';
 import '../domain/models/restaurant_stats.dart';
 import '../domain/models/live_order.dart';
 import '../domain/models/menu_management.dart';
 import '../domain/repositories/restaurant_owner_repository.dart';
 
 class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
-  final ApiClient _apiClient = ApiClient(
-    baseUrl: 'https://api.eatfast.cm',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  );
+  final ApiClient _apiClient = ApiClient();
   final Map<String, StreamController<List<LiveOrder>>> _liveOrderControllers = {};
 
   @override

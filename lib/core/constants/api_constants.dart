@@ -68,9 +68,6 @@ class ApiConstants {
   static const String paymentNoupayConfirm = '/payments/noupay/confirm';
   static const String paymentStripeInitiate = '/payments/stripe/initiate';
   static const String paymentStripeConfirm = '/payments/stripe/confirm';
-  static const String paymentStatus = '/payments/status';
-  static const String createPaymentIntent = '/payments/intent';
-  static const String confirmPayment = '/payments/confirm';
   static const String wallet = '/client/wallet';
   
   // Driver endpoints - matching backend exactly

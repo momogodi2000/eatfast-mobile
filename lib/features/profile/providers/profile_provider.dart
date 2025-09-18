@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../auth/domain/user.dart';
+import '../../../core/auth/models/app_user.dart';
 import '../domain/models.dart';
 import '../domain/profile_repository.dart';
 import '../data/profile_repository_impl.dart';
-import '../../../core/network/api_client.dart';
+import '../../../core/services/api/api_client.dart';
 
 /// Profile repository provider
 final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
@@ -15,7 +15,7 @@ final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
 
 /// Profile state
 class ProfileState {
-  final User? user;
+  final AppUser? user;
   final List<Address> addresses;
   final List<PaymentMethod> paymentMethods;
   final NotificationPreferences? notificationPreferences;
@@ -38,7 +38,7 @@ class ProfileState {
   });
 
   ProfileState copyWith({
-    User? user,
+    AppUser? user,
     List<Address>? addresses,
     List<PaymentMethod>? paymentMethods,
     NotificationPreferences? notificationPreferences,
@@ -147,7 +147,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     result.when(
       success: (imageUrl) {
         if (currentState.user != null) {
-          final updatedUser = currentState.user!.copyWith(avatarUrl: imageUrl);
+          final updatedUser = currentState.user!.copyWith(avatar: imageUrl);
           state = AsyncValue.data(currentState.copyWith(
             user: updatedUser,
             isUploadingImage: false,
@@ -183,7 +183,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     result.when(
       success: (_) {
         if (currentState.user != null) {
-          final updatedUser = currentState.user!.copyWith(avatarUrl: null);
+          final updatedUser = currentState.user!.copyWith(avatar: null);
           state = AsyncValue.data(currentState.copyWith(
             user: updatedUser,
             isUploadingImage: false,

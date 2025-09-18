@@ -181,4 +181,13 @@ class ApiClient {
       options: options,
     );
   }
+
+  // Auth token management methods
+  void setAuthToken(String token) {
+    dio.options.headers['Authorization'] = 'Bearer $token';
+  }
+
+  void clearAuthToken() {
+    dio.options.headers.remove('Authorization');
+  }
 }

@@ -17,7 +17,7 @@ class ServiceRegistry {
   /// Initialize all services that require setup
   static Future<void> initializeServices(WidgetRef ref) async {
     // Services are now initialized through Riverpod providers
-    // Socket connection would be handled by socketServiceProvider when needed
+    // WebSocket connection would be handled by WebSocketService when needed
     
     // Any other service initialization can go here
   }
@@ -173,7 +173,7 @@ class ServiceTestHelper {
   
   /// Test real-time features
   static Future<void> testRealtimeFeatures() async {
-    // TODO: Use socketServiceProvider and orderServiceProvider for testing
+    // TODO: Use WebSocketService and orderServiceProvider for testing
     _logger.info('Real-time features test - TODO: Update to use Riverpod providers');
   }
 }
@@ -191,7 +191,7 @@ class BackendIntegrationTracker {
     // Core services
     'api_client': IntegrationStatus.completed,
     'auth_service': IntegrationStatus.completed,
-    'socket_service': IntegrationStatus.completed,
+    'websocket_service': IntegrationStatus.completed,
     
     // Feature services
     'guest_service': IntegrationStatus.completed,

@@ -12,6 +12,7 @@ class AppConfig {
   
   // Development Configuration (remove mock references for production)
   static const Duration apiRetryDelay = Duration(milliseconds: 800);
+  static const Duration mockApiDelay = Duration(milliseconds: 500);
   static const int defaultItemsPerPage = 10;
   
   // Feature Flags - Updated for production readiness

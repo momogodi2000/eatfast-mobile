@@ -5,8 +5,7 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/utils/validators.dart';
-import '../../../../core/auth/providers/auth_provider.dart';
-import '../../providers/auth_state.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 
 /// Login Screen with email/password and phone options
 class LoginScreen extends ConsumerStatefulWidget {
@@ -113,7 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   @override
   Widget build(BuildContext context) {
     ref.listen<AuthState>(authProvider, (previous, next) {
-      if (next is AuthAuthenticated) {
+      if (next.isAuthenticated) {
         context.go(RouteNames.home);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -121,20 +120,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             backgroundColor: DesignTokens.successColor,
           ),
         );
-      } else if (next is AuthError) {
+      } else if (next.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.message),
+            content: Text(next.error!),
             backgroundColor: DesignTokens.errorColor,
           ),
         );
-      } else if (next is AuthOtpSent) {
-        context.go('${RouteNames.otpVerification}?phone=${next.phoneNumber}');
       }
     });
 
     final authState = ref.watch(authProvider);
-    final isLoading = authState is AuthLoading;
+    final isLoading = authState.isLoading;
 
     return Scaffold(
       backgroundColor: DesignTokens.backgroundPrimary,

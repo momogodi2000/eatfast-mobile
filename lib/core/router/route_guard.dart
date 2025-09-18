@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../auth/models/app_user.dart';
-import '../auth/providers/auth_provider.dart';
+import '../services/auth/unified_auth_service.dart';
+import '../auth/providers/unified_auth_provider.dart';
 
 /// Route guard that checks authentication and role permissions
 class RouteGuard {
@@ -21,12 +21,12 @@ class RouteGuard {
     }
 
     // If specific role is required
-    if (requiredRole != null && !authState.hasRequiredRole(requiredRole)) {
+    if (requiredRole != null && authState.user != null && !authState.user!.hasRole(requiredRole)) {
       return _getUnauthorizedRoute(authState.user?.role);
     }
 
     // If any of the allowed roles is required
-    if (allowedRoles != null && !authState.hasAnyRole(allowedRoles)) {
+    if (allowedRoles != null && authState.user != null && !authState.user!.hasAnyRole(allowedRoles)) {
       return _getUnauthorizedRoute(authState.user?.role);
     }
 
@@ -37,13 +37,15 @@ class RouteGuard {
   /// Get appropriate route based on user role when unauthorized
   static String _getUnauthorizedRoute(UserRole? userRole) {
     switch (userRole) {
-      case UserRole.restaurantOwner:
+      case UserRole.restaurant:
         return '/restaurant-dashboard';
-      case UserRole.deliveryAgent:
+      case UserRole.driver:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
+        return '/home';
+      case UserRole.guest:
         return '/home';
       case null:
         return '/home';
@@ -53,13 +55,15 @@ class RouteGuard {
   /// Get default route after successful login based on user role
   static String getDefaultRouteForRole(UserRole role) {
     switch (role) {
-      case UserRole.restaurantOwner:
+      case UserRole.restaurant:
         return '/restaurant-dashboard';
-      case UserRole.deliveryAgent:
+      case UserRole.driver:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
+        return '/home';
+      case UserRole.guest:
         return '/home';
     }
   }

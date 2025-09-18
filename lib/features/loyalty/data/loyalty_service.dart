@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/network/api_client.dart';
+import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../domain/models/loyalty.dart';
 
@@ -344,6 +344,5 @@ class LoyaltyPaginationInfo {
 
 /// Provider for loyalty service
 final loyaltyServiceProvider = Provider<LoyaltyService>((ref) {
-  final apiClient = ref.watch(apiClientProvider);
-  return LoyaltyService(apiClient);
+  return LoyaltyService(ApiClient());
 });

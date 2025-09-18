@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../api/api_client.dart';
 import '../../constants/api_constants.dart';
-import '../../models/user.dart';
+import '../../auth/models/app_user.dart';
 
 class UnifiedAuthService {
   static final UnifiedAuthService _instance = UnifiedAuthService._internal();
@@ -21,12 +21,12 @@ class UnifiedAuthService {
   UnifiedAuthService._internal();
 
   // Current authentication state
-  AuthUser? _currentUser;
+  AppUser? _currentUser;
   String? _accessToken;
   String? _refreshToken;
 
   /// Get current authenticated user
-  AuthUser? get currentUser => _currentUser;
+  AppUser? get currentUser => _currentUser;
 
   /// Check if user is authenticated
   bool get isAuthenticated => _currentUser != null && _accessToken != null;
@@ -119,7 +119,7 @@ class UnifiedAuthService {
           'password': password,
           'confirmPassword': confirmPassword,
           'phone': phone,
-          'role': role.backendValue,
+          'role': role.value,
           if (additionalData != null) ...additionalData,
         },
       );
@@ -325,12 +325,12 @@ class UnifiedAuthService {
   }
 
   /// Get current user info from backend
-  Future<AuthUser?> getCurrentUser() async {
+  Future<AppUser?> getCurrentUser() async {
     try {
       final response = await _apiClient.get(ApiConstants.authMe);
 
       if (response.statusCode == 200) {
-        _currentUser = AuthUser.fromJson(response.data);
+        _currentUser = AppUser.fromJson(response.data);
         return _currentUser;
       }
     } catch (e) {
@@ -374,6 +374,8 @@ class UnifiedAuthService {
     }
   }
 
+  /// Add missing methods to AuthUser
+
   /// Private helper methods
 
   Future<void> _handleLoginSuccess(Map<String, dynamic> data) async {
@@ -382,7 +384,7 @@ class UnifiedAuthService {
     _refreshToken = data['refreshToken'];
 
     // Extract user data
-    _currentUser = AuthUser.fromJson(data['user'] ?? data);
+    _currentUser = AppUser.fromJson(data['user'] ?? data);
 
     // Store tokens securely
     if (_accessToken != null) {
@@ -397,7 +399,7 @@ class UnifiedAuthService {
     // Store user data in preferences for quick access
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('user_id', _currentUser!.id);
-    await prefs.setString('user_role', _currentUser!.role.backendValue);
+    await prefs.setString('user_role', _currentUser!.role.value);
   }
 
   Future<void> _clearAuthData() async {
@@ -432,38 +434,6 @@ class UnifiedAuthService {
 
 // Enums and Data Models
 
-enum UserRole {
-  guest('guest'),
-  customer('customer'),
-  restaurant('restaurant'),
-  driver('driver'),
-  admin('admin');
-
-  const UserRole(this.backendValue);
-  final String backendValue;
-
-  static UserRole fromBackendValue(String value) {
-    for (final role in UserRole.values) {
-      if (role.backendValue == value) return role;
-    }
-    return UserRole.guest;
-  }
-
-  String get displayName {
-    switch (this) {
-      case UserRole.guest:
-        return 'Invité';
-      case UserRole.customer:
-        return 'Client';
-      case UserRole.restaurant:
-        return 'Restaurant';
-      case UserRole.driver:
-        return 'Livreur';
-      case UserRole.admin:
-        return 'Administrateur';
-    }
-  }
-}
 
 enum OtpType {
   login('login'),
@@ -476,57 +446,10 @@ enum OtpType {
   final String backendValue;
 }
 
-class AuthUser {
-  final String id;
-  final String name;
-  final String email;
-  final String? phone;
-  final UserRole role;
-  final bool isVerified;
-  final bool twoFactorEnabled;
-  final Map<String, dynamic>? profile;
-
-  AuthUser({
-    required this.id,
-    required this.name,
-    required this.email,
-    this.phone,
-    required this.role,
-    this.isVerified = false,
-    this.twoFactorEnabled = false,
-    this.profile,
-  });
-
-  factory AuthUser.fromJson(Map<String, dynamic> json) {
-    return AuthUser(
-      id: json['id'] ?? json['_id'] ?? '',
-      name: json['name'] ?? json['firstName'] ?? '',
-      email: json['email'] ?? '',
-      phone: json['phone'],
-      role: UserRole.fromBackendValue(json['role'] ?? 'guest'),
-      isVerified: json['isVerified'] ?? false,
-      twoFactorEnabled: json['twoFactorEnabled'] ?? false,
-      profile: json['profile'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'role': role.backendValue,
-      'isVerified': isVerified,
-      'twoFactorEnabled': twoFactorEnabled,
-      'profile': profile,
-    };
-  }
-}
 
 class AuthResult {
   final AuthResultType type;
-  final AuthUser? user;
+  final AppUser? user;
   final String? message;
   final String? userId;
   final List<String>? twoFactorMethods;
@@ -539,7 +462,7 @@ class AuthResult {
     this.twoFactorMethods,
   });
 
-  factory AuthResult.success(AuthUser user) {
+  factory AuthResult.success(AppUser user) {
     return AuthResult._(type: AuthResultType.success, user: user);
   }
 

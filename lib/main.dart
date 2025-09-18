@@ -9,7 +9,7 @@ import 'core/theme/app_theme.dart';
 import 'core/services/localization/language_service.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/auth/models/app_user.dart';
-import 'core/auth/providers/auth_provider.dart';
+import 'core/auth/providers/unified_auth_provider.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/legal/presentation/screens/terms_conditions_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
@@ -32,7 +32,6 @@ import 'features/orders/presentation/screens/order_history_screen.dart';
 import 'features/settings/presentation/screens/language_settings_screen.dart';
 import 'features/settings/presentation/screens/settings_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
-import 'features/profile/presentation/screens/profile_api_screen.dart';
 import 'features/profile/presentation/screens/edit_profile_screen.dart';
 // Role-specific screens
 import 'features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
@@ -249,10 +248,6 @@ GoRouter _createRouter(AuthState authState) {
     ),
     
     // New API-based Profile (for testing/integration)
-    GoRoute(
-      path: '/profile-api',
-      builder: (context, state) => const ProfileApiScreen(),
-    ),
     
       GoRoute(
         path: RouteNames.editProfile,
