@@ -1,9 +1,6 @@
 class ApiConstants {
-  // Backend URL - using the provided render URL
-  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api';
-  
-  // API Versions
-  static const String apiV1 = '/v1';
+  // Base URL for API requests - using the provided render URL
+  static const String baseUrl = 'https://eatfast-backend-api.onrender.com/api/v1';
   
   // Timeout configurations
   static const Duration connectTimeout = Duration(seconds: 30);
@@ -46,6 +43,12 @@ class ApiConstants {
   static const String clientLoyalty = '/client/loyalty';
   static const String clientReviews = '/client/reviews';
   static const String clientPaymentMethods = '/client/payment-methods';
+  
+  // Payment endpoints
+  static const String createPaymentIntent = '/payments/create-intent';
+  static const String confirmPayment = '/payments/confirm';
+  static const String processMobilePayment = '/payments/mobile';
+  static const String paymentStatus = '/payments/status';
   
   // Restaurant endpoints - matching backend exactly
   static const String restaurants = '/public/restaurants'; // Public restaurant browsing

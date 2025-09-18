@@ -1,0 +1,281 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/theme/design_tokens.dart';
+import '../widgets/driver_status_card.dart';
+import '../widgets/earnings_summary_card.dart';
+import '../widgets/available_orders_list.dart';
+import '../widgets/active_delivery_card.dart';
+import '../widgets/quick_stats_row.dart';
+import '../../domain/models/driver_profile.dart';
+import '../../domain/models/driver_earnings.dart';
+import '../../domain/models/delivery_order.dart';
+import '../../data/driver_service.dart';
+import '../../domain/providers/driver_providers.dart';
+
+class DriverDashboardScreen extends ConsumerStatefulWidget {
+  final String driverId;
+  
+  const DriverDashboardScreen({
+    super.key,
+    required this.driverId,
+  });
+
+  @override
+  ConsumerState<DriverDashboardScreen> createState() => _DriverDashboardScreenState();
+}
+
+class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
+    with AutomaticKeepAliveClientMixin {
+  
+  @override
+  bool get wantKeepAlive => true;
+  
+  bool isLoading = true;
+  String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDriverData();
+  }
+
+  Future<void> _loadDriverData() async {
+    try {
+      // Load driver data from API
+      await ref.read(driverServiceProvider).getDriverProfile(widget.driverId);
+      await ref.read(driverServiceProvider).getDriverEarnings(widget.driverId);
+      await ref.read(driverServiceProvider).getAvailableOrders();
+      await ref.read(driverServiceProvider).getActiveDelivery(widget.driverId);
+      
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          error = e.toString();
+        });
+      }
+    }
+  }
+
+  Future<void> _toggleOnlineStatus() async {
+    final driverProfile = ref.read(driverProfileProvider);
+    
+    if (driverProfile == null) return;
+    
+    final newStatus = !driverProfile.isOnline;
+    
+    try {
+      await ref.read(driverServiceProvider).updateDriverStatus(
+        driverId: widget.driverId,
+        isOnline: newStatus,
+      );
+      
+      await _loadDriverData();
+    } catch (e) {
+      // Show error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update status: ${e.toString()}'),
+        ),
+      );
+    }
+  }
+
+  Future<void> _refreshData() async {
+    setState(() {
+      isLoading = true;
+      error = null;
+    });
+    
+    await _loadDriverData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    
+    final driverProfile = ref.watch(driverProfileProvider);
+    final driverEarnings = ref.watch(driverEarningsProvider);
+    final availableOrders = ref.watch(availableOrdersProvider);
+    final activeDelivery = ref.watch(activeDeliveryProvider);
+    
+    if (isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    
+    if (error != null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const SizedBox(height: 16),
+              Text('Error loading data: $error'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _refreshData,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    if (driverProfile == null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.person_off, size: 48, color: Colors.grey),
+              const SizedBox(height: 16),
+              const Text('Driver profile not found'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _refreshData,
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Driver Dashboard'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refreshData,
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              context.push('/driver/settings');
+            },
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Driver status card
+              DriverStatusCard(
+                driverName: '${driverProfile.firstName} ${driverProfile.lastName}',
+                status: driverProfile.status,
+                isOnline: driverProfile.isOnline,
+                onToggleStatus: _toggleOnlineStatus,
+                rating: driverProfile.rating,
+              ),
+              const SizedBox(height: 16),
+              
+              // Quick stats
+              if (driverEarnings != null) QuickStatsRow(
+                deliveries: driverEarnings.todayDeliveries,
+                earnings: driverEarnings.todayEarnings,
+                rating: driverProfile.rating,
+              ),
+              const SizedBox(height: 16),
+              
+              // Active delivery
+              if (activeDelivery != null) ...[
+                const Text('Current Delivery', style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
+                const SizedBox(height: 8),
+                ActiveDeliveryCard(
+                  order: activeDelivery,
+                  onUpdateStatus: (String status) async {
+                    try {
+                      await ref.read(driverServiceProvider).updateOrderStatus(
+                        orderId: activeDelivery.orderId,
+                        status: status,
+                      );
+                      
+                      await _loadDriverData();
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Failed to update order: ${e.toString()}'),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+              ],
+              
+              // Earnings summary
+              if (driverEarnings != null) ...[
+                const Text('Earnings Summary', style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
+                const SizedBox(height: 8),
+                EarningsSummaryCard(
+                  earnings: driverEarnings,
+                ),
+                const SizedBox(height: 16),
+              ],
+              
+              // Available orders
+              if (driverProfile.isOnline && driverProfile.isAvailable) ...[
+                const Text('Available Orders', style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )),
+                const SizedBox(height: 8),
+                availableOrders.isEmpty
+                  ? const Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Text('No orders available at the moment'),
+                        ),
+                      ),
+                    )
+                  : AvailableOrdersList(
+                      orders: availableOrders,
+                      onAccept: (String orderId) async {
+                        try {
+                          await ref.read(driverServiceProvider).acceptOrder(
+                            driverId: widget.driverId,
+                            orderId: orderId,
+                          );
+                          
+                          await _loadDriverData();
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Failed to accept order: ${e.toString()}'),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

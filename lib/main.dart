@@ -107,7 +107,7 @@ GoRouter _createRouter(AuthState authState) {
       if (path == '/driver-dashboard') {
         return RouteGuard.checkAuth(
           authState: authState,
-          requiredRole: UserRole.deliveryAgent,
+          requiredRole: UserRole.deliveryDriver,
         );
       }
       

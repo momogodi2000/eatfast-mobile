@@ -1,0 +1,136 @@
+/// API Constants for EatFast Mobile App
+/// Aligned with backend API structure
+class ApiConstants {
+  // Base URL for API requests
+  static const String baseUrl = 'https://eatfast-backend-api.onrender.com/api/v1';
+  
+  // Authentication endpoints
+  static const String login = '/auth/login';
+  static const String register = '/auth/register';
+  static const String forgotPassword = '/auth/forgot-password';
+  static const String resetPassword = '/auth/reset-password';
+  static const String verifyEmail = '/auth/verify-email';
+  static const String refreshToken = '/auth/refresh';
+  static const String logout = '/auth/logout';
+  
+  // Two-factor authentication
+  static const String setup2FA = '/auth/2fa/setup';
+  static const String verify2FA = '/auth/2fa/verify';
+  static const String disable2FA = '/auth/2fa/disable';
+  static const String backupCodes2FA = '/auth/2fa/backup-codes';
+  
+  // OAuth endpoints
+  static const String googleAuth = '/auth/google';
+  static const String appleAuth = '/auth/apple';
+  
+  // Guest user endpoints
+  static const String guestSession = '/guest/session';
+  static const String guestCart = '/guest/cart';
+  static const String guestOrders = '/guest/orders';
+  
+  // User profile endpoints
+  static const String userProfile = '/user/profile';
+  static const String changePassword = '/user/change-password';
+  static const String deleteAccount = '/user/delete';
+  
+  // Restaurant endpoints
+  static const String restaurants = '/restaurants';
+  static const String restaurantCategories = '/restaurants/categories';
+  static const String featuredRestaurants = '/restaurants/featured';
+  static const String restaurantSearch = '/search/restaurants';
+  
+  // Menu endpoints
+  static const String menu = '/menu';
+  static const String popularMenuItems = '/menu/popular';
+  static const String menuCategories = '/menu/categories';
+  static const String menuSearch = '/search/menu';
+  
+  // Cart endpoints
+  static const String cart = '/cart';
+  static const String cartItems = '/cart/items';
+  static const String cartClear = '/cart/clear';
+  static const String cartApplyCoupon = '/cart/apply-coupon';
+  static const String cartRemoveCoupon = '/cart/remove-coupon';
+  
+  // Order endpoints
+  static const String orders = '/orders';
+  static const String orderHistory = '/orders/history';
+  static const String orderStatus = '/orders/status';
+  static const String orderTracking = '/orders/track';
+  static const String orderCancel = '/orders/cancel';
+  static const String orderRating = '/orders/rate';
+  
+  // Address endpoints
+  static const String addresses = '/addresses';
+  static const String defaultAddress = '/addresses/default';
+  static const String validateAddress = '/addresses/validate';
+  static const String geocodeAddress = '/addresses/geocode';
+  
+  // Payment endpoints
+  static const String paymentMethods = '/payments/methods';
+  static const String savedPaymentMethods = '/payments/saved';
+  static const String createPaymentIntent = '/payments/create-intent';
+  static const String confirmPayment = '/payments/confirm';
+  static const String processMobilePayment = '/payments/mobile';
+  static const String paymentStatus = '/payments/status';
+  
+  // Wallet endpoints
+  static const String wallet = '/wallet';
+  static const String walletTransactions = '/wallet/transactions';
+  
+  // Loyalty endpoints
+  static const String loyaltyPoints = '/loyalty/points';
+  static const String loyaltyHistory = '/loyalty/history';
+  static const String loyaltyTiers = '/loyalty/tiers';
+  
+  // Notifications endpoints
+  static const String notifications = '/notifications';
+  static const String notificationSettings = '/notifications/settings';
+  static const String markNotificationRead = '/notifications/read';
+  static const String subscribeNotifications = '/notifications/subscribe';
+  
+  // Settings endpoints
+  static const String settings = '/settings';
+  static const String appSettings = '/settings/app';
+  static const String userPreferences = '/settings/preferences';
+  
+  // Driver endpoints
+  static const String driverProfile = '/driver/profile';
+  static const String driverEarnings = '/driver/earnings';
+  static const String driverStatistics = '/driver/stats';
+  static const String driverStatus = '/driver/status';
+  static const String driverActiveDelivery = '/driver/active-delivery';
+  static const String availableOrders = '/driver/available-orders';
+  static const String acceptOrder = '/driver/accept-order';
+  static const String completeDelivery = '/driver/complete-delivery';
+  static const String driverLocation = '/driver/location';
+  
+  // Restaurant owner endpoints
+  static const String restaurantDashboard = '/restaurant/dashboard';
+  static const String restaurantOrders = '/restaurant/orders';
+  static const String restaurantMenu = '/restaurant/menu';
+  static const String restaurantStats = '/restaurant/stats';
+  
+  // Admin endpoints
+  static const String adminDashboard = '/admin/dashboard';
+  static const String adminUsers = '/admin/users';
+  static const String adminRestaurants = '/admin/restaurants';
+  static const String adminOrders = '/admin/orders';
+  static const String adminReports = '/admin/reports';
+  static const String adminSettings = '/admin/settings';
+  
+  // Public endpoints
+  static const String publicRestaurants = '/public/restaurants';
+  static const String publicMenu = '/public/restaurants/menu';
+  static const String contact = '/public/contact';
+  static const String newsletter = '/public/newsletter';
+  
+  // Search endpoints
+  static const String search = '/search';
+  static const String searchSuggestions = '/search/suggestions';
+  
+  // Other endpoints
+  static const String health = '/health';
+  static const String version = '/version';
+  static const String feedback = '/feedback';
+}

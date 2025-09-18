@@ -145,7 +145,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                   Expanded(
                     child: Text('${item['quantity']}x ${item['name']}'),
                   ),
-                  Text('${item['total']} FCFA'),
+                  Text('${item['total']} ${AppConfig.currencySymbol}'),
                 ],
               ),
             )),
@@ -154,14 +154,14 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Sous-total:'),
-                Text('${widget.subtotal.toStringAsFixed(0)} FCFA'),
+                Text('${widget.subtotal.toStringAsFixed(0)} ${AppConfig.currencySymbol}'),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Livraison:'),
-                Text('${_deliveryFee.toStringAsFixed(0)} FCFA'),
+                Text('${_deliveryFee.toStringAsFixed(0)} ${AppConfig.currencySymbol}'),
               ],
             ),
           ],
@@ -203,14 +203,14 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                 labelText: 'Numéro de téléphone *',
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
-                helperText: 'Format: +237 6XX XXX XXX',
+                helperText: 'Format: ${AppConfig.countryCode} 6XX XXX XXX',
               ),
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Le numéro de téléphone est requis';
                 }
-                final phoneRegex = RegExp(r'^\+237[679]\d{8}$');
+                final phoneRegex = RegExp('^${AppConfig.countryCode}[679]\\d{8}\$');
                 if (!phoneRegex.hasMatch(value.replaceAll(' ', ''))) {
                   return 'Format de téléphone invalide';
                 }
@@ -395,7 +395,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
-              '${total.toStringAsFixed(0)} FCFA',
+              '${total.toStringAsFixed(0)} ${AppConfig.currencySymbol}',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
@@ -418,7 +418,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
         ),
         child: _isLoading
             ? const CircularProgressIndicator(color: Colors.white)
-            : Text('Commander ${total.toStringAsFixed(0)} FCFA'),
+            : Text('Commander ${total.toStringAsFixed(0)} ${AppConfig.currencySymbol}'),
       ),
     );
   }
@@ -481,7 +481,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
         )).toList(),
         deliveryAddress: _addressController.text.trim(),
         deliveryCoordinates: const GuestOrderCoordinates(
-          lat: 3.8480, // Default Yaoundé coordinates
+          lat: 3.8480, // Default ${AppConfig.defaultCity} coordinates
           lng: 11.5021,
         ),
         guestName: _nameController.text.trim(),

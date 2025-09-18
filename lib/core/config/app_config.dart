@@ -10,9 +10,9 @@ class AppConfig {
     defaultValue: 'https://eat-fast-backend-express-js.onrender.com/api'
   );
   
-  // Mock Data Configuration (kept for development/testing)
-  static const Duration mockApiDelay = Duration(milliseconds: 800);
-  static const int mockItemsPerPage = 10;
+  // Development Configuration (remove mock references for production)
+  static const Duration apiRetryDelay = Duration(milliseconds: 800);
+  static const int defaultItemsPerPage = 10;
   
   // Feature Flags - Updated for production readiness
   static const bool enableBiometricAuth = true;

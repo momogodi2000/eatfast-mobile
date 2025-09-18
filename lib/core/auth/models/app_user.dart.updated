@@ -103,12 +103,74 @@ class AppUser {
     required this.updatedAt,
   });
 
-  // Computed properties
-  String get fullName => [firstName, lastName].where((name) => name != null && name.isNotEmpty).join(' ');
-  String get displayName => fullName.isNotEmpty ? fullName : email;
-  String get name => fullName; // Alias for backward compatibility
-  bool get isVerified => emailVerified || phoneVerified;
-  
+  factory AppUser.fromJson(Map<String, dynamic> json) {
+    return AppUser(
+      id: json['id'],
+      email: json['email'],
+      phone: json['phone'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      role: UserRole.fromString(json['role'] ?? 'customer'),
+      status: UserStatus.fromString(json['status'] ?? 'pending'),
+      avatar: json['avatar'],
+      location: json['location'],
+      preferences: json['preferences'],
+      emailVerified: json['email_verified'] ?? false,
+      phoneVerified: json['phone_verified'] ?? false,
+      lastLoginAt: json['last_login_at'] != null
+          ? DateTime.parse(json['last_login_at'])
+          : null,
+      city: json['city'],
+      language: json['language'] ?? 'fr',
+      twoFactorEnabled: json['two_factor_enabled'] ?? false,
+      twoFactorMethod: json['two_factor_method'],
+      googleId: json['google_id'],
+      appleId: json['apple_id'],
+      pushToken: json['push_token'],
+      loyaltyPoints: json['loyalty_points'] ?? 0,
+      loyaltyTier: json['loyalty_tier'] ?? 'bronze',
+      totalOrders: json['total_orders'] ?? 0,
+      totalSpent: (json['total_spent'] ?? 0.0).toDouble(),
+      referralCode: json['referral_code'],
+      referredBy: json['referred_by'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'phone': phone,
+      'first_name': firstName,
+      'last_name': lastName,
+      'role': role.value,
+      'status': status.value,
+      'avatar': avatar,
+      'location': location,
+      'preferences': preferences,
+      'email_verified': emailVerified,
+      'phone_verified': phoneVerified,
+      'last_login_at': lastLoginAt?.toIso8601String(),
+      'city': city,
+      'language': language,
+      'two_factor_enabled': twoFactorEnabled,
+      'two_factor_method': twoFactorMethod,
+      'google_id': googleId,
+      'apple_id': appleId,
+      'push_token': pushToken,
+      'loyalty_points': loyaltyPoints,
+      'loyalty_tier': loyaltyTier,
+      'total_orders': totalOrders,
+      'total_spent': totalSpent,
+      'referral_code': referralCode,
+      'referred_by': referredBy,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+    };
+  }
+
   AppUser copyWith({
     String? id,
     String? email,
@@ -169,81 +231,5 @@ class AppUser {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'phone': phone,
-      'firstName': firstName,
-      'lastName': lastName,
-      'role': role.value,
-      'status': status.value,
-      'avatar': avatar,
-      'location': location,
-      'preferences': preferences,
-      'emailVerified': emailVerified,
-      'phoneVerified': phoneVerified,
-      'lastLoginAt': lastLoginAt?.toIso8601String(),
-      'city': city,
-      'language': language,
-      'twoFactorEnabled': twoFactorEnabled,
-      'twoFactorMethod': twoFactorMethod,
-      'googleId': googleId,
-      'appleId': appleId,
-      'pushToken': pushToken,
-      'loyaltyPoints': loyaltyPoints,
-      'loyaltyTier': loyaltyTier,
-      'totalOrders': totalOrders,
-      'totalSpent': totalSpent,
-      'referralCode': referralCode,
-      'referredBy': referredBy,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
-  }
-
-  factory AppUser.fromJson(Map<String, dynamic> json) {
-    return AppUser(
-      id: json['id'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      role: UserRole.fromString(json['role'] as String? ?? 'customer'),
-      status: UserStatus.fromString(json['status'] as String? ?? 'pending'),
-      avatar: json['avatar'] as String?,
-      location: json['location'] as Map<String, dynamic>?,
-      preferences: json['preferences'] as Map<String, dynamic>?,
-      emailVerified: json['emailVerified'] as bool? ?? false,
-      phoneVerified: json['phoneVerified'] as bool? ?? false,
-      lastLoginAt: json['lastLoginAt'] != null 
-          ? DateTime.parse(json['lastLoginAt'] as String) 
-          : null,
-      city: json['city'] as String?,
-      language: json['language'] as String? ?? 'fr',
-      twoFactorEnabled: json['twoFactorEnabled'] as bool? ?? false,
-      twoFactorMethod: json['twoFactorMethod'] as String?,
-      googleId: json['googleId'] as String?,
-      appleId: json['appleId'] as String?,
-      pushToken: json['pushToken'] as String?,
-      loyaltyPoints: json['loyalty_points'] as int? ?? json['loyaltyPoints'] as int? ?? 0,
-      loyaltyTier: json['loyalty_tier'] as String? ?? json['loyaltyTier'] as String? ?? 'bronze',
-      totalOrders: json['total_orders'] as int? ?? json['totalOrders'] as int? ?? 0,
-      totalSpent: (json['total_spent'] as num?)?.toDouble() ?? (json['totalSpent'] as num?)?.toDouble() ?? 0.0,
-      referralCode: json['referral_code'] as String? ?? json['referralCode'] as String?,
-      referredBy: json['referred_by'] as String? ?? json['referredBy'] as String?,
-      createdAt: DateTime.parse(json['createdAt'] as String? ?? json['created_at'] as String? ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(json['updatedAt'] as String? ?? json['updated_at'] as String? ?? DateTime.now().toIso8601String()),
-    );
-  }
-
-  bool hasRole(UserRole requiredRole) {
-    return role == requiredRole;
-  }
-
-  bool hasAnyRole(List<UserRole> roles) {
-    return roles.contains(role);
   }
 }

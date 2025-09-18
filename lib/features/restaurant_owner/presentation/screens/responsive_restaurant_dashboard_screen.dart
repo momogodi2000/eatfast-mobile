@@ -472,9 +472,9 @@ class _ResponsiveRestaurantDashboardScreenState
                   () {},
                 ),
                 _buildActionTile(
-                  'Support',
-                  'Aide & contact',
-                  Icons.support_agent,
+                  'Assistance',
+                  'Centre d\'aide',
+                  Icons.help_center,
                   Colors.purple,
                   () {},
                 ),

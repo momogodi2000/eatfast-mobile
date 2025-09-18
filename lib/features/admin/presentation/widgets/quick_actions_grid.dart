@@ -62,12 +62,12 @@ class QuickActionsGrid extends ConsumerWidget {
                   onTap: () => _validateRestaurants(context),
                 ),
                 _ActionTile(
-                  title: 'Support',
-                  subtitle: 'Tickets ouverts',
-                  icon: Icons.support_agent,
+                  title: 'Support Client',
+                  subtitle: 'Messages clients',
+                  icon: Icons.headset_mic,
                   color: Colors.purple,
                   badge: '12',
-                  onTap: () => _viewSupport(context),
+                  onTap: () => _viewCustomerSupport(context),
                 ),
                 _ActionTile(
                   title: 'Rapports',
@@ -224,7 +224,7 @@ class QuickActionsGrid extends ConsumerWidget {
     );
   }
 
-  void _viewSupport(BuildContext context) {
+  void _viewCustomerSupport(BuildContext context) {
     // Navigate to support tickets
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Navigation vers tickets de support')),

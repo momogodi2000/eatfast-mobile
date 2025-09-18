@@ -48,7 +48,7 @@ class PromoCodeNotifier extends StateNotifier<PromoCodeState> {
     state = state.copyWith(isLoading: true);
     
     try {
-      // Mock data - replace with actual API call
+      // TODO: Replace with actual API call to backend promotions endpoint
       final promoCodes = [
         PromoCode(
           id: 'welcome20',

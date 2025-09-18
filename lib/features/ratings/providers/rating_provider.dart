@@ -36,7 +36,7 @@ class RatingState {
 class RatingNotifier extends StateNotifier<RatingState> {
   RatingNotifier() : super(const RatingState());
 
-  // Mock data - replace with actual API calls
+  // TODO: Replace with actual API calls to backend ratings endpoint
   final List<Rating> _mockRatings = [
     Rating(
       id: '1',

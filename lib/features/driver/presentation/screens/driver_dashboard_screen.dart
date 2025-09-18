@@ -29,23 +29,37 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
   @override
   bool get wantKeepAlive => true;
   
-  bool isOnline = false;
-  bool isAvailable = true;
-
-  // Mock driver data - replace with actual data from provider
-  late DriverProfile mockDriver;
-  late DriverEarnings mockEarnings;
-  late List<DeliveryOrder> mockOrders;
-  late DeliveryOrder? mockActiveOrder;
+  bool isLoading = true;
+  String? error;
 
   @override
   void initState() {
     super.initState();
-    _initializeMockData();
+    _loadDriverData();
   }
 
-  void _initializeMockData() {
-    mockDriver = DriverProfile(
+  Future<void> _loadDriverData() async {
+    try {
+      // Load driver data from API
+      await ref.read(driverProfileProvider.notifier).fetchDriverProfile(widget.driverId);
+      await ref.read(driverEarningsProvider.notifier).fetchDriverEarnings(widget.driverId);
+      await ref.read(availableOrdersProvider.notifier).fetchAvailableOrders();
+      await ref.read(activeDeliveryProvider.notifier).fetchActiveDelivery(widget.driverId);
+      
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          error = e.toString();
+        });
+      }
+    }
+  }
       driverId: 'driver123',
       name: 'Jean Mbeki',
       email: 'jean@example.com',
