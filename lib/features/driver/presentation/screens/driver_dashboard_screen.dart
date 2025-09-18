@@ -511,15 +511,7 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
   }
 
 
-  void _showStatusChangeSnackbar(String status) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Statut mis à jour: $status'),
-        backgroundColor: DesignTokens.successColor,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
+  // Removed unused _showStatusChangeSnackbar method
 
   void _showSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

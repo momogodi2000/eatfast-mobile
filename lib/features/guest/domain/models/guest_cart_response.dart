@@ -1,5 +1,4 @@
 // These models are manually implemented until code generation is run
-import 'guest_models.dart';
 
 /// Guest cart response model
 class GuestCartResponse {

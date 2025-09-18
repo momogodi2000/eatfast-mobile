@@ -43,6 +43,13 @@ class ApiConstants {
   static const String clientLoyalty = '/client/loyalty';
   static const String clientReviews = '/client/reviews';
   static const String clientPaymentMethods = '/client/payment-methods';
+
+  // Profile management endpoints
+  static const String addresses = '/client/profile/addresses';
+  static const String defaultAddress = '/client/profile/addresses';
+  static const String notificationSettings = '/client/profile/notification-settings';
+  static const String changePassword = '/client/profile/password';
+  static const String deleteAccount = '/client/profile';
   
   // Payment endpoints
   static const String createPaymentIntent = '/payments/create-intent';

@@ -65,22 +65,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
     }
   }
 
-  Future<void> _calculateDeliveryFee(double lat, double lng) async {
-    try {
-      final fee = await _guestService.calculateDeliveryFee(
-        restaurantId: widget.restaurantId,
-        latitude: lat,
-        longitude: lng,
-      );
-      setState(() {
-        _deliveryFee = fee;
-      });
-    } catch (e) {
-      setState(() {
-        _deliveryFee = AppConfig.defaultDeliveryFee;
-      });
-    }
-  }
+  // Removed unused _calculateDeliveryFee method
 
   @override
   Widget build(BuildContext context) {
@@ -384,7 +369,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
 
   Widget _buildTotalSection(double total) {
     return Card(
-      color: Theme.of(context).primaryColor.withOpacity(0.1),
+      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(

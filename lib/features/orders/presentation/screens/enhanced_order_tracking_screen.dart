@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-import '../../domain/models/order.dart';
 import '../../../guest/domain/models/guest_models.dart';
 import '../../../guest/data/guest_service.dart';
 import '../../../../core/constants/api_constants.dart';

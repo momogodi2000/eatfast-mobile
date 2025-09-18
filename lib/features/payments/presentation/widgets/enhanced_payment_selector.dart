@@ -2,14 +2,14 @@
 /// Shows all payment methods with gateway information and failover status
 
 import 'package:flutter/material.dart';
-import '../../domain/models/payment.dart';
-import '../../../../core/services/payment/unified_payment_service.dart';
+import '../../domain/models/payment.dart' as domain;
+import '../../../../core/services/payment/unified_payment_service.dart' as service;
 
 class EnhancedPaymentSelector extends StatefulWidget {
   final double amount;
   final String currency;
-  final PaymentMethod? selectedMethod;
-  final Function(PaymentMethod) onMethodSelected;
+  final domain.PaymentMethod? selectedMethod;
+  final Function(domain.PaymentMethod) onMethodSelected;
   final String? phoneNumber;
   final Function(String)? onPhoneNumberChanged;
 
@@ -28,8 +28,8 @@ class EnhancedPaymentSelector extends StatefulWidget {
 }
 
 class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
-  final UnifiedPaymentService _paymentService = UnifiedPaymentService();
-  Map<PaymentMethod, PaymentMethodInfo>? _paymentMethodInfo;
+  final service.UnifiedPaymentService _paymentService = service.UnifiedPaymentService();
+  List<domain.PaymentMethod>? _paymentMethods;
   bool _isLoading = true;
 
   @override
@@ -40,15 +40,35 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
 
   Future<void> _loadPaymentMethods() async {
     try {
-      final methods = await _paymentService.getAvailablePaymentMethods();
+      final serviceMethods = await _paymentService.getAvailablePaymentMethods();
       setState(() {
-        _paymentMethodInfo = {}; // Will be populated with actual method info
+        _paymentMethods = serviceMethods.map((m) => _convertPaymentMethod(m)).whereType<domain.PaymentMethod>().toList();
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
+        _paymentMethods = domain.PaymentMethod.values; // Fallback to all methods
         _isLoading = false;
       });
+    }
+  }
+
+  domain.PaymentMethod? _convertPaymentMethod(service.PaymentMethod serviceMethod) {
+    switch (serviceMethod) {
+      case service.PaymentMethod.cash:
+        return domain.PaymentMethod.cash;
+      case service.PaymentMethod.campay:
+        return domain.PaymentMethod.campay;
+      case service.PaymentMethod.noupay:
+        return domain.PaymentMethod.noupay;
+      case service.PaymentMethod.stripe:
+        return domain.PaymentMethod.stripe;
+      case service.PaymentMethod.wallet:
+        return domain.PaymentMethod.wallet;
+      case service.PaymentMethod.mtn:
+        return domain.PaymentMethod.mtn;
+      case service.PaymentMethod.orange:
+        return domain.PaymentMethod.orange;
     }
   }
 
@@ -60,7 +80,7 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
       );
     }
 
-    if (_paymentMethodInfo == null) {
+    if (_paymentMethods == null || _paymentMethods!.isEmpty) {
       return const Center(
         child: Text('Failed to load payment methods'),
       );
@@ -74,8 +94,7 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 16),
-        ...PaymentMethod.values
-            .where((method) => _paymentMethodInfo![method]?.isEnabled == true)
+        ..._paymentMethods!
             .map((method) => _buildPaymentMethodTile(method))
             .toList(),
 
@@ -88,8 +107,7 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
     );
   }
 
-  Widget _buildPaymentMethodTile(PaymentMethod method) {
-    final info = _paymentMethodInfo![method]!;
+  Widget _buildPaymentMethodTile(domain.PaymentMethod method) {
     final isSelected = widget.selectedMethod == method;
 
     return Card(
@@ -99,35 +117,10 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
           backgroundImage: AssetImage(method.icon),
           backgroundColor: Colors.grey[200],
         ),
-        title: Row(
-          children: [
-            Text(method.displayName),
-            if (info.hasFailover) ...[
-              const SizedBox(width: 8),
-              Chip(
-                label: const Text('Failover'),
-                backgroundColor: Colors.blue[100],
-                labelStyle: const TextStyle(fontSize: 10),
-              ),
-            ],
-          ],
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (info.fee > 0)
-              Text('Frais: ${info.fee.toStringAsFixed(0)} ${widget.currency}'),
-            if (info.hasFailover)
-              Text(
-                'Principal: ${info.primaryGateway}, Secours: ${info.fallbackGateways.join(", ")}',
-                style: Theme.of(context).textTheme.bodySmall,
-              )
-            else
-              Text(
-                'Passerelle: ${info.primaryGateway}',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-          ],
+        title: Text(method.displayName),
+        subtitle: Text(
+          _getMethodDescription(method),
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         trailing: isSelected
             ? const Icon(Icons.check_circle, color: Colors.green)
@@ -136,6 +129,25 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
         selected: isSelected,
       ),
     );
+  }
+
+  String _getMethodDescription(domain.PaymentMethod method) {
+    switch (method) {
+      case domain.PaymentMethod.cash:
+        return 'Paiement à la livraison';
+      case domain.PaymentMethod.campay:
+        return 'Mobile Money via CamPay';
+      case domain.PaymentMethod.noupay:
+        return 'Portefeuille digital NouPay';
+      case domain.PaymentMethod.stripe:
+        return 'Carte bancaire sécurisée';
+      case domain.PaymentMethod.wallet:
+        return 'Portefeuille EatFast';
+      case domain.PaymentMethod.mtn:
+        return 'MTN Mobile Money';
+      case domain.PaymentMethod.orange:
+        return 'Orange Money';
+    }
   }
 
   Widget _buildPhoneNumberInput() {
@@ -176,10 +188,9 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
 class PaymentProcessingWidget extends StatefulWidget {
   final String orderId;
   final double amount;
-  final PaymentMethod method;
+  final domain.PaymentMethod method;
   final String? phoneNumber;
   final String? paymentMethodId;
-  final Map<String, dynamic>? billingDetails;
 
   const PaymentProcessingWidget({
     super.key,
@@ -188,7 +199,6 @@ class PaymentProcessingWidget extends StatefulWidget {
     required this.method,
     this.phoneNumber,
     this.paymentMethodId,
-    this.billingDetails,
   });
 
   @override
@@ -196,11 +206,11 @@ class PaymentProcessingWidget extends StatefulWidget {
 }
 
 class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
-  final UnifiedPaymentService _paymentService = UnifiedPaymentService();
+  final service.UnifiedPaymentService _paymentService = service.UnifiedPaymentService();
   String _currentStatus = 'Initialisation du paiement...';
   String? _currentGateway;
   bool _isProcessing = true;
-  PaymentResponse? _result;
+  service.PaymentResponse? _result;
   String? _error;
 
   @override
@@ -215,20 +225,24 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
         _currentStatus = 'Traitement du paiement...';
       });
 
+      final serviceMethod = _convertDomainToServiceMethod(widget.method);
+      if (serviceMethod == null) {
+        throw Exception('Méthode de paiement non supportée');
+      }
+
       final result = await _paymentService.processPayment(
         orderId: widget.orderId,
         amount: widget.amount,
-        method: widget.method,
+        method: serviceMethod,
         phoneNumber: widget.phoneNumber,
         paymentMethodId: widget.paymentMethodId,
-        billingDetails: widget.billingDetails,
       );
 
       setState(() {
         _result = result;
         _isProcessing = false;
         _currentStatus = 'Paiement traité avec succès';
-        _currentGateway = result.additionalData?['gateway'];
+        _currentGateway = result.gatewayUsed;
       });
     } catch (e) {
       setState(() {
@@ -236,6 +250,25 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
         _isProcessing = false;
         _currentStatus = 'Échec du paiement';
       });
+    }
+  }
+
+  service.PaymentMethod? _convertDomainToServiceMethod(domain.PaymentMethod domainMethod) {
+    switch (domainMethod) {
+      case domain.PaymentMethod.cash:
+        return service.PaymentMethod.cash;
+      case domain.PaymentMethod.campay:
+        return service.PaymentMethod.campay;
+      case domain.PaymentMethod.noupay:
+        return service.PaymentMethod.noupay;
+      case domain.PaymentMethod.stripe:
+        return service.PaymentMethod.stripe;
+      case domain.PaymentMethod.wallet:
+        return service.PaymentMethod.wallet;
+      case domain.PaymentMethod.mtn:
+        return service.PaymentMethod.mtn;
+      case domain.PaymentMethod.orange:
+        return service.PaymentMethod.orange;
     }
   }
 
@@ -314,11 +347,8 @@ class PaymentMethodComparisonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<PaymentMethod, PaymentMethodInfo>>(
-      future: UnifiedPaymentService().getAvailablePaymentMethods(
-        amount: amount,
-        currency: currency,
-      ),
+    return FutureBuilder<List<service.PaymentMethod>>(
+      future: service.UnifiedPaymentService().getAvailablePaymentMethods(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -329,9 +359,6 @@ class PaymentMethodComparisonWidget extends StatelessWidget {
         }
 
         final methods = snapshot.data!;
-        final enabledMethods = methods.entries
-            .where((entry) => entry.value.isEnabled)
-            .toList();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,32 +371,17 @@ class PaymentMethodComparisonWidget extends StatelessWidget {
             DataTable(
               columns: const [
                 DataColumn(label: Text('Méthode')),
-                DataColumn(label: Text('Frais')),
-                DataColumn(label: Text('Failover')),
                 DataColumn(label: Text('Statut')),
               ],
-              rows: enabledMethods.map((entry) {
-                final method = entry.key;
-                final info = entry.value;
-
+              rows: methods.map((method) {
                 return DataRow(cells: [
                   DataCell(Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(method.icon),
-                        radius: 12,
-                      ),
                       const SizedBox(width: 8),
                       Text(method.displayName),
                     ],
                   )),
-                  DataCell(Text('${info.fee.toStringAsFixed(0)} $currency')),
-                  DataCell(info.hasFailover
-                      ? const Icon(Icons.check, color: Colors.green)
-                      : const Icon(Icons.close, color: Colors.red)),
-                  DataCell(info.isEnabled
-                      ? const Icon(Icons.check_circle, color: Colors.green)
-                      : const Icon(Icons.cancel, color: Colors.red)),
+                  DataCell(const Icon(Icons.check_circle, color: Colors.green)),
                 ]);
               }).toList(),
             ),

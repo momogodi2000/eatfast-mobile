@@ -28,19 +28,7 @@ class ApiResponse<T> with _$ApiResponse<T> {
   }
 }
 
-T? _dataFromJson<T>(Object? json, T Function(Object?) fromJsonT) {
-  if (json == null) {
-    return null;
-  }
-  return fromJsonT(json);
-}
-
-Object? _dataToJson<T>(T? data, Object? Function(T?) toJsonT) {
-  if (data == null) {
-    return null;
-  }
-  return toJsonT(data);
-}
+// Helper methods removed as they were unused
 
 /// Pagination info for API responses
 @freezed
