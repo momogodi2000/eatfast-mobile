@@ -8,7 +8,7 @@ import 'package:lottie/lottie.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/widgets.dart';
-import '../domain/models.dart';
+import '../data/unified_profile_repository.dart';
 import '../providers/profile_provider.dart';
 
 class AddressManagementScreen extends ConsumerStatefulWidget {
@@ -95,7 +95,7 @@ class _AddressManagementScreenState
     );
   }
 
-  Widget _buildAddressList(BuildContext context, List<Address> addresses) {
+  Widget _buildAddressList(BuildContext context, List<UserAddress> addresses) {
     if (addresses.isEmpty) {
       return _buildEmptyState(context);
     }
@@ -115,7 +115,7 @@ class _AddressManagementScreenState
     );
   }
 
-  Widget _buildAddressCard(BuildContext context, Address address) {
+  Widget _buildAddressCard(BuildContext context, UserAddress address) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 2,
@@ -182,7 +182,7 @@ class _AddressManagementScreenState
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          address.fullAddress,
+                          address.address,
                           style: AppTextStyles.bodyMedium.copyWith(
                             color: AppColors.gray,
                           ),
@@ -315,7 +315,7 @@ class _AddressManagementScreenState
     );
   }
 
-  void _showEditAddressSheet(BuildContext context, Address address) {
+  void _showEditAddressSheet(BuildContext context, UserAddress address) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -324,7 +324,7 @@ class _AddressManagementScreenState
     );
   }
 
-  void _handleAddressAction(BuildContext context, String action, Address address) {
+  void _handleAddressAction(BuildContext context, String action, UserAddress address) {
     switch (action) {
       case 'edit':
         _showEditAddressSheet(context, address);
@@ -338,7 +338,7 @@ class _AddressManagementScreenState
     }
   }
 
-  void _showDeleteConfirmation(BuildContext context, Address address) {
+  void _showDeleteConfirmation(BuildContext context, UserAddress address) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -367,7 +367,7 @@ class _AddressManagementScreenState
 }
 
 class AddAddressSheet extends ConsumerStatefulWidget {
-  final Address? address;
+  final UserAddress? address;
 
   const AddAddressSheet({
     super.key,
@@ -416,15 +416,18 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
     if (widget.address != null) {
       final address = widget.address!;
       _labelController.text = address.label;
-      _streetController.text = address.street;
-      _cityController.text = address.city;
-      _postalCodeController.text = address.postalCode;
-      _countryController.text = address.country;
-      _isDefault = address.isDefault;
-      
-      if (address.latitude != null && address.longitude != null) {
-        _selectedLocation = google_maps.LatLng(address.latitude!, address.longitude!);
+
+      // Parse the address string to populate individual fields
+      final addressParts = address.address.split(', ');
+      if (addressParts.isNotEmpty) {
+        _streetController.text = addressParts[0];
+        if (addressParts.length > 1) _cityController.text = addressParts[1];
+        if (addressParts.length > 2) _postalCodeController.text = addressParts[2];
+        if (addressParts.length > 3) _countryController.text = addressParts[3];
       }
+
+      _isDefault = address.isDefault;
+      _selectedLocation = google_maps.LatLng(address.latitude, address.longitude);
     } else {
       // Set default country for new addresses
       _countryController.text = 'Cameroun';
@@ -816,25 +819,27 @@ class _AddAddressSheetState extends ConsumerState<AddAddressSheet>
       return;
     }
     
-    final now = DateTime.now();
-    final address = Address(
-      id: widget.address?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
-      label: _labelController.text.trim(),
-      street: _streetController.text.trim(),
-      city: _cityController.text.trim(),
-      postalCode: _postalCodeController.text.trim(),
-      country: _countryController.text.trim(),
-      latitude: _selectedLocation!.latitude,
-      longitude: _selectedLocation!.longitude,
-      isDefault: _isDefault,
-      createdAt: widget.address?.createdAt ?? now,
-      updatedAt: now,
-    );
-    
+    final fullAddress = '${_streetController.text.trim()}, ${_cityController.text.trim()}, ${_postalCodeController.text.trim()}, ${_countryController.text.trim()}';
+
     if (widget.address != null) {
-      ref.read(profileProvider.notifier).updateAddress(address);
+      ref.read(profileProvider.notifier).updateAddress(
+        widget.address!.id,
+        label: _labelController.text.trim(),
+        address: fullAddress,
+        latitude: _selectedLocation!.latitude,
+        longitude: _selectedLocation!.longitude,
+        instructions: null,
+        isDefault: _isDefault,
+      );
     } else {
-      ref.read(profileProvider.notifier).addAddress(address);
+      ref.read(profileProvider.notifier).addAddress(
+        label: _labelController.text.trim(),
+        address: fullAddress,
+        latitude: _selectedLocation!.latitude,
+        longitude: _selectedLocation!.longitude,
+        instructions: null,
+        isDefault: _isDefault,
+      );
     }
     
     Navigator.of(context).pop();

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/widgets.dart';
-import '../domain/models.dart';
+import '../data/unified_profile_repository.dart';
 import '../providers/profile_provider.dart';
 
 class PaymentMethodsScreen extends ConsumerStatefulWidget {
@@ -144,7 +144,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
                     Row(
                       children: [
                         Text(
-                          method.displayName,
+                          method.label,
                           style: AppTextStyles.h3,
                         ),
                         if (method.isDefault) ...[
@@ -170,15 +170,15 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      method.typeDisplayName,
+                      method.type,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.gray,
                       ),
                     ),
-                    if (method.accountNumber != null) ...[
+                    if ((method.details['accountNumber'] ?? method.details['number'] ?? 'N/A') != null) ...[
                       const SizedBox(height: 2),
                       Text(
-                        _formatAccountNumber(method.accountNumber!),
+                        _formatAccountNumber((method.details['accountNumber'] ?? method.details['number'] ?? 'N/A')!),
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.gray,
                           fontFamily: 'monospace',
@@ -343,7 +343,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
       builder: (context) => AlertDialog(
         title: const Text('Supprimer le moyen de paiement'),
         content: Text(
-          'Êtes-vous sûr de vouloir supprimer "${method.displayName}" ?\n\n'
+          'Êtes-vous sûr de vouloir supprimer "${method.label}" ?\n\n'
           'Cette action est irréversible.',
         ),
         actions: [
@@ -476,9 +476,9 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
     if (widget.paymentMethod != null) {
       final method = widget.paymentMethod!;
       _selectedType = method.type;
-      _displayNameController.text = method.displayName;
-      _accountNumberController.text = method.accountNumber ?? '';
-      _accountNameController.text = method.accountName ?? '';
+      _displayNameController.text = method.label;
+      _accountNumberController.text = (method.details['accountNumber'] ?? method.details['number'] ?? 'N/A') ?? '';
+      _accountNameController.text = (method.details['accountName'] ?? method.details['name'] ?? 'N/A') ?? '';
       _isDefault = method.isDefault;
     }
   }
@@ -701,24 +701,23 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
 
   void _savePaymentMethod() {
     if (!_formKey.currentState!.validate()) return;
-    
-    final now = DateTime.now();
-    final method = PaymentMethod(
-      id: widget.paymentMethod?.id ?? 
-          DateTime.now().millisecondsSinceEpoch.toString(),
-      type: _selectedType,
-      displayName: _displayNameController.text.trim(),
-      accountNumber: _selectedType == 'cash' ? null : _accountNumberController.text.trim(),
-      accountName: _selectedType == 'cash' ? null : _accountNameController.text.trim(),
-      isDefault: _isDefault,
-      createdAt: widget.paymentMethod?.createdAt ?? now,
-      updatedAt: now,
-    );
-    
+
+    final details = <String, dynamic>{
+      if (_selectedType != 'cash') 'accountNumber': _accountNumberController.text.trim(),
+      if (_selectedType != 'cash') 'accountName': _accountNameController.text.trim(),
+    };
+
     if (widget.paymentMethod != null) {
-      ref.read(profileProvider.notifier).updatePaymentMethod(method);
+      ref.read(profileProvider.notifier).updatePaymentMethod(
+        widget.paymentMethod!.id,
+        type: _selectedType,
+        details: details,
+      );
     } else {
-      ref.read(profileProvider.notifier).addPaymentMethod(method);
+      ref.read(profileProvider.notifier).addPaymentMethod(
+        type: _selectedType,
+        details: details,
+      );
     }
     
     Navigator.of(context).pop();

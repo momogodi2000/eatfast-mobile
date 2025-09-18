@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/design_tokens.dart' as app_design_tokens;
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
-import '../../domain/models/restaurant.dart';
 import '../../providers/restaurant_provider.dart';
 import '../widgets/restaurant_card.dart';
 import '../widgets/restaurant_filter_bottom_sheet.dart';

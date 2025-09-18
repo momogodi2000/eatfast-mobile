@@ -69,8 +69,8 @@ class LoadingOverlay extends StatelessWidget {
       context: context,
       barrierDismissible: false,
       barrierColor: backgroundColor ?? Colors.black.withValues(alpha: 0.3),
-      builder: (context) => WillPopScope(
-        onWillPop: () async => false,
+      builder: (context) => PopScope(
+        canPop: false,
         child: Center(
           child: Card(
             child: Padding(

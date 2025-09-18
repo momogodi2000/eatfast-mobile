@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/shimmer_loading.dart';
 import '../../../restaurants/providers/restaurant_provider.dart';
-import '../../../restaurants/domain/models/restaurant.dart';
+import '../../../../core/models/restaurant.dart';
 
 class PopularRestaurantsSection extends ConsumerWidget {
   const PopularRestaurantsSection({super.key});

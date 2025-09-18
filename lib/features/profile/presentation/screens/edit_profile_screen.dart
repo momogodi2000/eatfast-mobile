@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
+import '../../providers/profile_provider.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
@@ -431,15 +432,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     });
 
     try {
-      final currentUser = ref.read(authProvider).user!;
-      final updatedUser = currentUser.copyWith(
-        firstName: _nameController.text.trim().split(' ').first,
-        lastName: _nameController.text.trim().split(' ').skip(1).join(' '),
+      // Update the profile via the profile provider instead
+      await ref.read(profileProvider.notifier).updateProfile(
+        name: _nameController.text.trim(),
         email: _emailController.text.trim(),
-        phone: _phoneController.text.trim().isEmpty 
-            ? null 
+        phone: _phoneController.text.trim().isEmpty
+            ? null
             : _phoneController.text.trim(),
-        avatar: _selectedAvatar,
       );
 
       // TODO: Add profile update functionality

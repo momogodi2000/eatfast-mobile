@@ -21,6 +21,11 @@ class Restaurant {
   final double deliveryFee;
   final int estimatedDeliveryTime;
   final double minimumOrderAmount;
+  final bool isPromoted;
+  final String priceRange;
+  final Map<String, dynamic>? contact;
+  final List<String> specialties;
+  final List<String> paymentMethods;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -44,6 +49,11 @@ class Restaurant {
     this.deliveryFee = 0.0,
     this.estimatedDeliveryTime = 30,
     this.minimumOrderAmount = 0.0,
+    this.isPromoted = false,
+    this.priceRange = r'$$',
+    this.contact,
+    this.specialties = const [],
+    this.paymentMethods = const [],
     required this.createdAt,
     required this.updatedAt,
   });
@@ -69,6 +79,11 @@ class Restaurant {
       deliveryFee: (json['deliveryFee'] ?? 0.0).toDouble(),
       estimatedDeliveryTime: json['estimatedDeliveryTime'] ?? 30,
       minimumOrderAmount: (json['minimumOrderAmount'] ?? 0.0).toDouble(),
+      isPromoted: json['isPromoted'] ?? false,
+      priceRange: json['priceRange'] ?? r'$$',
+      contact: json['contact'],
+      specialties: List<String>.from(json['specialties'] ?? []),
+      paymentMethods: List<String>.from(json['paymentMethods'] ?? []),
       createdAt: DateTime.parse(json['createdAt'] ?? DateTime.now().toIso8601String()),
       updatedAt: DateTime.parse(json['updatedAt'] ?? DateTime.now().toIso8601String()),
     );
@@ -95,6 +110,11 @@ class Restaurant {
       'deliveryFee': deliveryFee,
       'estimatedDeliveryTime': estimatedDeliveryTime,
       'minimumOrderAmount': minimumOrderAmount,
+      'isPromoted': isPromoted,
+      'priceRange': priceRange,
+      'contact': contact,
+      'specialties': specialties,
+      'paymentMethods': paymentMethods,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };
@@ -120,6 +140,11 @@ class Restaurant {
     double? deliveryFee,
     int? estimatedDeliveryTime,
     double? minimumOrderAmount,
+    bool? isPromoted,
+    String? priceRange,
+    Map<String, dynamic>? contact,
+    List<String>? specialties,
+    List<String>? paymentMethods,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -143,6 +168,11 @@ class Restaurant {
       deliveryFee: deliveryFee ?? this.deliveryFee,
       estimatedDeliveryTime: estimatedDeliveryTime ?? this.estimatedDeliveryTime,
       minimumOrderAmount: minimumOrderAmount ?? this.minimumOrderAmount,
+      isPromoted: isPromoted ?? this.isPromoted,
+      priceRange: priceRange ?? this.priceRange,
+      contact: contact ?? this.contact,
+      specialties: specialties ?? this.specialties,
+      paymentMethods: paymentMethods ?? this.paymentMethods,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

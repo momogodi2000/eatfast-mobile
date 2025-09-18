@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
-import '../../domain/models/restaurant.dart';
+import '../../../../core/models/restaurant.dart';
 import '../../domain/models/menu_item.dart' hide MenuCategory;
 import '../../../../core/services/restaurant/restaurant_service.dart' show MenuCategory;
 import '../../providers/restaurant_provider.dart';
@@ -483,34 +483,28 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildInfoSection('Adresse', [
-            restaurant.address?.street ?? 'Adresse non disponible',
-            restaurant.address?.district != null && restaurant.address?.city != null 
-                ? '${restaurant.address?.district}, ${restaurant.address?.city}'
-                : restaurant.city ?? 'Ville non disponible',
-            if (restaurant.address?.landmark != null) restaurant.address!.landmark!,
+            restaurant.address.isNotEmpty ? restaurant.address : 'Adresse non disponible',
           ]),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
           _buildInfoSection('Contact', [
-            restaurant.contact?.phone ?? 'No phone number available',
+            restaurant.contact?['phone'] ?? 'No phone number available',
           ]),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          _buildInfoSection('Horaires', 
-            restaurant.openingHours != null 
-              ? _parseOpeningHoursFromMap(restaurant.openingHours!)
-              : ['Horaires non disponibles']
-          ),
+          _buildInfoSection('Horaires', [
+            restaurant.openingHours.isNotEmpty ? restaurant.openingHours : 'Horaires non disponibles'
+          ]),
           
           const SizedBox(height: DesignTokens.spaceXL),
           
-          _buildInfoSection('Spécialités', restaurant.specialties?.toList() ?? ['Information non disponible']),
-          
+          _buildInfoSection('Spécialités', restaurant.specialties.isNotEmpty ? restaurant.specialties : ['Information non disponible']),
+
           const SizedBox(height: DesignTokens.spaceXL),
-          
-          _buildInfoSection('Moyens de paiement', restaurant.paymentMethods?.toList() ?? ['Information non disponible']),
+
+          _buildInfoSection('Moyens de paiement', restaurant.paymentMethods.isNotEmpty ? restaurant.paymentMethods : ['Information non disponible']),
         ],
       ),
     );

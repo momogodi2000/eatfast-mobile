@@ -78,7 +78,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       );
 
       if (image != null) {
-        await ref.read(profileProvider.notifier).updateProfilePicture(image.path);
+        await ref.read(profileProvider.notifier).updateProfilePicture(File(image.path));
       }
     } catch (e) {
       if (mounted) {
@@ -123,7 +123,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                     );
 
                     if (image != null) {
-                      await ref.read(profileProvider.notifier).updateProfilePicture(image.path);
+                      await ref.read(profileProvider.notifier).updateProfilePicture(File(image.path));
                     }
                   } catch (e) {
                     if (mounted) {
@@ -165,7 +165,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
 
-    if (authState is! AuthAuthenticated) {
+    if (!authState.isAuthenticated) {
       return const Scaffold(
         body: Center(
           child: Text('Veuillez vous connecter pour accéder au profil'),
@@ -173,7 +173,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       );
     }
 
-    final user = authState.user;
+    final user = authState.user!;
 
     return Scaffold(
       backgroundColor: DesignTokens.backgroundPrimary,

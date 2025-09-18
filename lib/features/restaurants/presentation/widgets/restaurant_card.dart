@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/theme/design_tokens.dart';
-import '../../domain/models/restaurant.dart';
+import '../../../../core/models/restaurant.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
@@ -356,9 +356,7 @@ class RestaurantCard extends StatelessWidget {
               
               Expanded(
                 child: Text(
-                  restaurant.address?.district != null && restaurant.address?.city != null 
-                    ? '${restaurant.address!.district}, ${restaurant.address!.city}'
-                    : restaurant.city ?? 'Ville non disponible',
+                  restaurant.address.isNotEmpty ? restaurant.address : 'Adresse non disponible',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: DesignTokens.textTertiary,
                   ),
