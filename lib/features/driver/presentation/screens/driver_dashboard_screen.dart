@@ -7,9 +7,6 @@ import '../widgets/earnings_summary_card.dart';
 import '../widgets/available_orders_list.dart';
 import '../widgets/active_delivery_card.dart';
 import '../widgets/quick_stats_row.dart';
-import '../../domain/models/driver_profile.dart';
-import '../../domain/models/driver_earnings.dart';
-import '../../domain/models/delivery_order.dart';
 import '../../domain/providers/driver_providers.dart';
 import '../../data/driver_service.dart';
 

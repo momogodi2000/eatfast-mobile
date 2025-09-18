@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
-import '../domain/profile_user.dart';
+import '../../../core/auth/models/app_user.dart';
 
 class UnifiedProfileRepository {
   final ApiClient _apiClient;
@@ -14,13 +14,13 @@ class UnifiedProfileRepository {
   UnifiedProfileRepository(this._apiClient);
 
   /// Get user profile from backend
-  Future<ProfileResult<ProfileUser>> getUserProfile() async {
+  Future<ProfileResult<AppUser>> getUserProfile() async {
     try {
       final response = await _apiClient.get(ApiConstants.clientProfile);
 
       if (response.statusCode == 200) {
         final profileData = response.data['data'] ?? response.data;
-        final user = ProfileUser.fromJson(profileData);
+        final user = AppUser.fromJson(profileData);
         return ProfileResult.success(user);
       } else {
         return ProfileResult.failure(
@@ -35,7 +35,7 @@ class UnifiedProfileRepository {
   }
 
   /// Update user profile
-  Future<ProfileResult<ProfileUser>> updateProfile(ProfileUpdateRequest request) async {
+  Future<ProfileResult<AppUser>> updateProfile(ProfileUpdateRequest request) async {
     try {
       final response = await _apiClient.put(
         ApiConstants.clientProfile,
@@ -44,7 +44,7 @@ class UnifiedProfileRepository {
 
       if (response.statusCode == 200) {
         final profileData = response.data['data'] ?? response.data;
-        final user = ProfileUser.fromJson(profileData);
+        final user = AppUser.fromJson(profileData);
         return ProfileResult.success(user);
       } else {
         return ProfileResult.failure(

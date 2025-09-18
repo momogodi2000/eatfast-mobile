@@ -223,7 +223,7 @@ class GuestService {
         try {
           final paymentMethod = _convertPaymentMethod(orderRequest.paymentMethod);
 
-          final paymentResult = await _paymentService.processPaymentWithFailover(
+          final paymentResult = await _paymentService.processPayment(
             orderId: orderId,
             amount: orderData['totalAmount'] as double,
             method: paymentMethod,

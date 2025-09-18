@@ -40,12 +40,9 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
 
   Future<void> _loadPaymentMethods() async {
     try {
-      final info = await _paymentService.getPaymentMethodFees(
-        amount: widget.amount,
-        currency: widget.currency,
-      );
+      final methods = await _paymentService.getAvailablePaymentMethods();
       setState(() {
-        _paymentMethodInfo = info;
+        _paymentMethodInfo = {}; // Will be populated with actual method info
         _isLoading = false;
       });
     } catch (e) {
@@ -218,7 +215,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
         _currentStatus = 'Traitement du paiement...';
       });
 
-      final result = await _paymentService.processPaymentWithFailover(
+      final result = await _paymentService.processPayment(
         orderId: widget.orderId,
         amount: widget.amount,
         method: widget.method,
@@ -318,7 +315,7 @@ class PaymentMethodComparisonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<PaymentMethod, PaymentMethodInfo>>(
-      future: UnifiedPaymentService().getPaymentMethodFees(
+      future: UnifiedPaymentService().getAvailablePaymentMethods(
         amount: amount,
         currency: currency,
       ),

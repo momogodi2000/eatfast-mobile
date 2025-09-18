@@ -1,14 +1,14 @@
 /// Profile Repository Interface
 /// Defines contract for profile data operations
 
-import '../../../core/models/user_profile.dart';
+import '../../../core/auth/models/app_user.dart';
 
 abstract class ProfileRepository {
   /// Get user profile by ID
-  Future<UserProfile?> getProfile(String userId);
+  Future<AppUser?> getProfile(String userId);
 
   /// Update user profile
-  Future<bool> updateProfile(UserProfile profile);
+  Future<bool> updateProfile(AppUser profile);
 
   /// Update user avatar
   Future<String?> updateAvatar(String userId, String imagePath);

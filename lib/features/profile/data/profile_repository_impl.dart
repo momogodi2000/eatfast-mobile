@@ -1,7 +1,7 @@
 /// Profile Repository Implementation
 /// Concrete implementation of profile data operations using API
 
-import '../../../core/models/user_profile.dart';
+import '../../../core/auth/models/app_user.dart';
 import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../domain/profile_repository.dart';
@@ -12,12 +12,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl(this._apiClient);
 
   @override
-  Future<UserProfile?> getProfile(String userId) async {
+  Future<AppUser?> getProfile(String userId) async {
     try {
       final response = await _apiClient.get('${ApiConstants.clientProfile}/$userId');
 
       if (response.statusCode == 200) {
-        return UserProfile.fromJson(response.data);
+        return AppUser.fromJson(response.data);
       }
       return null;
     } catch (e) {
@@ -26,7 +26,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<bool> updateProfile(UserProfile profile) async {
+  Future<bool> updateProfile(AppUser profile) async {
     try {
       final response = await _apiClient.put(
         '${ApiConstants.clientProfile}/${profile.id}',
