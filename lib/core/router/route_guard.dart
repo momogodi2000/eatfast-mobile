@@ -39,12 +39,14 @@ class RouteGuard {
     switch (userRole) {
       case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.deliveryDriver:
+      case UserRole.deliveryAgent:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
         return '/home';
+      case UserRole.guest:
+        return '/welcome';
       case null:
         return '/home';
     }
@@ -55,12 +57,14 @@ class RouteGuard {
     switch (role) {
       case UserRole.restaurantOwner:
         return '/restaurant-dashboard';
-      case UserRole.deliveryDriver:
+      case UserRole.deliveryAgent:
         return '/driver-dashboard';
       case UserRole.admin:
         return '/admin-dashboard';
       case UserRole.customer:
         return '/home';
+      case UserRole.guest:
+        return '/welcome';
     }
   }
 }

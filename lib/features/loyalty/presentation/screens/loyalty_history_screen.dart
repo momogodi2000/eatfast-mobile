@@ -38,7 +38,7 @@ class _LoyaltyHistoryScreenState extends ConsumerState<LoyaltyHistoryScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historique de Fidélité'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         bottom: TabBar(
@@ -138,7 +138,7 @@ class _LoyaltyHistoryScreenState extends ConsumerState<LoyaltyHistoryScreen>
           );
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
         ),
         child: const Text('Charger Plus'),

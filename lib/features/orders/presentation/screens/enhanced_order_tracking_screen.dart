@@ -597,7 +597,7 @@ class _EnhancedOrderTrackingScreenState extends ConsumerState<EnhancedOrderTrack
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       shape: BoxShape.circle,
                     ),
                   ),

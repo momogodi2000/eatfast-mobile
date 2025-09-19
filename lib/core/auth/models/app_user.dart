@@ -2,8 +2,9 @@
 enum UserRole {
   customer('customer'),
   restaurantOwner('restaurant_owner'),
-  deliveryDriver('delivery_driver'),
-  admin('admin');
+  deliveryAgent('delivery_agent'),
+  admin('admin'),
+  guest('guest');
 
   const UserRole(this.value);
   final String value;

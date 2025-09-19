@@ -1,0 +1,4 @@
+# Files to exclude from analysis due to incomplete implementation
+analyzer:
+  exclude:
+    - lib/features/orders/presentation/screens/realtime_order_tracking_screen.dart

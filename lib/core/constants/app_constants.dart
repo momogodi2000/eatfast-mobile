@@ -14,14 +14,14 @@ class AppConstants {
   static const String companyWhatsApp = '+237 6XX XXX XXX';
   static const String companyAddress = 'Yaoundé, Cameroun';
   
-  // API Configuration (matching backend)
-  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com'; // Production URL
+  // API Configuration (matching backend exactly)
+  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api'; // Production URL
   static const String apiVersion = 'v1';
   static const int connectionTimeout = 60000; // Increased for Render's cold start
   static const int receiveTimeout = 60000;
-  
+
   // Development URL (use this for local development)
-  // static const String baseUrl = 'http://localhost:3000';
+  // static const String baseUrl = 'http://localhost:3000/api';
   
   // Storage Keys
   static const String keyIsFirstTime = 'is_first_time';

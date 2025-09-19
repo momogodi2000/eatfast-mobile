@@ -13,7 +13,7 @@ class TierBenefitsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Niveaux et Avantages'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -27,8 +27,8 @@ class TierBenefitsScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withValues(alpha: 0.8),
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                   ],
                 ),
                 borderRadius: const BorderRadius.vertical(
@@ -259,7 +259,7 @@ class _TierCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isCurrentTier 
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).colorScheme.primary
               : Colors.grey[200]!,
           width: isCurrentTier ? 2 : 1,
         ),

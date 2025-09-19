@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../widgets/contact_form_widget.dart';
+import '../widgets/newsletter_subscription_widget.dart';
 
 /// Contact Us Screen
 class ContactUsScreen extends StatelessWidget {
@@ -175,7 +177,17 @@ class ContactUsScreen extends StatelessWidget {
               ),
               
               const SizedBox(height: DesignTokens.spaceXXL),
-              
+
+              // Contact Form Widget
+              const ContactFormWidget(),
+
+              const SizedBox(height: DesignTokens.spaceXXL),
+
+              // Newsletter Subscription Widget
+              const NewsletterSubscriptionWidget(),
+
+              const SizedBox(height: DesignTokens.spaceXXL),
+
               // FAQ Button
               SizedBox(
                 width: double.infinity,

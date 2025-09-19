@@ -20,7 +20,7 @@ class LoyaltyScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Programme de Fidélité'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -227,12 +227,12 @@ class LoyaltyScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                      Theme.of(context).primaryColor.withValues(alpha: 0.05),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 0.2)),
+                  border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,7 +241,7 @@ class LoyaltyScreen extends ConsumerWidget {
                       children: [
                         Icon(
                           Icons.help_outline,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.primary,
                           size: 24,
                         ),
                         const SizedBox(width: 12),
@@ -249,7 +249,7 @@ class LoyaltyScreen extends ConsumerWidget {
                           'Comment ça marche ?',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ],
@@ -483,7 +483,7 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: canAfford && reward.canRedeem ? onRedeem : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(

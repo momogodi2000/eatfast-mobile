@@ -80,7 +80,7 @@ class _TransactionHistoryScreenState extends ConsumerState<TransactionHistoryScr
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historique des Transactions'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         bottom: TabBar(
@@ -124,12 +124,12 @@ class _TransactionHistoryScreenState extends ConsumerState<TransactionHistoryScr
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                    Theme.of(context).primaryColor.withValues(alpha: 0.05),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 0.2)),
+                border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -138,7 +138,7 @@ class _TransactionHistoryScreenState extends ConsumerState<TransactionHistoryScr
                     title: 'Solde Actuel',
                     value: '${walletState.balance.toStringAsFixed(0)} XAF',
                     icon: Icons.account_balance_wallet,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                   Container(
                     width: 1,

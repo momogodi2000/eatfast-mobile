@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/platform_stats_cards.dart';
 import '../widgets/real_time_metrics_card.dart';
 import '../widgets/quick_actions_grid.dart';
@@ -21,7 +22,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 6, vsync: this); // Updated for merged support functionality
   }
 
   @override
@@ -131,10 +132,13 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.white70,
                 indicatorColor: Colors.white,
+                isScrollable: true,
                 tabs: const [
                   Tab(text: 'Vue d\'ensemble'),
                   Tab(text: 'Utilisateurs'),
                   Tab(text: 'Commandes'),
+                  Tab(text: 'Support'),
+                  Tab(text: 'Marketing'),
                   Tab(text: 'Système'),
                 ],
               ),
@@ -151,6 +155,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
                   _buildOverviewTab(),
                   _buildUsersTab(),
                   _buildOrdersTab(),
+                  _buildSupportTab(),
+                  _buildMarketingTab(),
                   _buildSystemTab(),
                 ],
               ),
@@ -546,6 +552,490 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
     );
   }
 
+  Widget _buildSupportTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.support_agent,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Support Client & Communication',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Support Stats Row
+          Row(
+            children: [
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.orange.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.mail_outline,
+                                color: Colors.orange,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Messages contact'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '127',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.orange,
+                          ),
+                        ),
+                        const Text('En attente'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.email,
+                                color: Colors.blue,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Newsletter'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '2,450',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        const Text('Abonnés actifs'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.green.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.handshake,
+                                color: Colors.green,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Partenariats'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '45',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.green,
+                          ),
+                        ),
+                        const Text('Demandes'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Support Actions Grid
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Actions Support',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 3,
+                    children: [
+                      _SupportActionButton(
+                        icon: Icons.message,
+                        label: 'Messages Contact',
+                        onTap: () => _navigateToContactMessages(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.email_outlined,
+                        label: 'Gestion Newsletter',
+                        onTap: () => _navigateToNewsletterManagement(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.business,
+                        label: 'Demandes Partenariat',
+                        onTap: () => _navigateToPartnershipRequests(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.analytics,
+                        label: 'Rapports Support',
+                        onTap: () => _navigateToSupportReports(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // WhatsApp Business Integration Card
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FaIcon(
+                          FontAwesomeIcons.whatsapp,
+                          color: Colors.green,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'WhatsApp Business',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Gérez les communications WhatsApp avec vos clients',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _navigateToWhatsAppContacts(),
+                          icon: const Icon(Icons.contacts),
+                          label: const Text('Contacts'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _navigateToWhatsAppTemplates(),
+                          icon: const Icon(Icons.description_outlined),
+                          label: const Text('Modèles'),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () => _navigateToWhatsAppBulkSend(),
+                          icon: const Icon(Icons.send),
+                          label: const Text('Envoi groupé'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMarketingTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.campaign,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Campagnes Marketing',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Marketing Stats
+          Row(
+            children: [
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.purple.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.campaign,
+                                color: Colors.purple,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Campagnes actives'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '12',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.teal.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.schedule,
+                                color: Colors.teal,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Programmées'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '8',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.teal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: Colors.indigo.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.analytics,
+                                color: Colors.indigo,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Taux engagement'),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          '78%',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.indigo,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Marketing Actions
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Actions Marketing',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 3,
+                    children: [
+                      _SupportActionButton(
+                        icon: Icons.add_circle,
+                        label: 'Nouvelle Campagne',
+                        onTap: () => _navigateToCreateCampaign(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.list,
+                        label: 'Gérer Campagnes',
+                        onTap: () => _navigateToCampaignManagement(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.group,
+                        label: 'Segments Audience',
+                        onTap: () => _navigateToAudienceSegments(),
+                      ),
+                      _SupportActionButton(
+                        icon: Icons.bar_chart,
+                        label: 'Analytics',
+                        onTap: () => _navigateToMarketingAnalytics(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildSystemTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -712,6 +1202,86 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen>
       ),
     );
   }
+
+  // Support navigation methods
+  void _navigateToContactMessages() {
+    // TODO: Navigate to contact messages management screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers messages contact')),
+    );
+  }
+
+  void _navigateToNewsletterManagement() {
+    // TODO: Navigate to newsletter management screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers gestion newsletter')),
+    );
+  }
+
+  void _navigateToPartnershipRequests() {
+    // TODO: Navigate to partnership requests screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers demandes partenariat')),
+    );
+  }
+
+  void _navigateToSupportReports() {
+    // TODO: Navigate to support reports screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers rapports support')),
+    );
+  }
+
+  // WhatsApp navigation methods
+  void _navigateToWhatsAppContacts() {
+    // TODO: Navigate to WhatsApp contacts management
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers contacts WhatsApp')),
+    );
+  }
+
+  void _navigateToWhatsAppTemplates() {
+    // TODO: Navigate to WhatsApp templates management
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers modèles WhatsApp')),
+    );
+  }
+
+  void _navigateToWhatsAppBulkSend() {
+    // TODO: Navigate to WhatsApp bulk send screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers envoi groupé WhatsApp')),
+    );
+  }
+
+  // Marketing navigation methods
+  void _navigateToCreateCampaign() {
+    // TODO: Navigate to create marketing campaign screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers création campagne')),
+    );
+  }
+
+  void _navigateToCampaignManagement() {
+    // TODO: Navigate to campaign management screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers gestion campagnes')),
+    );
+  }
+
+  void _navigateToAudienceSegments() {
+    // TODO: Navigate to audience segments management
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers segments audience')),
+    );
+  }
+
+  void _navigateToMarketingAnalytics() {
+    // TODO: Navigate to marketing analytics screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Navigation vers analytics marketing')),
+    );
+  }
 }
 
 class _ActionChip extends StatelessWidget {
@@ -731,6 +1301,47 @@ class _ActionChip extends StatelessWidget {
       avatar: Icon(icon, size: 16),
       label: Text(label),
       onPressed: onTap,
+    );
+  }
+}
+
+class _SupportActionButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _SupportActionButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

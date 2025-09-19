@@ -17,7 +17,7 @@ class WalletScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mon Portefeuille'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -206,7 +206,7 @@ class WalletScreen extends ConsumerWidget {
         },
         icon: const Icon(Icons.add),
         label: const Text('Recharger'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

@@ -47,10 +47,10 @@ class _PaymentMethodTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? Theme.of(context).primaryColor.withValues(alpha: 0.1) : Colors.white,
+          color: isSelected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1) : Colors.white,
           border: Border.all(
             color: isSelected 
-                ? Theme.of(context).primaryColor 
+                ? Theme.of(context).colorScheme.primary 
                 : Colors.grey[300]!,
             width: 2,
           ),
@@ -84,7 +84,7 @@ class _PaymentMethodTile extends StatelessWidget {
                     method.displayName,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isSelected ? Theme.of(context).primaryColor : null,
+                      color: isSelected ? Theme.of(context).colorScheme.primary : null,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -104,7 +104,7 @@ class _PaymentMethodTile extends StatelessWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(

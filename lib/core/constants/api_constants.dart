@@ -1,6 +1,6 @@
 class ApiConstants {
-  // Base URL for API requests - using the provided render URL
-  static const String baseUrl = 'https://eatfast-backend-api.onrender.com/api/v1';
+  // Base URL for API requests - using the provided render URL (standardized)
+  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api/v1';
   
   // Timeout configurations
   static const Duration connectTimeout = Duration(seconds: 30);
@@ -102,6 +102,9 @@ class ApiConstants {
   static const String adminAnalytics = '/admin/analytics';
   static const String adminWhatsapp = '/admin/whatsapp';
   static const String adminMarketing = '/admin/marketing';
+
+  // Analytics endpoints
+  static const String analytics = '/shared/analytics';
   
   // Public endpoints - matching backend exactly
   static const String publicContact = '/public/contact';

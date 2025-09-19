@@ -59,8 +59,11 @@ class _LoginApiScreenState extends ConsumerState<LoginApiScreen> {
           case UserRole.restaurantOwner:
             context.go('/restaurant-dashboard');
             break;
-          case UserRole.deliveryDriver:
+          case UserRole.deliveryAgent:
             context.go('/driver-dashboard');
+            break;
+          case UserRole.guest:
+            context.go('/guest-home');
             break;
         }
       }

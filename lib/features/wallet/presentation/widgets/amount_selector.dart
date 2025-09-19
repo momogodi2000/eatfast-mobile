@@ -85,7 +85,7 @@ class _AmountSelectorState extends State<AmountSelector> {
                     }
                   });
                 },
-                activeColor: Theme.of(context).primaryColor,
+                activeColor: Theme.of(context).colorScheme.primary,
               ),
               const Text('Montant personnalisé'),
             ],
@@ -111,7 +111,7 @@ class _AmountSelectorState extends State<AmountSelector> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   width: 2,
                 ),
               ),
@@ -170,10 +170,10 @@ class _AmountChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? Theme.of(context).primaryColor : Colors.white,
+          color: isSelected ? Theme.of(context).colorScheme.primary : Colors.white,
           border: Border.all(
             color: isSelected 
-                ? Theme.of(context).primaryColor 
+                ? Theme.of(context).colorScheme.primary 
                 : Colors.grey[300]!,
             width: 2,
           ),

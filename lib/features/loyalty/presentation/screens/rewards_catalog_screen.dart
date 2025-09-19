@@ -28,7 +28,7 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catalogue des Récompenses'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -47,8 +47,8 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).primaryColor.withValues(alpha: 0.8),
+                  Theme.of(context).colorScheme.primary,
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                 ],
               ),
               borderRadius: const BorderRadius.vertical(
@@ -335,7 +335,7 @@ class _RewardTile extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: canAfford 
-                    ? Theme.of(context).primaryColor.withValues(alpha: 0.3)
+                    ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.3)
                     : Colors.grey[300]!,
                 width: canAfford ? 2 : 1,
               ),
@@ -386,7 +386,7 @@ class _RewardTile extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: canAfford 
-                                  ? Theme.of(context).primaryColor
+                                  ? Theme.of(context).colorScheme.primary
                                   : Colors.grey[400],
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -552,7 +552,7 @@ class _FilterBottomSheet extends ConsumerWidget {
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                     ),
                     child: const Text('Appliquer'),
@@ -721,7 +721,7 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: canAfford && reward.canRedeem ? onRedeem : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(

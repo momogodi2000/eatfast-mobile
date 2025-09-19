@@ -369,7 +369,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
 
   Widget _buildTotalSection(double total) {
     return Card(
-      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -383,7 +383,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
               '${total.toStringAsFixed(0)} ${AppConfig.currencySymbol}',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ],

@@ -402,7 +402,7 @@ final isRestaurantProvider = Provider<bool>((ref) {
 
 final isDriverProvider = Provider<bool>((ref) {
   final role = ref.watch(currentUserRoleProvider);
-  return role == UserRole.deliveryDriver;
+  return role == UserRole.deliveryAgent;
 });
 
 final isCustomerProvider = Provider<bool>((ref) {
