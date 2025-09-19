@@ -420,8 +420,6 @@ void main() {
 
     testWidgets('should handle pull to refresh', (WidgetTester tester) async {
       // Arrange
-      bool refreshCalled = false;
-
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
@@ -429,10 +427,10 @@ void main() {
               body: RefreshIndicator(
                 key: const Key('refresh_indicator'),
                 onRefresh: () async {
-                  refreshCalled = true;
+                  // Refresh logic would go here
                 },
-                child: const ListView(
-                  children: [
+                child: ListView(
+                  children: const [
                     ListTile(title: Text('Content')),
                   ],
                 ),

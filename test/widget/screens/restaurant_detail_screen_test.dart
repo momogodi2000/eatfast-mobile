@@ -12,7 +12,7 @@ void main() {
             home: Scaffold(
               body: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     key: const Key('restaurant_header'),
                     height: 250,
                     child: Stack(
@@ -500,8 +500,8 @@ void main() {
               body: Column(
                 children: [
                   const Text('Customize Your Order'),
-                  const ListTile(
-                    title: Text('Size'),
+                  ListTile(
+                    title: const Text('Size'),
                     trailing: DropdownButton<String>(
                       value: 'Medium',
                       items: const [

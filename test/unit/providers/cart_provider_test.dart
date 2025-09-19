@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/features/cart/domain/models/cart.dart';
 
 // Mock Cart models and provider for testing
 class CartItem {

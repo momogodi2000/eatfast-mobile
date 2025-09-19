@@ -13,8 +13,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
         );
 
         // Assert
@@ -25,7 +26,7 @@ void main() {
         expect(user.fullName, equals('John Doe'));
         expect(user.role, equals(UserRole.customer));
         expect(user.status, equals(UserStatus.active));
-        expect(user.isEmailVerified, isTrue);
+        expect(user.emailVerified, isTrue);
         expect(user.createdAt, equals(DateTime(2024, 1, 1)));
       });
 
@@ -38,8 +39,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
         );
 
         // Act
@@ -65,7 +67,7 @@ void main() {
           'lastName': 'Doe',
           'role': 'customer',
           'status': 'active',
-          'isEmailVerified': true,
+          'emailVerified': true,
           'createdAt': '2024-01-01T00:00:00.000Z',
         };
 
@@ -79,7 +81,7 @@ void main() {
         expect(user.lastName, equals('Doe'));
         expect(user.role, equals(UserRole.customer));
         expect(user.status, equals(UserStatus.active));
-        expect(user.isEmailVerified, isTrue);
+        expect(user.emailVerified, isTrue);
       });
 
       test('should handle optional fields correctly', () {
@@ -91,8 +93,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: false,
+          emailVerified: false,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
           phone: '+1234567890',
           profileImageUrl: 'https://example.com/profile.jpg',
         );
@@ -111,8 +114,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
         );
 
         final user2 = AppUser(
@@ -122,8 +126,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
         );
 
         final user3 = AppUser(
@@ -133,8 +138,9 @@ void main() {
           lastName: 'Smith',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime(2024, 1, 1),
+          updatedAt: DateTime(2024, 1, 1),
         );
 
         // Assert
@@ -203,8 +209,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -223,8 +230,9 @@ void main() {
           lastName: 'Owner',
           role: UserRole.restaurantOwner,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -243,8 +251,9 @@ void main() {
           lastName: 'Driver',
           role: UserRole.deliveryAgent,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -263,8 +272,9 @@ void main() {
           lastName: 'Admin',
           role: UserRole.admin,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -283,8 +293,9 @@ void main() {
           lastName: 'User',
           role: UserRole.guest,
           status: UserStatus.active,
-          isEmailVerified: false,
+          emailVerified: false,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -305,8 +316,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -323,8 +335,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.inactive,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -341,8 +354,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.suspended,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -360,8 +374,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.pending,
-          isEmailVerified: false,
+          emailVerified: false,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -382,8 +397,9 @@ void main() {
           lastName: 'Doe',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -400,8 +416,9 @@ void main() {
           lastName: '',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert
@@ -418,8 +435,9 @@ void main() {
           lastName: '',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Assert

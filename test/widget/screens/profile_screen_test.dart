@@ -561,7 +561,7 @@ void main() {
                         children: [
                           Text('Order #EF${1000 + index}'),
                           const Text('Delivered • \$25.99'),
-                          const Text('Jan ${15 + index}, 2024'),
+                          Text('Jan ${15 + index}, 2024'),
                         ],
                       ),
                       trailing: Column(

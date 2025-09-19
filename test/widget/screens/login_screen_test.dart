@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
 
 // Mock classes would be generated here
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
@@ -155,16 +154,12 @@ void main() {
 
     testWidgets('should show loading indicator during login', (WidgetTester tester) async {
       // Arrange
-      bool isLoading = true;
-
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: Center(
-                child: isLoading
-                    ? const CircularProgressIndicator(key: Key('loading_indicator'))
-                    : const Text('Login Form'),
+              body: const Center(
+                child: CircularProgressIndicator(key: Key('loading_indicator')),
               ),
             ),
           ),
@@ -281,31 +276,36 @@ void main() {
 
     testWidgets('should show/hide password visibility', (WidgetTester tester) async {
       // Arrange
-      bool isPasswordVisible = false;
-
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: Column(
-                children: [
-                  TextField(
-                    key: const Key('password_field'),
-                    obscureText: !isPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        key: const Key('visibility_toggle'),
-                        icon: Icon(
-                          isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+              body: StatefulBuilder(
+                builder: (context, setState) {
+                  bool isPasswordVisible = false;
+                  return Column(
+                    children: [
+                      TextField(
+                        key: const Key('password_field'),
+                        obscureText: !isPasswordVisible,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            key: const Key('visibility_toggle'),
+                            icon: Icon(
+                              isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          isPasswordVisible = !isPasswordVisible;
-                        },
                       ),
-                    ),
-                  ),
-                ],
+                    ],
+                  );
+                },
               ),
             ),
           ),

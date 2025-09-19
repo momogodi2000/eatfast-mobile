@@ -16,8 +16,9 @@ class MockAuthRepository extends Mock {
         lastName: 'User',
         role: UserRole.customer,
         status: UserStatus.active,
-        isEmailVerified: true,
+        emailVerified: true,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       )),
     );
   }
@@ -44,8 +45,9 @@ class MockAuthRepository extends Mock {
         lastName: lastName,
         role: UserRole.customer,
         status: UserStatus.pending,
-        isEmailVerified: false,
+        emailVerified: false,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       )),
     );
   }
@@ -257,8 +259,9 @@ void main() {
           lastName: 'User',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
         );
 
         // Act
@@ -337,8 +340,9 @@ void main() {
           lastName: 'User',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
         );
 
         when(mockAuthRepository.login(email, password))
@@ -389,8 +393,9 @@ void main() {
             lastName: 'User',
             role: UserRole.customer,
             status: UserStatus.active,
-            isEmailVerified: true,
+            emailVerified: true,
             createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
           );
         });
 
@@ -416,8 +421,9 @@ void main() {
           lastName: lastName,
           role: UserRole.customer,
           status: UserStatus.pending,
-          isEmailVerified: false,
+          emailVerified: false,
           createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
         );
 
         when(mockAuthRepository.register(
@@ -488,8 +494,9 @@ void main() {
             lastName: 'User',
             role: UserRole.customer,
             status: UserStatus.active,
-            isEmailVerified: true,
+            emailVerified: true,
             createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
           ),
         );
 
@@ -515,8 +522,9 @@ void main() {
             lastName: 'User',
             role: UserRole.customer,
             status: UserStatus.active,
-            isEmailVerified: true,
+            emailVerified: true,
             createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
           ),
         );
 
@@ -540,8 +548,9 @@ void main() {
           lastName: 'User',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
         );
 
         when(mockAuthRepository.isLoggedIn()).thenAnswer((_) async => true);
@@ -645,8 +654,9 @@ void main() {
               lastName: 'User',
               role: UserRole.customer,
               status: UserStatus.active,
-              isEmailVerified: true,
+              emailVerified: true,
               createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
             ));
 
         // Act

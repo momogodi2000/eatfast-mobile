@@ -126,22 +126,20 @@ void main() {
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    ...deliveryOptions.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final option = entry.value;
-                      return Container(
-                        key: Key('delivery_option_$index'),
+                    for (final entry in deliveryOptions.asMap().entries) ...[
+                      Container(
+                        key: Key('delivery_option_${entry.key}'),
                         margin: const EdgeInsets.only(bottom: 8),
                         child: RadioListTile<int>(
-                          value: index,
+                          value: entry.key,
                           groupValue: 0,
                           onChanged: (value) {},
-                          title: Text(option['time']!),
-                          subtitle: Text('+ \$${option['fee']} delivery fee'),
+                          title: Text(entry.value['time']!),
+                          subtitle: Text('+ \$${entry.value['fee']} delivery fee'),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                         ),
-                      );
-                    }).toList(),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -572,24 +570,20 @@ void main() {
 
     testWidgets('should handle loading state during order placement', (WidgetTester tester) async {
       // Arrange
-      bool isLoading = true;
-
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
             home: Scaffold(
-              body: Center(
-                child: isLoading
-                    ? const Column(
-                        key: Key('loading_state'),
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 16),
-                          Text('Placing your order...'),
-                        ],
-                      )
-                    : const Text('Order placed successfully!'),
+              body: const Center(
+                child: Column(
+                  key: Key('loading_state'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text('Placing your order...'),
+                  ],
+                ),
               ),
             ),
           ),
