@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/features/loyalty/domain/models/enhanced_loyalty_models.dart';
 
 void main() {
   group('Loyalty Service Tests', () {
@@ -254,7 +253,7 @@ void main() {
         };
 
         // Act & Assert
-        expect(userMetrics['currentBalance'], equals(userMetrics['totalPointsEarned']! - userMetrics['totalPointsRedeemed']!));
+        expect(userMetrics['currentBalance'], equals((userMetrics['totalPointsEarned'] as int) - (userMetrics['totalPointsRedeemed'] as int)));
         expect(userMetrics['totalOrders'], greaterThan(0));
         expect(userMetrics['averageOrderValue'], greaterThan(0));
       });

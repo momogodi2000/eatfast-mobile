@@ -182,7 +182,7 @@ void main() {
 
         // Act & Assert
         expect(successResponse.statusCode, equals(200));
-        expect(successResponse.data['success'], isTrue);
+        expect(successResponse.data!['success'], isTrue);
       });
 
       test('should log response for debugging', () {

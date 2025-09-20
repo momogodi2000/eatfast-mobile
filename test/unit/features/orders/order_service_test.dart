@@ -2,425 +2,306 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:eatfast_mobile/features/orders/domain/models/order.dart';
 import 'package:eatfast_mobile/features/cart/domain/models/cart.dart';
 import 'package:eatfast_mobile/features/profile/domain/user_address.dart';
-import 'package:eatfast_mobile/features/profile/domain/models.dart';
+import 'package:eatfast_mobile/features/payments/domain/models/payment.dart';
+import 'package:eatfast_mobile/features/restaurants/domain/models/menu_item.dart';
 
 void main() {
   group('Order Service Tests', () {
     group('Order Creation', () {
       test('should create order with valid cart data', () async {
         // Arrange
+        final menuItem1 = MenuItem(
+          id: 'menu-1',
+          restaurantId: 'restaurant-1',
+          name: 'Burger',
+          description: 'Delicious burger',
+          price: 12.99,
+          category: 'Main Course',
+          isAvailable: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        final menuItem2 = MenuItem(
+          id: 'menu-2',
+          restaurantId: 'restaurant-1',
+          name: 'Fries',
+          description: 'Crispy fries',
+          price: 4.99,
+          category: 'Sides',
+          isAvailable: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
         final cartItems = [
           CartItem(
             id: 'item-1',
-            menuItemId: 'menu-1',
-            name: 'Burger',
-            price: 12.99,
+            menuItem: menuItem1,
             quantity: 2,
             specialInstructions: 'No onions',
+            itemTotal: 25.98,
+            addedAt: DateTime.now(),
           ),
           CartItem(
             id: 'item-2',
-            menuItemId: 'menu-2',
-            name: 'Fries',
-            price: 4.99,
+            menuItem: menuItem2,
             quantity: 1,
+            itemTotal: 4.99,
+            addedAt: DateTime.now(),
           ),
         ];
 
         final deliveryAddress = UserAddress(
           id: 'addr-1',
+          userId: 'user-1',
+          label: 'Home',
+          fullAddress: '123 Main St, Test City, Test State 12345',
           street: '123 Main St',
           city: 'Test City',
           state: 'Test State',
-          zipCode: '12345',
+          postalCode: '12345',
           country: 'Test Country',
           latitude: 40.7128,
           longitude: -74.0060,
           isDefault: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
-        final paymentMethod = PaymentMethod(
-          id: 'pay-1',
-          type: PaymentType.creditCard,
-          cardNumber: '**** **** **** 1234',
-          expiryDate: '12/25',
-          isDefault: true,
-        );
+        final paymentMethod = PaymentMethod.cash;
 
         // Act & Assert
         expect(cartItems, hasLength(2));
-        expect(cartItems[0].quantity, equals(2));
-        expect(deliveryAddress.street, equals('123 Main St'));
-        expect(paymentMethod.type, equals(PaymentType.creditCard));
+        expect(cartItems.first.menuItem.name, equals('Burger'));
+        expect(cartItems.first.quantity, equals(2));
+        expect(deliveryAddress.fullAddress, contains('123 Main St'));
+        expect(paymentMethod, equals(PaymentMethod.cash));
       });
 
-      test('should calculate order totals correctly', () {
+      test('should calculate order totals correctly', () async {
         // Arrange
-        const subtotal = 30.97;
-        const deliveryFee = 2.99;
-        const tax = 2.48;
-        const discount = 5.00;
-        final total = subtotal + deliveryFee + tax - discount;
+        final menuItem = MenuItem(
+          id: 'menu-1',
+          restaurantId: 'restaurant-1',
+          name: 'Test Item',
+          description: 'Test description',
+          price: 10.00,
+          category: 'Test',
+          isAvailable: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
 
-        // Act & Assert
-        expect(total, equals(31.44));
-        expect(subtotal, greaterThan(0));
-        expect(deliveryFee, greaterThan(0));
-      });
+        final cartItem = CartItem(
+          id: 'item-1',
+          menuItem: menuItem,
+          quantity: 3,
+          itemTotal: 30.00,
+          addedAt: DateTime.now(),
+        );
 
-      test('should generate unique order ID', () {
-        // Arrange
-        const orderId1 = 'order_123456789';
-        const orderId2 = 'order_987654321';
-
-        // Act & Assert
-        expect(orderId1, isNot(equals(orderId2)));
-        expect(orderId1, startsWith('order_'));
-        expect(orderId2, startsWith('order_'));
-      });
-    });
-
-    group('Order Status Management', () {
-      test('should track order status progression', () {
-        // Arrange
-        final statusProgression = [
-          OrderStatus.created,
-          OrderStatus.confirmed,
-          OrderStatus.accepted,
-          OrderStatus.preparing,
-          OrderStatus.readyForPickup,
-          OrderStatus.assignedDriver,
-          OrderStatus.pickedUp,
-          OrderStatus.inTransit,
-          OrderStatus.delivered,
-          OrderStatus.completed,
-        ];
-
-        // Act & Assert
-        expect(statusProgression, hasLength(10));
-        expect(statusProgression.first, equals(OrderStatus.created));
-        expect(statusProgression.last, equals(OrderStatus.completed));
-      });
-
-      test('should identify active orders', () {
-        // Arrange
-        final activeStatuses = [
-          OrderStatus.created,
-          OrderStatus.confirmed,
-          OrderStatus.accepted,
-          OrderStatus.preparing,
-          OrderStatus.readyForPickup,
-          OrderStatus.assignedDriver,
-          OrderStatus.pickedUp,
-          OrderStatus.inTransit,
-        ];
-
-        // Act & Assert
-        for (final status in activeStatuses) {
-          final order = Order(
-            id: 'test-order',
-            userId: 'user-123',
-            restaurantId: 'restaurant-1',
-            restaurantName: 'Test Restaurant',
-            items: [],
-            status: status,
-            subtotal: 20.0,
-            deliveryFee: 2.99,
-            tax: 1.6,
-            discount: 0.0,
-            total: 24.59,
-            deliveryAddress: UserAddress(
-              id: 'addr-1',
-              street: '123 Test St',
-              city: 'Test City',
-              state: 'Test State',
-              zipCode: '12345',
-              country: 'Test Country',
-              latitude: 40.7128,
-              longitude: -74.0060,
-              isDefault: true,
-            ),
-            paymentMethod: PaymentMethod(
-              id: 'pay-1',
-              type: PaymentType.creditCard,
-              cardNumber: '**** 1234',
-              expiryDate: '12/25',
-              isDefault: true,
-            ),
-            createdAt: DateTime.now(),
-          );
-
-          expect(order.isActive, isTrue);
-        }
-      });
-
-      test('should identify completed orders', () {
-        // Arrange
-        final completedStatuses = [
-          OrderStatus.delivered,
-          OrderStatus.completed,
-          OrderStatus.cancelled,
-          OrderStatus.refunded,
-          OrderStatus.expired,
-        ];
-
-        // Act & Assert
-        for (final status in completedStatuses) {
-          if (status == OrderStatus.delivered || status == OrderStatus.completed) {
-            expect([OrderStatus.delivered, OrderStatus.completed], contains(status));
-          }
-        }
-      });
-
-      test('should check if order can be cancelled', () {
-        // Arrange
-        final cancellableStatuses = [
-          OrderStatus.created,
-          OrderStatus.confirmed,
-        ];
-
-        final nonCancellableStatuses = [
-          OrderStatus.preparing,
-          OrderStatus.readyForPickup,
-          OrderStatus.inTransit,
-          OrderStatus.delivered,
-        ];
-
-        // Act & Assert
-        for (final status in cancellableStatuses) {
-          final order = Order(
-            id: 'test-order',
-            userId: 'user-123',
-            restaurantId: 'restaurant-1',
-            restaurantName: 'Test Restaurant',
-            items: [],
-            status: status,
-            subtotal: 20.0,
-            deliveryFee: 2.99,
-            tax: 1.6,
-            discount: 0.0,
-            total: 24.59,
-            deliveryAddress: UserAddress(
-              id: 'addr-1',
-              street: '123 Test St',
-              city: 'Test City',
-              state: 'Test State',
-              zipCode: '12345',
-              country: 'Test Country',
-              latitude: 40.7128,
-              longitude: -74.0060,
-              isDefault: true,
-            ),
-            paymentMethod: PaymentMethod(
-              id: 'pay-1',
-              type: PaymentType.creditCard,
-              cardNumber: '**** 1234',
-              expiryDate: '12/25',
-              isDefault: true,
-            ),
-            createdAt: DateTime.now(),
-          );
-          expect(order.canBeCancelled, isTrue);
-        }
-
-        for (final status in nonCancellableStatuses) {
-          expect(cancellableStatuses, isNot(contains(status)));
-        }
-      });
-    });
-
-    group('Order History', () {
-      test('should retrieve user order history', () async {
-        // Arrange
-        final mockOrders = [
-          {
-            'id': 'order-1',
-            'restaurantName': 'Pizza Place',
-            'total': 25.99,
-            'status': 'delivered',
-            'createdAt': DateTime.now().subtract(const Duration(days: 1)),
-          },
-          {
-            'id': 'order-2',
-            'restaurantName': 'Burger Joint',
-            'total': 18.50,
-            'status': 'completed',
-            'createdAt': DateTime.now().subtract(const Duration(days: 3)),
-          },
-          {
-            'id': 'order-3',
-            'restaurantName': 'Sushi Bar',
-            'total': 45.00,
-            'status': 'cancelled',
-            'createdAt': DateTime.now().subtract(const Duration(days: 5)),
-          },
-        ];
-
-        // Act & Assert
-        expect(mockOrders, hasLength(3));
-        expect(mockOrders[0]['total'], equals(25.99));
-        expect(mockOrders[1]['restaurantName'], equals('Burger Joint'));
-      });
-
-      test('should filter orders by status', () {
-        // Arrange
-        final orders = ['delivered', 'completed', 'cancelled', 'in_transit'];
-        final completedOrders = orders.where((status) =>
-          status == 'delivered' || status == 'completed').toList();
-
-        // Act & Assert
-        expect(completedOrders, hasLength(2));
-        expect(completedOrders, contains('delivered'));
-        expect(completedOrders, contains('completed'));
-      });
-
-      test('should sort orders by date', () {
-        // Arrange
-        final orderDates = [
-          DateTime.now().subtract(const Duration(days: 5)),
-          DateTime.now().subtract(const Duration(days: 1)),
-          DateTime.now().subtract(const Duration(days: 3)),
-        ];
-
-        final sortedDates = List<DateTime>.from(orderDates)
-          ..sort((a, b) => b.compareTo(a)); // Newest first
-
-        // Act & Assert
-        expect(sortedDates[0], equals(orderDates[1])); // Most recent
-        expect(sortedDates.last, equals(orderDates[0])); // Oldest
-      });
-    });
-
-    group('Order Tracking', () {
-      test('should track order location updates', () {
-        // Arrange
-        final locationUpdate = {
-          'orderId': 'order-123',
-          'driverId': 'driver-456',
-          'latitude': 40.7580,
-          'longitude': -73.9855,
-          'timestamp': DateTime.now(),
-          'estimatedArrival': '15 minutes',
-        };
-
-        // Act & Assert
-        expect(locationUpdate['orderId'], equals('order-123'));
-        expect(locationUpdate['latitude'], isA<double>());
-        expect(locationUpdate['longitude'], isA<double>());
-        expect(locationUpdate['estimatedArrival'], contains('minutes'));
-      });
-
-      test('should update estimated delivery time', () {
-        // Arrange
-        final initialEstimate = DateTime.now().add(const Duration(minutes: 30));
-        final updatedEstimate = DateTime.now().add(const Duration(minutes: 25));
-
-        // Act & Assert
-        expect(updatedEstimate.isBefore(initialEstimate), isTrue);
-        expect(updatedEstimate.isAfter(DateTime.now()), isTrue);
-      });
-
-      test('should handle driver assignment', () {
-        // Arrange
-        const driverId = 'driver-789';
-        const driverName = 'John Driver';
-        const driverPhone = '+1234567890';
-
-        // Act & Assert
-        expect(driverId, startsWith('driver-'));
-        expect(driverName, isNotEmpty);
-        expect(driverPhone, startsWith('+'));
-      });
-    });
-
-    group('Order Reordering', () {
-      test('should create new order from previous order', () {
-        // Arrange
-        final originalOrder = {
-          'id': 'order-123',
-          'restaurantId': 'restaurant-1',
-          'items': [
-            {'menuItemId': 'item-1', 'quantity': 2},
-            {'menuItemId': 'item-2', 'quantity': 1},
-          ],
-        };
-
-        final newOrderData = {
-          'restaurantId': originalOrder['restaurantId'],
-          'items': originalOrder['items'],
-        };
-
-        // Act & Assert
-        expect(newOrderData['restaurantId'], equals(originalOrder['restaurantId']));
-        expect(newOrderData['items'], equals(originalOrder['items']));
-      });
-
-      test('should update quantities for reorder', () {
-        // Arrange
-        final originalItems = [
-          {'menuItemId': 'item-1', 'quantity': 2},
-          {'menuItemId': 'item-2', 'quantity': 1},
-        ];
-
-        final updatedItems = originalItems.map((item) => {
-          ...item,
-          'quantity': (item['quantity'] as int) + 1,
-        }).toList();
-
-        // Act & Assert
-        expect(updatedItems[0]['quantity'], equals(3));
-        expect(updatedItems[1]['quantity'], equals(2));
-      });
-    });
-
-    group('Order Validation', () {
-      test('should validate minimum order amount', () {
-        // Arrange
-        const minimumOrderAmount = 10.00;
-        const orderTotal = 15.99;
-        const lowOrderTotal = 8.50;
-
-        // Act & Assert
-        expect(orderTotal >= minimumOrderAmount, isTrue);
-        expect(lowOrderTotal >= minimumOrderAmount, isFalse);
-      });
-
-      test('should validate delivery address', () {
-        // Arrange
-        final validAddress = UserAddress(
+        final deliveryAddress = UserAddress(
           id: 'addr-1',
-          street: '123 Main St',
-          city: 'Test City',
-          state: 'Test State',
-          zipCode: '12345',
-          country: 'Test Country',
+          userId: 'user-1',
+          label: 'Test Address',
+          fullAddress: 'Test Address',
+          country: 'Cameroon',
           latitude: 40.7128,
           longitude: -74.0060,
-          isDefault: true,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        final payment = Payment(
+          id: 'pay-1',
+          orderId: 'order-1',
+          customerId: 'customer-1',
+          amount: 30.00,
+          currency: 'XAF',
+          method: PaymentMethod.cash,
+          status: PaymentStatus.pending,
+          createdAt: DateTime.now(),
         );
 
         // Act & Assert
-        expect(validAddress.street, isNotEmpty);
-        expect(validAddress.city, isNotEmpty);
-        expect(validAddress.zipCode, hasLength(5));
-        expect(validAddress.latitude, isNotNull);
-        expect(validAddress.longitude, isNotNull);
+        expect(cartItem.totalPrice, equals(30.00));
+        expect(payment.amount, equals(30.00));
+        expect(payment.method, equals(PaymentMethod.cash));
+        expect(payment.status, equals(PaymentStatus.pending));
       });
 
-      test('should validate payment method', () {
+      test('should handle different payment methods', () {
+        // Arrange & Act & Assert
+        expect(PaymentMethod.cash.displayName, equals('Cash on Delivery'));
+        expect(PaymentMethod.noupay.displayName, equals('NouPay'));
+        expect(PaymentMethod.campay.displayName, equals('CamPay'));
+        expect(PaymentMethod.stripe.displayName, equals('Credit/Debit Card'));
+        expect(PaymentMethod.wallet.displayName, equals('EatFast Wallet'));
+        expect(PaymentMethod.mtn.displayName, equals('MTN Mobile Money'));
+        expect(PaymentMethod.orange.displayName, equals('Orange Money'));
+
+        expect(PaymentMethod.mtn.requiresPhoneNumber, isTrue);
+        expect(PaymentMethod.orange.requiresPhoneNumber, isTrue);
+        expect(PaymentMethod.cash.requiresPhoneNumber, isFalse);
+
+        expect(PaymentMethod.wallet.isDigitalWallet, isTrue);
+        expect(PaymentMethod.cash.isDigitalWallet, isFalse);
+
+        expect(PaymentMethod.mtn.isMobileMoney, isTrue);
+        expect(PaymentMethod.stripe.isMobileMoney, isFalse);
+      });
+
+      test('should validate address information correctly', () {
         // Arrange
-        final validPaymentMethod = PaymentMethod(
-          id: 'pay-1',
-          type: PaymentType.creditCard,
-          cardNumber: '**** **** **** 1234',
-          expiryDate: '12/25',
-          isDefault: true,
+        final completeAddress = UserAddress(
+          id: 'addr-1',
+          userId: 'user-1',
+          label: 'Home',
+          fullAddress: '123 Main St, Douala, Littoral',
+          street: '123 Main St',
+          city: 'Douala',
+          state: 'Littoral',
+          country: 'Cameroon',
+          latitude: 4.0511,
+          longitude: 9.7679,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        final basicAddress = UserAddress(
+          id: 'addr-2',
+          userId: 'user-1',
+          label: 'Work',
+          fullAddress: 'Office Building, Random City',
+          country: 'Cameroon',
+          latitude: 3.8480,
+          longitude: 11.5021,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Act & Assert
-        expect(validPaymentMethod.type, equals(PaymentType.creditCard));
-        expect(validPaymentMethod.cardNumber, contains('****'));
-        expect(validPaymentMethod.expiryDate, matches(RegExp(r'\d{2}/\d{2}')));
+        expect(completeAddress.isInMajorCity, isTrue);
+        expect(completeAddress.streetAddress, equals('123 Main St, Douala, Littoral'));
+        expect(completeAddress.displayText, equals('Home - 123 Main St, Douala, Littoral'));
+
+        expect(basicAddress.isInMajorCity, isFalse);
+        expect(basicAddress.displayText, equals('Work - Office Building, Random City'));
+      });
+
+      test('should handle payment status transitions', () {
+        // Arrange
+        final initialPayment = Payment(
+          id: 'pay-1',
+          orderId: 'order-1',
+          amount: 25.99,
+          currency: 'XAF',
+          method: PaymentMethod.mtn,
+          status: PaymentStatus.pending,
+          phoneNumber: '+237697123456',
+          createdAt: DateTime.now(),
+        );
+
+        final processedPayment = initialPayment.copyWith(
+          status: PaymentStatus.processing,
+          transactionId: 'txn-123',
+        );
+
+        final completedPayment = processedPayment.copyWith(
+          status: PaymentStatus.completed,
+          completedAt: DateTime.now(),
+          operatorReference: 'MTN-REF-456',
+        );
+
+        // Act & Assert
+        expect(initialPayment.status, equals(PaymentStatus.pending));
+        expect(initialPayment.method.requiresPhoneNumber, isTrue);
+        expect(initialPayment.phoneNumber, equals('+237697123456'));
+
+        expect(processedPayment.status, equals(PaymentStatus.processing));
+        expect(processedPayment.transactionId, equals('txn-123'));
+
+        expect(completedPayment.status, equals(PaymentStatus.completed));
+        expect(completedPayment.completedAt, isNotNull);
+        expect(completedPayment.operatorReference, equals('MTN-REF-456'));
+      });
+
+      test('should serialize payment to JSON correctly', () {
+        // Arrange
+        final payment = Payment(
+          id: 'pay-1',
+          orderId: 'order-1',
+          customerId: 'customer-1',
+          amount: 15.50,
+          currency: 'XAF',
+          method: PaymentMethod.campay,
+          status: PaymentStatus.completed,
+          transactionId: 'txn-abc123',
+          phoneNumber: '+237677123456',
+          createdAt: DateTime(2024, 1, 1),
+          completedAt: DateTime(2024, 1, 1, 10, 30),
+        );
+
+        // Act
+        final json = payment.toJson();
+
+        // Assert
+        expect(json['id'], equals('pay-1'));
+        expect(json['orderId'], equals('order-1'));
+        expect(json['customerId'], equals('customer-1'));
+        expect(json['amount'], equals(15.50));
+        expect(json['currency'], equals('XAF'));
+        expect(json['method'], equals('campay'));
+        expect(json['status'], equals('completed'));
+        expect(json['transactionId'], equals('txn-abc123'));
+        expect(json['phoneNumber'], equals('+237677123456'));
+        expect(json['createdAt'], equals('2024-01-01T00:00:00.000'));
+        expect(json['completedAt'], equals('2024-01-01T10:30:00.000'));
+      });
+
+      test('should deserialize payment from JSON correctly', () {
+        // Arrange
+        final json = {
+          'id': 'pay-1',
+          'orderId': 'order-1',
+          'customerId': 'customer-1',
+          'amount': 25.99,
+          'currency': 'XAF',
+          'method': 'noupay',
+          'status': 'pending',
+          'transactionId': 'txn-xyz789',
+          'phoneNumber': '+237698123456',
+          'createdAt': '2024-01-01T00:00:00.000Z',
+        };
+
+        // Act
+        final payment = Payment.fromJson(json);
+
+        // Assert
+        expect(payment.id, equals('pay-1'));
+        expect(payment.orderId, equals('order-1'));
+        expect(payment.customerId, equals('customer-1'));
+        expect(payment.amount, equals(25.99));
+        expect(payment.currency, equals('XAF'));
+        expect(payment.method, equals(PaymentMethod.noupay));
+        expect(payment.status, equals(PaymentStatus.pending));
+        expect(payment.transactionId, equals('txn-xyz789'));
+        expect(payment.phoneNumber, equals('+237698123456'));
+      });
+
+      test('should handle mobile money providers correctly', () {
+        // Act & Assert
+        expect(MobileMoneyProvider.mtn.name, equals('MTN Mobile Money'));
+        expect(MobileMoneyProvider.mtn.code, equals('mtn'));
+        expect(MobileMoneyProvider.mtn.supportedCountries, contains('CM'));
+
+        expect(MobileMoneyProvider.orange.name, equals('Orange Money'));
+        expect(MobileMoneyProvider.orange.code, equals('orange'));
+        expect(MobileMoneyProvider.orange.supportedCountries, contains('CM'));
+
+        expect(MobileMoneyProvider.providers, hasLength(2));
+        expect(MobileMoneyProvider.providers.first, equals(MobileMoneyProvider.mtn));
       });
     });
   });

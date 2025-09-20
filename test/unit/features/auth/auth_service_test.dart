@@ -17,14 +17,15 @@ void main() {
           lastName: 'User',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Act & Assert
         expect(expectedUser.email, equals(email));
         expect(expectedUser.role, equals(UserRole.customer));
-        expect(expectedUser.isEmailVerified, isTrue);
+        expect(expectedUser.emailVerified, isTrue);
       });
 
       test('should reject invalid credentials', () async {
@@ -143,8 +144,9 @@ void main() {
           lastName: 'User',
           role: UserRole.customer,
           status: UserStatus.active,
-          isEmailVerified: true,
+          emailVerified: true,
           createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         );
 
         // Act & Assert
