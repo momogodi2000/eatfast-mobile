@@ -462,10 +462,10 @@ void main() {
         const errorMessage = 'Email already exists';
 
         when(mockAuthRepository.register(
-          firstName: anyNamed('firstName'),
-          lastName: anyNamed('lastName'),
-          email: anyNamed('email'),
-          password: anyNamed('password'),
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'john@example.com',
+          password: 'password123',
         )).thenThrow(Exception(errorMessage));
 
         // Act
