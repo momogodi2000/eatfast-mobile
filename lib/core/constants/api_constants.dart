@@ -1,5 +1,5 @@
 class ApiConstants {
-  // Base URL for API requests - using the provided render URL (standardized)
+  // Base URL for API requests - using the provided render URL (st/andardized)
   static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api/v1';
   
   // Timeout configurations
