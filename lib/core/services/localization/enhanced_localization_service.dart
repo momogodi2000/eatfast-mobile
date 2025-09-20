@@ -266,13 +266,13 @@ class EnhancedLocalizationService {
 
   /// Get localized day name
   String getDayName(int weekday) {
-    final key = 'day_${weekday}';
+    final key = 'day_$weekday';
     return getString(key);
   }
 
   /// Get localized month name
   String getMonthName(int month) {
-    final key = 'month_${month}';
+    final key = 'month_$month';
     return getString(key);
   }
 

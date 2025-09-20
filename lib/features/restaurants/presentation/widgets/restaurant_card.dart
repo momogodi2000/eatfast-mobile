@@ -279,7 +279,7 @@ class RestaurantCard extends StatelessWidget {
         children: [
           // Description
           Text(
-            restaurant.description ?? 'No description available',
+            restaurant.description.isNotEmpty ? restaurant.description : 'No description available',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: DesignTokens.textSecondary,
               height: 1.4,

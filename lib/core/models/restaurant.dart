@@ -1,5 +1,5 @@
-/// Restaurant Model
-/// Core model for restaurant data
+// Restaurant Model
+// Core model for restaurant data
 
 class Restaurant {
   final String id;

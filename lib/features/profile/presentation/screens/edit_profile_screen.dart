@@ -40,7 +40,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   void _loadUserData() {
     final user = ref.read(authProvider).user;
     if (user != null) {
-      _nameController.text = user.name ?? '';
+      _nameController.text = user.name;
       _emailController.text = user.email;
       _phoneController.text = user.phone ?? '';
       _selectedAvatar = user.avatar;
@@ -99,7 +99,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             : null,
                         child: _selectedAvatar == null
                             ? Text(
-                                (user.name ?? user.email)
+                                (user.name.isNotEmpty ? user.name : user.email)
                                     .split(' ')
                                     .map((n) => n.isEmpty ? '' : n[0])
                                     .take(2)

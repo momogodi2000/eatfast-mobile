@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/features/orders/domain/models/order.dart';
 import 'package:eatfast_mobile/features/cart/domain/models/cart.dart';
 import 'package:eatfast_mobile/features/profile/domain/user_address.dart';
 import 'package:eatfast_mobile/features/payments/domain/models/payment.dart';
@@ -101,17 +100,6 @@ void main() {
           addedAt: DateTime.now(),
         );
 
-        final deliveryAddress = UserAddress(
-          id: 'addr-1',
-          userId: 'user-1',
-          label: 'Test Address',
-          fullAddress: 'Test Address',
-          country: 'Cameroon',
-          latitude: 40.7128,
-          longitude: -74.0060,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
 
         final payment = Payment(
           id: 'pay-1',

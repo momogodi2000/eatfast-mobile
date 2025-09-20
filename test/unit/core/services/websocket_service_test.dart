@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:eatfast_mobile/core/services/websocket/websocket_service.dart';
 
 void main() {

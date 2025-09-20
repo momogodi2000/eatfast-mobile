@@ -19,21 +19,21 @@ This guide covers the complete deployment process for the EatFast mobile app acr
 #### Development Environment
 - **API**: `http://localhost:3000/api`
 - **Database**: Local PostgreSQL
-- **Firebase**: `eatfast-dev` project
+- **Backend Web Push**: `eatfast-dev` project
 - **Logging**: Debug level
 - **Analytics**: Disabled
 
 #### Staging Environment
 - **API**: `https://staging-api.eatfast.com/api`
 - **Database**: Staging PostgreSQL
-- **Firebase**: `eatfast-staging` project
+- **Backend Web Push**: `eatfast-staging` project
 - **Logging**: Info level
 - **Analytics**: Test data
 
 #### Production Environment
 - **API**: `https://api.eatfast.com/api`
 - **Database**: Production PostgreSQL
-- **Firebase**: `eatfast-prod` project
+- **Backend Web Push**: `eatfast-prod` project
 - **Logging**: Error level
 - **Analytics**: Enabled
 
@@ -292,7 +292,7 @@ deploy-staging:
   if: github.ref == 'refs/heads/develop'
 
   steps:
-    - name: Build and deploy to Firebase App Distribution
+    - name: Build and deploy to Backend Web Push App Distribution
       run: |
         flutter build apk --flavor staging
         firebase appdistribution:distribute \
@@ -343,12 +343,12 @@ deploy-production:
 
 ### Testing Environments
 
-#### Firebase App Distribution
+#### Backend Web Push App Distribution
 ```bash
-# Install Firebase CLI
+# Install Backend Web Push CLI
 npm install -g firebase-tools
 
-# Login to Firebase
+# Login to Backend Web Push
 firebase login
 
 # Deploy to testers
@@ -370,14 +370,14 @@ firebase appdistribution:distribute app-release.apk \
 
 #### Crash Reporting
 ```dart
-// Firebase Crashlytics setup
+// Backend Web Push Crashlytics setup
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (kReleaseMode) {
     // Initialize crashlytics in release mode
-    await Firebase.initializeApp();
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    await Backend Web Push.initializeApp();
+    FlutterError.onError = Backend Web PushCrashlytics.instance.recordFlutterError;
   }
 
   runApp(MyApp());
@@ -386,14 +386,14 @@ void main() async {
 
 #### Performance Monitoring
 ```dart
-// Firebase Performance setup
+// Backend Web Push Performance setup
 class PerformanceService {
   static void trackScreen(String screenName) {
-    FirebasePerformance.instance.newTrace(screenName).start();
+    Backend Web PushPerformance.instance.newTrace(screenName).start();
   }
 
   static void trackAPICall(String endpoint) {
-    final metric = FirebasePerformance.instance.newHttpMetric(
+    final metric = Backend Web PushPerformance.instance.newHttpMetric(
       endpoint,
       HttpMethod.Get,
     );
@@ -404,17 +404,17 @@ class PerformanceService {
 
 #### Analytics Setup
 ```dart
-// Firebase Analytics
+// Backend Web Push Analytics
 class AnalyticsService {
   static void logEvent(String name, Map<String, dynamic> parameters) {
-    FirebaseAnalytics.instance.logEvent(
+    Backend Web PushAnalytics.instance.logEvent(
       name: name,
       parameters: parameters,
     );
   }
 
   static void setUserId(String userId) {
-    FirebaseAnalytics.instance.setUserId(id: userId);
+    Backend Web PushAnalytics.instance.setUserId(id: userId);
   }
 }
 ```

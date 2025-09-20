@@ -241,17 +241,13 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
           final success = await ref.read(loyaltyProvider.notifier).redeemPoints(request);
           
           if (success && mounted) {
-            if (mounted) {
-              Navigator.of(context).pop();
-              if (mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Récompense ${reward.name} échangée avec succès!'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-              }
-            }
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Récompense ${reward.name} échangée avec succès!'),
+                backgroundColor: Colors.green,
+              ),
+            );
           }
         },
       ),

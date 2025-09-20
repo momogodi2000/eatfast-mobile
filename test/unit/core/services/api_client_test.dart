@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/core/services/api/api_client.dart';
 import 'package:eatfast_mobile/core/constants/api_constants.dart';
 
 // Generate mocks
@@ -11,12 +10,10 @@ import 'api_client_test.mocks.dart';
 
 void main() {
   group('ApiClient Tests', () {
-    late ApiClient apiClient;
     late MockDio mockDio;
 
     setUp(() {
       mockDio = MockDio();
-      apiClient = ApiClient();
       // In a real implementation, you'd inject the mock dio
     });
 

@@ -42,7 +42,7 @@ class SettingsScreen extends ConsumerWidget {
                         : null,
                     child: user.avatar == null
                         ? Text(
-                            (user.name ?? user.email)
+                            (user.name.isNotEmpty ? user.name : user.email)
                                 .split(' ')
                                 .map((n) => n.isEmpty ? '' : n[0])
                                 .take(2)
@@ -62,7 +62,7 @@ class SettingsScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user.name ?? user.email,
+                          user.name.isNotEmpty ? user.name : user.email,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

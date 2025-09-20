@@ -110,7 +110,7 @@ API_BASE_URL=http://localhost:3000/api
 API_VERSION=v1
 API_TIMEOUT=30000
 
-# Firebase Configuration
+# Backend Web Push Configuration
 FIREBASE_PROJECT_ID=eatfast-dev
 FIREBASE_API_KEY=your-dev-api-key
 FIREBASE_APP_ID=your-dev-app-id
@@ -137,7 +137,7 @@ API_BASE_URL=https://staging-api.eatfast.com/api
 API_VERSION=v1
 API_TIMEOUT=30000
 
-# Firebase Configuration
+# Backend Web Push Configuration
 FIREBASE_PROJECT_ID=eatfast-staging
 FIREBASE_API_KEY=your-staging-api-key
 FIREBASE_APP_ID=your-staging-app-id
@@ -164,7 +164,7 @@ API_BASE_URL=https://api.eatfast.com/api
 API_VERSION=v1
 API_TIMEOUT=30000
 
-# Firebase Configuration
+# Backend Web Push Configuration
 FIREBASE_PROJECT_ID=eatfast-prod
 FIREBASE_API_KEY=your-prod-api-key
 FIREBASE_APP_ID=your-prod-app-id
@@ -184,17 +184,17 @@ DEBUG_MODE=false
 LOG_LEVEL=error
 ```
 
-### Firebase Setup
+### Backend Web Push Setup
 
-#### 1. Create Firebase Projects
+#### 1. Create Backend Web Push Projects
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
+1. Go to [Backend Web Push Console](https://console.backend_web_push.google.com/)
 2. Create projects for each environment:
    - `eatfast-dev` (Development)
    - `eatfast-staging` (Staging)
    - `eatfast-prod` (Production)
 
-#### 2. Add Apps to Firebase Projects
+#### 2. Add Apps to Backend Web Push Projects
 
 For each project, add:
 - Android app (`com.eatfast.app.dev`, `com.eatfast.app.staging`, `com.eatfast.app`)
@@ -216,9 +216,9 @@ For each project, add:
 - Download `GoogleService-Info.plist` for each environment
 - Add them to Xcode project with proper targets
 
-#### 4. Enable Firebase Services
+#### 4. Enable Backend Web Push Services
 
-Enable the following services in Firebase Console:
+Enable the following services in Backend Web Push Console:
 - **Authentication** (Email/Password, Google, Facebook)
 - **Firestore Database** (for offline data)
 - **Cloud Storage** (for file uploads)
@@ -554,7 +554,7 @@ flutter pub get
 
 - [Flutter Documentation](https://flutter.dev/docs)
 - [Dart Documentation](https://dart.dev/guides)
-- [Firebase Documentation](https://firebase.google.com/docs)
+- [Backend Web Push Documentation](https://backend_web_push.google.com/docs)
 - [Google Maps Flutter](https://pub.dev/packages/google_maps_flutter)
 
 ### Community Support
@@ -567,7 +567,7 @@ flutter pub get
 
 - [Flutter Inspector](https://flutter.dev/docs/development/tools/flutter-inspector)
 - [Dart DevTools](https://dart.dev/tools/dart-devtools)
-- [Firebase Console](https://console.firebase.google.com/)
+- [Backend Web Push Console](https://console.backend_web_push.google.com/)
 - [Google Cloud Console](https://console.cloud.google.com/)
 
 ---

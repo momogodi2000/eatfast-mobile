@@ -141,8 +141,7 @@ image_picker: ^1.0.7
 image_cropper: ^5.0.1
 
 # Push Notifications
-firebase_core: ^2.31.0
-firebase_messaging: ^14.9.2
+# Removed Firebase dependencies - using backend web push notifications instead
 flutter_local_notifications: ^17.1.2
 
 # Real-time Communication
@@ -163,7 +162,7 @@ flutter_stripe: ^10.1.1
 - Dart 3.8.1+
 - Android Studio / VS Code
 - Google Maps API key
-- Firebase project (for notifications)
+- Backend web push notifications (replaces Firebase)
 
 ### Installation
 1. **Clone the repository**

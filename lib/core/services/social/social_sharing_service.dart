@@ -24,12 +24,12 @@ enum SocialPlatform {
 
 enum ShareContentType {
   restaurant,
-  menu_item,
+  menuItem,
   order,
   promotion,
-  loyalty_achievement,
-  referral_code,
-  app_download
+  loyaltyAchievement,
+  referralCode,
+  appDownload
 }
 
 class SocialSharingService {
@@ -95,7 +95,7 @@ class SocialSharingService {
   }) async {
     try {
       final shareData = ShareContent(
-        type: ShareContentType.menu_item,
+        type: ShareContentType.menuItem,
         title: '$itemName de $restaurantName',
         message: customMessage ??
             'Regardez ce délicieux plat que j\'ai trouvé sur EatFast: $itemName de $restaurantName! 🍽️',
@@ -189,7 +189,7 @@ class SocialSharingService {
   }) async {
     try {
       final shareData = ShareContent(
-        type: ShareContentType.loyalty_achievement,
+        type: ShareContentType.loyaltyAchievement,
         title: 'Nouveau succès débloqué sur EatFast!',
         message: customMessage ??
             'Je viens de débloquer "$achievementTitle" sur EatFast et j\'ai gagné $pointsEarned points! 🏆\n'
@@ -220,7 +220,7 @@ class SocialSharingService {
       final referralData = await _getReferralData();
 
       final shareData = ShareContent(
-        type: ShareContentType.referral_code,
+        type: ShareContentType.referralCode,
         title: 'Rejoignez EatFast avec mon code de parrainage!',
         message: customMessage ??
             'Salut! Je t\'invite à essayer EatFast, la meilleure app de livraison de nourriture! 🍔\n\n'
@@ -250,7 +250,7 @@ class SocialSharingService {
   }) async {
     try {
       final shareData = ShareContent(
-        type: ShareContentType.app_download,
+        type: ShareContentType.appDownload,
         title: 'Téléchargez EatFast - Livraison rapide!',
         message: customMessage ??
             'Découvrez EatFast, l\'app de livraison la plus rapide au Cameroun! 🇨🇲\n\n'

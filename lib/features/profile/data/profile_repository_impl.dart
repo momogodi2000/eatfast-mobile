@@ -111,7 +111,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<bool> setDefaultAddress(String userId, String addressId) async {
     try {
       final response = await _apiClient.patch(
-        '${ApiConstants.defaultAddress}',
+        ApiConstants.defaultAddress,
         data: {
           'userId': userId,
           'addressId': addressId,

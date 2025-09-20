@@ -77,7 +77,7 @@ flutter run
 - **Image Handling**: Cached Network Image
 - **Maps**: Google Maps
 - **Authentication**: JWT + Custom Auth
-- **Push Notifications**: Firebase Cloud Messaging
+- **Push Notifications**: Backend Web Push API
 - **Payments**: Stripe/PayPal Integration
 
 ## 📱 Supported Platforms

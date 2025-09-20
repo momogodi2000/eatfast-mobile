@@ -252,7 +252,7 @@ class _RestaurantFilterBottomSheetState extends State<RestaurantFilterBottomShee
       min: 0,
       max: 5,
       divisions: 10,
-      label: '${_filter.minRating?.toStringAsFixed(1) ?? '0.0'}',
+      label: _filter.minRating?.toStringAsFixed(1) ?? '0.0',
       onChanged: _updateRatingFilter,
     );
   }

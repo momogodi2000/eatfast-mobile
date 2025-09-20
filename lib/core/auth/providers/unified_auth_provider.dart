@@ -1,5 +1,5 @@
-/// Unified Authentication Provider - Backend Aligned
-/// Replaces all duplicate auth providers with single source of truth
+// Unified Authentication Provider - Backend Aligned
+// Replaces all duplicate auth providers with single source of truth
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../services/auth/unified_auth_service.dart';

@@ -519,8 +519,8 @@ void main() {
 ```dart
 class AnalyticsService {
   static void trackEvent(String event, Map<String, dynamic> parameters) {
-    // Firebase Analytics
-    FirebaseAnalytics.instance.logEvent(
+    // Backend Web Push Analytics
+    Backend Web PushAnalytics.instance.logEvent(
       name: event,
       parameters: parameters,
     );
@@ -531,7 +531,7 @@ class AnalyticsService {
 
   static void trackError(Object error, StackTrace stackTrace) {
     // Crashlytics
-    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+    Backend Web PushCrashlytics.instance.recordError(error, stackTrace);
 
     // Sentry
     Sentry.captureException(error, stackTrace: stackTrace);

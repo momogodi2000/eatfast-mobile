@@ -4,7 +4,7 @@
 import 'dart:async';
 // import 'dart:convert'; // Removed unused import
 import 'package:flutter/foundation.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as socket_io;
 import '../../constants/api_constants.dart';
 // import '../../../features/orders/domain/models/order.dart'; // Removed unused import
 
@@ -20,7 +20,7 @@ class WebSocketService {
   static final WebSocketService _instance = WebSocketService._internal();
   factory WebSocketService() => _instance;
 
-  IO.Socket? _socket;
+  socket_io.Socket? _socket;
   SocketConnectionStatus _status = SocketConnectionStatus.disconnected;
   Timer? _heartbeatTimer;
   Timer? _reconnectTimer;
@@ -64,7 +64,7 @@ class WebSocketService {
           .replaceAll('/api/v1', '')
           .replaceAll('/api', '');
 
-      _socket = IO.io(baseUrl, IO.OptionBuilder()
+      _socket = socket_io.io(baseUrl, socket_io.OptionBuilder()
           .setTransports(['websocket'])
           .enableAutoConnect()
           .enableReconnection()

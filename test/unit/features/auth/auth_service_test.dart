@@ -1,6 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
 import 'package:eatfast_mobile/core/auth/models/app_user.dart';
 
 void main() {
@@ -9,7 +7,6 @@ void main() {
       test('should login with valid credentials', () async {
         // Arrange
         const email = 'test@example.com';
-        const password = 'password123';
         final expectedUser = AppUser(
           id: 'user-123',
           email: email,

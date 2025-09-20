@@ -268,7 +268,7 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            restaurant.description ?? 'Aucune description disponible',
+            restaurant.description.isNotEmpty ? restaurant.description : 'Aucune description disponible',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               height: 1.5,
             ),
@@ -511,40 +511,6 @@ class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen>
   }
 
   /// Parse opening hours from map structure to list of strings
-  List<String> _parseOpeningHoursFromMap(Map<String, dynamic> openingHours) {
-    final List<String> result = [];
-    final Map<String, String> dayTranslations = {
-      'monday': 'Lundi',
-      'tuesday': 'Mardi',
-      'wednesday': 'Mercredi',
-      'thursday': 'Jeudi',
-      'friday': 'Vendredi',
-      'saturday': 'Samedi',
-      'sunday': 'Dimanche',
-    };
-    
-    openingHours.forEach((day, hours) {
-      if (hours is Map<String, dynamic>) {
-        final bool isClosed = hours['isClosed'] == true;
-        if (isClosed) {
-          result.add('${dayTranslations[day] ?? day}: Fermé');
-        } else {
-          final String open = hours['open'] ?? '--:--';
-          final String close = hours['close'] ?? '--:--';
-          result.add('${dayTranslations[day] ?? day}: $open - $close');
-        }
-      } else if (hours is String) {
-        // Handle case where hours might be a simple string
-        result.add('${dayTranslations[day] ?? day}: $hours');
-      }
-    });
-    
-    if (result.isEmpty) {
-      return ['Information non disponible'];
-    }
-    
-    return result;
-  }
 
   Widget _buildInfoSection(String title, List<String> items) {
     return Column(

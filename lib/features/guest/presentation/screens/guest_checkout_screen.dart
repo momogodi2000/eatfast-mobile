@@ -38,7 +38,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
   final GuestService _guestService = GuestService();
 
   PaymentMethod _selectedPaymentMethod = PaymentMethod.cash;
-  double _deliveryFee = 0.0;
+  final double _deliveryFee = 0.0;
   bool _isLoading = false;
   bool _agreedToTerms = false;
   String? _currentSessionId;

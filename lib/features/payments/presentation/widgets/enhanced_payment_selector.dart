@@ -95,8 +95,7 @@ class _EnhancedPaymentSelectorState extends State<EnhancedPaymentSelector> {
         ),
         const SizedBox(height: 16),
         ..._paymentMethods!
-            .map((method) => _buildPaymentMethodTile(method))
-            .toList(),
+            .map((method) => _buildPaymentMethodTile(method)),
 
         // Show phone number input for methods that require it
         if (widget.selectedMethod?.requiresPhoneNumber == true) ...[
