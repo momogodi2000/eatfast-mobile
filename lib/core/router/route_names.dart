@@ -26,4 +26,8 @@ class RouteNames {
   static const String careers = '/careers';
   static const String settings = '/settings';
   static const String languageSettings = '/language-settings';
+  static const String guestLanding = '/guest-landing';
+  static const String guestRestaurants = '/guest-restaurants';
+  static const String guestCheckout = '/guest-checkout';
+  static const String promotions = '/promotions';
 }

@@ -97,7 +97,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   }
 
   void _exploreAsGuest() {
-    context.go(RouteNames.home);
+    context.go(RouteNames.guestLanding);
   }
 
   @override

@@ -37,6 +37,10 @@ import 'features/profile/presentation/screens/edit_profile_screen.dart';
 import 'features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
 import 'features/driver/presentation/screens/driver_dashboard_screen.dart';
 import 'features/admin/presentation/screens/admin_dashboard_screen.dart';
+import 'features/guest/presentation/screens/guest_landing_screen.dart';
+import 'features/guest/presentation/screens/guest_checkout_screen.dart';
+import 'features/promotions/presentation/screens/promotions_screen.dart';
+import 'features/guest/presentation/screens/guest_restaurant_discovery_screen.dart';
 
 void main() {
   runApp(
@@ -91,6 +95,15 @@ GoRouter _createRouter(AuthState authState) {
         RouteNames.forgotPassword,
         RouteNames.otpVerification,
         RouteNames.aboutUs,
+        RouteNames.contactUs,
+        RouteNames.ourTeam,
+        RouteNames.guestLanding,
+        RouteNames.guestRestaurants,
+        RouteNames.guestCheckout,
+        RouteNames.promotions,
+        RouteNames.restaurants,
+        RouteNames.cart,
+        RouteNames.checkout,
       ];
       
       if (publicRoutes.contains(path)) return null;
@@ -189,7 +202,46 @@ GoRouter _createRouter(AuthState authState) {
       GoRoute(
         path: RouteNames.contactUs,
         builder: (context, state) => const ContactUsScreen(),
-      ),    // Home Screen
+      ),
+
+    // Guest Landing Screen
+    GoRoute(
+      path: RouteNames.guestLanding,
+      builder: (context, state) => const GuestLandingScreen(),
+    ),
+
+    // Guest Restaurant Discovery Screen
+    GoRoute(
+      path: RouteNames.guestRestaurants,
+      builder: (context, state) => const GuestRestaurantDiscoveryScreen(),
+    ),
+
+    // Guest Checkout Screen
+    GoRoute(
+      path: RouteNames.guestCheckout,
+      builder: (context, state) {
+        // Extract parameters from query or use defaults
+        final restaurantId = state.uri.queryParameters['restaurantId'] ?? 'demo_restaurant';
+        final restaurantName = state.uri.queryParameters['restaurantName'] ?? 'Demo Restaurant';
+        final subtotalStr = state.uri.queryParameters['subtotal'] ?? '0.0';
+        final subtotal = double.tryParse(subtotalStr) ?? 0.0;
+
+        return GuestCheckoutScreen(
+          restaurantId: restaurantId,
+          restaurantName: restaurantName,
+          cartItems: const [], // Cart items would be passed through navigation state
+          subtotal: subtotal,
+        );
+      },
+    ),
+
+    // Promotions Screen
+    GoRoute(
+      path: RouteNames.promotions,
+      builder: (context, state) => const PromotionsScreen(),
+    ),
+
+    // Home Screen
     GoRoute(
       path: RouteNames.home,
       builder: (context, state) => const HomeScreen(),

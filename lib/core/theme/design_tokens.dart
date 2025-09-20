@@ -32,6 +32,7 @@ class DesignTokens {
   static const Color backgroundSecondary = Color(0xFFF8F9FA);
   static const Color backgroundTertiary = Color(0xFFF1F3F4);
   static const Color backgroundGrey = Color(0xFFF5F5F5);
+  static const Color backgroundLight = Color(0xFFF8F9FA);
   static const Color surfaceColor = Color(0xFFFFFFFF);
   
   // Shadow Colors

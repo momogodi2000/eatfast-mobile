@@ -1,3 +1,4 @@
+
 /// Guest Checkout Screen
 /// Allows guest users to place orders without registration
 
@@ -6,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/guest_service.dart';
 import '../../domain/models/guest_models.dart';
 import '../../../payments/presentation/widgets/enhanced_payment_selector.dart';
+import '../../../payments/presentation/widgets/card_payment_stub.dart';
 import '../../../payments/domain/models/payment.dart';
 import '../../../../core/config/app_config.dart';
 
@@ -300,6 +302,22 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                 _phoneController.text = phone;
               },
             ),
+
+            // Show card payment stub when stripe is selected
+            if (_selectedPaymentMethod == PaymentMethod.stripe) ...[
+              const SizedBox(height: 16),
+              CardPaymentStub(
+                amount: widget.subtotal + _deliveryFee,
+                currency: AppConfig.currency,
+                onPaymentComplete: (success, error) {
+                  if (success) {
+                    _showSuccessDialog('Card payment processed successfully');
+                  } else {
+                    _showErrorDialog(error ?? 'Card payment failed');
+                  }
+                },
+              ),
+            ],
           ],
         ),
       ),
@@ -510,6 +528,40 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
         });
       }
     }
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: const Icon(Icons.check_circle, color: Colors.green, size: 48),
+        title: const Text('Payment Success'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Continue'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: const Icon(Icons.error, color: Colors.red, size: 48),
+        title: const Text('Payment Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Try Again'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

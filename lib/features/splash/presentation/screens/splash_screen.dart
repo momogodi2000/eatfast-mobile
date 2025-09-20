@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../providers/splash_provider.dart';
 
 /// Splash Screen with animated logo and branding
@@ -120,7 +121,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             if (isFirstTime) {
               context.go(RouteNames.terms);
             } else {
-              context.go(RouteNames.home);
+              // Check if user is authenticated
+              final authState = ref.read(authProvider);
+              if (authState.isAuthenticated) {
+                context.go(RouteNames.home);
+              } else {
+                // Navigate to guest landing for unauthenticated users
+                context.go(RouteNames.guestLanding);
+              }
             }
           }
         });
