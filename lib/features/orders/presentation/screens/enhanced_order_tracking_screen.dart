@@ -1,6 +1,3 @@
-/// Enhanced Order Tracking Screen with Real-time Updates
-/// Supports both guest and authenticated user orders
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;

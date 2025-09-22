@@ -276,13 +276,13 @@ void main() {
 
     testWidgets('should show/hide password visibility', (WidgetTester tester) async {
       // Arrange
+      bool isPasswordVisible = false;
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
             home: Scaffold(
               body: StatefulBuilder(
                 builder: (context, setState) {
-                  bool isPasswordVisible = false;
                   return Column(
                     children: [
                       TextField(

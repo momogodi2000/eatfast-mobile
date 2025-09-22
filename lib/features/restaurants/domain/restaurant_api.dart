@@ -1,5 +1,3 @@
-/// Restaurant API models and data classes
-
 class RestaurantReview {
   final String id;
   final String userId;

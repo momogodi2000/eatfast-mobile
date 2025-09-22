@@ -1,6 +1,3 @@
-/// Enhanced Payment Selector with Failover Support
-/// Shows all payment methods with gateway information and failover status
-
 import 'package:flutter/material.dart';
 import '../../domain/models/payment.dart' as domain;
 import '../../../../core/services/payment/unified_payment_service.dart' as service;

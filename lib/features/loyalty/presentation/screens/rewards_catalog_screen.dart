@@ -237,12 +237,14 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
         reward: reward,
         availablePoints: availablePoints,
         onRedeem: () async {
+          final navigator = Navigator.of(context);
+          final messenger = ScaffoldMessenger.of(context);
           final request = LoyaltyRedemptionRequest(rewardId: reward.id);
           final success = await ref.read(loyaltyProvider.notifier).redeemPoints(request);
           
           if (success && mounted) {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
+            navigator.pop();
+            messenger.showSnackBar(
               SnackBar(
                 content: Text('Récompense ${reward.name} échangée avec succès!'),
                 backgroundColor: Colors.green,

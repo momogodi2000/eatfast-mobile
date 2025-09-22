@@ -299,7 +299,7 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
   }
 
   Future<void> _refreshOrders() async {
-    ref.refresh(liveOrdersProvider(widget.restaurantId));
+    final _ = ref.refresh(liveOrdersProvider(widget.restaurantId));
   }
 
   void _showOrderDetail(LiveOrder order) {

@@ -1,6 +1,3 @@
-/// Unified Profile Repository - Backend Aligned
-/// Consolidates all profile functionality and aligns with backend API
-
 import 'dart:io';
 import 'package:dio/dio.dart';
 import '../../../core/services/api/api_client.dart';

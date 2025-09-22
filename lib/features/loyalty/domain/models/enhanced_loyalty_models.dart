@@ -1,6 +1,3 @@
-/// Enhanced Loyalty Models for EatFast
-/// Comprehensive models for the loyalty program system
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'enhanced_loyalty_models.freezed.dart';

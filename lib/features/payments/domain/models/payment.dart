@@ -1,6 +1,3 @@
-/// Comprehensive payment models for EatFast
-/// Supports all payment methods available in the backend
-
 enum PaymentMethod {
   cash('cash', 'Cash on Delivery'),
   noupay('noupay', 'NouPay'),

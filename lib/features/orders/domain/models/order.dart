@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import '../../../cart/domain/models/cart.dart';
 import '../../../profile/domain/models.dart';
 import '../../../profile/domain/user_address.dart';

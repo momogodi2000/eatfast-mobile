@@ -1,5 +1,3 @@
-/// Restaurant review domain model
-
 class RestaurantReview {
   final String id;
   final String userId;

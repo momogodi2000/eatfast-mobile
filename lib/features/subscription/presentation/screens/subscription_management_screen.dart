@@ -235,9 +235,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          subscription.nextBillingDate != null
-                              ? _formatDate(subscription.nextBillingDate!)
-                              : 'N/A',
+                          _formatDate(subscription.nextBillingDate),
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w500,
                           ),
@@ -440,22 +438,18 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
               ],
             ),
             const SizedBox(height: 12),
-            if (subscription.nextBillingDate != null) ...[
-              Text(
-                'Votre abonnement sera renouvelé le ${_formatDate(subscription.nextBillingDate!)}',
-                style: Theme.of(context).textTheme.bodyMedium,
+            Text(
+              'Votre abonnement sera renouvelé le ${_formatDate(subscription.nextBillingDate)}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Montant: ${subscription.plan.price.toStringAsFixed(0)} XAF',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Montant: ${subscription.plan.price.toStringAsFixed(0)} XAF',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ] else ...[
-              const Text('Aucune facturation programmée'),
-            ],
+            ),
           ],
         ),
       ),

@@ -114,6 +114,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 title: const Text('Appareil photo'),
                 onTap: () async {
                   Navigator.of(context).pop();
+                  final messenger = ScaffoldMessenger.of(context);
                   try {
                     final XFile? image = await _imagePicker.pickImage(
                       source: ImageSource.camera,
@@ -127,16 +128,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                     }
                   } catch (e) {
                     if (mounted) {
-                      if (mounted) {
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Erreur de capture d\'image: $e'),
-                              backgroundColor: DesignTokens.errorColor,
-                            ),
-                          );
-                        }
-                      }
+                      messenger.showSnackBar(
+                        SnackBar(
+                          content: Text('Erreur de capture d\'image: $e'),
+                          backgroundColor: DesignTokens.errorColor,
+                        ),
+                      );
                     }
                   }
                 },

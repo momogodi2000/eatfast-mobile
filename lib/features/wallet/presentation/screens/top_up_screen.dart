@@ -332,19 +332,17 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
     
     if (success && mounted) {
       // Show success dialog
-      if (mounted) {
-        if (mounted) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => AlertDialog(
-              title: const Text('Recharge Initiée'),
-              content: const Text(
-                'Votre demande de recharge a été initiée avec succès. '
-                'Vous recevrez une notification de confirmation.',
-              ),
-              actions: [
-              TextButton(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: const Text('Recharge Initiée'),
+          content: const Text(
+            'Votre demande de recharge a été initiée avec succès. '
+            'Vous recevrez une notification de confirmation.',
+          ),
+          actions: [
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
                 Navigator.of(context).pop(); // Close top-up screen
@@ -360,8 +358,6 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
           ],
         ),
       );
-        }
-      }
     }
   }
 }

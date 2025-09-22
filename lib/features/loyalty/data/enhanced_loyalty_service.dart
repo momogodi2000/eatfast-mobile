@@ -1,6 +1,3 @@
-/// Enhanced Loyalty Service for EatFast
-/// Integrates with backend loyalty system for comprehensive rewards management
-
 import 'package:flutter/foundation.dart';
 import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';

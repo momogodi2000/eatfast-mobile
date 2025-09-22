@@ -1,6 +1,3 @@
-/// Profile Repository Interface
-/// Defines contract for profile data operations
-
 import '../../../core/auth/models/app_user.dart';
 
 abstract class ProfileRepository {
