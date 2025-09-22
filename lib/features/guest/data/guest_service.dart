@@ -3,10 +3,12 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/services/api/api_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../domain/models/guest_models.dart';
 import '../../../core/services/payment/unified_payment_service.dart';
+import '../../../features/payments/domain/models/payment.dart' as domain;
 
 class GuestService {
   static final GuestService _instance = GuestService._internal();
@@ -14,16 +16,29 @@ class GuestService {
 
   final ApiClient _apiClient = ApiClient();
   final UnifiedPaymentService _paymentService = UnifiedPaymentService();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   GuestService._internal();
 
   /// Initialize guest session
   Future<String> initializeGuestSession() async {
     try {
+      // Check if we already have a valid session
+      final existingSessionId = await _secureStorage.read(key: 'guest_session_id');
+      if (existingSessionId != null) {
+        return existingSessionId;
+      }
+
       final response = await _apiClient.post(ApiConstants.guestSession);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return response.data['sessionId'] as String;
+        final sessionId = response.data['sessionId'] as String;
+
+        // Store session ID securely
+        await _secureStorage.write(key: 'guest_session_id', value: sessionId);
+        await _apiClient.setGuestSession(sessionId);
+
+        return sessionId;
       } else {
         throw GuestException(
           'Failed to initialize guest session: ${response.statusMessage}',
@@ -141,7 +156,7 @@ class GuestService {
   Future<Map<String, dynamic>> getCartContents(String sessionId) async {
     try {
       final response = await _apiClient.get(
-        ApiConstants.guestCartItems,
+        ApiConstants.guestCart,
         queryParameters: {'sessionId': sessionId},
       );
 
@@ -222,11 +237,12 @@ class GuestService {
       if (orderRequest.paymentMethod != 'cash') {
         try {
           final paymentMethod = _convertPaymentMethod(orderRequest.paymentMethod);
+          final servicePaymentMethod = _convertToServicePaymentMethod(paymentMethod);
 
           final paymentResult = await _paymentService.processPayment(
             orderId: orderId,
             amount: orderData['totalAmount'] as double,
-            method: paymentMethod,
+            method: servicePaymentMethod,
             phoneNumber: orderRequest.guestPhone,
             currency: 'XAF',
             metadata: {
@@ -373,29 +389,51 @@ class GuestService {
     return true;
   }
 
-  /// Convert payment method string to PaymentMethod enum
-  PaymentMethod _convertPaymentMethod(String paymentMethod) {
+  /// Convert domain PaymentMethod to service PaymentMethod
+  PaymentMethod _convertToServicePaymentMethod(domain.PaymentMethod method) {
+    switch (method) {
+      case domain.PaymentMethod.cash:
+        return PaymentMethod.cash;
+      case domain.PaymentMethod.campay:
+        return PaymentMethod.campay;
+      case domain.PaymentMethod.noupay:
+        return PaymentMethod.noupay;
+      case domain.PaymentMethod.stripe:
+        return PaymentMethod.stripe;
+      case domain.PaymentMethod.wallet:
+        return PaymentMethod.wallet;
+      case domain.PaymentMethod.mtn:
+        return PaymentMethod.mtn;
+      case domain.PaymentMethod.orange:
+        return PaymentMethod.orange;
+      default:
+        throw UnsupportedError('Unsupported payment method: $method');
+    }
+  }
+
+  /// Convert payment method string to domain PaymentMethod enum
+  domain.PaymentMethod _convertPaymentMethod(String paymentMethod) {
     switch (paymentMethod.toLowerCase()) {
       case 'cash':
-        return PaymentMethod.cash;
+        return domain.PaymentMethod.cash;
       case 'campay':
-        return PaymentMethod.campay;
+        return domain.PaymentMethod.campay;
       case 'noupay':
       case 'nopia':
-        return PaymentMethod.noupay;
+        return domain.PaymentMethod.noupay;
       case 'stripe':
       case 'card':
-        return PaymentMethod.stripe;
+        return domain.PaymentMethod.stripe;
       case 'mtn':
       case 'mtn_money':
-        return PaymentMethod.mtn;
+        return domain.PaymentMethod.mtn;
       case 'orange':
       case 'orange_money':
-        return PaymentMethod.orange;
+        return domain.PaymentMethod.orange;
       case 'wallet':
-        return PaymentMethod.wallet;
+        return domain.PaymentMethod.wallet;
       default:
-        return PaymentMethod.cash;
+        return domain.PaymentMethod.cash;
     }
   }
 

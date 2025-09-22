@@ -33,12 +33,20 @@ class ApiClient {
         if (token != null) {
           options.headers['Authorization'] = 'Bearer $token';
         }
-        
+
+        // Add guest session header if available and no auth token
+        if (token == null) {
+          final guestSessionId = await _storage.read(key: 'guest_session_id');
+          if (guestSessionId != null) {
+            options.headers['X-Guest-Session'] = guestSessionId;
+          }
+        }
+
         // Add mobile-specific headers
         options.headers['X-Device-Type'] = 'flutter_mobile';
         options.headers['X-App-Version'] = '1.0.0';
         options.headers['X-Platform'] = 'mobile';
-        
+
         return handler.next(options);
       },
       
@@ -189,5 +197,27 @@ class ApiClient {
 
   void clearAuthToken() {
     dio.options.headers.remove('Authorization');
+  }
+
+  // Guest session management methods
+  Future<void> setGuestSession(String sessionId) async {
+    await _storage.write(key: 'guest_session_id', value: sessionId);
+  }
+
+  Future<String?> getGuestSession() async {
+    return await _storage.read(key: 'guest_session_id');
+  }
+
+  Future<void> clearGuestSession() async {
+    await _storage.delete(key: 'guest_session_id');
+  }
+
+  // Clear all authentication data (for logout)
+  Future<void> clearAllAuth() async {
+    await _storage.delete(key: 'auth_token');
+    await _storage.delete(key: 'refresh_token');
+    await _storage.delete(key: 'user_data');
+    await _storage.delete(key: 'guest_session_id');
+    clearAuthToken();
   }
 }

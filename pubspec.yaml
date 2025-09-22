@@ -102,8 +102,17 @@ dependencies:
   
   # Payment
   flutter_stripe: ^10.1.1
-  
-  
+
+  # AI & Speech
+  speech_to_text: ^7.3.0
+
+  # Charts & Analytics
+  fl_chart: ^0.68.0
+
+  # QR Code
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^5.0.1
+
   # Icons
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.7.0

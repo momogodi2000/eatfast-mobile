@@ -1,12 +1,11 @@
 /// Real-time WebSocket Service for EatFast
 /// Handles live order tracking, driver location updates, and real-time notifications
+library;
 
 import 'dart:async';
-// import 'dart:convert'; // Removed unused import
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as socket_io;
 import '../../constants/api_constants.dart';
-// import '../../../features/orders/domain/models/order.dart'; // Removed unused import
 
 enum SocketConnectionStatus {
   disconnected,

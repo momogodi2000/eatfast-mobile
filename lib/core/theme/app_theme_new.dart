@@ -1,5 +1,6 @@
 /// EatFast App Theme System - Completely Regenerated
 /// Comprehensive theme system with modern Material 3 design
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

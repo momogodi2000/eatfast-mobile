@@ -1,6 +1,7 @@
 /// Unified Authentication Service - Backend Aligned
 /// Consolidates all authentication functionality from duplicated services
 /// Mirrors the backend authentication endpoints exactly
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

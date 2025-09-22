@@ -1,5 +1,6 @@
 /// Push Notification Service for EatFast
 /// Integrates with backend notification service using web push (no Firebase)
+library;
 
 import 'dart:async';
 import 'dart:convert';

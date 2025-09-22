@@ -1,6 +1,7 @@
 /// Live Data Service
 /// Replaces all mock data with real API calls to the backend
 /// Centralizes data fetching and caching logic
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';

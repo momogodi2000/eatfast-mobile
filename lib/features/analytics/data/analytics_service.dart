@@ -1,5 +1,6 @@
 /// Advanced Analytics Service for EatFast
 /// Comprehensive analytics and reporting system
+library;
 
 import 'package:flutter/foundation.dart';
 import '../../../core/services/api/api_client.dart';

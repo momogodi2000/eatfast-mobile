@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/payment.dart';
 
 /// Card Payment Stub for Testing
 /// Provides a simple test interface for card payments before gateway integration

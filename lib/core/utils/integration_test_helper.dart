@@ -1,6 +1,7 @@
 /// Integration Test Helper
 /// Comprehensive testing utilities for validating complete user journeys
 /// Tests all flows: Guest → Customer → Restaurant Owner → Delivery Agent → Admin
+library;
 
 import 'package:flutter/foundation.dart';
 import '../services/api/live_data_service.dart';

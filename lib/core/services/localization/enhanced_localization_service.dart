@@ -1,5 +1,6 @@
 /// Enhanced Localization Service for EatFast
 /// Comprehensive multi-language support with dynamic content and RTL support
+library;
 
 import 'dart:convert';
 import 'dart:ui';

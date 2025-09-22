@@ -1,6 +1,6 @@
 class ApiConstants {
-  // Base URL for API requests - using the provided render URL (st/andardized)
-  static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api/v1';
+  // Base URL for API requests - local development
+  static const String baseUrl = 'http://localhost:3000/api/v1';
   
   // Timeout configurations
   static const Duration connectTimeout = Duration(seconds: 30);
@@ -26,15 +26,17 @@ class ApiConstants {
   static const String oauthGoogle = '/oauth/google';
   static const String oauthApple = '/oauth/apple';
   
-  // Guest endpoints - matching backend exactly (public routes)
-  static const String guestSession = '/public/guest/session';
-  static const String guestRestaurants = '/public/restaurants';
-  static const String guestMenu = '/public/restaurants/{id}/menu';
-  static const String guestCart = '/public/guest/cart';
-  static const String guestCartAdd = '/public/guest/cart/add';
-  static const String guestCartItems = '/public/guest/cart/items';
-  static const String guestInfo = '/public/guest/info';
-  static const String guestOrders = '/public/guest/orders';
+  // Guest endpoints - matching backend exactly (/guest/* routes)
+  static const String guestSession = '/guest/session';
+  static const String guestRestaurants = '/guest/restaurants';
+  static const String guestMenu = '/guest/restaurants/{restaurantId}/menu';
+  static const String guestCart = '/guest/cart';
+  static const String guestCartAdd = '/guest/cart/add';
+  static const String guestCartUpdate = '/guest/cart/items/{itemId}';
+  static const String guestCartRemove = '/guest/cart/items/{itemId}';
+  static const String guestInfo = '/guest/info';
+  static const String guestOrders = '/guest/orders';
+  static const String guestCheckout = '/guest/checkout';
   
   // Client endpoints (authenticated users)
   static const String clientProfile = '/client/profile';
@@ -51,11 +53,12 @@ class ApiConstants {
   static const String changePassword = '/client/profile/password';
   static const String deleteAccount = '/client/profile';
   
-  // Payment endpoints
-  static const String createPaymentIntent = '/payments/create-intent';
-  static const String confirmPayment = '/payments/confirm';
-  static const String processMobilePayment = '/payments/mobile';
-  static const String paymentStatus = '/payments/status';
+  // Payment endpoints - matching backend exactly
+  static const String createPaymentIntent = '/payments/process';
+  static const String confirmPayment = '/payments/{paymentId}/verify';
+  static const String paymentStatus = '/payments/{paymentId}/status';
+  static const String paymentMethodsList = '/payments/methods';
+  static const String paymentProviders = '/payments/providers';
   
   // Restaurant endpoints - matching backend exactly
   static const String restaurants = '/public/restaurants'; // Public restaurant browsing
@@ -68,7 +71,6 @@ class ApiConstants {
   
   // Payment endpoints - matching backend exactly
   static const String payments = '/payments';
-  static const String paymentMethods = '/client/payment-methods';
   static const String paymentCampayInitiate = '/payments/campay/initiate';
   static const String paymentCampayConfirm = '/payments/campay/confirm';
   static const String paymentNoupayInitiate = '/payments/noupay/initiate';
@@ -153,11 +155,14 @@ class ApiConstants {
   static const String socialPlatforms = '/shared/mvp/social/platforms';
 
   static const String users = '/users';
-  
+
   // Additional guest endpoints
   static const String guestOrderTracking = '/public/guest/orders/{id}/track';
   static const String guestDeliveryFee = '/public/guest/delivery-fee/{restaurantId}';
   static const String guestConvert = '/public/guest/orders/{id}/convert';
+
+  // Payment methods endpoints (getter for backward compatibility)
+  static String get paymentMethods => '/client/payment-methods';
   
   // Utility method to replace path parameters
   static String replacePathParams(String endpoint, Map<String, String> params) {

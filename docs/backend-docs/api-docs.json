@@ -1,0 +1,934 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EatFast Backend API",
+    "description": "Comprehensive food delivery platform API for Cameroon market",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EatFast Support",
+      "email": "tech@eatfast.cm",
+      "url": "https://eatfast.cm"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000/api/v1",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.eatfast.cm/api/v1",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique user identifier"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User email address"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User phone number"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User first name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User last name"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["customer", "restaurant_owner", "delivery_agent", "admin", "guest"],
+            "description": "User role"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "suspended", "pending", "inactive"],
+            "description": "User account status"
+          },
+          "city": {
+            "type": "string",
+            "enum": ["Yaoundé", "Douala", "Bafoussam", "Bamenda", "Autre"],
+            "description": "User city"
+          },
+          "language": {
+            "type": "string",
+            "enum": ["fr", "en"],
+            "description": "Preferred language"
+          },
+          "loyalty_points": {
+            "type": "integer",
+            "description": "User loyalty points"
+          },
+          "total_orders": {
+            "type": "integer",
+            "description": "Total orders placed"
+          },
+          "total_spent": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total amount spent"
+          },
+          "isGuest": {
+            "type": "boolean",
+            "description": "Whether user is a guest"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": ["id", "email", "role", "status"]
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique order identifier"
+          },
+          "customer_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Customer who placed the order"
+          },
+          "restaurant_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Restaurant fulfilling the order"
+          },
+          "driver_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Driver assigned to delivery"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["created", "confirmed", "preparing", "ready_for_pickup", "in_transit", "delivered", "cancelled"],
+            "description": "Current order status"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "enum": ["cash", "noupay", "campay", "stripe", "wallet"],
+            "description": "Payment method used"
+          },
+          "paymentStatus": {
+            "type": "string",
+            "enum": ["pending", "paid", "failed", "refunded"],
+            "description": "Payment processing status"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Order subtotal before fees"
+          },
+          "deliveryFee": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Delivery fee"
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Total order amount"
+          },
+          "currency": {
+            "type": "string",
+            "default": "XAF",
+            "description": "Currency code"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "menu_item_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "integer"
+                },
+                "price": {
+                  "type": "number",
+                  "format": "decimal"
+                },
+                "special_instructions": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Order items"
+          },
+          "deliveryAddress": {
+            "type": "string",
+            "description": "Delivery address"
+          },
+          "specialInstructions": {
+            "type": "string",
+            "description": "Special delivery instructions"
+          },
+          "estimatedDeliveryTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Estimated delivery time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Order creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": ["id", "customer_id", "restaurant_id", "status", "total"]
+      },
+      "Restaurant": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique restaurant identifier"
+          },
+          "owner_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Restaurant owner"
+          },
+          "name": {
+            "type": "string",
+            "description": "Restaurant name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Restaurant description"
+          },
+          "address": {
+            "type": "string",
+            "description": "Restaurant address"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Restaurant phone number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Restaurant email"
+          },
+          "cuisine_type": {
+            "type": "string",
+            "description": "Type of cuisine"
+          },
+          "isOpen": {
+            "type": "boolean",
+            "description": "Whether restaurant is currently open"
+          },
+          "rating": {
+            "type": "number",
+            "format": "decimal",
+            "minimum": 0,
+            "maximum": 5,
+            "description": "Average customer rating"
+          },
+          "total_orders": {
+            "type": "integer",
+            "description": "Total orders fulfilled"
+          },
+          "delivery_time": {
+            "type": "integer",
+            "description": "Average delivery time in minutes"
+          },
+          "delivery_fee": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Delivery fee"
+          },
+          "minimum_order": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Minimum order amount"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "format": "float"
+              },
+              "longitude": {
+                "type": "number",
+                "format": "float"
+              }
+            },
+            "description": "Restaurant location coordinates"
+          },
+          "operating_hours": {
+            "type": "object",
+            "description": "Operating hours by day"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Restaurant creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": ["id", "owner_id", "name", "address", "phone"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if the request was successful"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "code": {
+            "type": "string",
+            "description": "Error code for programmatic handling"
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional error details"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Error timestamp"
+          }
+        },
+        "required": ["success", "error", "code"]
+      },
+      "Success": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if the request was successful"
+          },
+          "data": {
+            "type": "object",
+            "description": "Response data"
+          },
+          "message": {
+            "type": "string",
+            "description": "Success message"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Response timestamp"
+          }
+        },
+        "required": ["success"]
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "description": "Check if the API is running and healthy",
+        "tags": ["Health"],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "API is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register new user",
+        "description": "Create a new user account",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["customer", "restaurant_owner", "delivery_agent"]
+                  },
+                  "city": {
+                    "type": "string",
+                    "enum": ["Yaoundé", "Douala", "Bafoussam", "Bamenda", "Autre"]
+                  }
+                },
+                "required": ["email", "password", "firstName", "lastName", "phone", "role"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "User login",
+        "description": "Authenticate user and return JWT tokens",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/restaurants": {
+      "get": {
+        "summary": "List restaurants",
+        "description": "Get list of available restaurants (public access)",
+        "tags": ["Public"],
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by city"
+          },
+          {
+            "name": "cuisine",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by cuisine type"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Restaurants retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/orders": {
+      "get": {
+        "summary": "Get customer orders",
+        "description": "Retrieve customer's order history",
+        "tags": ["Customer"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["created", "confirmed", "preparing", "ready_for_pickup", "in_transit", "delivered", "cancelled"]
+            },
+            "description": "Filter by order status"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Place new order",
+        "description": "Create a new food order",
+        "tags": ["Customer"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "restaurant_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "menu_item_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "minimum": 1
+                        },
+                        "special_instructions": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "deliveryAddress": {
+                    "type": "string"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "enum": ["cash", "noupay", "campay", "stripe", "wallet"]
+                  },
+                  "specialInstructions": {
+                    "type": "string"
+                  }
+                },
+                "required": ["restaurant_id", "items", "deliveryAddress", "paymentMethod"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid order data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restaurant/orders": {
+      "get": {
+        "summary": "Get restaurant orders",
+        "description": "Retrieve orders for the restaurant",
+        "tags": ["Restaurant"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["created", "confirmed", "preparing", "ready_for_pickup", "in_transit", "delivered", "cancelled"]
+            },
+            "description": "Filter by order status"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Filter by date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - not a restaurant owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/driver/orders": {
+      "get": {
+        "summary": "Get driver orders",
+        "description": "Retrieve orders assigned to the driver",
+        "tags": ["Driver"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["ready_for_pickup", "in_transit", "delivered"]
+            },
+            "description": "Filter by order status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - not a delivery driver",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/dashboard": {
+      "get": {
+        "summary": "Admin dashboard",
+        "description": "Get platform overview and statistics",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - not an admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "Health check endpoints"
+    },
+    {
+      "name": "Authentication",
+      "description": "User authentication and authorization"
+    },
+    {
+      "name": "Public",
+      "description": "Publicly accessible endpoints"
+    },
+    {
+      "name": "Customer",
+      "description": "Customer-specific endpoints"
+    },
+    {
+      "name": "Restaurant",
+      "description": "Restaurant owner endpoints"
+    },
+    {
+      "name": "Driver",
+      "description": "Delivery driver endpoints"
+    },
+    {
+      "name": "Admin",
+      "description": "Administrator endpoints"
+    }
+  ]
+}

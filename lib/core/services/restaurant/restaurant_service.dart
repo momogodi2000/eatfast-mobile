@@ -1,5 +1,6 @@
 /// Restaurant Service - Core business logic for restaurant operations
 /// Provides unified interface for restaurant data and menu management
+library;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/restaurant.dart';

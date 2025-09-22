@@ -160,7 +160,7 @@ class GuestSessionService {
       };
 
       final response = await _apiClient.put(
-        ApiConstants.guestCartItems,
+        ApiConstants.guestCart,
         data: requestData,
       );
 

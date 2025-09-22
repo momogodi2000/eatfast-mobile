@@ -1,6 +1,7 @@
 /// Unified Payment Service - Backend Aligned
 /// Consolidates all payment functionality with proper CamPay->NouPay->Stripe failover
 /// Mirrors exactly the backend payment processing logic
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
