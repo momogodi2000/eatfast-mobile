@@ -1,7 +1,4 @@
 
-/// Guest Checkout Screen
-/// Allows guest users to place orders without registration
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/guest_service.dart';

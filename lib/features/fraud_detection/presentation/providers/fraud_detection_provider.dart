@@ -44,7 +44,7 @@ class FraudDetectionNotifier extends StateNotifier<FraudDetectionState> {
         alerts: alerts,
         isLoading: false,
       );
-    } catch (error, stackTrace) {
+    } catch (error) {
       state = state.copyWith(
         isLoading: false,
         error: error.toString(),

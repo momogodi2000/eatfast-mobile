@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import '../../domain/models/two_factor_auth.dart';
 import '../providers/two_factor_provider.dart';
 import '../widgets/backup_codes_widget.dart';
@@ -526,110 +525,6 @@ class _Advanced2FAScreenState extends ConsumerState<Advanced2FAScreen>
       );
     } catch (error) {
       _showErrorSnackBar(error.toString());
-    }
-  }
-
-  void _regenerateTOTPSecret() async {
-    final confirmed = await _showConfirmationDialog(
-      'Régénérer le secret TOTP',
-      'Cela invalidera votre configuration actuelle. Vous devrez reconfigurer votre application d\'authentification.',
-    );
-    if (confirmed) {
-      try {
-        await ref.read(twoFactorProvider.notifier).regenerateTOTPSecret();
-        _showSuccessSnackBar('Secret TOTP régénéré');
-      } catch (error) {
-        _showErrorSnackBar(error.toString());
-      }
-    }
-  }
-
-  void _showTOTPQRCode() async {
-    final config = ref.read(twoFactorProvider).valueOrNull;
-    if (config?.totpSecret == null) return;
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Code QR TOTP'),
-        content: SizedBox(
-          width: 250,
-          height: 250,
-          child: QrImageView(
-            data: config!.qrCodeUrl!,
-            version: QrVersions.auto,
-            size: 250,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Fermer'),
-          ),
-          TextButton(
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: config.totpSecret!));
-              Navigator.pop(context);
-              _showSuccessSnackBar('Secret copié dans le presse-papiers');
-            },
-            child: const Text('Copier le secret'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _regenerateBackupCodes() async {
-    final confirmed = await _showConfirmationDialog(
-      'Régénérer les codes de secours',
-      'Cela invalidera tous vos codes de secours actuels. Assurez-vous de sauvegarder les nouveaux codes.',
-    );
-    if (confirmed) {
-      try {
-        await ref.read(twoFactorProvider.notifier).regenerateBackupCodes();
-        _showSuccessSnackBar('Codes de secours régénérés');
-      } catch (error) {
-        _showErrorSnackBar(error.toString());
-      }
-    }
-  }
-
-  void _downloadBackupCodes() async {
-    try {
-      await ref.read(twoFactorProvider.notifier).downloadBackupCodes();
-      _showSuccessSnackBar('Codes de secours téléchargés');
-    } catch (error) {
-      _showErrorSnackBar(error.toString());
-    }
-  }
-
-  void _revokeTrustedDevice(String deviceId) async {
-    final confirmed = await _showConfirmationDialog(
-      'Révoquer l\'appareil',
-      'Cet appareil ne sera plus considéré comme de confiance.',
-    );
-    if (confirmed) {
-      try {
-        await ref.read(twoFactorProvider.notifier).revokeTrustedDevice(deviceId);
-        _showSuccessSnackBar('Appareil révoqué');
-      } catch (error) {
-        _showErrorSnackBar(error.toString());
-      }
-    }
-  }
-
-  void _revokeAllTrustedDevices() async {
-    final confirmed = await _showConfirmationDialog(
-      'Révoquer tous les appareils',
-      'Tous les appareils de confiance seront révoqués. Vous devrez confirmer votre identité sur tous vos appareils.',
-    );
-    if (confirmed) {
-      try {
-        await ref.read(twoFactorProvider.notifier).revokeAllTrustedDevices();
-        _showSuccessSnackBar('Tous les appareils révoqués');
-      } catch (error) {
-        _showErrorSnackBar(error.toString());
-      }
     }
   }
 

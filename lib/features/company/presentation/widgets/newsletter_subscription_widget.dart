@@ -1,6 +1,3 @@
-/// Newsletter Subscription Widget for EatFast
-/// Aligns with backend validation schemas and public newsletter endpoints
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/services/api/api_client.dart';

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'driver_earnings.freezed.dart';
 part 'driver_earnings.g.dart';

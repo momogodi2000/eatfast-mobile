@@ -6,14 +6,11 @@ final whatsappRepositoryProvider = Provider<WhatsAppRepository>((ref) {
 });
 
 final whatsappProvider = StateNotifierProvider<WhatsAppNotifier, WhatsAppState>((ref) {
-  final repository = ref.watch(whatsappRepositoryProvider);
-  return WhatsAppNotifier(repository);
+  return WhatsAppNotifier();
 });
 
 class WhatsAppNotifier extends StateNotifier<WhatsAppState> {
-  final WhatsAppRepository _repository;
-
-  WhatsAppNotifier(this._repository) : super(const WhatsAppState());
+  WhatsAppNotifier() : super(const WhatsAppState());
 
   Future<WhatsAppMessage> createMessage({
     required String phoneNumber,

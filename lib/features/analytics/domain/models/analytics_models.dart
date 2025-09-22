@@ -1,6 +1,3 @@
-/// Analytics Models for EatFast
-/// Comprehensive analytics data models aligned with backend
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'analytics_models.freezed.dart';

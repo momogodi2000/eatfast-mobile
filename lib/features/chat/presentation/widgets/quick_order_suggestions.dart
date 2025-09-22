@@ -46,7 +46,7 @@ class QuickOrderSuggestions extends StatelessWidget {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

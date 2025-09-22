@@ -1,6 +1,3 @@
-/// Comprehensive Guest Service
-/// Handles all guest user functionality including ordering, tracking, and conversion
-
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -406,8 +403,6 @@ class GuestService {
         return PaymentMethod.mtn;
       case domain.PaymentMethod.orange:
         return PaymentMethod.orange;
-      default:
-        throw UnsupportedError('Unsupported payment method: $method');
     }
   }
 
