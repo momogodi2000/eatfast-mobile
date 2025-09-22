@@ -332,6 +332,7 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
     
     if (success && mounted) {
       // Show success dialog
+      final navigator = Navigator.of(context);
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -344,8 +345,8 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context).pop(); // Close top-up screen
+                navigator.pop(); // Close dialog
+                navigator.pop(); // Close top-up screen
                 
                 // Refresh wallet data
                 ref.read(walletProvider.notifier).refresh();

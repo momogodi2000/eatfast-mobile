@@ -295,11 +295,7 @@ void main() {
                             icon: Icon(
                               isPasswordVisible ? Icons.visibility_off : Icons.visibility,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                isPasswordVisible = !isPasswordVisible;
-                              });
-                            },
+                            onPressed: () {},
                           ),
                         ),
                       ),
