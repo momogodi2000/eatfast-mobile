@@ -4,11 +4,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'core/constants/app_constants.dart';
 import 'core/router/route_names.dart';
-// import 'core/router/route_guard.dart'; // No longer needed - role routes removed
+import 'core/router/route_guard.dart';
 import 'core/theme/app_theme.dart';
 import 'core/services/localization/language_service.dart';
 import 'core/l10n/app_localizations.dart';
-// import 'core/auth/models/app_user.dart'; // No longer needed - role routes removed
 import 'core/auth/providers/unified_auth_provider.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/legal/presentation/screens/terms_conditions_screen.dart';
@@ -33,10 +32,6 @@ import 'features/settings/presentation/screens/language_settings_screen.dart';
 import 'features/settings/presentation/screens/settings_screen.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
 import 'features/profile/presentation/screens/edit_profile_screen.dart';
-// Role-specific screens - Excluded from mobile UX scope per requirements
-// import 'features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
-// import 'features/driver/presentation/screens/driver_dashboard_screen.dart';
-// import 'features/admin/presentation/screens/admin_dashboard_screen.dart';
 import 'features/guest/presentation/screens/guest_landing_screen.dart';
 import 'features/guest/presentation/screens/guest_checkout_screen.dart';
 import 'features/promotions/presentation/screens/promotions_screen.dart';
@@ -310,26 +305,6 @@ GoRouter _createRouter(AuthState authState) {
         path: RouteNames.settings,
         builder: (context, state) => const SettingsScreen(),
       ),      
-      // Role-specific Dashboard Routes excluded from mobile UX scope per requirements
-      // GoRoute(
-      //   path: '/restaurant-dashboard',
-      //   builder: (context, state) => RestaurantDashboardScreen(
-      //     restaurantId: authState.user?.id ?? 'demo_restaurant',
-      //   ),
-      // ),
-      
-      // GoRoute(
-      //   path: '/driver-dashboard',
-      //   builder: (context, state) => DriverDashboardScreen(
-      //     driverId: authState.user?.id ?? 'demo_driver',
-      //   ),
-      // ),
-      
-      // GoRoute(
-      //   path: '/admin-dashboard',
-      //   builder: (context, state) => const AdminDashboardScreen(),
-      // ),
-      
       // Language Settings
       GoRoute(
         path: RouteNames.languageSettings,
