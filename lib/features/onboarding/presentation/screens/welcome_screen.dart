@@ -5,7 +5,7 @@ import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// Welcome Screen - Final screen after onboarding
-/// Shows welcome message and navigation to authentication
+/// Shows welcome message and auto-redirects to Guest Landing Page
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -100,10 +100,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         _exploreAsGuest();
       }
     });
-  }
-
-  void _navigateToAuth() {
-    context.go(RouteNames.login);
   }
 
   void _exploreAsGuest() {
@@ -268,62 +264,32 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         ),
                       ),
                       
-                      SizedBox(height: screenHeight * 0.08),
-                      
-                      // Action Buttons
+                      // Auto-redirect to Guest Landing in 8 seconds
                       SlideTransition(
                         position: _slideFromBottomAnimation,
-                        child: Column(
-                          children: [
-                            // Primary Action - Sign Up/Login
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: _navigateToAuth,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: DesignTokens.primaryColor,
-                                  foregroundColor: DesignTokens.white,
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: DesignTokens.spaceLG,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                                  ),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Créer mon compte',
-                                      style: TextStyle(
-                                        fontSize: DesignTokens.fontSizeLG,
-                                        fontWeight: DesignTokens.fontWeightSemiBold,
-                                      ),
-                                    ),
-                                    SizedBox(width: DesignTokens.spaceXS),
-                                    Icon(Icons.arrow_forward),
-                                  ],
+                        child: Container(
+                          padding: const EdgeInsets.all(DesignTokens.spaceLG),
+                          decoration: BoxDecoration(
+                            color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.access_time,
+                                color: DesignTokens.primaryColor,
+                              ),
+                              const SizedBox(width: DesignTokens.spaceSM),
+                              Text(
+                                'Redirection automatique vers la découverte...',
+                                style: TextStyle(
+                                  color: DesignTokens.primaryColor,
+                                  fontWeight: DesignTokens.fontWeightMedium,
                                 ),
                               ),
-                            ),
-                            
-                            const SizedBox(height: DesignTokens.spaceMD),
-                            
-                            // Secondary Action - Explore as Guest
-                            SizedBox(
-                              width: double.infinity,
-                              child: OutlinedButton(
-                                onPressed: _exploreAsGuest,
-                                child: const Text(
-                                  'Explorer en tant qu\'invité',
-                                  style: TextStyle(
-                                    fontSize: DesignTokens.fontSizeMD,
-                                    fontWeight: DesignTokens.fontWeightMedium,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

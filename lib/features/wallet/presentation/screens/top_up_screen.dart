@@ -330,34 +330,38 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
 
     final success = await ref.read(topUpProvider.notifier).submitTopUp();
     
-    if (success && mounted) {
-      // Show success dialog
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          title: const Text('Recharge Initiée'),
-          content: const Text(
-            'Votre demande de recharge a été initiée avec succès. '
-            'Vous recevrez une notification de confirmation.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-                Navigator.of(context).pop(); // Close top-up screen
-                
-                // Refresh wallet data
-                ref.read(walletProvider.notifier).refresh();
-                
-                // Reset top-up state
-                ref.read(topUpProvider.notifier).reset();
-              },
-              child: const Text('OK'),
+    if (success) {
+      // Show success dialog - check mounted before using context
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('Recharge Initiée'),
+              content: const Text(
+                'Votre demande de recharge a été initiée avec succès. '
+                'Vous recevrez une notification de confirmation.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close dialog
+                    Navigator.of(context).pop(); // Close top-up screen
+                    
+                    // Refresh wallet data
+                    ref.read(walletProvider.notifier).refresh();
+                    
+                    // Reset top-up state
+                    ref.read(topUpProvider.notifier).reset();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+          );
+        }
+      });
     }
   }
 }
