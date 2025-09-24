@@ -23,6 +23,68 @@ class SettingsScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
+          // Guest Authentication Section
+          if (user == null) ...[
+            Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Bienvenue !',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: DesignTokens.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Connectez-vous pour accéder à toutes les fonctionnalités',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => context.push(RouteNames.login),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: DesignTokens.primaryColor,
+                            foregroundColor: DesignTokens.white,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: const Text('Se connecter'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => context.push(RouteNames.register),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: DesignTokens.primaryColor),
+                            foregroundColor: DesignTokens.primaryColor,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: const Text('S\'inscrire'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+          ],
+
           // User Info Section
           if (user != null)
             Container(

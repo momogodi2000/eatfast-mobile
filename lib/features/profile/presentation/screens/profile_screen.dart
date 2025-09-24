@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/buttons/app_button.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../providers/profile_provider.dart';
 
@@ -163,9 +164,87 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     final authState = ref.watch(authProvider);
 
     if (!authState.isAuthenticated) {
-      return const Scaffold(
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Profil'),
+          elevation: 0,
+        ),
         body: Center(
-          child: Text('Veuillez vous connecter pour accéder au profil'),
+          child: Padding(
+            padding: const EdgeInsets.all(DesignTokens.spaceLG),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.account_circle_outlined,
+                  size: 80,
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.5),
+                ),
+                const SizedBox(height: DesignTokens.spaceLG),
+                const Text(
+                  'Connectez-vous pour accéder à votre profil',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: DesignTokens.spaceMD),
+                const Text(
+                  'Gérez vos commandes, adresses et préférences personnelles',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: DesignTokens.spaceXL),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => context.push(RouteNames.login),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: DesignTokens.primaryColor,
+                      foregroundColor: DesignTokens.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                      ),
+                    ),
+                    child: const Text(
+                      'Se connecter',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: DesignTokens.spaceMD),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () => context.push(RouteNames.register),
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: DesignTokens.primaryColor),
+                      foregroundColor: DesignTokens.primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                      ),
+                    ),
+                    child: const Text(
+                      'Créer un compte',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
