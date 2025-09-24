@@ -29,6 +29,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.initState();
     _initializeAnimations();
     _startAnimations();
+    _startAutoNavigation();
   }
 
   void _initializeAnimations() {
@@ -89,6 +90,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     
     Future.delayed(const Duration(milliseconds: 500), () {
       _slideAnimationController.forward();
+    });
+  }
+
+  void _startAutoNavigation() {
+    // Auto-navigate to guest landing after 8 seconds if user doesn't interact
+    Future.delayed(const Duration(seconds: 8), () {
+      if (mounted) {
+        _exploreAsGuest();
+      }
     });
   }
 

@@ -295,7 +295,9 @@ void main() {
                             icon: Icon(
                               isPasswordVisible ? Icons.visibility_off : Icons.visibility,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() => isPasswordVisible = !isPasswordVisible);
+                            },
                           ),
                         ),
                       ),

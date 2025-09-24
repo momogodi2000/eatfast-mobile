@@ -6,6 +6,7 @@ import '../../../../core/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../widgets/guest_feature_cards.dart';
+import '../../providers/guest_session_provider.dart';
 
 /// Guest Landing Screen - Default page for unauthenticated users
 /// Provides access to restaurant discovery, company info, and guest ordering
@@ -24,7 +25,17 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeGuestSession();
     _getCurrentLocation();
+  }
+
+  Future<void> _initializeGuestSession() async {
+    try {
+      await ref.read(guestSessionProvider.notifier).ensureSession();
+    } catch (e) {
+      // Handle error silently for now - guest can still browse
+      debugPrint('Failed to initialize guest session: $e');
+    }
   }
 
   Future<void> _getCurrentLocation() async {

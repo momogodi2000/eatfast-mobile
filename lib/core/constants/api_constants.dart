@@ -26,17 +26,17 @@ class ApiConstants {
   static const String oauthGoogle = '/oauth/google';
   static const String oauthApple = '/oauth/apple';
   
-  // Guest endpoints - matching backend exactly (/guest/* routes)
-  static const String guestSession = '/guest/session';
-  static const String guestRestaurants = '/guest/restaurants';
-  static const String guestMenu = '/guest/restaurants/{restaurantId}/menu';
-  static const String guestCart = '/guest/cart';
-  static const String guestCartAdd = '/guest/cart/add';
-  static const String guestCartUpdate = '/guest/cart/items/{itemId}';
-  static const String guestCartRemove = '/guest/cart/items/{itemId}';
-  static const String guestInfo = '/guest/info';
-  static const String guestOrders = '/guest/orders';
-  static const String guestCheckout = '/guest/checkout';
+  // Guest endpoints - matching backend exactly (/public/guest/* routes)
+  static const String guestSession = '/public/guest/session';
+  static const String guestRestaurants = '/public/guest/restaurants';
+  static const String guestMenu = '/public/guest/restaurants/{restaurantId}/menu';
+  static const String guestCart = '/public/guest/cart';
+  static const String guestCartAdd = '/public/guest/cart/add';
+  static const String guestCartUpdate = '/public/guest/cart/items/{itemId}';
+  static const String guestCartRemove = '/public/guest/cart/items/{itemId}';
+  static const String guestInfo = '/public/guest/info';
+  static const String guestOrders = '/public/guest/orders';
+  static const String guestCheckout = '/public/guest/checkout';
   
   // Client endpoints (authenticated users)
   static const String clientProfile = '/client/profile';
@@ -54,7 +54,8 @@ class ApiConstants {
   static const String deleteAccount = '/client/profile';
   
   // Payment endpoints - matching backend exactly
-  static const String createPaymentIntent = '/payments/process';
+  static const String createPaymentIntent = '/payments/create-payment-intent';
+  static const String processPayment = '/payments/process';
   static const String confirmPayment = '/payments/{paymentId}/verify';
   static const String paymentStatus = '/payments/{paymentId}/status';
   static const String paymentMethodsList = '/payments/methods';

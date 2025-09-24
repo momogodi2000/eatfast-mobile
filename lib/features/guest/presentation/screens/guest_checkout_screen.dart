@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/guest_service.dart';
 import '../../domain/models/guest_models.dart';
 import '../../../payments/presentation/widgets/enhanced_payment_selector.dart';
-import '../../../payments/presentation/widgets/card_payment_stub.dart';
+import '../../../payments/presentation/widgets/stripe_payment_widget.dart';
 import '../../../payments/domain/models/payment.dart';
 import '../../../../core/config/app_config.dart';
 
@@ -300,12 +300,13 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
               },
             ),
 
-            // Show card payment stub when stripe is selected
+            // Show stripe payment widget when stripe is selected
             if (_selectedPaymentMethod == PaymentMethod.stripe) ...[
               const SizedBox(height: 16),
-              CardPaymentStub(
+              StripePaymentWidget(
                 amount: widget.subtotal + _deliveryFee,
                 currency: AppConfig.currency,
+                orderId: _currentSessionId ?? 'temp-order', // Will be replaced with actual order ID
                 onPaymentComplete: (success, error) {
                   if (success) {
                     _showSuccessDialog('Card payment processed successfully');
