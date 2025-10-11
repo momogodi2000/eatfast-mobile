@@ -63,11 +63,9 @@ class BiometricAuthService {
     }
   }
 
-  /// Setup biometric login
-  Future<bool> setupBiometricLogin({
-    required String email,
-    required String password,
-  }) async {
+  /// Setup biometric login (token-based)
+  /// SECURITY: Uses stored auth tokens instead of credentials
+  Future<bool> setupBiometricLogin() async {
     try {
       // First authenticate with biometrics
       final authenticated = await authenticate(
@@ -78,24 +76,22 @@ class BiometricAuthService {
         return false;
       }
 
-      // Hash the password for secure storage
-      final hashedPassword = _hashPassword(password);
-
-      // Store credentials securely
-      await _secureStorage.storeUserCredentials(
-        email: email,
-        hashedPassword: hashedPassword,
-      );
+      // Verify user has valid tokens before enabling biometric
+      final hasTokens = await _secureStorage.hasValidTokens();
+      if (!hasTokens) {
+        return false;
+      }
 
       // Enable biometric login
       await _secureStorage.setBiometricLoginEnabled(true);
 
       // Store biometric setup data
       final biometricData = {
+        'enabled': true,
         'setupDate': DateTime.now().toIso8601String(),
         'deviceFingerprint': await getDeviceFingerprint(),
       };
-      
+
       await _secureStorage.storeBiometricCredentials(biometricData);
 
       return true;
@@ -104,12 +100,13 @@ class BiometricAuthService {
     }
   }
 
-  /// Authenticate with biometrics and get stored credentials
-  Future<Map<String, String>?> authenticateAndGetCredentials() async {
+  /// Authenticate with biometrics and verify stored tokens
+  /// SECURITY: Returns true if biometric auth succeeds AND valid tokens exist
+  Future<bool> authenticateAndVerifyTokens() async {
     try {
       final isEnabled = await _secureStorage.isBiometricLoginEnabled();
       if (!isEnabled) {
-        return null;
+        return false;
       }
 
       // Authenticate with biometrics
@@ -118,28 +115,21 @@ class BiometricAuthService {
       );
 
       if (!authenticated) {
-        return null;
+        return false;
       }
 
-      // Get stored credentials
-      final credentials = await _secureStorage.getUserCredentials();
-      if (credentials == null) {
-        return null;
-      }
-
-      return {
-        'email': credentials['email'] as String,
-        'hashedPassword': credentials['hashedPassword'] as String,
-      };
+      // Verify stored tokens exist
+      final hasTokens = await _secureStorage.hasValidTokens();
+      return hasTokens;
     } catch (e) {
-      return null;
+      return false;
     }
   }
 
   /// Disable biometric login
   Future<void> disableBiometricLogin() async {
     await _secureStorage.setBiometricLoginEnabled(false);
-    // Note: We don't delete stored credentials in case user wants to re-enable
+    // Note: Tokens remain stored for re-enabling biometric login
   }
 
   /// Generate device fingerprint
@@ -190,6 +180,8 @@ class BiometricAuthService {
   }
 
   /// Hash password for secure storage
+  /// DEPRECATED: Use server-side password verification instead
+  @Deprecated('Password hashing should be done server-side')
   static String _hashPassword(String password) {
     final bytes = utf8.encode(password);
     final digest = sha256.convert(bytes);
@@ -197,6 +189,8 @@ class BiometricAuthService {
   }
 
   /// Verify hashed password
+  /// DEPRECATED: Use server-side password verification instead
+  @Deprecated('Password verification should be done server-side')
   static bool verifyHashedPassword(String password, String hashedPassword) {
     final newHash = _hashPassword(password);
     return newHash == hashedPassword;
@@ -206,9 +200,9 @@ class BiometricAuthService {
   Future<bool> canUseBiometricLogin() async {
     final isAvailableResult = await isAvailable();
     final isEnabled = await _secureStorage.isBiometricLoginEnabled();
-    final hasCredentials = await _secureStorage.getUserCredentials() != null;
-    
-    return isAvailableResult && isEnabled && hasCredentials;
+    final hasTokens = await _secureStorage.hasValidTokens();
+
+    return isAvailableResult && isEnabled && hasTokens;
   }
 
   /// Get user-friendly biometric type string

@@ -6,7 +6,7 @@ import 'core/constants/app_constants.dart';
 import 'core/router/route_names.dart';
 import 'core/router/route_guard.dart';
 import 'core/theme/app_theme.dart';
-import 'core/services/localization/language_service.dart';
+import 'core/l10n/language_provider.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/auth/providers/unified_auth_provider.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
@@ -52,13 +52,13 @@ class EatFastApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLanguage = ref.watch(languageProvider);
     final authState = ref.watch(authProvider);
-    
+
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      locale: currentLanguage.locale,
+      locale: currentLanguage,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

@@ -332,4 +332,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get changeLanguage => 'Changer de langue';
+
+  @override
+  String get selectLanguage => 'Sélectionnez votre langue préférée';
+
+  @override
+  String get appRestartLanguage => 'La langue sera appliquée immédiatement';
 }

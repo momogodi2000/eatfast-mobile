@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/services/localization/language_service.dart';
+import '../../../core/l10n/language_provider.dart';
 import '../../../core/theme/design_tokens.dart';
 
 /// Language selector widget for changing app language
@@ -20,7 +20,12 @@ class LanguageSelector extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLanguage = ref.watch(languageProvider);
     final theme = Theme.of(context);
-    
+
+    final supportedLanguages = [
+      {'locale': const Locale('en', ''), 'name': 'English', 'englishName': 'English', 'flag': '🇺🇸'},
+      {'locale': const Locale('fr', ''), 'name': 'Français', 'englishName': 'French', 'flag': '🇫🇷'},
+    ];
+
     return Card(
       elevation: elevation ?? 0,
       child: Padding(
@@ -38,12 +43,16 @@ class LanguageSelector extends ConsumerWidget {
               ),
               const SizedBox(height: DesignTokens.spaceMD),
             ],
-            ...AppLanguage.values.map((language) {
-              final isSelected = currentLanguage == language;
+            ...supportedLanguages.map((lang) {
+              final locale = lang['locale'] as Locale;
+              final isSelected = currentLanguage.languageCode == locale.languageCode;
               return _LanguageOption(
-                language: language,
+                locale: locale,
+                name: lang['name'] as String,
+                englishName: lang['englishName'] as String,
+                flag: lang['flag'] as String,
                 isSelected: isSelected,
-                onTap: () => ref.read(languageProvider.notifier).changeLanguage(language),
+                onTap: () => ref.read(languageProvider.notifier).changeLanguage(locale),
               );
             }),
           ],
@@ -54,12 +63,18 @@ class LanguageSelector extends ConsumerWidget {
 }
 
 class _LanguageOption extends StatelessWidget {
-  final AppLanguage language;
+  final Locale locale;
+  final String name;
+  final String englishName;
+  final String flag;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _LanguageOption({
-    required this.language,
+    required this.locale,
+    required this.name,
+    required this.englishName,
+    required this.flag,
     required this.isSelected,
     required this.onTap,
   });
@@ -67,7 +82,7 @@ class _LanguageOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Container(
@@ -79,20 +94,20 @@ class _LanguageOption extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            _getFlagEmoji(language),
+            flag,
             style: const TextStyle(fontSize: 16),
           ),
         ),
       ),
       title: Text(
-        language.name,
+        name,
         style: theme.textTheme.bodyLarge?.copyWith(
           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: isSelected ? theme.colorScheme.primary : null,
         ),
       ),
       subtitle: Text(
-        language.englishName,
+        englishName,
         style: theme.textTheme.bodySmall?.copyWith(
           color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
         ),
@@ -110,15 +125,6 @@ class _LanguageOption extends StatelessWidget {
             ),
       onTap: onTap,
     );
-  }
-
-  String _getFlagEmoji(AppLanguage language) {
-    switch (language) {
-      case AppLanguage.english:
-        return '🇺🇸';
-      case AppLanguage.french:
-        return '🇫🇷';
-    }
   }
 }
 
@@ -138,6 +144,17 @@ class LanguageToggleButton extends ConsumerWidget {
     final currentLanguage = ref.watch(languageProvider);
     final theme = Theme.of(context);
 
+    String getFlagEmoji(String languageCode) {
+      switch (languageCode) {
+        case 'en':
+          return '🇺🇸';
+        case 'fr':
+          return '🇫🇷';
+        default:
+          return '🌐';
+      }
+    }
+
     return IconButton(
       onPressed: () => ref.read(languageProvider.notifier).toggleLanguage(),
       tooltip: 'Change Language / Changer de langue',
@@ -146,13 +163,13 @@ class LanguageToggleButton extends ConsumerWidget {
         children: [
           if (showFlag)
             Text(
-              _getFlagEmoji(currentLanguage),
+              getFlagEmoji(currentLanguage.languageCode),
               style: const TextStyle(fontSize: 18),
             ),
           if (showText && showFlag) const SizedBox(width: 4),
           if (showText)
             Text(
-              currentLanguage.code.toUpperCase(),
+              currentLanguage.languageCode.toUpperCase(),
               style: theme.textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -160,15 +177,6 @@ class LanguageToggleButton extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  String _getFlagEmoji(AppLanguage language) {
-    switch (language) {
-      case AppLanguage.english:
-        return '🇺🇸';
-      case AppLanguage.french:
-        return '🇫🇷';
-    }
   }
 }
 

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/services/api/api_client.dart';
-import '../../../../core/error/app_error.dart';
 
 /// Guest session service for managing temporary user sessions
 /// Handles guest session creation, cart management, and order processing
@@ -82,7 +81,7 @@ class GuestSessionService {
       await _secureStorage.write(key: _guestSessionKey, value: session.id);
       await _secureStorage.write(key: _guestDataKey, value: jsonEncode(session.toJson()));
     } catch (e) {
-      throw CacheException('Failed to update guest session: $e');
+      rethrow;
     }
   }
 
@@ -183,7 +182,7 @@ class GuestSessionService {
       await _secureStorage.delete(key: _guestSessionKey);
       await _secureStorage.delete(key: _guestDataKey);
     } catch (e) {
-      throw CacheException('Failed to clear guest session: $e');
+      rethrow;
     }
   }
 

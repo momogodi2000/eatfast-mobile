@@ -149,6 +149,8 @@ abstract class AppLocalizations {
   String get english;
   String get french;
   String get changeLanguage;
+  String get selectLanguage;
+  String get appRestartLanguage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
