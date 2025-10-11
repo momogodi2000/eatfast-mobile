@@ -132,16 +132,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     final authState = ref.watch(authProvider);
     final isLoading = authState.isLoading;
 
-    return Scaffold(
-      backgroundColor: DesignTokens.backgroundPrimary,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go(RouteNames.welcome),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          context.go(RouteNames.guestLanding);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: DesignTokens.backgroundPrimary,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => context.go(RouteNames.guestLanding),
+          ),
         ),
-      ),
       body: AnimatedBuilder(
         animation: Listenable.merge([_slideAnimationController, _fadeAnimationController]),
         builder: (context, child) {
@@ -202,6 +209,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             ),
           );
         },
+      ),
       ),
     );
   }

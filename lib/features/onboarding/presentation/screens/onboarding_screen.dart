@@ -145,7 +145,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   }
 
   void _completeOnboarding() {
-    context.go(RouteNames.welcome);
+    context.go(RouteNames.guestLanding);
   }
 
   @override

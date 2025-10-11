@@ -99,17 +99,24 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
       }
     });
 
-    return Scaffold(
-      backgroundColor: DesignTokens.backgroundPrimary,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => context.pop(),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          context.go(RouteNames.guestLanding);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: DesignTokens.backgroundPrimary,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => context.go(RouteNames.guestLanding),
+          ),
+          title: const Text('Inscription'),
         ),
-        title: const Text('Inscription'),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(DesignTokens.spaceLG),
@@ -141,6 +148,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -6,13 +6,13 @@ import 'core/constants/app_constants.dart';
 import 'core/router/route_names.dart';
 import 'core/router/route_guard.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/theme_provider.dart';
 import 'core/l10n/language_provider.dart';
 import 'core/l10n/app_localizations.dart';
 import 'core/auth/providers/unified_auth_provider.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 import 'features/legal/presentation/screens/terms_conditions_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'features/onboarding/presentation/screens/welcome_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/auth/presentation/screens/login_api_screen.dart';
 import 'features/auth/presentation/screens/register_screen.dart';
@@ -52,12 +52,14 @@ class EatFastApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLanguage = ref.watch(languageProvider);
     final authState = ref.watch(authProvider);
+    final themeState = ref.watch(themeProvider);
 
     return MaterialApp.router(
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      themeMode: themeState.effectiveThemeMode,
       locale: currentLanguage,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -84,7 +86,6 @@ GoRouter _createRouter(AuthState authState) {
         RouteNames.splash,
         RouteNames.terms,
         RouteNames.onboarding,
-        RouteNames.welcome,
         RouteNames.login,
         RouteNames.register,
         RouteNames.forgotPassword,
@@ -146,13 +147,7 @@ GoRouter _createRouter(AuthState authState) {
       path: RouteNames.onboarding,
       builder: (context, state) => const OnboardingScreen(),
     ),
-    
-    // Welcome
-    GoRoute(
-      path: RouteNames.welcome,
-      builder: (context, state) => const WelcomeScreen(),
-    ),
-    
+
     // Authentication
     GoRoute(
       path: RouteNames.login,

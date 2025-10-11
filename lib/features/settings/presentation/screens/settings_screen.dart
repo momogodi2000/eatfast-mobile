@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/theme/theme_provider.dart';
 import '../../../../core/auth/providers/unified_auth_provider.dart';
 import '../../../../core/router/route_names.dart';
 
@@ -204,13 +205,7 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: 'Gérer les alertes et les rappels',
             onTap: () => _showComingSoonSnackBar(context),
           ),
-          _buildSettingsTile(
-            context,
-            icon: Icons.dark_mode,
-            title: 'Thème',
-            subtitle: 'Clair / Sombre',
-            onTap: () => _showComingSoonSnackBar(context),
-          ),
+          _buildThemeTile(context, ref),
 
           const Divider(),
 
@@ -337,6 +332,104 @@ class SettingsScreen extends ConsumerWidget {
           fontWeight: FontWeight.bold,
           color: textColor ?? Colors.grey[600],
         ),
+      ),
+    );
+  }
+
+  Widget _buildThemeTile(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeProvider);
+    String themeSubtitle;
+
+    switch (themeState.themeMode) {
+      case AppThemeMode.light:
+        themeSubtitle = 'Clair';
+        break;
+      case AppThemeMode.dark:
+        themeSubtitle = 'Sombre';
+        break;
+      case AppThemeMode.system:
+        themeSubtitle = 'Automatique (système)';
+        break;
+    }
+
+    return ListTile(
+      leading: Icon(
+        Icons.brightness_6,
+        color: Colors.grey[700],
+      ),
+      title: const Text(
+        'Thème',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: Text(
+        themeSubtitle,
+        style: const TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+        ),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: Colors.grey,
+      ),
+      onTap: () => _showThemeDialog(context, ref),
+    );
+  }
+
+  void _showThemeDialog(BuildContext context, WidgetRef ref) {
+    final currentTheme = ref.read(themeProvider).themeMode;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Choisir un thème'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RadioListTile<AppThemeMode>(
+              title: const Text('Clair'),
+              value: AppThemeMode.light,
+              groupValue: currentTheme,
+              onChanged: (value) {
+                if (value != null) {
+                  ref.read(themeProvider.notifier).setLightTheme();
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+            RadioListTile<AppThemeMode>(
+              title: const Text('Sombre'),
+              value: AppThemeMode.dark,
+              groupValue: currentTheme,
+              onChanged: (value) {
+                if (value != null) {
+                  ref.read(themeProvider.notifier).setDarkTheme();
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+            RadioListTile<AppThemeMode>(
+              title: const Text('Automatique (système)'),
+              value: AppThemeMode.system,
+              groupValue: currentTheme,
+              onChanged: (value) {
+                if (value != null) {
+                  ref.read(themeProvider.notifier).setSystemTheme();
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Fermer'),
+          ),
+        ],
       ),
     );
   }
