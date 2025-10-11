@@ -12,7 +12,10 @@
       "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
       "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\core\\auth\\providers/**)",
       "Read(/E:\\Eat Fast App\\eatfast-mobile\\lib\\features\\auth\\providers/**)",
-      "Bash(flutter clean:*)"
+      "Bash(flutter clean:*)",
+      "Bash(flutter doctor:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []
