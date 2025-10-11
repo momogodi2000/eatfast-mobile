@@ -151,33 +151,25 @@ class SecureStorageService {
     return await _storage.readAll();
   }
 
-  /// Store user credentials for biometric login
+  /// DEPRECATED: Do not store credentials - use token-based biometric auth instead
+  /// This method is kept for migration purposes only
+  @Deprecated('Use token-based biometric authentication instead')
   Future<void> storeUserCredentials({
     required String email,
     required String hashedPassword,
   }) async {
-    final credentials = {
-      'email': email,
-      'hashedPassword': hashedPassword,
-      'timestamp': DateTime.now().toIso8601String(),
-    };
-    await _storage.write(
-      key: 'user_credentials',
-      value: jsonEncode(credentials),
+    // SECURITY: Do not store password hashes locally
+    // Instead, use biometric to unlock stored auth tokens
+    throw UnimplementedError(
+      'Password storage is disabled for security. Use token-based biometric auth.',
     );
   }
 
-  /// Get stored user credentials
+  /// DEPRECATED: Do not retrieve stored credentials
+  @Deprecated('Use token-based biometric authentication instead')
   Future<Map<String, dynamic>?> getUserCredentials() async {
-    final credentialsJson = await _storage.read(key: 'user_credentials');
-    if (credentialsJson != null) {
-      try {
-        return jsonDecode(credentialsJson) as Map<String, dynamic>;
-      } catch (e) {
-        await _storage.delete(key: 'user_credentials');
-        return null;
-      }
-    }
+    // Clean up any legacy stored credentials
+    await _storage.delete(key: 'user_credentials');
     return null;
   }
 

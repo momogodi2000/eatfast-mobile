@@ -4,10 +4,10 @@ class AppConfig {
   static const bool useMockPayments = bool.fromEnvironment('USE_MOCK_PAYMENTS', defaultValue: false);
   static const bool enableDebugMode = bool.fromEnvironment('DEBUG_MODE', defaultValue: true);
   
-  // API Configuration - Updated to match backend
+  // API Configuration - Local development
   static const String baseUrl = String.fromEnvironment(
-    'BASE_URL', 
-    defaultValue: 'https://eat-fast-backend-express-js.onrender.com/api'
+    'BASE_URL',
+    defaultValue: 'http://localhost:3000/api'
   );
   
   // Development Configuration (remove mock references for production)

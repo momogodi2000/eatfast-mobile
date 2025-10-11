@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/constants/api_constants.dart';
-import '../../../../core/services/api/api_client_service.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/services/api/api_client.dart';
 import '../../../restaurants/data/models/restaurant_model.dart';
 
 /// Guest restaurant service for discovering restaurants without authentication
 /// Handles location-based search and public restaurant endpoints
 class GuestRestaurantService {
-  final ApiClientService _apiClient;
+  final ApiClient _apiClient;
 
   GuestRestaurantService(this._apiClient);
 
@@ -46,12 +45,12 @@ class GuestRestaurantService {
 
         return restaurants;
       } else {
-        throw ServerException('Failed to fetch restaurants: ${response.statusCode}');
+        throw Exception('Failed to fetch restaurants: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error: ${e.message}');
+      throw Exception('Network error: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error: $e');
+      throw Exception('Unexpected error: $e');
     }
   }
 
@@ -89,12 +88,12 @@ class GuestRestaurantService {
 
         return restaurants;
       } else {
-        throw ServerException('Failed to search restaurants: ${response.statusCode}');
+        throw Exception('Failed to search restaurants: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error: ${e.message}');
+      throw Exception('Network error: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error: $e');
+      throw Exception('Unexpected error: $e');
     }
   }
 
@@ -112,12 +111,12 @@ class GuestRestaurantService {
         final data = response.data as Map<String, dynamic>;
         return Restaurant.fromJson(data['restaurant'] as Map<String, dynamic>);
       } else {
-        throw ServerException('Failed to fetch restaurant details: ${response.statusCode}');
+        throw Exception('Failed to fetch restaurant details: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error: ${e.message}');
+      throw Exception('Network error: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error: $e');
+      throw Exception('Unexpected error: $e');
     }
   }
 
@@ -139,12 +138,12 @@ class GuestRestaurantService {
 
         return menu;
       } else {
-        throw ServerException('Failed to fetch restaurant menu: ${response.statusCode}');
+        throw Exception('Failed to fetch restaurant menu: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error: ${e.message}');
+      throw Exception('Network error: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error: $e');
+      throw Exception('Unexpected error: $e');
     }
   }
 
@@ -154,7 +153,7 @@ class GuestRestaurantService {
       // Check if location services are enabled
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
-        throw LocationException('Location services are disabled');
+        throw Exception('Location services are disabled');
       }
 
       // Check location permissions
@@ -162,12 +161,12 @@ class GuestRestaurantService {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw LocationException('Location permissions are denied');
+          throw Exception('Location permissions are denied');
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        throw LocationException('Location permissions are permanently denied');
+        throw Exception('Location permissions are permanently denied');
       }
 
       // Get current position
@@ -175,8 +174,7 @@ class GuestRestaurantService {
         desiredAccuracy: LocationAccuracy.high,
       );
     } catch (e) {
-      if (e is LocationException) rethrow;
-      throw LocationException('Failed to get location: $e');
+      throw Exception('Failed to get location: $e');
     }
   }
 
@@ -196,14 +194,6 @@ class GuestRestaurantService {
   }
 }
 
-/// Custom exception for location-related errors
-class LocationException implements Exception {
-  final String message;
-  LocationException(this.message);
-
-  @override
-  String toString() => 'LocationException: $message';
-}
 
 /// Menu item model for restaurant menus
 class MenuItem {

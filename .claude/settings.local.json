@@ -15,7 +15,8 @@
       "Bash(flutter clean:*)",
       "Bash(flutter doctor:*)",
       "Bash(dir:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

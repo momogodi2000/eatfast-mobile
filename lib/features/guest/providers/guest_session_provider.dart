@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../../core/services/api/api_client_service.dart';
+import '../../../core/services/api/api_client.dart';
 import '../data/services/guest_session_service.dart';
 
 /// Provider for guest session service

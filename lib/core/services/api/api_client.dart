@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../constants/api_constants.dart';
@@ -221,3 +222,8 @@ class ApiClient {
     clearAuthToken();
   }
 }
+
+/// Provider for ApiClient - use this instead of api_client_service.dart
+final apiClientProvider = Provider<ApiClient>((ref) {
+  return ApiClient();
+});

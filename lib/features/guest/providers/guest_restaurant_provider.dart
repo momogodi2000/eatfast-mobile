@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../../core/services/api/api_client_service.dart';
+import '../../../core/services/api/api_client.dart';
 import '../../../features/restaurants/data/models/restaurant_model.dart';
 import '../data/services/guest_restaurant_service.dart';
 

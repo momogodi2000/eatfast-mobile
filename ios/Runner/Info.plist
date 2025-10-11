@@ -74,16 +74,14 @@
 			<false/>
 			<key>NSExceptionDomains</key>
 			<dict>
-				<key>eat-fast-backend-express-js.onrender.com</key>
+				<key>localhost</key>
 				<dict>
 					<key>NSExceptionAllowsInsecureHTTPLoads</key>
-					<false/>
-					<key>NSExceptionMinimumTLSVersion</key>
-					<string>TLSv1.2</string>
+					<true/>
 					<key>NSIncludesSubdomains</key>
 					<true/>
 				</dict>
-				<key>localhost</key>
+				<key>10.0.2.2</key>
 				<dict>
 					<key>NSExceptionAllowsInsecureHTTPLoads</key>
 					<true/>

@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../core/constants/api_constants.dart';
-import '../../../../core/services/api/api_client_service.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../../../core/services/api/api_client.dart';
+import '../../../../core/error/app_error.dart';
 
 /// Guest session service for managing temporary user sessions
 /// Handles guest session creation, cart management, and order processing
 class GuestSessionService {
-  final ApiClientService _apiClient;
+  final ApiClient _apiClient;
   final FlutterSecureStorage _secureStorage;
 
   static const String _guestSessionKey = 'guest_session_id';
@@ -32,7 +32,7 @@ class GuestSessionService {
       // Create new guest session
       return await _createNewSession();
     } catch (e) {
-      throw CacheException('Failed to get or create guest session: $e');
+      throw Exception('Failed to get or create guest session: $e');
     }
   }
 
@@ -51,12 +51,12 @@ class GuestSessionService {
 
         return session;
       } else {
-        throw ServerException('Failed to create guest session: ${response.statusCode}');
+        throw Exception('Failed to create guest session: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error creating guest session: ${e.message}');
+      throw Exception('Network error creating guest session: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error creating guest session: $e');
+      throw Exception('Unexpected error creating guest session: $e');
     }
   }
 
@@ -113,12 +113,12 @@ class GuestSessionService {
         final data = response.data as Map<String, dynamic>;
         return GuestCart.fromJson(data['cart'] as Map<String, dynamic>);
       } else {
-        throw ServerException('Failed to add item to cart: ${response.statusCode}');
+        throw Exception('Failed to add item to cart: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error adding to cart: ${e.message}');
+      throw Exception('Network error adding to cart: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error adding to cart: $e');
+      throw Exception('Unexpected error adding to cart: $e');
     }
   }
 
@@ -136,12 +136,12 @@ class GuestSessionService {
         final data = response.data as Map<String, dynamic>;
         return GuestCart.fromJson(data['cart'] as Map<String, dynamic>);
       } else {
-        throw ServerException('Failed to get cart: ${response.statusCode}');
+        throw Exception('Failed to get cart: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error getting cart: ${e.message}');
+      throw Exception('Network error getting cart: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error getting cart: $e');
+      throw Exception('Unexpected error getting cart: $e');
     }
   }
 
@@ -168,12 +168,12 @@ class GuestSessionService {
         final data = response.data as Map<String, dynamic>;
         return GuestCart.fromJson(data['cart'] as Map<String, dynamic>);
       } else {
-        throw ServerException('Failed to update cart item: ${response.statusCode}');
+        throw Exception('Failed to update cart item: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      throw ServerException('Network error updating cart: ${e.message}');
+      throw Exception('Network error updating cart: ${e.message}');
     } catch (e) {
-      throw ServerException('Unexpected error updating cart: $e');
+      throw Exception('Unexpected error updating cart: $e');
     }
   }
 

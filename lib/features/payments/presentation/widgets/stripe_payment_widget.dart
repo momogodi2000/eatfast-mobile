@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/api_constants.dart';
-import '../../../../core/services/api/api_client_service.dart';
+import '../../../../core/services/api/api_client.dart';
 import '../../../../core/theme/design_tokens.dart';
 
 /// Stripe Payment Widget
