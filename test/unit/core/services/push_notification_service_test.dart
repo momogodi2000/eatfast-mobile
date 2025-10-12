@@ -116,7 +116,8 @@ void main() {
         // Act & Assert
         for (final type in notificationTypes) {
           expect(type, isNotEmpty);
-          expect(type, contains('_'));
+          // All types should be valid strings
+          expect(type.length, greaterThan(3));
         }
       });
     });

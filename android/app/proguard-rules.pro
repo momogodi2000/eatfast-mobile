@@ -1,21 +1,6 @@
-## Stripe Android SDK
--keep class com.stripe.android.** { *; }
--dontwarn com.stripe.android.**
--keep class com.stripe.android.pushProvisioning.** { *; }
--keep class com.stripe.android.pushProvisioning.PushProvisioningActivity$** { *; }
--keep class com.stripe.android.pushProvisioning.PushProvisioningActivityStarter$** { *; }
+# ProGuard Rules for EatFast Flutter App
 
-## Additional Stripe specific rules
--keepclassmembers class com.stripe.android.** {
-    *;
-}
--keep,allowobfuscation @interface com.stripe.android.**
-
-## Kotlin reflection
--keep class kotlin.** { *; }
--keep class kotlin.reflect.** { *; }
-
-## Flutter
+# Flutter wrapper
 -keep class io.flutter.app.** { *; }
 -keep class io.flutter.plugin.**  { *; }
 -keep class io.flutter.util.**  { *; }
@@ -23,10 +8,55 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 
-## Google Play Core (for deferred components)
--keep class com.google.android.play.core.** { *; }
--dontwarn com.google.android.play.core.**
+# Gson (JSON serialization)
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn sun.misc.**
+-keep class com.google.gson.** { *; }
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
 
-## Other dependencies
+# Google Maps
+-keep class com.google.android.gms.maps.** { *; }
+-keep interface com.google.android.gms.maps.** { *; }
+-dontwarn com.google.android.gms.**
+
+# Google Play Services
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
+
+# OkHttp & Retrofit (for Dio)
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-keepattributes Signature
+-keepattributes Exceptions
+
+# Kotlin
+-keep class kotlin.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class $$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+
+# Keep data classes for JSON serialization
+-keep class com.eatfast.mobile.** { *; }
+-keepclassmembers class com.eatfast.mobile.** {
+    <fields>;
+    <init>(...);
+}
+
+# Preserve line numbers for debugging stack traces
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+
+# Remove logging in release
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** i(...);
+}
