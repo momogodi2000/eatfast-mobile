@@ -37,7 +37,10 @@ import 'features/guest/presentation/screens/guest_checkout_screen.dart';
 import 'features/promotions/presentation/screens/promotions_screen.dart';
 import 'features/guest/presentation/screens/guest_restaurant_discovery_screen.dart';
 
-void main() {
+void main() async {
+  // Ensure Flutter bindings are initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     const ProviderScope(
       child: EatFastApp(),

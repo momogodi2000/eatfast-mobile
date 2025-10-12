@@ -22,7 +22,9 @@
       "Bash(then rm -rf android/build)",
       "Bash(fi)",
       "Bash(if [ -d \"build\" ])",
-      "Bash(then rm -rf build)"
+      "Bash(then rm -rf build)",
+      "Bash(./gradlew:*)",
+      "Bash(adb logcat:*)"
     ],
     "deny": [],
     "ask": []
