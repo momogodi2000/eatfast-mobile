@@ -9,10 +9,10 @@ class AppConstants {
   
   // Company Information
   static const String companyName = 'EatFast Cameroon';
-  static const String companyEmail = 'contact@eatfast.cm';
-  static const String companyPhone = '+237 6XX XXX XXX';
-  static const String companyWhatsApp = '+237 6XX XXX XXX';
-  static const String companyAddress = 'Yaoundé, Cameroun';
+  static const String companyEmail = 'eatfast2025@gmail.com';
+  static const String companyPhone = '+237 694638412';
+  static const String companyWhatsApp = '+237694638412';
+  static const String companyAddress = 'Yaoundé, Simbock, Cameroun';
   
   // API Configuration (matching backend exactly)
   static const String baseUrl = 'https://eat-fast-backend-express-js.onrender.com/api'; // Production URL
