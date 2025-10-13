@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
 
 /// Forgot Password Screen - Redesigned and Responsive
-class ForgotPasswordScreen extends StatefulWidget {
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -61,20 +63,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
     super.dispose();
   }
 
-  void _onResetPressed() {
+  Future<void> _onResetPressed() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate API call
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-            _emailSent = true;
-          });
+      try {
+        // Call real API through unified auth provider
+        final success = await ref.read(authProvider.notifier).forgotPassword(
+          _emailController.text.trim(),
+        );
 
+        if (!mounted) return;
+
+        setState(() {
+          _isLoading = false;
+          _emailSent = success;
+        });
+
+        if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Instructions de réinitialisation envoyées par email'),
@@ -82,8 +90,30 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
               behavior: SnackBarBehavior.floating,
             ),
           );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Erreur lors de l\'envoi de l\'email'),
+              backgroundColor: DesignTokens.errorColor,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
         }
-      });
+      } catch (error) {
+        if (!mounted) return;
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: ${error.toString()}'),
+            backgroundColor: DesignTokens.errorColor,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 

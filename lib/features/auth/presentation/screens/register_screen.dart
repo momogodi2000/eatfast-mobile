@@ -81,6 +81,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
     return null;
   }
 
+  void _signInWithGoogle() async {
+    await ref.read(authProvider.notifier).signInWithGoogle();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
@@ -140,9 +144,19 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
               
               // Register Button
               _buildRegisterButton(authState),
-              
+
               const SizedBox(height: DesignTokens.spaceLG),
-              
+
+              // Social Login Divider
+              _buildSocialLoginDivider(),
+
+              const SizedBox(height: DesignTokens.spaceLG),
+
+              // Google Sign-In Button
+              _buildGoogleSignInButton(authState.isLoading),
+
+              const SizedBox(height: DesignTokens.spaceLG),
+
               // Footer
               _buildFooter(),
             ],
@@ -360,6 +374,56 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                   fontWeight: DesignTokens.fontWeightSemiBold,
                 ),
               ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLoginDivider() {
+    return Row(
+      children: [
+        const Expanded(child: Divider(color: DesignTokens.borderColor)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMD),
+          child: Text(
+            'Ou s\'inscrire avec',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: DesignTokens.textSecondary,
+            ),
+          ),
+        ),
+        const Expanded(child: Divider(color: DesignTokens.borderColor)),
+      ],
+    );
+  }
+
+  Widget _buildGoogleSignInButton(bool isLoading) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: isLoading ? null : _signInWithGoogle,
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMD),
+          side: const BorderSide(color: DesignTokens.borderColor),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+          ),
+        ),
+        icon: Image.asset(
+          'assets/images/google_logo.png',
+          height: 24,
+          width: 24,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.login, color: DesignTokens.textPrimary);
+          },
+        ),
+        label: const Text(
+          'S\'inscrire avec Google',
+          style: TextStyle(
+            color: DesignTokens.textPrimary,
+            fontSize: DesignTokens.fontSizeMD,
+            fontWeight: DesignTokens.fontWeightMedium,
+          ),
+        ),
       ),
     );
   }

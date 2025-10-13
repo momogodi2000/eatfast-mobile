@@ -108,6 +108,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     context.go(RouteNames.forgotPassword);
   }
 
+  void _signInWithGoogle() async {
+    await ref.read(authProvider.notifier).signInWithGoogle();
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen<AuthState>(authProvider, (previous, next) {
@@ -186,19 +190,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         
                         // Login Button
                         _buildLoginButton(isLoading),
-                        
-                        const SizedBox(height: DesignTokens.spaceLG),
-                        
-                        // Divider
-                        _buildDivider(),
-                        
-                        const SizedBox(height: DesignTokens.spaceLG),
-                        
-                        // Social Login Buttons
-                        _buildSocialLoginButtons(),
-                        
+
                         const SizedBox(height: DesignTokens.spaceXL),
-                        
+
+                        // Social Login Divider
+                        _buildSocialLoginDivider(),
+
+                        const SizedBox(height: DesignTokens.spaceXL),
+
+                        // Google Sign-In Button
+                        _buildGoogleSignInButton(isLoading),
+
+                        const SizedBox(height: DesignTokens.spaceXL),
+
                         // Register Link
                         _buildRegisterLink(),
                       ],
@@ -469,59 +473,53 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     );
   }
 
-  Widget _buildDivider() {
+  Widget _buildSocialLoginDivider() {
     return Row(
       children: [
-        const Expanded(child: Divider()),
+        const Expanded(child: Divider(color: DesignTokens.borderColor)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMD),
           child: Text(
-            'OU',
+            'Ou continuer avec',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: DesignTokens.textTertiary,
+              color: DesignTokens.textSecondary,
             ),
           ),
         ),
-        const Expanded(child: Divider()),
+        const Expanded(child: Divider(color: DesignTokens.borderColor)),
       ],
     );
   }
 
-  Widget _buildSocialLoginButtons() {
-    return Column(
-      children: [
-        // Google Login
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            onPressed: () {
-              // TODO: Implement Google login
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Connexion Google bientôt disponible')),
-              );
-            },
-            icon: const Icon(Icons.g_mobiledata, size: 24),
-            label: const Text('Continuer avec Google'),
+  Widget _buildGoogleSignInButton(bool isLoading) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        onPressed: isLoading ? null : _signInWithGoogle,
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMD),
+          side: const BorderSide(color: DesignTokens.borderColor),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
           ),
         ),
-        
-        const SizedBox(height: DesignTokens.spaceMD),
-        
-        // Facebook Login
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            onPressed: () {
-              // TODO: Implement Facebook login
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Connexion Facebook bientôt disponible')),
-              );
-            },
-            icon: const Icon(Icons.facebook, size: 24),
-            label: const Text('Continuer avec Facebook'),
+        icon: Image.asset(
+          'assets/images/google_logo.png',
+          height: 24,
+          width: 24,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.login, color: DesignTokens.textPrimary);
+          },
+        ),
+        label: const Text(
+          'Se connecter avec Google',
+          style: TextStyle(
+            color: DesignTokens.textPrimary,
+            fontSize: DesignTokens.fontSizeMD,
+            fontWeight: DesignTokens.fontWeightMedium,
           ),
         ),
-      ],
+      ),
     );
   }
 

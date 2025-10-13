@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/design_tokens.dart';
+import '../../../../core/auth/providers/unified_auth_provider.dart';
+import '../../../../core/services/auth/unified_auth_service.dart';
 
 /// OTP Verification Screen
-class OtpVerificationScreen extends StatefulWidget {
+class OtpVerificationScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
   
   const OtpVerificationScreen({
@@ -14,10 +17,10 @@ class OtpVerificationScreen extends StatefulWidget {
   });
 
   @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  ConsumerState<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
   final List<TextEditingController> _controllers = List.generate(
     6,
     (index) => TextEditingController(),
@@ -85,9 +88,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     }
   }
 
-  void _onVerifyPressed() {
+  Future<void> _onVerifyPressed() async {
     final String otp = _controllers.map((controller) => controller.text).join();
-    
+
     if (otp.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -102,30 +105,81 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       _isLoading = true;
     });
 
-    // Simulate API call
-    Future.delayed(const Duration(seconds: 2), () {
+    try {
+      // Call real API through unified auth provider
+      await ref.read(authProvider.notifier).verifyOtp(
+        phoneOrEmail: widget.phoneNumber,
+        code: otp,
+        type: OtpType.login,
+      );
+
       if (!mounted) return;
-      
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Vérification réussie'),
+          backgroundColor: DesignTokens.successColor,
+        ),
+      );
+
+      // Navigate to home
+      context.go(RouteNames.home);
+    } catch (error) {
+      if (!mounted) return;
+
       setState(() {
         _isLoading = false;
       });
-      
-      // Navigate to home
-      context.go(RouteNames.home);
-    });
+
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erreur de vérification: ${error.toString()}'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+    }
   }
 
-  void _onResendPressed() {
+  Future<void> _onResendPressed() async {
     if (!_canResend) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Code de vérification renvoyé'),
-        backgroundColor: DesignTokens.successColor,
-      ),
-    );
-    
-    _startResendTimer();
+    try {
+      // Call real API to resend OTP
+      final success = await ref.read(authProvider.notifier).sendOtp(
+        phoneOrEmail: widget.phoneNumber,
+        type: OtpType.login,
+      );
+
+      if (!mounted) return;
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Code de vérification renvoyé'),
+            backgroundColor: DesignTokens.successColor,
+          ),
+        );
+        _startResendTimer();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erreur lors du renvoi du code'),
+            backgroundColor: DesignTokens.errorColor,
+          ),
+        );
+      }
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erreur: ${error.toString()}'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+    }
   }
 
   @override

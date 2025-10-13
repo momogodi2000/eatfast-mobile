@@ -11,6 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../api/api_client.dart';
 import '../../constants/api_constants.dart';
 import '../../auth/models/app_user.dart';
+import 'google_sign_in_service.dart';
 
 class UnifiedAuthService {
   static final UnifiedAuthService _instance = UnifiedAuthService._internal();
@@ -18,8 +19,11 @@ class UnifiedAuthService {
 
   final ApiClient _apiClient = ApiClient();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  late final GoogleSignInService _googleSignInService;
 
-  UnifiedAuthService._internal();
+  UnifiedAuthService._internal() {
+    _googleSignInService = GoogleSignInService(apiClient: _apiClient);
+  }
 
   // Current authentication state
   AppUser? _currentUser;
@@ -338,6 +342,30 @@ class UnifiedAuthService {
       debugPrint('Get current user failed: $e');
     }
     return null;
+  }
+
+  /// Sign in with Google
+  Future<AuthResult> signInWithGoogle() async {
+    try {
+      final result = await _googleSignInService.signInWithGoogle();
+
+      return result.when(
+        success: (data) async {
+          await _handleLoginSuccess({
+            'token': data['token'],
+            'refreshToken': data['refreshToken'],
+            'user': data['user'],
+          });
+          return AuthResult.success(_currentUser!);
+        },
+        failure: (error) {
+          return AuthResult.failure(error);
+        },
+      );
+    } catch (e) {
+      debugPrint('Google sign-in error: $e');
+      return AuthResult.failure('Google sign-in error: ${e.toString()}');
+    }
   }
 
   /// Initialize auth service (check stored tokens)

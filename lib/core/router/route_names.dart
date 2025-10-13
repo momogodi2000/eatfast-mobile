@@ -29,4 +29,12 @@ class RouteNames {
   static const String guestRestaurants = '/guest-restaurants';
   static const String guestCheckout = '/guest-checkout';
   static const String promotions = '/promotions';
+
+  // Admin routes
+  static const String adminDashboard = '/admin-dashboard';
+  static const String adminUsers = '/admin/users';
+  static const String adminRestaurants = '/admin/restaurants';
+  static const String adminOrders = '/admin/orders';
+  static const String adminFinancialReports = '/admin/financial-reports';
+  static const String adminLiveTracking = '/admin/live-tracking';
 }

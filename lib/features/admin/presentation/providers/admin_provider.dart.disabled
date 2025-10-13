@@ -1,0 +1,536 @@
+/// Admin Provider
+/// State management for admin operations using Riverpod
+library;
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../domain/models/admin_stats.dart';
+import '../../domain/models/user_management.dart';
+import '../../domain/repositories/admin_repository.dart';
+import '../../data/repositories/admin_repository_impl.dart';
+import '../../data/services/admin_api_service.dart';
+
+part 'admin_provider.freezed.dart';
+
+// ===================== PROVIDERS =====================
+
+/// Admin API Service Provider
+final adminApiServiceProvider = Provider<AdminApiService>((ref) {
+  return AdminApiService();
+});
+
+/// Admin Repository Provider
+final adminRepositoryProvider = Provider<AdminRepository>((ref) {
+  final apiService = ref.watch(adminApiServiceProvider);
+  return AdminRepositoryImpl(apiService: apiService);
+});
+
+/// Admin Dashboard Provider
+final adminDashboardProvider =
+    StateNotifierProvider<AdminDashboardNotifier, AdminDashboardState>((ref) {
+  final repository = ref.watch(adminRepositoryProvider);
+  return AdminDashboardNotifier(repository);
+});
+
+/// User Management Provider
+final userManagementProvider =
+    StateNotifierProvider<UserManagementNotifier, UserManagementState>((ref) {
+  final repository = ref.watch(adminRepositoryProvider);
+  return UserManagementNotifier(repository);
+});
+
+/// Restaurant Management Provider
+final restaurantManagementProvider = StateNotifierProvider<
+    RestaurantManagementNotifier, RestaurantManagementState>((ref) {
+  final repository = ref.watch(adminRepositoryProvider);
+  return RestaurantManagementNotifier(repository);
+});
+
+// ===================== DASHBOARD STATE & NOTIFIER =====================
+
+@freezed
+class AdminDashboardState with _$AdminDashboardState {
+  const factory AdminDashboardState({
+    @Default(false) bool isLoading,
+    @Default(false) bool isRefreshing,
+    AdminStats? stats,
+    String? error,
+    DateTime? lastUpdated,
+  }) = _AdminDashboardState;
+}
+
+class AdminDashboardNotifier extends StateNotifier<AdminDashboardState> {
+  final AdminRepository _repository;
+
+  AdminDashboardNotifier(this._repository)
+      : super(const AdminDashboardState()) {
+    loadDashboardStats();
+  }
+
+  /// Load dashboard statistics
+  Future<void> loadDashboardStats() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    final result = await _repository.getPlatformStats();
+
+    result.when(
+      success: (stats) {
+        state = state.copyWith(
+          isLoading: false,
+          stats: stats,
+          lastUpdated: DateTime.now(),
+          error: null,
+        );
+      },
+      failure: (error) {
+        state = state.copyWith(
+          isLoading: false,
+          error: error,
+        );
+      },
+    );
+  }
+
+  /// Refresh dashboard statistics
+  Future<void> refreshDashboardStats() async {
+    state = state.copyWith(isRefreshing: true, error: null);
+
+    final result = await _repository.getPlatformStats();
+
+    result.when(
+      success: (stats) {
+        state = state.copyWith(
+          isRefreshing: false,
+          stats: stats,
+          lastUpdated: DateTime.now(),
+          error: null,
+        );
+      },
+      failure: (error) {
+        state = state.copyWith(
+          isRefreshing: false,
+          error: error,
+        );
+      },
+    );
+  }
+
+  /// Clear error
+  void clearError() {
+    state = state.copyWith(error: null);
+  }
+}
+
+// ===================== USER MANAGEMENT STATE & NOTIFIER =====================
+
+@freezed
+class UserManagementState with _$UserManagementState {
+  const factory UserManagementState({
+    @Default(false) bool isLoading,
+    @Default([]) List<UserAccount> users,
+    UserAccount? selectedUser,
+    @Default([]) List<UserActivity> userActivity,
+    String? error,
+    @Default(1) int currentPage,
+    @Default(20) int pageSize,
+    @Default(0) int totalUsers,
+    @Default(false) bool hasMore,
+    // Filters
+    UserRole? filterRole,
+    UserStatus? filterStatus,
+    String? searchQuery,
+  }) = _UserManagementState;
+}
+
+class UserManagementNotifier extends StateNotifier<UserManagementState> {
+  final AdminRepository _repository;
+
+  UserManagementNotifier(this._repository)
+      : super(const UserManagementState()) {
+    loadUsers();
+  }
+
+  /// Load users with current filters
+  Future<void> loadUsers() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    final result = await _repository.getUsers(
+      role: state.filterRole,
+      status: state.filterStatus,
+      searchQuery: state.searchQuery,
+      limit: state.pageSize,
+      offset: (state.currentPage - 1) * state.pageSize,
+    );
+
+    result.when(
+      success: (users) {
+        state = state.copyWith(
+          isLoading: false,
+          users: users,
+          hasMore: users.length >= state.pageSize,
+          error: null,
+        );
+      },
+      failure: (error) {
+        state = state.copyWith(
+          isLoading: false,
+          error: error,
+        );
+      },
+    );
+  }
+
+  /// Load user details
+  Future<void> loadUserDetails(String userId) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    final result = await _repository.getUserDetails(userId);
+
+    result.when(
+      success: (user) {
+        state = state.copyWith(
+          isLoading: false,
+          selectedUser: user,
+          error: null,
+        );
+        // Load user activity
+        loadUserActivity(userId);
+      },
+      failure: (error) {
+        state = state.copyWith(
+          isLoading: false,
+          error: error,
+        );
+      },
+    );
+  }
+
+  /// Load user activity
+  Future<void> loadUserActivity(String userId) async {
+    final result = await _repository.getUserActivity(userId);
+
+    result.when(
+      success: (activity) {
+        state = state.copyWith(
+          userActivity: activity,
+        );
+      },
+      failure: (error) {
+        // Don't overwrite main error
+      },
+    );
+  }
+
+  /// Update user status
+  Future<bool> updateUserStatus(
+    String userId,
+    UserStatus status, {
+    String? reason,
+  }) async {
+    state = state.copyWith(error: null);
+
+    final result = await _repository.updateUserStatus(
+      userId,
+      status,
+      reason: reason,
+    );
+
+    return result.when(
+      success: (_) {
+        // Reload users to reflect changes
+        loadUsers();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Suspend user
+  Future<bool> suspendUser(String userId, String reason) async {
+    final result = await _repository.suspendUser(userId, reason, null);
+
+    return result.when(
+      success: (_) {
+        loadUsers();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Unsuspend user
+  Future<bool> unsuspendUser(String userId) async {
+    final result = await _repository.unsuspendUser(userId);
+
+    return result.when(
+      success: (_) {
+        loadUsers();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Ban user
+  Future<bool> banUser(String userId, String reason) async {
+    final result = await _repository.banUser(userId, reason);
+
+    return result.when(
+      success: (_) {
+        loadUsers();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Delete user
+  Future<bool> deleteUser(String userId) async {
+    final result = await _repository.deleteUser(userId);
+
+    return result.when(
+      success: (_) {
+        loadUsers();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Apply filters
+  void applyFilters({
+    UserRole? role,
+    UserStatus? status,
+    String? searchQuery,
+  }) {
+    state = state.copyWith(
+      filterRole: role,
+      filterStatus: status,
+      searchQuery: searchQuery,
+      currentPage: 1, // Reset to first page
+    );
+    loadUsers();
+  }
+
+  /// Clear filters
+  void clearFilters() {
+    state = state.copyWith(
+      filterRole: null,
+      filterStatus: null,
+      searchQuery: null,
+      currentPage: 1,
+    );
+    loadUsers();
+  }
+
+  /// Go to next page
+  void nextPage() {
+    if (state.hasMore) {
+      state = state.copyWith(currentPage: state.currentPage + 1);
+      loadUsers();
+    }
+  }
+
+  /// Go to previous page
+  void previousPage() {
+    if (state.currentPage > 1) {
+      state = state.copyWith(currentPage: state.currentPage - 1);
+      loadUsers();
+    }
+  }
+
+  /// Search users
+  void searchUsers(String query) {
+    state = state.copyWith(
+      searchQuery: query.isEmpty ? null : query,
+      currentPage: 1,
+    );
+    loadUsers();
+  }
+
+  /// Clear error
+  void clearError() {
+    state = state.copyWith(error: null);
+  }
+}
+
+// ===================== RESTAURANT MANAGEMENT STATE & NOTIFIER =====================
+
+@freezed
+class RestaurantManagementState with _$RestaurantManagementState {
+  const factory RestaurantManagementState({
+    @Default(false) bool isLoading,
+    @Default([]) List<RestaurantAccount> restaurants,
+    RestaurantAccount? selectedRestaurant,
+    String? error,
+    @Default(1) int currentPage,
+    @Default(20) int pageSize,
+    @Default(0) int totalRestaurants,
+    @Default(false) bool hasMore,
+    // Filters
+    RestaurantStatus? filterStatus,
+    String? searchQuery,
+  }) = _RestaurantManagementState;
+}
+
+class RestaurantManagementNotifier
+    extends StateNotifier<RestaurantManagementState> {
+  final AdminRepository _repository;
+
+  RestaurantManagementNotifier(this._repository)
+      : super(const RestaurantManagementState()) {
+    loadRestaurants();
+  }
+
+  /// Load restaurants with current filters
+  Future<void> loadRestaurants() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    final result = await _repository.getRestaurants(
+      status: state.filterStatus,
+      searchQuery: state.searchQuery,
+      limit: state.pageSize,
+      offset: (state.currentPage - 1) * state.pageSize,
+    );
+
+    result.when(
+      success: (restaurants) {
+        state = state.copyWith(
+          isLoading: false,
+          restaurants: restaurants,
+          hasMore: restaurants.length >= state.pageSize,
+          error: null,
+        );
+      },
+      failure: (error) {
+        state = state.copyWith(
+          isLoading: false,
+          error: error,
+        );
+      },
+    );
+  }
+
+  /// Verify restaurant
+  Future<bool> verifyRestaurant(String restaurantId) async {
+    final result = await _repository.verifyRestaurant(restaurantId);
+
+    return result.when(
+      success: (_) {
+        loadRestaurants();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Reject restaurant
+  Future<bool> rejectRestaurant(String restaurantId, String reason) async {
+    final result = await _repository.rejectRestaurant(restaurantId, reason);
+
+    return result.when(
+      success: (_) {
+        loadRestaurants();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Suspend restaurant
+  Future<bool> suspendRestaurant(String restaurantId, String reason) async {
+    final result = await _repository.suspendRestaurant(
+      restaurantId,
+      reason,
+      null,
+    );
+
+    return result.when(
+      success: (_) {
+        loadRestaurants();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Update commission rate
+  Future<bool> updateCommissionRate(
+    String restaurantId,
+    double rate,
+  ) async {
+    final result = await _repository.updateCommissionRate(restaurantId, rate);
+
+    return result.when(
+      success: (_) {
+        loadRestaurants();
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(error: error);
+        return false;
+      },
+    );
+  }
+
+  /// Apply filters
+  void applyFilters({
+    RestaurantStatus? status,
+    String? searchQuery,
+  }) {
+    state = state.copyWith(
+      filterStatus: status,
+      searchQuery: searchQuery,
+      currentPage: 1,
+    );
+    loadRestaurants();
+  }
+
+  /// Clear filters
+  void clearFilters() {
+    state = state.copyWith(
+      filterStatus: null,
+      searchQuery: null,
+      currentPage: 1,
+    );
+    loadRestaurants();
+  }
+
+  /// Search restaurants
+  void searchRestaurants(String query) {
+    state = state.copyWith(
+      searchQuery: query.isEmpty ? null : query,
+      currentPage: 1,
+    );
+    loadRestaurants();
+  }
+
+  /// Clear error
+  void clearError() {
+    state = state.copyWith(error: null);
+  }
+}

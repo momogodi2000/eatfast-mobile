@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/loyalty_service.dart';
+import '../data/unified_loyalty_service.dart';
 import '../domain/models/loyalty.dart';
 
 /// Loyalty state
@@ -56,7 +56,7 @@ class LoyaltyState {
 
 /// Loyalty notifier
 class LoyaltyNotifier extends StateNotifier<LoyaltyState> {
-  final LoyaltyService _loyaltyService;
+  final UnifiedLoyaltyService _loyaltyService;
 
   LoyaltyNotifier(this._loyaltyService) : super(const LoyaltyState()) {
     loadLoyaltyProgram();
@@ -212,7 +212,7 @@ class LoyaltyNotifier extends StateNotifier<LoyaltyState> {
 
 /// Loyalty provider
 final loyaltyProvider = StateNotifierProvider<LoyaltyNotifier, LoyaltyState>((ref) {
-  final loyaltyService = ref.watch(loyaltyServiceProvider);
+  final loyaltyService = ref.watch(unifiedLoyaltyServiceProvider);
   return LoyaltyNotifier(loyaltyService);
 });
 

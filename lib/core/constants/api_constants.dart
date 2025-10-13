@@ -1,6 +1,10 @@
 class ApiConstants {
-  // Base URL for API requests - local development
-  static const String baseUrl = 'http://localhost:3000/api/v1';
+  // Base URL for API requests - supports environment configuration
+  // Usage: flutter build apk --dart-define=API_BASE_URL=https://api.eatfast.cm/api/v1
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'http://localhost:3000/api/v1',
+  );
   
   // Timeout configurations
   static const Duration connectTimeout = Duration(seconds: 30);
@@ -100,6 +104,12 @@ class ApiConstants {
   // Admin endpoints - matching backend exactly
   static const String adminDashboard = '/admin/dashboard';
   static const String adminUsers = '/admin/users';
+  static const String adminUserById = '/admin/users/{userId}';
+  static const String adminUserUpdate = '/admin/users/{userId}';
+  static const String adminUserDelete = '/admin/users/{userId}';
+  static const String adminUserResetPassword = '/admin/users/{userId}/reset-password';
+  static const String adminUserAuditLog = '/admin/users/{userId}/audit-log';
+  static const String adminUserStatus = '/admin/users/{userId}/status';
   static const String adminRestaurants = '/admin/restaurants';
   static const String adminOrders = '/admin/orders';
   static const String adminAnalytics = '/admin/analytics';

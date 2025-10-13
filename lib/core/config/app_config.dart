@@ -35,6 +35,53 @@ class AppConfig {
   static const bool enableNouPayPayments = true;
   static const bool enableMobileMoneyPayments = true;
   static const bool enableWalletPayments = true;
+
+  // CamPay Configuration
+  static const String campayBaseUrl = String.fromEnvironment(
+    'CAMPAY_BASE_URL',
+    defaultValue: 'https://demo.campay.net/api',
+  );
+  static const String campayApiKey = String.fromEnvironment(
+    'CAMPAY_API_KEY',
+    defaultValue: '',
+  );
+  static const String campayApiSecret = String.fromEnvironment(
+    'CAMPAY_API_SECRET',
+    defaultValue: '',
+  );
+  static const String campayWebhookUrl = String.fromEnvironment(
+    'CAMPAY_WEBHOOK_URL',
+    defaultValue: 'http://localhost:3000/api/webhooks/campay',
+  );
+  static const String campayRedirectUrl = String.fromEnvironment(
+    'CAMPAY_REDIRECT_URL',
+    defaultValue: 'eatfast://payment/callback',
+  );
+
+  // NouPay Configuration
+  static const String noupayBaseUrl = String.fromEnvironment(
+    'NOUPAY_BASE_URL',
+    defaultValue: 'https://api.noupay.com',
+  );
+  static const String noupayApiKey = String.fromEnvironment(
+    'NOUPAY_API_KEY',
+    defaultValue: '',
+  );
+  static const String noupayWebhookUrl = String.fromEnvironment(
+    'NOUPAY_WEBHOOK_URL',
+    defaultValue: 'http://localhost:3000/api/webhooks/noupay',
+  );
+  static const String noupayRedirectUrl = String.fromEnvironment(
+    'NOUPAY_REDIRECT_URL',
+    defaultValue: 'eatfast://payment/callback',
+  );
+
+  // Stripe Configuration
+  static const String stripePublishableKey = String.fromEnvironment(
+    'STRIPE_PUBLISHABLE_KEY',
+    defaultValue: '',
+  );
+  static const String apiBaseUrl = baseUrl;
   
   // Performance Configuration
   static const int maxCacheSize = 50 * 1024 * 1024; // 50MB
