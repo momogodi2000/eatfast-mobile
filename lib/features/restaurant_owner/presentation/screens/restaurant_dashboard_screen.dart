@@ -11,6 +11,7 @@ import '../widgets/quick_actions_grid.dart';
 import '../widgets/live_orders_preview.dart';
 import '../widgets/performance_chart.dart';
 import '../widgets/popular_items_list.dart';
+import '../widgets/restaurant_manager_drawer.dart';
 
 class RestaurantDashboardScreen extends ConsumerStatefulWidget {
   final String restaurantId;
@@ -39,6 +40,7 @@ class _RestaurantDashboardScreenState extends ConsumerState<RestaurantDashboardS
     
     return Scaffold(
       backgroundColor: DesignTokens.backgroundGrey,
+      drawer: RestaurantManagerDrawer(restaurantId: widget.restaurantId),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () => _refreshData(),
@@ -81,6 +83,12 @@ class _RestaurantDashboardScreenState extends ConsumerState<RestaurantDashboardS
       floating: false,
       pinned: true,
       backgroundColor: DesignTokens.primaryColor,
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: const Icon(Icons.menu, color: DesignTokens.white),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),
+      ),
       flexibleSpace: FlexibleSpaceBar(
         title: const Text(
           'Tableau de bord',

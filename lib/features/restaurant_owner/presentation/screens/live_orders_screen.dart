@@ -6,6 +6,7 @@ import '../../../../shared/widgets/loading/app_loading_indicator.dart';
 import '../../providers/restaurant_owner_provider.dart';
 import '../../domain/models/live_order.dart';
 import '../widgets/order_detail_card.dart';
+import '../widgets/restaurant_manager_drawer.dart';
 
 class LiveOrdersScreen extends ConsumerStatefulWidget {
   final String restaurantId;
@@ -42,6 +43,7 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
     
     return Scaffold(
       backgroundColor: DesignTokens.backgroundGrey,
+      drawer: RestaurantManagerDrawer(restaurantId: widget.restaurantId),
       appBar: AppBar(
         title: const Text('Commandes en direct'),
         backgroundColor: DesignTokens.primaryColor,

@@ -15,8 +15,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<RestaurantStats, String>> getDashboardStats(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/stats');
-      
+      // Backend uses auth token to identify restaurant, not URL param
+      final response = await _apiClient.get('/restaurant/analytics/dashboard');
+
       if (response.statusCode == 200) {
         return Result.success(RestaurantStats.fromJson(response.data));
       } else {
@@ -30,11 +31,12 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<HourlyStats>, String>> getHourlyStats(String restaurantId, DateTime date) async {
     try {
+      // Backend uses auth token, hourly stats from analytics dashboard
       final response = await _apiClient.get(
-        '/restaurant/$restaurantId/stats/hourly',
+        '/restaurant/analytics/dashboard',
         queryParameters: {'date': date.toIso8601String()},
       );
-      
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['hourly_stats'] ?? [];
         final stats = data.map((json) => HourlyStats.fromJson(json)).toList();
@@ -50,8 +52,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<DailyStats>, String>> getWeeklyStats(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/stats/weekly');
-      
+      // Backend provides weekly stats in analytics dashboard
+      final response = await _apiClient.get('/restaurant/analytics/dashboard');
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['daily_stats'] ?? [];
         final stats = data.map((json) => DailyStats.fromJson(json)).toList();
@@ -67,8 +70,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<LiveOrder>, String>> getLiveOrders(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/orders/live');
-      
+      // Backend route: GET /restaurant/orders/current
+      final response = await _apiClient.get('/restaurant/orders/current');
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['orders'] ?? [];
         final orders = data.map((json) => LiveOrder.fromJson(json)).toList();
@@ -199,10 +203,11 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<MenuCategory>, String>> getMenuCategories(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/menu/categories');
-      
+      // Backend route: GET /restaurant/menus
+      final response = await _apiClient.get('/restaurant/menus');
+
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['categories'] ?? [];
+        final List<dynamic> data = response.data['categories'] ?? response.data['menus'] ?? [];
         final categories = data.map((json) => MenuCategory.fromJson(json)).toList();
         return Result.success(categories);
       } else {
@@ -216,12 +221,13 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<MenuCategory, String>> createMenuCategory(String restaurantId, MenuCategory category) async {
     try {
-      final response = await _apiClient.post('/restaurant/$restaurantId/menu/categories', 
+      // Backend route: POST /restaurant/menus
+      final response = await _apiClient.post('/restaurant/menus',
         data: category.toJson(),
       );
-      
-      if (response.statusCode == 201) {
-        return Result.success(MenuCategory.fromJson(response.data['category']));
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Result.success(MenuCategory.fromJson(response.data['category'] ?? response.data['menu']));
       } else {
         return Result.failure('Erreur lors de la création de la catégorie');
       }
@@ -233,12 +239,13 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<MenuCategory, String>> updateMenuCategory(MenuCategory category) async {
     try {
-      final response = await _apiClient.put('/menu/categories/${category.categoryId}', 
+      // Backend route: PUT /restaurant/menus/:menuId
+      final response = await _apiClient.put('/restaurant/menus/${category.categoryId}',
         data: category.toJson(),
       );
-      
+
       if (response.statusCode == 200) {
-        return Result.success(MenuCategory.fromJson(response.data['category']));
+        return Result.success(MenuCategory.fromJson(response.data['category'] ?? response.data['menu']));
       } else {
         return Result.failure('Erreur lors de la mise à jour de la catégorie');
       }
@@ -250,8 +257,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<void, String>> deleteMenuCategory(String categoryId) async {
     try {
-      final response = await _apiClient.delete('/menu/categories/$categoryId');
-      
+      // Backend route: DELETE /restaurant/menus/:menuId
+      final response = await _apiClient.delete('/restaurant/menus/$categoryId');
+
       if (response.statusCode == 200) {
         return Result.success(null);
       } else {
@@ -425,10 +433,11 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<MenuItemPerformance>, String>> getItemPerformance(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/analytics/items');
-      
+      // Backend route: GET /restaurant/analytics/dashboard contains item performance
+      final response = await _apiClient.get('/restaurant/analytics/dashboard');
+
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['performance'] ?? [];
+        final List<dynamic> data = response.data['performance'] ?? response.data['item_performance'] ?? [];
         final performance = data.map((json) => MenuItemPerformance.fromJson(json)).toList();
         return Result.success(performance);
       } else {
@@ -442,13 +451,14 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<Map<String, dynamic>, String>> getRevenueAnalytics(String restaurantId, DateTime from, DateTime to) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/analytics/revenue',
+      // Backend route: GET /restaurant/reports/financial with date range
+      final response = await _apiClient.get('/restaurant/reports/financial',
         queryParameters: {
           'from': from.toIso8601String(),
           'to': to.toIso8601String(),
         },
       );
-      
+
       if (response.statusCode == 200) {
         return Result.success(response.data);
       } else {
@@ -462,8 +472,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<PopularItem>, String>> getPopularItems(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/analytics/popular');
-      
+      // Backend route: GET /restaurant/analytics/dashboard contains popular items
+      final response = await _apiClient.get('/restaurant/analytics/dashboard');
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['popular_items'] ?? [];
         final items = data.map((json) => PopularItem.fromJson(json)).toList();
@@ -479,8 +490,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<Map<String, dynamic>, String>> getRestaurantProfile(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/profile');
-      
+      // Backend route: GET /restaurant/profile (uses auth token)
+      final response = await _apiClient.get('/restaurant/profile');
+
       if (response.statusCode == 200) {
         return Result.success(response.data);
       } else {
@@ -494,8 +506,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<void, String>> updateRestaurantProfile(String restaurantId, Map<String, dynamic> data) async {
     try {
-      final response = await _apiClient.put('/restaurant/$restaurantId/profile', data: data);
-      
+      // Backend route: PUT /restaurant/profile (uses auth token)
+      final response = await _apiClient.put('/restaurant/profile', data: data);
+
       if (response.statusCode == 200) {
         return Result.success(null);
       } else {
@@ -556,8 +569,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<List<Map<String, dynamic>>, String>> getNotifications(String restaurantId) async {
     try {
-      final response = await _apiClient.get('/restaurant/$restaurantId/notifications');
-      
+      // Backend route: GET /notifications (general endpoint for authenticated user)
+      final response = await _apiClient.get('/notifications');
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['notifications'] ?? [];
         return Result.success(List<Map<String, dynamic>>.from(data));

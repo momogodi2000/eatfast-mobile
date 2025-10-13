@@ -41,6 +41,13 @@ import '../../features/admin/presentation/screens/restaurant_management_screen.d
 import '../../features/admin/presentation/screens/order_management_screen.dart';
 import '../../features/admin/presentation/screens/financial_reports_screen.dart';
 import '../../features/admin/presentation/screens/live_delivery_tracking_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/restaurant_dashboard_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/live_orders_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/menu_management_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/analytics_reports_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/restaurant_profile_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/wallet_financials_screen.dart';
+import '../../features/restaurant_owner/presentation/screens/notifications_screen.dart';
 
 class AppRouter {
   /// Create GoRouter instance with auth state
@@ -327,12 +334,72 @@ class AppRouter {
         builder: (context, state) => const LiveDeliveryTrackingScreen(),
       ),
 
-      // Restaurant Dashboard (Restaurant Owner Only)
-      // TODO: Add when restaurant dashboard is implemented
-      // GoRoute(
-      //   path: '/restaurant-dashboard',
-      //   builder: (context, state) => const RestaurantDashboardScreen(),
-      // ),
+      // ============================================
+      // RESTAURANT MANAGER ROUTES (Restaurant Owner Only)
+      // ============================================
+
+      // Restaurant Dashboard
+      GoRoute(
+        path: '/restaurant-dashboard/:restaurantId',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return RestaurantDashboardScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Live Orders Management
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/orders',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return LiveOrdersScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Menu Management
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/menu',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return MenuManagementScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Analytics & Reports
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/analytics',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return AnalyticsReportsScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Restaurant Profile/Settings
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/profile',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return RestaurantProfileScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Wallet & Financials
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/wallet',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return WalletFinancialsScreen(restaurantId: restaurantId);
+        },
+      ),
+
+      // Notifications
+      GoRoute(
+        path: '/restaurant-owner/:restaurantId/notifications',
+        builder: (context, state) {
+          final restaurantId = state.pathParameters['restaurantId']!;
+          return NotificationsScreen(restaurantId: restaurantId);
+        },
+      ),
 
       // Driver Dashboard (Delivery Agent Only)
       // TODO: Add when driver dashboard is implemented

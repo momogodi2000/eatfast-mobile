@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/result.dart';
 import '../domain/models/restaurant_stats.dart';
 import '../domain/models/live_order.dart';
 import '../domain/models/menu_management.dart';
@@ -176,6 +177,39 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
 
   void selectOrder(String? orderId) {
     state = state.copyWith(selectedOrderId: orderId);
+  }
+
+  // Menu Management Methods
+  Future<Result<MenuCategory, String>> createMenuCategory(MenuCategory category) async {
+    return await _repository.createMenuCategory(_restaurantId, category);
+  }
+
+  Future<Result<MenuCategory, String>> updateMenuCategory(MenuCategory category) async {
+    return await _repository.updateMenuCategory(category);
+  }
+
+  Future<Result<void, String>> deleteMenuCategory(String categoryId) async {
+    return await _repository.deleteMenuCategory(categoryId);
+  }
+
+  Future<Result<MenuItemDetails, String>> createMenuItem(String categoryId, MenuItemDetails item) async {
+    return await _repository.createMenuItem(categoryId, item);
+  }
+
+  Future<Result<MenuItemDetails, String>> updateMenuItem(MenuItemDetails item) async {
+    return await _repository.updateMenuItem(item);
+  }
+
+  Future<Result<void, String>> deleteMenuItem(String itemId) async {
+    return await _repository.deleteMenuItem(itemId);
+  }
+
+  Future<Result<void, String>> toggleItemAvailability(String itemId, bool isAvailable) async {
+    return await _repository.toggleItemAvailability(itemId, isAvailable);
+  }
+
+  Future<Result<void, String>> bulkUpdateAvailability(List<String> itemIds, bool isAvailable) async {
+    return await _repository.bulkUpdateAvailability(itemIds, isAvailable);
   }
 
   List<LiveOrder> get filteredOrders {
