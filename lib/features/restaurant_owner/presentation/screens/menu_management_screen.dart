@@ -89,6 +89,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         error: (error, _) => _buildErrorView(error),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'menu_management_fab',
         onPressed: () => _showAddDialog(),
         icon: const Icon(Icons.add),
         label: Text(_tabController.index == 0 ? 'Nouvelle Catégorie' : 'Nouvel Article'),

@@ -81,6 +81,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'payment_methods_fab',
         onPressed: () => _showAddPaymentMethodSheet(context),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.onPrimary,

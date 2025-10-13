@@ -161,6 +161,7 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'live_orders_fab',
         onPressed: () => _showCreateOrderDialog(),
         icon: const Icon(Icons.add),
         label: const Text('Nouvelle commande'),

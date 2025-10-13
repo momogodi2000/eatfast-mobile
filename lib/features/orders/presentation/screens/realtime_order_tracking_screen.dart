@@ -329,6 +329,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
             ),
       floatingActionButton: _driverCurrentLocation != null
           ? FloatingActionButton(
+              heroTag: 'realtime_order_tracking_fab',
               onPressed: () {
                 setState(() {
                   _followDriver = !_followDriver;

@@ -193,6 +193,7 @@ class _EnhancedOrderTrackingScreenState extends ConsumerState<EnhancedOrderTrack
       body: _buildBody(),
       floatingActionButton: _orderTracking?.driverPhone != null
           ? FloatingActionButton(
+              heroTag: 'enhanced_order_tracking_fab',
               onPressed: _callDriver,
               child: const Icon(Icons.phone),
             )

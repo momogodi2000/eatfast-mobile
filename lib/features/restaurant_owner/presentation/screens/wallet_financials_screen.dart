@@ -90,6 +90,7 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
               ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'wallet_financials_fab',
         onPressed: _showWithdrawDialog,
         icon: const Icon(Icons.account_balance_wallet),
         label: const Text('Retirer'),

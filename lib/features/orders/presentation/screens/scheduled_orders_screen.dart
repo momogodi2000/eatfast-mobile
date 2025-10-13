@@ -71,6 +71,7 @@ class _ScheduledOrdersScreenState extends ConsumerState<ScheduledOrdersScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'scheduled_orders_fab',
         onPressed: () => _showCreateScheduledOrderDialog(context),
         icon: const Icon(Icons.add_alarm),
         label: const Text('Programmer'),

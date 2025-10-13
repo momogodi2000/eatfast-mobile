@@ -99,6 +99,7 @@ class _RatingsScreenState extends ConsumerState<RatingsScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'ratings_fab',
         onPressed: () => _navigateToSubmitRating(),
         icon: const Icon(Icons.rate_review),
         label: const Text('Donner votre avis'),

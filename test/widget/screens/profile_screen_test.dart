@@ -564,16 +564,16 @@ void main() {
                           Text('Jan ${15 + index}, 2024'),
                         ],
                       ),
-                      trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            key: Key('reorder_button_$index'),
-                            onPressed: () {},
-                            icon: const Icon(Icons.refresh),
-                          ),
-                          const Text('Reorder', style: TextStyle(fontSize: 12)),
-                        ],
+                      trailing: TextButton.icon(
+                        key: Key('reorder_button_$index'),
+                        onPressed: () {},
+                        icon: const Icon(Icons.refresh, size: 18),
+                        label: const Text('Reorder', style: TextStyle(fontSize: 11)),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          minimumSize: const Size(0, 0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                       ),
                     ),
                   );

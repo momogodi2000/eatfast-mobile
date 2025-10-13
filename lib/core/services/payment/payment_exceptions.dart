@@ -19,8 +19,7 @@ abstract class PaymentException implements Exception {
 /// Payment validation exception
 /// Thrown when payment request parameters are invalid
 class PaymentValidationException extends PaymentException {
-  PaymentValidationException(String message, {String? code, Exception? originalError})
-      : super(message, code: code ?? 'VALIDATION_ERROR', originalError: originalError);
+  PaymentValidationException(super.message, {super.code = 'VALIDATION_ERROR', super.originalError});
 
   @override
   String toString() => 'PaymentValidationException: $message';
@@ -35,14 +34,14 @@ class PaymentProviderException extends PaymentException {
   final bool isNetworkError;
 
   PaymentProviderException(
-    String message, {
+    super.message, {
     required this.provider,
-    String? code,
+    super.code = 'PROVIDER_ERROR',
     this.statusCode,
     this.isTimeout = false,
     this.isNetworkError = false,
-    Exception? originalError,
-  }) : super(message, code: code ?? 'PROVIDER_ERROR', originalError: originalError);
+    super.originalError,
+  });
 
   bool get shouldRetry => isTimeout || isNetworkError || statusCode == null || statusCode! >= 500;
 
@@ -54,8 +53,7 @@ class PaymentProviderException extends PaymentException {
 /// Payment network exception
 /// Thrown when network connectivity issues occur
 class PaymentNetworkException extends PaymentException {
-  PaymentNetworkException(String message, {String? code, Exception? originalError})
-      : super(message, code: code ?? 'NETWORK_ERROR', originalError: originalError);
+  PaymentNetworkException(super.message, {super.code = 'NETWORK_ERROR', super.originalError});
 
   @override
   String toString() => 'PaymentNetworkException: $message';
@@ -66,8 +64,7 @@ class PaymentNetworkException extends PaymentException {
 class PaymentTimeoutException extends PaymentException {
   final Duration timeout;
 
-  PaymentTimeoutException(String message, this.timeout, {String? code, Exception? originalError})
-      : super(message, code: code ?? 'TIMEOUT_ERROR', originalError: originalError);
+  PaymentTimeoutException(super.message, this.timeout, {super.code = 'TIMEOUT_ERROR', super.originalError});
 
   @override
   String toString() => 'PaymentTimeoutException: $message (Timeout: ${timeout.inSeconds}s)';
@@ -181,8 +178,7 @@ class PaymentAlreadyProcessedException extends PaymentException {
 class RefundException extends PaymentException {
   final String transactionId;
 
-  RefundException(this.transactionId, String message, {String? code, Exception? originalError})
-      : super(message, code: code ?? 'REFUND_ERROR', originalError: originalError);
+  RefundException(this.transactionId, super.message, {super.code = 'REFUND_ERROR', super.originalError});
 
   @override
   String toString() => 'RefundException[$transactionId]: $message';
@@ -191,8 +187,7 @@ class RefundException extends PaymentException {
 /// Payment configuration exception
 /// Thrown when payment service configuration is invalid
 class PaymentConfigurationException extends PaymentException {
-  PaymentConfigurationException(String message, {String? code})
-      : super(message, code: code ?? 'CONFIGURATION_ERROR');
+  PaymentConfigurationException(super.message, {super.code = 'CONFIGURATION_ERROR'});
 
   @override
   String toString() => 'PaymentConfigurationException: $message';

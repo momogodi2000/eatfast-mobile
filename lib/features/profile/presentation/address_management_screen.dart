@@ -86,6 +86,7 @@ class _AddressManagementScreenState
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'address_management_fab',
         onPressed: () => _showAddAddressSheet(context),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.onPrimary,

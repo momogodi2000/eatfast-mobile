@@ -196,6 +196,7 @@ class WalletScreen extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'wallet_fab',
         onPressed: () {
           Navigator.push(
             context,

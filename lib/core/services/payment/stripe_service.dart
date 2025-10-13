@@ -10,9 +10,11 @@ import 'payment_exceptions.dart';
 
 class StripeService {
   final Dio _dio;
+  /// Stripe publishable key reserved for client-side Stripe SDK initialization
+  /// when implementing native payment sheet or card input UI.
+  /// Currently, all Stripe operations are handled through the backend API.
   // ignore: unused_field
-  final String
-  _publishableKey; // Reserved for client-side Stripe SDK initialization
+  final String _publishableKey;
   final String _backendBaseUrl;
 
   StripeService({Dio? dio, String? publishableKey, String? backendBaseUrl})

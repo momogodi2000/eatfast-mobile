@@ -69,6 +69,7 @@ class _RestaurantDashboardScreenState extends ConsumerState<RestaurantDashboardS
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'restaurant_dashboard_fab',
         onPressed: () => _showNewOrderDialog(),
         icon: const Icon(Icons.add),
         label: const Text('Nouvelle commande'),
