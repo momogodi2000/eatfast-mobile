@@ -4,6 +4,8 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
 import '../../domain/models/menu_management.dart';
@@ -697,32 +699,598 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     );
   }
 
-  void _showAddItemDialog(MenuCategory? category) {
-    // TODO: Implement detailed item creation dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fonction en cours de développement'),
-        backgroundColor: DesignTokens.infoColor,
+  void _showAddItemDialog(MenuCategory? category) async {
+    if (category == null) return;
+
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final priceController = TextEditingController();
+    final prepTimeController = TextEditingController();
+    final allergensController = TextEditingController();
+    final dietaryTagsController = TextEditingController();
+    bool isPopular = false;
+    File? selectedImage;
+    final ImagePicker picker = ImagePicker();
+
+    await showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Nouvel Article'),
+          content: SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image picker
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final XFile? image = await picker.pickImage(
+                          source: ImageSource.gallery,
+                          maxWidth: 1920,
+                          maxHeight: 1080,
+                          imageQuality: 85,
+                        );
+                        if (image != null) {
+                          setState(() {
+                            selectedImage = File(image.path);
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: DesignTokens.lightGrey,
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          border: Border.all(color: DesignTokens.primaryColor.withValues(alpha: 0.3)),
+                        ),
+                        child: selectedImage != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                child: Image.file(selectedImage!, fit: BoxFit.cover),
+                              )
+                            : const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.add_photo_alternate, size: 48, color: DesignTokens.primaryColor),
+                                  SizedBox(height: 8),
+                                  Text('Ajouter une image', style: TextStyle(color: DesignTokens.primaryColor)),
+                                ],
+                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Name field
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nom de l\'article *',
+                      hintText: 'Ex: Pizza Margherita',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Description field
+                  TextField(
+                    controller: descriptionController,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                      labelText: 'Description *',
+                      hintText: 'Décrivez votre plat...',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Price and prep time
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Prix (FCFA) *',
+                            hintText: '5000',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: DesignTokens.spaceMD),
+                      Expanded(
+                        child: TextField(
+                          controller: prepTimeController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Temps (min) *',
+                            hintText: '15',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Allergens
+                  TextField(
+                    controller: allergensController,
+                    decoration: const InputDecoration(
+                      labelText: 'Allergènes',
+                      hintText: 'Ex: gluten, lactose (séparés par des virgules)',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Dietary tags
+                  TextField(
+                    controller: dietaryTagsController,
+                    decoration: const InputDecoration(
+                      labelText: 'Tags diététiques',
+                      hintText: 'Ex: végétarien, vegan (séparés par des virgules)',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Popular checkbox
+                  CheckboxListTile(
+                    title: const Text('Marquer comme populaire'),
+                    value: isPopular,
+                    onChanged: (value) {
+                      setState(() {
+                        isPopular = value ?? false;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (nameController.text.isEmpty ||
+                    descriptionController.text.isEmpty ||
+                    priceController.text.isEmpty ||
+                    prepTimeController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Veuillez remplir tous les champs obligatoires'),
+                      backgroundColor: DesignTokens.warningColor,
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.pop(context);
+                await _createMenuItem(
+                  category,
+                  nameController.text,
+                  descriptionController.text,
+                  double.tryParse(priceController.text) ?? 0,
+                  int.tryParse(prepTimeController.text) ?? 15,
+                  isPopular,
+                  allergensController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                  dietaryTagsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                  selectedImage,
+                );
+              },
+              child: const Text('Créer'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  void _showEditItemDialog(MenuItemDetails item) {
-    // TODO: Implement detailed item edit dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fonction en cours de développement'),
-        backgroundColor: DesignTokens.infoColor,
+  void _showEditItemDialog(MenuItemDetails item) async {
+    final nameController = TextEditingController(text: item.name);
+    final descriptionController = TextEditingController(text: item.description);
+    final priceController = TextEditingController(text: item.price.toString());
+    final prepTimeController = TextEditingController(text: item.preparationTime.toString());
+    final allergensController = TextEditingController(text: item.allergens.join(', '));
+    final dietaryTagsController = TextEditingController(text: item.dietaryTags.join(', '));
+    bool isPopular = item.isPopular;
+    File? selectedImage;
+    final ImagePicker picker = ImagePicker();
+
+    await showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Modifier l\'Article'),
+          content: SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image picker
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final XFile? image = await picker.pickImage(
+                          source: ImageSource.gallery,
+                          maxWidth: 1920,
+                          maxHeight: 1080,
+                          imageQuality: 85,
+                        );
+                        if (image != null) {
+                          setState(() {
+                            selectedImage = File(image.path);
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: DesignTokens.lightGrey,
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          border: Border.all(color: DesignTokens.primaryColor.withValues(alpha: 0.3)),
+                        ),
+                        child: selectedImage != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                child: Image.file(selectedImage!, fit: BoxFit.cover),
+                              )
+                            : item.imageUrl != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                    child: Image.network(item.imageUrl!, fit: BoxFit.cover),
+                                  )
+                                : const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.add_photo_alternate, size: 48, color: DesignTokens.primaryColor),
+                                      SizedBox(height: 8),
+                                      Text('Changer l\'image', style: TextStyle(color: DesignTokens.primaryColor)),
+                                    ],
+                                  ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Name field
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nom de l\'article *',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Description field
+                  TextField(
+                    controller: descriptionController,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                      labelText: 'Description *',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Price and prep time
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Prix (FCFA) *',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: DesignTokens.spaceMD),
+                      Expanded(
+                        child: TextField(
+                          controller: prepTimeController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Temps (min) *',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Allergens
+                  TextField(
+                    controller: allergensController,
+                    decoration: const InputDecoration(
+                      labelText: 'Allergènes',
+                      hintText: 'Séparés par des virgules',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Dietary tags
+                  TextField(
+                    controller: dietaryTagsController,
+                    decoration: const InputDecoration(
+                      labelText: 'Tags diététiques',
+                      hintText: 'Séparés par des virgules',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: DesignTokens.spaceMD),
+
+                  // Popular checkbox
+                  CheckboxListTile(
+                    title: const Text('Marquer comme populaire'),
+                    value: isPopular,
+                    onChanged: (value) {
+                      setState(() {
+                        isPopular = value ?? false;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Annuler'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (nameController.text.isEmpty ||
+                    descriptionController.text.isEmpty ||
+                    priceController.text.isEmpty ||
+                    prepTimeController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Veuillez remplir tous les champs obligatoires'),
+                      backgroundColor: DesignTokens.warningColor,
+                    ),
+                  );
+                  return;
+                }
+
+                Navigator.pop(context);
+                await _updateMenuItem(
+                  item.copyWith(
+                    name: nameController.text,
+                    description: descriptionController.text,
+                    price: double.tryParse(priceController.text) ?? item.price,
+                    preparationTime: int.tryParse(prepTimeController.text) ?? item.preparationTime,
+                    isPopular: isPopular,
+                    allergens: allergensController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                    dietaryTags: dietaryTagsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                  ),
+                  selectedImage,
+                );
+              },
+              child: const Text('Enregistrer'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   void _showItemDetailDialog(MenuItemDetails item) {
-    // TODO: Implement item detail dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fonction en cours de développement'),
-        backgroundColor: DesignTokens.infoColor,
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                item.name,
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: item.isAvailable
+                    ? DesignTokens.successColor.withValues(alpha: 0.1)
+                    : DesignTokens.errorColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+              ),
+              child: Text(
+                item.isAvailable ? 'Disponible' : 'Indisponible',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: DesignTokens.fontWeightBold,
+                  color: item.isAvailable ? DesignTokens.successColor : DesignTokens.errorColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image
+              if (item.imageUrl != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                  child: Image.network(
+                    item.imageUrl!,
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Container(
+                      height: 200,
+                      color: DesignTokens.lightGrey,
+                      child: const Center(child: Icon(Icons.image_not_supported, size: 48)),
+                    ),
+                  ),
+                ),
+              const SizedBox(height: DesignTokens.spaceMD),
+
+              // Description
+              const Text(
+                'Description',
+                style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+              ),
+              const SizedBox(height: 4),
+              Text(item.description),
+              const SizedBox(height: DesignTokens.spaceMD),
+
+              // Price and prep time
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildDetailCard('Prix', '${item.price} FCFA', Icons.monetization_on),
+                  ),
+                  const SizedBox(width: DesignTokens.spaceSM),
+                  Expanded(
+                    child: _buildDetailCard('Préparation', '${item.preparationTime} min', Icons.timer),
+                  ),
+                ],
+              ),
+              const SizedBox(height: DesignTokens.spaceMD),
+
+              // Stats
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildDetailCard('Commandes', '${item.orderCount}', Icons.shopping_bag),
+                  ),
+                  const SizedBox(width: DesignTokens.spaceSM),
+                  Expanded(
+                    child: _buildDetailCard('Note', '${item.rating.toStringAsFixed(1)}/5', Icons.star),
+                  ),
+                ],
+              ),
+              const SizedBox(height: DesignTokens.spaceMD),
+
+              // Allergens
+              if (item.allergens.isNotEmpty) ...[
+                const Text(
+                  'Allergènes',
+                  style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+                ),
+                const SizedBox(height: 4),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: item.allergens.map((allergen) => Chip(
+                    label: Text(allergen),
+                    backgroundColor: DesignTokens.warningColor.withValues(alpha: 0.1),
+                    labelStyle: const TextStyle(fontSize: 12),
+                  )).toList(),
+                ),
+                const SizedBox(height: DesignTokens.spaceMD),
+              ],
+
+              // Dietary tags
+              if (item.dietaryTags.isNotEmpty) ...[
+                const Text(
+                  'Tags diététiques',
+                  style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+                ),
+                const SizedBox(height: 4),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: item.dietaryTags.map((tag) => Chip(
+                    label: Text(tag),
+                    backgroundColor: DesignTokens.successColor.withValues(alpha: 0.1),
+                    labelStyle: const TextStyle(fontSize: 12),
+                  )).toList(),
+                ),
+                const SizedBox(height: DesignTokens.spaceMD),
+              ],
+
+              // Popular badge
+              if (item.isPopular)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.local_fire_department, size: 16, color: DesignTokens.primaryColor),
+                      SizedBox(width: 4),
+                      Text(
+                        'Article Populaire',
+                        style: TextStyle(
+                          color: DesignTokens.primaryColor,
+                          fontWeight: DesignTokens.fontWeightBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fermer'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _showEditItemDialog(item);
+            },
+            child: const Text('Modifier'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailCard(String label, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(DesignTokens.spaceSM),
+      decoration: BoxDecoration(
+        color: DesignTokens.lightGrey.withValues(alpha: 0.3),
+        borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 20, color: DesignTokens.primaryColor),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: DesignTokens.textSecondary,
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: DesignTokens.fontWeightBold,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -755,11 +1323,79 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
   }
 
   void _showBulkStockUpdateDialog() {
-    // TODO: Implement bulk stock update dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fonction en cours de développement'),
-        backgroundColor: DesignTokens.infoColor,
+    final categories = ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
+    final allItems = categories.expand((cat) => cat.items).toList();
+
+    if (allItems.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Aucun article disponible'),
+          backgroundColor: DesignTokens.warningColor,
+        ),
+      );
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Mise à jour en lot'),
+        content: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Sélectionnez une action à appliquer à tous les articles:',
+                  style: TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: DesignTokens.spaceMD),
+                ListTile(
+                  leading: const Icon(Icons.visibility, color: DesignTokens.successColor),
+                  title: const Text('Activer tous les articles'),
+                  subtitle: Text('${allItems.length} articles seront disponibles'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _bulkUpdateAvailability(true);
+                  },
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.visibility_off, color: DesignTokens.errorColor),
+                  title: const Text('Désactiver tous les articles'),
+                  subtitle: Text('${allItems.length} articles seront indisponibles'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _bulkUpdateAvailability(false);
+                  },
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.local_fire_department, color: DesignTokens.primaryColor),
+                  title: const Text('Marquer tous comme populaires'),
+                  subtitle: const Text('Tous les articles seront mis en avant'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Cette fonction nécessite une mise à jour individuelle des articles'),
+                        backgroundColor: DesignTokens.infoColor,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fermer'),
+          ),
+        ],
       ),
     );
   }
@@ -938,6 +1574,130 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
             backgroundColor: DesignTokens.errorColor,
           ),
         );
+      },
+    );
+  }
+
+  Future<void> _createMenuItem(
+    MenuCategory category,
+    String name,
+    String description,
+    double price,
+    int preparationTime,
+    bool isPopular,
+    List<String> allergens,
+    List<String> dietaryTags,
+    File? imageFile,
+  ) async {
+    final item = MenuItemDetails(
+      itemId: '',
+      name: name,
+      description: description,
+      price: price,
+      isAvailable: true,
+      isPopular: isPopular,
+      preparationTime: preparationTime,
+      allergens: allergens,
+      dietaryTags: dietaryTags,
+    );
+
+    final result = await ref
+        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .createMenuItem(category.categoryId, item);
+
+    await result.when(
+      success: (createdItem) async {
+        // Upload image if provided
+        if (imageFile != null && createdItem.itemId.isNotEmpty) {
+          final imageResult = await ref
+              .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+              .uploadItemImage(createdItem.itemId, imageFile);
+
+          imageResult.when(
+            success: (_) {},
+            failure: (error) {
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Article créé mais erreur lors de l\'upload de l\'image: $error'),
+                    backgroundColor: DesignTokens.warningColor,
+                  ),
+                );
+              }
+            },
+          );
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Article créé avec succès'),
+              backgroundColor: DesignTokens.successColor,
+            ),
+          );
+        }
+        ref.invalidate(menuCategoriesProvider(widget.restaurantId));
+      },
+      failure: (error) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur: $error'),
+              backgroundColor: DesignTokens.errorColor,
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> _updateMenuItem(MenuItemDetails item, File? imageFile) async {
+    final result = await ref
+        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .updateMenuItem(item);
+
+    await result.when(
+      success: (_) async {
+        // Upload image if provided
+        if (imageFile != null) {
+          final imageResult = await ref
+              .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+              .uploadItemImage(item.itemId, imageFile);
+
+          imageResult.when(
+            success: (_) {},
+            failure: (error) {
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Article mis à jour mais erreur lors de l\'upload de l\'image: $error'),
+                    backgroundColor: DesignTokens.warningColor,
+                  ),
+                );
+              }
+            },
+          );
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Article mis à jour'),
+              backgroundColor: DesignTokens.successColor,
+            ),
+          );
+        }
+        ref.invalidate(menuCategoriesProvider(widget.restaurantId));
+      },
+      failure: (error) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur: $error'),
+              backgroundColor: DesignTokens.errorColor,
+            ),
+          );
+        }
       },
     );
   }

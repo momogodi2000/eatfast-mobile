@@ -32,10 +32,10 @@ class AdminApiService {
   }
 
   /// Get live deliveries for real-time tracking
-  /// Backend: GET /admin/dashboard/live-deliveries
+  /// Backend: GET /admin/deliveries/live
   Future<Map<String, dynamic>> getLiveDeliveries() async {
     try {
-      final response = await _apiClient.get('${ApiConstants.adminDashboard}/live-deliveries');
+      final response = await _apiClient.get('/admin/deliveries/live');
       return response.data;
     } on DioException catch (e) {
       debugPrint('Get live deliveries failed: ${e.message}');

@@ -51,4 +51,9 @@ abstract class RestaurantOwnerRepository {
   // Notifications
   Future<Result<void, String>> markNotificationAsRead(String notificationId);
   Future<Result<List<Map<String, dynamic>>, String>> getNotifications(String restaurantId);
+
+  // Wallet & Financials
+  Future<Result<Map<String, dynamic>, String>> getWalletBalance(String restaurantId);
+  Future<Result<List<Map<String, dynamic>>, String>> getWalletTransactions(String restaurantId);
+  Future<Result<void, String>> requestWithdrawal(String restaurantId, double amount, String description);
 }

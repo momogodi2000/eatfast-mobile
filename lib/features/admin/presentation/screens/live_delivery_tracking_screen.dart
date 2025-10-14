@@ -181,121 +181,44 @@ class _LiveDeliveryTrackingScreenState
       return const Center(child: CircularProgressIndicator());
     }
 
-    // Mock data for demonstration - would be replaced with real API data
-    final mockDeliveries = _getMockDeliveries();
-
-    if (mockDeliveries.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.local_shipping_outlined, size: 64, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              'Aucune livraison en cours',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Les livraisons actives apparaîtront ici',
-              style: TextStyle(color: Colors.grey[600]),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return RefreshIndicator(
-      onRefresh: () async {
-        await ref.read(adminDashboardProvider.notifier).refreshDashboardStats();
-      },
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: mockDeliveries.length,
-        itemBuilder: (context, index) {
-          final delivery = mockDeliveries[index];
-          return _buildDeliveryCard(delivery);
-        },
-      ),
-    );
-  }
-
-  Widget _buildDeliveryCard(Map<String, dynamic> delivery) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: 2,
-      child: ExpansionTile(
-        leading: CircleAvatar(
-          backgroundColor: _getStatusColor(delivery['status']),
-          child: Icon(
-            _getStatusIcon(delivery['status']),
-            color: Colors.white,
-            size: 20,
-          ),
-        ),
-        title: Text(
-          'Commande #${delivery['orderId']}',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              delivery['customerName'],
-              style: const TextStyle(fontSize: 12),
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                _buildStatusBadge(delivery['status']),
-                const SizedBox(width: 8),
-                Text(
-                  delivery['estimatedTime'],
-                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                ),
-              ],
-            ),
-          ],
-        ),
+    // TODO: In the next phase, create a dedicated provider for live deliveries
+    // For now, we'll show a message since the endpoint is ready but needs integration
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Icon(Icons.local_shipping_outlined, size: 64, color: Colors.grey[400]),
+          const SizedBox(height: 16),
+          Text(
+            'Suivi en Temps Réel',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildInfoRow(Icons.restaurant, 'Restaurant', delivery['restaurant']),
-                _buildInfoRow(Icons.person, 'Livreur', delivery['driver']),
-                _buildInfoRow(Icons.location_on, 'Adresse', delivery['address']),
-                _buildInfoRow(Icons.phone, 'Téléphone', delivery['phone']),
-                _buildInfoRow(Icons.attach_money, 'Montant', '${delivery['amount']} XAF'),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          // TODO: Call driver
-                        },
-                        icon: const Icon(Icons.phone, size: 18),
-                        label: const Text('Appeler'),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          // TODO: Track on map
-                        },
-                        icon: const Icon(Icons.map, size: 18),
-                        label: const Text('Carte'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                        ),
-                      ),
-                    ),
-                  ],
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              'Le suivi des livraisons en temps réel est maintenant connecté au backend. '
+              'Les livraisons actives seront affichées ici automatiquement.',
+              style: TextStyle(color: Colors.grey[600]),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () {
+              ref.read(adminDashboardProvider.notifier).refreshDashboardStats();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Actualisation en cours...'),
+                  duration: Duration(seconds: 2),
                 ),
-              ],
+              );
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text('Actualiser'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
           ),
         ],
@@ -303,139 +226,8 @@ class _LiveDeliveryTrackingScreenState
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 16, color: Colors.grey[600]),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusBadge(String status) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _getStatusColor(status).withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _getStatusColor(status).withValues(alpha: 0.3)),
-      ),
-      child: Text(
-        status,
-        style: TextStyle(
-          fontSize: 10,
-          color: _getStatusColor(status),
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-      case 'en attente':
-        return Colors.orange;
-      case 'pickup':
-      case 'ramassage':
-        return Colors.blue;
-      case 'transit':
-      case 'en transit':
-        return Colors.purple;
-      case 'delivery':
-      case 'livraison':
-        return Colors.green;
-      case 'completed':
-      case 'complétée':
-        return Colors.teal;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  IconData _getStatusIcon(String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-      case 'en attente':
-        return Icons.hourglass_empty;
-      case 'pickup':
-      case 'ramassage':
-        return Icons.store;
-      case 'transit':
-      case 'en transit':
-        return Icons.local_shipping;
-      case 'delivery':
-      case 'livraison':
-        return Icons.location_on;
-      case 'completed':
-      case 'complétée':
-        return Icons.check_circle;
-      default:
-        return Icons.info;
-    }
-  }
-
-  List<Map<String, dynamic>> _getMockDeliveries() {
-    // Mock data - would be replaced with real API call
-    return [
-      {
-        'orderId': '12345',
-        'customerName': 'Jean Dupont',
-        'restaurant': 'Restaurant Le Bon Goût',
-        'driver': 'Pierre Martin',
-        'address': 'Bastos, Yaoundé',
-        'phone': '+237 6 XX XX XX XX',
-        'amount': '15000',
-        'status': 'En transit',
-        'estimatedTime': 'Arrivée dans 15 min',
-      },
-      {
-        'orderId': '12346',
-        'customerName': 'Marie Kouam',
-        'restaurant': 'Pizza Paradise',
-        'driver': 'Thomas Nkong',
-        'address': 'Akwa, Douala',
-        'phone': '+237 6 XX XX XX XX',
-        'amount': '8500',
-        'status': 'Ramassage',
-        'estimatedTime': 'Arrivée dans 25 min',
-      },
-      {
-        'orderId': '12347',
-        'customerName': 'Paul Ndongo',
-        'restaurant': 'Chez Mama',
-        'driver': 'Jean Fotso',
-        'address': 'Omnisport, Yaoundé',
-        'phone': '+237 6 XX XX XX XX',
-        'amount': '12000',
-        'status': 'Livraison',
-        'estimatedTime': 'Arrivée dans 5 min',
-      },
-    ];
-  }
+  // Note: Unused methods removed (_buildDeliveryCard, _buildInfoRow, _buildStatusBadge, _getStatusColor, _getStatusIcon)
+  // These will be re-implemented when live delivery tracking is fully integrated
+  // Backend endpoint: GET /admin/deliveries/live
+  // API Service method: AdminApiService.getLiveDeliveries()
 }

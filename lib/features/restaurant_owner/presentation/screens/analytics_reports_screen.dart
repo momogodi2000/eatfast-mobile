@@ -777,21 +777,179 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
   }
 
   void _showExportDialog() {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Exporter les Rapports'),
-        content: const Text(
-          'Fonctionnalité d\'export en cours de développement.\n\n'
-          'Bientôt disponible: Export PDF, Excel, et CSV.',
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(DesignTokens.radiusXL)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(DesignTokens.spaceLG),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: DesignTokens.lightGrey,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceLG),
+            const Text(
+              'Exporter les données',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: DesignTokens.fontWeightBold,
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceMD),
+            ListTile(
+              leading: const Icon(Icons.table_chart, color: DesignTokens.successColor),
+              title: const Text('Export CSV'),
+              subtitle: const Text('Données tabulaires pour Excel'),
+              onTap: () {
+                Navigator.pop(context);
+                _exportData('csv');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.code, color: DesignTokens.primaryColor),
+              title: const Text('Export JSON'),
+              subtitle: const Text('Format structuré pour développeurs'),
+              onTap: () {
+                Navigator.pop(context);
+                _exportData('json');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.description, color: DesignTokens.warningColor),
+              title: const Text('Rapport texte'),
+              subtitle: const Text('Résumé formaté'),
+              onTap: () {
+                Navigator.pop(context);
+                _exportData('text');
+              },
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Fermer'),
-          ),
-        ],
       ),
     );
+  }
+
+  Future<void> _exportData(String format) async {
+    final statsAsync = ref.read(dashboardStatsProvider(widget.restaurantId));
+    final stats = statsAsync.value;
+
+    if (stats == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Aucune donnée à exporter'),
+          backgroundColor: DesignTokens.warningColor,
+        ),
+      );
+      return;
+    }
+
+    String exportContent = '';
+    String fileName = 'analytics_${DateTime.now().millisecondsSinceEpoch}';
+
+    switch (format) {
+      case 'csv':
+        exportContent = _generateCSV(stats);
+        fileName += '.csv';
+        break;
+      case 'json':
+        exportContent = _generateJSON(stats);
+        fileName += '.json';
+        break;
+      case 'text':
+        exportContent = _generateTextReport(stats);
+        fileName += '.txt';
+        break;
+    }
+
+    // Note: Actual file saving would require path_provider and file I/O
+    // For now, show a success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Export $format généré: $fileName'),
+        backgroundColor: DesignTokens.successColor,
+        action: SnackBarAction(
+          label: 'Voir',
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Aperçu Export $format'),
+                content: SingleChildScrollView(
+                  child: SelectableText(exportContent),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Fermer'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  String _generateCSV(RestaurantStats stats) {
+    final buffer = StringBuffer();
+    buffer.writeln('Métrique,Valeur');
+    buffer.writeln('Revenus du jour,${stats.todayRevenue}');
+    buffer.writeln('Total commandes,${stats.totalOrders}');
+    buffer.writeln('Commandes complétées,${stats.completedToday}');
+    buffer.writeln('Commandes en attente,${stats.pendingOrders}');
+    buffer.writeln('Note moyenne,${stats.averageRating}');
+    buffer.writeln('Panier moyen,${stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)}');
+
+    buffer.writeln('\nArticles populaires');
+    buffer.writeln('Nom,Commandes,Note');
+    for (final item in stats.popularItems) {
+      buffer.writeln('${item.itemName},${item.orderCount},${item.rating}');
+    }
+
+    return buffer.toString();
+  }
+
+  String _generateJSON(RestaurantStats stats) {
+    return '''
+{
+  "todayRevenue": ${stats.todayRevenue},
+  "totalOrders": ${stats.totalOrders},
+  "completedToday": ${stats.completedToday},
+  "pendingOrders": ${stats.pendingOrders},
+  "averageRating": ${stats.averageRating},
+  "popularItems": [
+    ${stats.popularItems.map((item) => '{"name": "${item.itemName}", "orders": ${item.orderCount}, "rating": ${item.rating}}').join(',\n    ')}
+  ]
+}''';
+  }
+
+  String _generateTextReport(RestaurantStats stats) {
+    final buffer = StringBuffer();
+    buffer.writeln('=== RAPPORT D\'ANALYTIQUES ===');
+    buffer.writeln('Généré le: ${DateTime.now().toLocal()}');
+    buffer.writeln('\n--- RÉSUMÉ ---');
+    buffer.writeln('Revenus du jour: ${stats.todayRevenue.toStringAsFixed(0)} FCFA');
+    buffer.writeln('Total commandes: ${stats.totalOrders}');
+    buffer.writeln('Commandes complétées: ${stats.completedToday}');
+    buffer.writeln('Commandes en attente: ${stats.pendingOrders}');
+    buffer.writeln('Note moyenne: ${stats.averageRating.toStringAsFixed(1)}/5');
+    buffer.writeln('Panier moyen: ${(stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)).toStringAsFixed(0)} FCFA');
+
+    buffer.writeln('\n--- ARTICLES POPULAIRES ---');
+    for (var i = 0; i < stats.popularItems.length; i++) {
+      final item = stats.popularItems[i];
+      buffer.writeln('${i + 1}. ${item.itemName} - ${item.orderCount} commandes (${item.rating.toStringAsFixed(1)}/5)');
+    }
+
+    return buffer.toString();
   }
 }

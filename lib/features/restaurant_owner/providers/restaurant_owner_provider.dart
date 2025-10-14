@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/result.dart';
 import '../domain/models/restaurant_stats.dart';
@@ -210,6 +211,28 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
 
   Future<Result<void, String>> bulkUpdateAvailability(List<String> itemIds, bool isAvailable) async {
     return await _repository.bulkUpdateAvailability(itemIds, isAvailable);
+  }
+
+  // Image Management Methods
+  Future<Result<String, String>> uploadItemImage(String itemId, File imageFile) async {
+    return await _repository.uploadItemImage(itemId, imageFile);
+  }
+
+  Future<Result<String, String>> uploadCategoryImage(String categoryId, File imageFile) async {
+    return await _repository.uploadCategoryImage(categoryId, imageFile);
+  }
+
+  // Wallet & Financials Methods
+  Future<Result<Map<String, dynamic>, String>> getWalletBalance() async {
+    return await _repository.getWalletBalance(_restaurantId);
+  }
+
+  Future<Result<List<Map<String, dynamic>>, String>> getWalletTransactions() async {
+    return await _repository.getWalletTransactions(_restaurantId);
+  }
+
+  Future<Result<void, String>> requestWithdrawal(double amount, String description) async {
+    return await _repository.requestWithdrawal(_restaurantId, amount, description);
   }
 
   List<LiveOrder> get filteredOrders {

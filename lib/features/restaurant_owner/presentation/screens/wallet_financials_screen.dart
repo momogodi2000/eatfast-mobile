@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/design_tokens.dart';
 import '../../../../shared/widgets/loading/app_loading_indicator.dart';
+import '../../providers/restaurant_owner_provider.dart';
 import '../widgets/restaurant_manager_drawer.dart';
 
 class WalletFinancialsScreen extends ConsumerStatefulWidget {
@@ -24,11 +25,10 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoading = false;
-
-  // Mock data - will be replaced with real data from backend
-  final double _balance = 485750.0;
-  final double _pendingAmount = 125000.0;
-  final double _totalEarnings = 1250000.0;
+  double _balance = 0.0;
+  double _pendingAmount = 0.0;
+  double _totalEarnings = 0.0;
+  List<Map<String, dynamic>> _transactions = [];
 
   @override
   void initState() {
@@ -45,8 +45,59 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
 
   Future<void> _loadWalletData() async {
     setState(() => _isLoading = true);
-    // TODO: Load real wallet data from repository
-    await Future.delayed(const Duration(milliseconds: 500));
+
+    // Load wallet balance
+    final balanceResult = await ref
+        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .getWalletBalance();
+
+    balanceResult.when(
+      success: (data) {
+        if (mounted) {
+          setState(() {
+            _balance = (data['available_balance'] as num?)?.toDouble() ?? 0.0;
+            _pendingAmount = (data['pending_balance'] as num?)?.toDouble() ?? 0.0;
+            _totalEarnings = (data['total_earnings'] as num?)?.toDouble() ?? 0.0;
+          });
+        }
+      },
+      failure: (error) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur de chargement du solde: $error'),
+              backgroundColor: DesignTokens.errorColor,
+            ),
+          );
+        }
+      },
+    );
+
+    // Load transactions
+    final transactionsResult = await ref
+        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .getWalletTransactions();
+
+    transactionsResult.when(
+      success: (data) {
+        if (mounted) {
+          setState(() {
+            _transactions = data;
+          });
+        }
+      },
+      failure: (error) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur de chargement des transactions: $error'),
+              backgroundColor: DesignTokens.errorColor,
+            ),
+          );
+        }
+      },
+    );
+
     setState(() => _isLoading = false);
   }
 
@@ -208,15 +259,38 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
   }
 
   Widget _buildTransactionsTab() {
-    final transactions = _getMockTransactions();
+    if (_transactions.isEmpty) {
+      return RefreshIndicator(
+        onRefresh: _loadWalletData,
+        child: ListView(
+          padding: const EdgeInsets.all(DesignTokens.spaceXL),
+          children: [
+            const SizedBox(height: 100),
+            const Icon(Icons.account_balance_wallet_outlined, size: 80, color: DesignTokens.textTertiary),
+            const SizedBox(height: DesignTokens.spaceLG),
+            Text(
+              'Aucune transaction',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(color: DesignTokens.textSecondary),
+            ),
+            const SizedBox(height: DesignTokens.spaceSM),
+            Text(
+              'Vos transactions apparaîtront ici',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: DesignTokens.textTertiary),
+            ),
+          ],
+        ),
+      );
+    }
 
     return RefreshIndicator(
       onRefresh: _loadWalletData,
       child: ListView.builder(
         padding: const EdgeInsets.all(DesignTokens.spaceMD),
-        itemCount: transactions.length,
+        itemCount: _transactions.length,
         itemBuilder: (context, index) {
-          final transaction = transactions[index];
+          final transaction = _transactions[index];
           return _buildTransactionCard(transaction);
         },
       ),
@@ -248,7 +322,30 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
   }
 
   Widget _buildWithdrawalsTab() {
-    final withdrawals = _getMockWithdrawals();
+    // TODO: Replace with real withdrawal history from backend
+    final withdrawals = [
+      {
+        'amount': '50,000',
+        'date': 'Hier, 10:00',
+        'destination': 'MTN Mobile Money',
+        'status': 'completed',
+        'statusText': 'Complété',
+      },
+      {
+        'amount': '100,000',
+        'date': 'Il y a 3 jours',
+        'destination': 'Orange Money',
+        'status': 'pending',
+        'statusText': 'En cours',
+      },
+      {
+        'amount': '75,000',
+        'date': 'Il y a 1 semaine',
+        'destination': 'MTN Mobile Money',
+        'status': 'completed',
+        'statusText': 'Complété',
+      },
+    ];
 
     return ListView(
       padding: const EdgeInsets.all(DesignTokens.spaceMD),
@@ -640,7 +737,7 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
     );
   }
 
-  void _processWithdrawal(String amount) {
+  Future<void> _processWithdrawal(String amount) async {
     if (amount.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -651,73 +748,62 @@ class _WalletFinancialsScreenState extends ConsumerState<WalletFinancialsScreen>
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Demande de retrait envoyée. Traitement dans 24-48h'),
-        backgroundColor: DesignTokens.successColor,
-      ),
+    final withdrawalAmount = double.tryParse(amount);
+    if (withdrawalAmount == null || withdrawalAmount <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Montant invalide'),
+          backgroundColor: DesignTokens.warningColor,
+        ),
+      );
+      return;
+    }
+
+    if (withdrawalAmount > _balance) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Solde insuffisant'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+      return;
+    }
+
+    if (withdrawalAmount < 10000) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Le montant minimum de retrait est de 10,000 FCFA'),
+          backgroundColor: DesignTokens.warningColor,
+        ),
+      );
+      return;
+    }
+
+    final result = await ref
+        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .requestWithdrawal(withdrawalAmount, 'Demande de retrait');
+
+    result.when(
+      success: (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Demande de retrait envoyée. Traitement dans 24-48h'),
+            backgroundColor: DesignTokens.successColor,
+          ),
+        );
+        _loadWalletData(); // Refresh data
+      },
+      failure: (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: $error'),
+            backgroundColor: DesignTokens.errorColor,
+          ),
+        );
+      },
     );
   }
 
-  // Mock data methods
-  List<Map<String, dynamic>> _getMockTransactions() {
-    return [
-      {
-        'type': 'credit',
-        'description': 'Commande #12345',
-        'amount': '15,000',
-        'date': 'Aujourd\'hui, 14:30',
-      },
-      {
-        'type': 'credit',
-        'description': 'Commande #12344',
-        'amount': '22,500',
-        'date': 'Aujourd\'hui, 12:15',
-      },
-      {
-        'type': 'debit',
-        'description': 'Retrait',
-        'amount': '50,000',
-        'date': 'Hier, 10:00',
-      },
-      {
-        'type': 'credit',
-        'description': 'Commande #12343',
-        'amount': '18,750',
-        'date': 'Hier, 19:45',
-      },
-      {
-        'type': 'credit',
-        'description': 'Commande #12342',
-        'amount': '12,000',
-        'date': '2 jours, 16:20',
-      },
-    ];
-  }
-
-  List<Map<String, dynamic>> _getMockWithdrawals() {
-    return [
-      {
-        'amount': '50,000',
-        'date': 'Hier, 10:00',
-        'destination': 'MTN Mobile Money',
-        'status': 'completed',
-        'statusText': 'Complété',
-      },
-      {
-        'amount': '100,000',
-        'date': 'Il y a 3 jours',
-        'destination': 'Orange Money',
-        'status': 'pending',
-        'statusText': 'En cours',
-      },
-      {
-        'amount': '75,000',
-        'date': 'Il y a 1 semaine',
-        'destination': 'MTN Mobile Money',
-        'status': 'completed',
-        'statusText': 'Complété',
-      },
-    ];
-  }
+  // Note: Mock data methods removed - now using real backend API
+  // Backend endpoints: /restaurant/wallet, /restaurant/wallet/transactions, /restaurant/wallet/withdraw
 }

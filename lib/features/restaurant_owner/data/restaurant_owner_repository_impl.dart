@@ -109,8 +109,8 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
       );
 
       // TODO: Implement WebSocket connection for real-time updates
-      // For now, polling every 30 seconds
-      Timer.periodic(const Duration(seconds: 30), (timer) {
+      // Improved polling: every 10 seconds with better error handling
+      Timer.periodic(const Duration(seconds: 10), (timer) {
         if (_liveOrderControllers[restaurantId]?.isClosed ?? true) {
           timer.cancel();
           return;
@@ -135,12 +135,13 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<LiveOrder, String>> acceptOrder(String orderId, int estimatedPrepTime) async {
     try {
-      final response = await _apiClient.post('/orders/$orderId/accept', data: {
-        'estimated_prep_time': estimatedPrepTime,
+      // Backend route: POST /restaurant/orders/:orderId/confirm
+      final response = await _apiClient.post('/restaurant/orders/$orderId/confirm', data: {
+        'estimatedPreparationTime': estimatedPrepTime,
       });
-      
+
       if (response.statusCode == 200) {
-        return Result.success(LiveOrder.fromJson(response.data['order']));
+        return Result.success(LiveOrder.fromJson(response.data['order'] ?? response.data));
       } else {
         return Result.failure('Erreur lors de l\'acceptation de la commande');
       }
@@ -152,12 +153,13 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<LiveOrder, String>> rejectOrder(String orderId, String reason) async {
     try {
-      final response = await _apiClient.post('/orders/$orderId/reject', data: {
+      // Backend route: POST /restaurant/orders/:orderId/cancel
+      final response = await _apiClient.post('/restaurant/orders/$orderId/cancel', data: {
         'reason': reason,
       });
-      
+
       if (response.statusCode == 200) {
-        return Result.success(LiveOrder.fromJson(response.data['order']));
+        return Result.success(LiveOrder.fromJson(response.data['order'] ?? response.data));
       } else {
         return Result.failure('Erreur lors du rejet de la commande');
       }
@@ -169,12 +171,23 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   @override
   Future<Result<LiveOrder, String>> updateOrderStatus(String orderId, OrderStatus status) async {
     try {
-      final response = await _apiClient.put('/orders/$orderId/status', data: {
-        'status': status.name,
-      });
-      
+      // Backend routes: POST /restaurant/orders/:orderId/preparing or /ready
+      String endpoint;
+      switch (status) {
+        case OrderStatus.preparing:
+          endpoint = '/restaurant/orders/$orderId/preparing';
+          break;
+        case OrderStatus.ready:
+          endpoint = '/restaurant/orders/$orderId/ready';
+          break;
+        default:
+          return Result.failure('Statut non supporté');
+      }
+
+      final response = await _apiClient.post(endpoint);
+
       if (response.statusCode == 200) {
-        return Result.success(LiveOrder.fromJson(response.data['order']));
+        return Result.success(LiveOrder.fromJson(response.data['order'] ?? response.data));
       } else {
         return Result.failure('Erreur lors de la mise à jour du statut');
       }
@@ -577,6 +590,60 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
         return Result.success(List<Map<String, dynamic>>.from(data));
       } else {
         return Result.failure('Erreur lors de la récupération des notifications');
+      }
+    } catch (e) {
+      return Result.failure('Erreur de connexion: $e');
+    }
+  }
+
+  @override
+  Future<Result<Map<String, dynamic>, String>> getWalletBalance(String restaurantId) async {
+    try {
+      // Backend route: GET /restaurant/wallet (uses auth token)
+      final response = await _apiClient.get('/restaurant/wallet');
+
+      if (response.statusCode == 200) {
+        return Result.success(response.data);
+      } else {
+        return Result.failure('Erreur lors de la récupération du solde');
+      }
+    } catch (e) {
+      return Result.failure('Erreur de connexion: $e');
+    }
+  }
+
+  @override
+  Future<Result<List<Map<String, dynamic>>, String>> getWalletTransactions(String restaurantId) async {
+    try {
+      // Backend route: GET /restaurant/wallet/transactions
+      final response = await _apiClient.get('/restaurant/wallet/transactions');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['transactions'] ?? response.data ?? [];
+        return Result.success(List<Map<String, dynamic>>.from(data));
+      } else {
+        return Result.failure('Erreur lors de la récupération des transactions');
+      }
+    } catch (e) {
+      return Result.failure('Erreur de connexion: $e');
+    }
+  }
+
+  @override
+  Future<Result<void, String>> requestWithdrawal(String restaurantId, double amount, String description) async {
+    try {
+      // Backend route: POST /restaurant/wallet/withdraw
+      final response = await _apiClient.post('/restaurant/wallet/withdraw',
+        data: {
+          'amount': amount,
+          'description': description,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Result.success(null);
+      } else {
+        return Result.failure('Erreur lors de la demande de retrait');
       }
     } catch (e) {
       return Result.failure('Erreur de connexion: $e');
