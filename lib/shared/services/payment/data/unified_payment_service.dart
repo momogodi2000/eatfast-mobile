@@ -264,7 +264,7 @@ enum PaymentMethod {
   String get displayName {
     switch (this) {
       case PaymentMethod.cash:
-        return 'Espèces';
+        return 'EspÃ¨ces';
       case PaymentMethod.campay:
         return 'CamPay';
       case PaymentMethod.noupay:

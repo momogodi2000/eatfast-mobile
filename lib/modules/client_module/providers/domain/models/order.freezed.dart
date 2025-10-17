@@ -25,14 +25,15 @@ mixin _$Order {
   String get restaurantId => throw _privateConstructorUsedError;
   String get restaurantName => throw _privateConstructorUsedError;
   List<CartItem> get items => throw _privateConstructorUsedError;
-  OrderStatus get status => throw _privateConstructorUsedError;
+  shared_models.OrderStatus get status => throw _privateConstructorUsedError;
   double get subtotal => throw _privateConstructorUsedError;
   double get deliveryFee => throw _privateConstructorUsedError;
   double get tax => throw _privateConstructorUsedError;
   double get discount => throw _privateConstructorUsedError;
   double get total => throw _privateConstructorUsedError;
   UserAddress get deliveryAddress => throw _privateConstructorUsedError;
-  PaymentMethod get paymentMethod => throw _privateConstructorUsedError;
+  shared_models.PaymentMethod get paymentMethod =>
+      throw _privateConstructorUsedError;
   String? get specialInstructions => throw _privateConstructorUsedError;
   String? get driverId => throw _privateConstructorUsedError;
   String? get driverName => throw _privateConstructorUsedError;
@@ -64,14 +65,14 @@ abstract class $OrderCopyWith<$Res> {
       String restaurantId,
       String restaurantName,
       List<CartItem> items,
-      OrderStatus status,
+      shared_models.OrderStatus status,
       double subtotal,
       double deliveryFee,
       double tax,
       double discount,
       double total,
       UserAddress deliveryAddress,
-      PaymentMethod paymentMethod,
+      shared_models.PaymentMethod paymentMethod,
       String? specialInstructions,
       String? driverId,
       String? driverName,
@@ -145,7 +146,7 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as OrderStatus,
+              as shared_models.OrderStatus,
       subtotal: null == subtotal
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -173,7 +174,7 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
       paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
+              as shared_models.PaymentMethod,
       specialInstructions: freezed == specialInstructions
           ? _value.specialInstructions
           : specialInstructions // ignore: cast_nullable_to_non_nullable
@@ -227,14 +228,14 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
       String restaurantId,
       String restaurantName,
       List<CartItem> items,
-      OrderStatus status,
+      shared_models.OrderStatus status,
       double subtotal,
       double deliveryFee,
       double tax,
       double discount,
       double total,
       UserAddress deliveryAddress,
-      PaymentMethod paymentMethod,
+      shared_models.PaymentMethod paymentMethod,
       String? specialInstructions,
       String? driverId,
       String? driverName,
@@ -306,7 +307,7 @@ class __$$OrderImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as OrderStatus,
+              as shared_models.OrderStatus,
       subtotal: null == subtotal
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -334,7 +335,7 @@ class __$$OrderImplCopyWithImpl<$Res>
       paymentMethod: null == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
+              as shared_models.PaymentMethod,
       specialInstructions: freezed == specialInstructions
           ? _value.specialInstructions
           : specialInstructions // ignore: cast_nullable_to_non_nullable
@@ -425,7 +426,7 @@ class _$OrderImpl extends _Order {
   }
 
   @override
-  final OrderStatus status;
+  final shared_models.OrderStatus status;
   @override
   final double subtotal;
   @override
@@ -439,7 +440,7 @@ class _$OrderImpl extends _Order {
   @override
   final UserAddress deliveryAddress;
   @override
-  final PaymentMethod paymentMethod;
+  final shared_models.PaymentMethod paymentMethod;
   @override
   final String? specialInstructions;
   @override
@@ -567,14 +568,14 @@ abstract class _Order extends Order {
       required final String restaurantId,
       required final String restaurantName,
       required final List<CartItem> items,
-      required final OrderStatus status,
+      required final shared_models.OrderStatus status,
       required final double subtotal,
       required final double deliveryFee,
       required final double tax,
       required final double discount,
       required final double total,
       required final UserAddress deliveryAddress,
-      required final PaymentMethod paymentMethod,
+      required final shared_models.PaymentMethod paymentMethod,
       final String? specialInstructions,
       final String? driverId,
       final String? driverName,
@@ -599,7 +600,7 @@ abstract class _Order extends Order {
   @override
   List<CartItem> get items;
   @override
-  OrderStatus get status;
+  shared_models.OrderStatus get status;
   @override
   double get subtotal;
   @override
@@ -613,7 +614,7 @@ abstract class _Order extends Order {
   @override
   UserAddress get deliveryAddress;
   @override
-  PaymentMethod get paymentMethod;
+  shared_models.PaymentMethod get paymentMethod;
   @override
   String? get specialInstructions;
   @override
@@ -648,7 +649,7 @@ OrderStatusUpdate _$OrderStatusUpdateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OrderStatusUpdate {
   String get id => throw _privateConstructorUsedError;
-  OrderStatus get status => throw _privateConstructorUsedError;
+  shared_models.OrderStatus get status => throw _privateConstructorUsedError;
   DateTime get timestamp => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   String? get updatedBy => throw _privateConstructorUsedError;
@@ -671,7 +672,7 @@ abstract class $OrderStatusUpdateCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      OrderStatus status,
+      shared_models.OrderStatus status,
       DateTime timestamp,
       String? message,
       String? updatedBy});
@@ -706,7 +707,7 @@ class _$OrderStatusUpdateCopyWithImpl<$Res, $Val extends OrderStatusUpdate>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as OrderStatus,
+              as shared_models.OrderStatus,
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -733,7 +734,7 @@ abstract class _$$OrderStatusUpdateImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      OrderStatus status,
+      shared_models.OrderStatus status,
       DateTime timestamp,
       String? message,
       String? updatedBy});
@@ -766,7 +767,7 @@ class __$$OrderStatusUpdateImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as OrderStatus,
+              as shared_models.OrderStatus,
       timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -799,7 +800,7 @@ class _$OrderStatusUpdateImpl implements _OrderStatusUpdate {
   @override
   final String id;
   @override
-  final OrderStatus status;
+  final shared_models.OrderStatus status;
   @override
   final DateTime timestamp;
   @override
@@ -851,7 +852,7 @@ class _$OrderStatusUpdateImpl implements _OrderStatusUpdate {
 abstract class _OrderStatusUpdate implements OrderStatusUpdate {
   const factory _OrderStatusUpdate(
       {required final String id,
-      required final OrderStatus status,
+      required final shared_models.OrderStatus status,
       required final DateTime timestamp,
       final String? message,
       final String? updatedBy}) = _$OrderStatusUpdateImpl;
@@ -862,7 +863,7 @@ abstract class _OrderStatusUpdate implements OrderStatusUpdate {
   @override
   String get id;
   @override
-  OrderStatus get status;
+  shared_models.OrderStatus get status;
   @override
   DateTime get timestamp;
   @override

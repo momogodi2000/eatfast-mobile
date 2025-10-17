@@ -12,7 +12,8 @@ import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 
 class PushNotificationService {
-  static final PushNotificationService _instance = PushNotificationService._internal();
+  static final PushNotificationService _instance =
+      PushNotificationService._internal();
   factory PushNotificationService() => _instance;
 
   FlutterLocalNotificationsPlugin? _localNotifications;
@@ -28,9 +29,12 @@ class PushNotificationService {
       StreamController<PromotionNotification>.broadcast();
 
   // Getters for streams
-  Stream<NotificationData> get notificationStream => _notificationController.stream;
-  Stream<OrderNotification> get orderNotifications => _orderNotificationController.stream;
-  Stream<PromotionNotification> get promotionNotifications => _promotionController.stream;
+  Stream<NotificationData> get notificationStream =>
+      _notificationController.stream;
+  Stream<OrderNotification> get orderNotifications =>
+      _orderNotificationController.stream;
+  Stream<PromotionNotification> get promotionNotifications =>
+      _promotionController.stream;
 
   PushNotificationService._internal();
 
@@ -60,7 +64,6 @@ class PushNotificationService {
       if (_deviceToken != null) {
         await _registerPushSubscription(_deviceToken!);
       }
-
     } catch (e) {
       if (kDebugMode) print('Error registering device with backend: $e');
     }
@@ -70,7 +73,9 @@ class PushNotificationService {
   Future<void> _initializeLocalNotifications() async {
     _localNotifications = FlutterLocalNotificationsPlugin();
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -97,8 +102,8 @@ class PushNotificationService {
   Future<void> _createNotificationChannels() async {
     const orderChannel = AndroidNotificationChannel(
       'order_updates',
-      'Mises à jour de commandes',
-      description: 'Notifications pour les mises à jour de commandes',
+      'Mises Ã  jour de commandes',
+      description: 'Notifications pour les mises Ã  jour de commandes',
       importance: Importance.high,
       sound: RawResourceAndroidNotificationSound('order_notification'),
     );
@@ -106,27 +111,33 @@ class PushNotificationService {
     const promotionChannel = AndroidNotificationChannel(
       'promotions',
       'Promotions et offres',
-      description: 'Notifications pour les promotions et offres spéciales',
+      description: 'Notifications pour les promotions et offres spÃ©ciales',
       importance: Importance.defaultImportance,
     );
 
     const generalChannel = AndroidNotificationChannel(
       'general',
-      'Notifications générales',
-      description: 'Notifications générales de l\'application',
+      'Notifications gÃ©nÃ©rales',
+      description: 'Notifications gÃ©nÃ©rales de l\'application',
       importance: Importance.defaultImportance,
     );
 
     await _localNotifications!
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(orderChannel);
 
     await _localNotifications!
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(promotionChannel);
 
     await _localNotifications!
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(generalChannel);
   }
 
@@ -155,10 +166,7 @@ class PushNotificationService {
         data: {
           'subscription': {
             'endpoint': 'mobile://device/$deviceToken',
-            'keys': {
-              'p256dh': 'mobile-device-key',
-              'auth': deviceToken,
-            },
+            'keys': {'p256dh': 'mobile-device-key', 'auth': deviceToken},
           },
           'deviceInfo': await _getDeviceInfo(),
         },
@@ -272,11 +280,15 @@ class PushNotificationService {
     switch (data.type) {
       case NotificationType.orderUpdate:
         if (data.orderId != null) {
-          _orderNotificationController.add(OrderNotification.fromNotificationData(data));
+          _orderNotificationController.add(
+            OrderNotification.fromNotificationData(data),
+          );
         }
         break;
       case NotificationType.promotion:
-        _promotionController.add(PromotionNotification.fromNotificationData(data));
+        _promotionController.add(
+          PromotionNotification.fromNotificationData(data),
+        );
         break;
       default:
         break;
@@ -327,7 +339,9 @@ class PushNotificationService {
   }
 
   /// Get notification history from backend
-  Future<List<NotificationData>> getNotificationHistory({int limit = 50}) async {
+  Future<List<NotificationData>> getNotificationHistory({
+    int limit = 50,
+  }) async {
     try {
       final apiClient = ApiClient();
       final response = await apiClient.get(
@@ -351,7 +365,10 @@ class PushNotificationService {
     try {
       final apiClient = ApiClient();
       await apiClient.patch(
-        ApiConstants.notificationMarkRead.replaceAll('{notificationId}', notificationId),
+        ApiConstants.notificationMarkRead.replaceAll(
+          '{notificationId}',
+          notificationId,
+        ),
       );
     } catch (e) {
       if (kDebugMode) print('Error marking notification as read: $e');
@@ -425,7 +442,8 @@ class NotificationData {
       body: backendData['message'] ?? backendData['body'] ?? '',
       type: _parseNotificationType(backendData['type']),
       data: backendData['data'] ?? {},
-      timestamp: DateTime.tryParse(backendData['createdAt'] ?? '') ?? DateTime.now(),
+      timestamp:
+          DateTime.tryParse(backendData['createdAt'] ?? '') ?? DateTime.now(),
       isRead: backendData['read'] ?? false,
       orderId: backendData['orderId'],
       restaurantId: backendData['restaurantId'],
@@ -440,7 +458,9 @@ class NotificationData {
       body: json['body'] ?? '',
       type: _parseNotificationType(json['type']),
       data: json['data'],
-      timestamp: DateTime.parse(json['timestamp'] ?? DateTime.now().toIso8601String()),
+      timestamp: DateTime.parse(
+        json['timestamp'] ?? DateTime.now().toIso8601String(),
+      ),
       isRead: json['isRead'] ?? false,
       orderId: json['orderId'],
       restaurantId: json['restaurantId'],

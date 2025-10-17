@@ -1,5 +1,6 @@
 ﻿import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
+import 'package:eatfast_mobile/shared/services/orders/domain/models/order_status.dart';
 
 part 'api_responses.freezed.dart';
 part 'api_responses.g.dart';

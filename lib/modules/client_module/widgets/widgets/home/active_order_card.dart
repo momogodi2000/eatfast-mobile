@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/services/orders/providers/order_provider.dart';
-import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class ActiveOrderCard extends ConsumerWidget {
   const ActiveOrderCard({super.key});

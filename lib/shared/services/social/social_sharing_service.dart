@@ -67,10 +67,10 @@ class SocialSharingService {
       // Create share content
       final shareData = ShareContent(
         type: ShareContentType.restaurant,
-        title: 'Découvrez $restaurantName sur EatFast!',
+        title: 'DÃ©couvrez $restaurantName sur EatFast!',
         message:
             customMessage ??
-            'Je viens de découvrir ce super restaurant sur EatFast: $restaurantName. '
+            'Je viens de dÃ©couvrir ce super restaurant sur EatFast: $restaurantName. '
                 'Commandez maintenant et profitez de la livraison rapide!',
         url: _buildDeepLink('restaurant', restaurantId, referralCode),
         referralCode: referralCode,
@@ -102,7 +102,7 @@ class SocialSharingService {
         title: '$itemName de $restaurantName',
         message:
             customMessage ??
-            'Regardez ce délicieux plat que j\'ai trouvé sur EatFast: $itemName de $restaurantName! ???',
+            'Regardez ce dÃ©licieux plat que j\'ai trouvÃ© sur EatFast: $itemName de $restaurantName! ğŸ½ï¸',
         url: _buildDeepLink('menu-item', menuItemId),
         imageData: itemImage,
         metadata: {
@@ -130,11 +130,11 @@ class SocialSharingService {
     try {
       final shareData = ShareContent(
         type: ShareContentType.order,
-        title: 'Commande livrée avec succès!',
+        title: 'Commande livrÃ©e avec succÃ¨s!',
         message:
             customMessage ??
             'Je viens de recevoir ma commande de $restaurantName via EatFast! '
-                'Service rapide et efficace. Je recommande! ??',
+                'Service rapide et efficace. Je recommande! ğŸ‘',
         url: _buildDeepLink('order', orderId),
         imageData: orderScreenshot,
         metadata: {'orderId': orderId, 'restaurantName': restaurantName},
@@ -159,12 +159,12 @@ class SocialSharingService {
     try {
       final shareData = ShareContent(
         type: ShareContentType.promotion,
-        title: 'Offre spéciale EatFast: $promoTitle',
+        title: 'Offre spÃ©ciale EatFast: $promoTitle',
         message:
             customMessage ??
             'Super offre sur EatFast! $promoTitle\n'
                 'Code promo: $promoCode\n'
-                'Profitez-en avant qu\'il ne soit trop tard! ??',
+                'Profitez-en avant qu\'il ne soit trop tard! ğŸ‰',
         url: _buildDeepLink('promotion', promotionId),
         imageData: promoImage,
         metadata: {
@@ -193,11 +193,11 @@ class SocialSharingService {
     try {
       final shareData = ShareContent(
         type: ShareContentType.loyaltyAchievement,
-        title: 'Nouveau succès débloqué sur EatFast!',
+        title: 'Nouveau succÃ¨s dÃ©bloquÃ© sur EatFast!',
         message:
             customMessage ??
-            'Je viens de débloquer "$achievementTitle" sur EatFast et j\'ai gagné $pointsEarned points! ??\n'
-                'Rejoignez-moi et profitez du programme de fidélité!',
+            'Je viens de dÃ©bloquer "$achievementTitle" sur EatFast et j\'ai gagnÃ© $pointsEarned points! ğŸ†\n'
+                'Rejoignez-moi et profitez du programme de fidÃ©litÃ©!',
         url: _buildDeepLink('achievement', achievementId),
         imageData: achievementImage,
         metadata: {
@@ -228,10 +228,10 @@ class SocialSharingService {
         title: 'Rejoignez EatFast avec mon code de parrainage!',
         message:
             customMessage ??
-            'Salut! Je t\'invite à essayer EatFast, la meilleure app de livraison de nourriture! ??\n\n'
+            'Salut! Je t\'invite Ã  essayer EatFast, la meilleure app de livraison de nourriture! ğŸ•\n\n'
                 'Utilise mon code de parrainage: $referralCode\n'
-                'Tu recevras ${referralData['bonusPoints']} points de fidélité gratuits!\n\n'
-                'Télécharge l\'app maintenant:',
+                'Tu recevras ${referralData['bonusPoints']} points de fidÃ©litÃ© gratuits!\n\n'
+                'TÃ©lÃ©charge l\'app maintenant:',
         url: _buildDeepLink('referral', referralCode),
         referralCode: referralCode,
         metadata: {
@@ -256,15 +256,15 @@ class SocialSharingService {
     try {
       final shareData = ShareContent(
         type: ShareContentType.appDownload,
-        title: 'Téléchargez EatFast - Livraison rapide!',
+        title: 'TÃ©lÃ©chargez EatFast - Livraison rapide!',
         message:
             customMessage ??
-            'Découvrez EatFast, l\'app de livraison la plus rapide au Cameroun! ????\n\n'
-                '? Livraison en 30 minutes\n'
-                '? Plus de 500 restaurants\n'
-                '? Paiement mobile money\n'
-                '? Programme de fidélité\n\n'
-                'Téléchargez maintenant:',
+            'DÃ©couvrez EatFast, l\'app de livraison la plus rapide au Cameroun! ğŸš€ğŸ”\n\n'
+                'âœ“ Livraison en 30 minutes\n'
+                'âœ“ Plus de 500 restaurants\n'
+                'âœ“ Paiement mobile money\n'
+                'âœ“ Programme de fidÃ©litÃ©\n\n'
+                'TÃ©lÃ©chargez maintenant:',
         url: _buildAppDownloadUrl(),
         metadata: {'source': 'user_share', 'platform': platform.toString()},
       );

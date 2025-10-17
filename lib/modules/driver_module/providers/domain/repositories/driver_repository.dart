@@ -1,8 +1,5 @@
 ﻿import 'dart:io';
-import 'package:eatfast_mobile/../shared/utils/result.dart';
-import '../models/driver_profile.dart';
-import '../models/delivery_order.dart';
-import '../models/driver_earnings.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 abstract class DriverRepository {
   // Driver Profile Management

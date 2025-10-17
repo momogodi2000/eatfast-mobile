@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/modules/driver_module/providers/domain/models/delivery_order.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class AvailableOrdersList extends ConsumerWidget {
   final List<DeliveryOrder> orders;

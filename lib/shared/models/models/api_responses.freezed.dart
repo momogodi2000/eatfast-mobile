@@ -3200,13 +3200,13 @@ class _$OrderStatusHistoryCopyWithImpl<$Res, $Val extends OrderStatusHistory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? timestamp = null,
     Object? note = freezed,
     Object? updatedBy = freezed,
   }) {
     return _then(_value.copyWith(
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as OrderStatus,
@@ -3254,13 +3254,13 @@ class __$$OrderStatusHistoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
     Object? timestamp = null,
     Object? note = freezed,
     Object? updatedBy = freezed,
   }) {
     return _then(_$OrderStatusHistoryImpl(
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as OrderStatus,
@@ -3311,7 +3311,7 @@ class _$OrderStatusHistoryImpl implements _OrderStatusHistory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OrderStatusHistoryImpl &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.note, note) || other.note == note) &&
@@ -3321,8 +3321,8 @@ class _$OrderStatusHistoryImpl implements _OrderStatusHistory {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(status), timestamp, note, updatedBy);
+  int get hashCode =>
+      Object.hash(runtimeType, status, timestamp, note, updatedBy);
 
   /// Create a copy of OrderStatusHistory
   /// with the given fields replaced by the non-null parameter values.
@@ -3844,7 +3844,7 @@ class _$OrderStatusUpdateCopyWithImpl<$Res, $Val extends OrderStatusUpdate>
   @override
   $Res call({
     Object? orderId = null,
-    Object? status = freezed,
+    Object? status = null,
     Object? timestamp = null,
     Object? message = freezed,
     Object? updatedBy = freezed,
@@ -3855,7 +3855,7 @@ class _$OrderStatusUpdateCopyWithImpl<$Res, $Val extends OrderStatusUpdate>
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String,
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as OrderStatus,
@@ -3927,7 +3927,7 @@ class __$$OrderStatusUpdateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? orderId = null,
-    Object? status = freezed,
+    Object? status = null,
     Object? timestamp = null,
     Object? message = freezed,
     Object? updatedBy = freezed,
@@ -3938,7 +3938,7 @@ class __$$OrderStatusUpdateImplCopyWithImpl<$Res>
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String,
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as OrderStatus,
@@ -4000,7 +4000,7 @@ class _$OrderStatusUpdateImpl implements _OrderStatusUpdate {
         (other.runtimeType == runtimeType &&
             other is _$OrderStatusUpdateImpl &&
             (identical(other.orderId, orderId) || other.orderId == orderId) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.message, message) || other.message == message) &&
@@ -4012,14 +4012,8 @@ class _$OrderStatusUpdateImpl implements _OrderStatusUpdate {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      orderId,
-      const DeepCollectionEquality().hash(status),
-      timestamp,
-      message,
-      updatedBy,
-      driverLocation);
+  int get hashCode => Object.hash(runtimeType, orderId, status, timestamp,
+      message, updatedBy, driverLocation);
 
   /// Create a copy of OrderStatusUpdate
   /// with the given fields replaced by the non-null parameter values.

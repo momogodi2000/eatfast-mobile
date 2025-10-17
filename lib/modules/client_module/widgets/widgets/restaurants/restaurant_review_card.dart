@@ -1,8 +1,7 @@
 ﻿import 'package:flutter/material.dart';
-
 import 'package:eatfast_mobile/shared/themes/app_colors.dart';
 import 'package:eatfast_mobile/shared/themes/app_text_styles.dart';
-import '../domain/models/restaurant_review.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class RestaurantReviewCard extends StatelessWidget {
   final RestaurantReview review;
