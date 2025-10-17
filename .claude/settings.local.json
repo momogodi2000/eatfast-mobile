@@ -24,7 +24,18 @@
       "Bash(if [ -d \"build\" ])",
       "Bash(then rm -rf build)",
       "Bash(./gradlew:*)",
-      "Bash(adb logcat:*)"
+      "Bash(adb logcat:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(powershell:*)",
+      "Bash(tee:*)",
+      "Bash(git -C \"E:\\project\\Eat Fast App\\eatfatsApp\" log --oneline -10 -- \"lib/core/auth/*\")",
+      "Read(//e/**)",
+      "Bash(timeout 180 bash -c \"while [ ! -f ''E:\\project\\Eat Fast App\\eatfatsApp\\analyze_output.txt'' ] || grep -q ''Analyzing'' ''E:\\project\\Eat Fast App\\eatfatsApp\\analyze_output.txt''; do sleep 2; done; cat ''E:\\project\\Eat Fast App\\eatfatsApp\\analyze_output.txt''\")",
+      "Bash(dart analyze:*)",
+      "Bash(del \"E:\\project\\Eat Fast App\\eatfatsApp\\lib\\shared\\services\\orders\\domain\\repositories\\order极速快3pository.dart\")",
+      "Bash(rm:*)",
+      "Bash(awk:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

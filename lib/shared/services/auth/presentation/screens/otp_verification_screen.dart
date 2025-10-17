@@ -1,0 +1,349 @@
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'dart:async';
+import 'package:eatfast_mobile/shared/config/router/route_names.dart';
+import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
+import 'package:eatfast_mobile/shared/services/auth/providers/unified_auth_provider.dart';
+import 'package:eatfast_mobile/shared/services/auth/unified_auth_service.dart';
+
+/// OTP Verification Screen
+class OtpVerificationScreen extends ConsumerStatefulWidget {
+  final String phoneNumber;
+  
+  const OtpVerificationScreen({
+    super.key,
+    required this.phoneNumber,
+  });
+
+  @override
+  ConsumerState<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+}
+
+class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (index) => TextEditingController(),
+  );
+  final List<FocusNode> _focusNodes = List.generate(
+    6,
+    (index) => FocusNode(),
+  );
+
+  bool _isLoading = false;
+  bool _canResend = false;
+  int _resendCountdown = 30;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startResendTimer();
+  }
+
+  @override
+  void dispose() {
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startResendTimer() {
+    _canResend = false;
+    _resendCountdown = 30;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_resendCountdown > 0) {
+        setState(() {
+          _resendCountdown--;
+        });
+      } else {
+        setState(() {
+          _canResend = true;
+        });
+        timer.cancel();
+      }
+    });
+  }
+
+  void _onDigitChanged(String value, int index) {
+    if (value.isNotEmpty) {
+      if (index < 5) {
+        _focusNodes[index + 1].requestFocus();
+      }
+    } else {
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
+    }
+
+    // Check if all fields are filled
+    final bool allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
+    if (allFilled) {
+      _onVerifyPressed();
+    }
+  }
+
+  Future<void> _onVerifyPressed() async {
+    final String otp = _controllers.map((controller) => controller.text).join();
+
+    if (otp.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Veuillez entrer le code complet'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Call real API through unified auth provider
+      await ref.read(authProvider.notifier).verifyOtp(
+        phoneOrEmail: widget.phoneNumber,
+        code: otp,
+        type: OtpType.login,
+      );
+
+      if (!mounted) return;
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('V�rification r�ussie'),
+          backgroundColor: DesignTokens.successColor,
+        ),
+      );
+
+      // Navigate to home
+      context.go(RouteNames.home);
+    } catch (error) {
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erreur de v�rification: ${error.toString()}'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onResendPressed() async {
+    if (!_canResend) return;
+
+    try {
+      // Call real API to resend OTP
+      final success = await ref.read(authProvider.notifier).sendOtp(
+        phoneOrEmail: widget.phoneNumber,
+        type: OtpType.login,
+      );
+
+      if (!mounted) return;
+
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Code de v�rification renvoy�'),
+            backgroundColor: DesignTokens.successColor,
+          ),
+        );
+        _startResendTimer();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Erreur lors du renvoi du code'),
+            backgroundColor: DesignTokens.errorColor,
+          ),
+        );
+      }
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erreur: ${error.toString()}'),
+          backgroundColor: DesignTokens.errorColor,
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: DesignTokens.backgroundPrimary,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => context.pop(),
+        ),
+        title: const Text('V�rification'),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(DesignTokens.spaceLG),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: DesignTokens.spaceXL),
+              
+              // Icon
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: DesignTokens.primaryColor.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.sms_outlined,
+                  color: DesignTokens.primaryColor,
+                  size: 40,
+                ),
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceLG),
+              
+              // Header
+              Text(
+                'V�rification du code',
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                  fontWeight: DesignTokens.fontWeightBold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceXS),
+              
+              Text(
+                'Nous avons envoy� un code de v�rification �',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: DesignTokens.textSecondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceXS),
+              
+              Text(
+                widget.phoneNumber,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: DesignTokens.fontWeightSemiBold,
+                  color: DesignTokens.primaryColor,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceXXL),
+              
+              // OTP Input Fields
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(6, (index) {
+                  return SizedBox(
+                    width: 50,
+                    height: 60,
+                    child: TextField(
+                      controller: _controllers[index],
+                      focusNode: _focusNodes[index],
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      maxLength: 1,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: DesignTokens.fontWeightBold,
+                      ),
+                      decoration: InputDecoration(
+                        counterText: '',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          borderSide: const BorderSide(
+                            color: DesignTokens.primaryColor,
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                      onChanged: (value) => _onDigitChanged(value, index),
+                      enabled: !_isLoading,
+                    ),
+                  );
+                }),
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceXXL),
+              
+              // Verify Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : _onVerifyPressed,
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(DesignTokens.white),
+                          ),
+                        )
+                      : const Text(
+                          'V�rifier',
+                          style: TextStyle(
+                            fontSize: DesignTokens.fontSizeLG,
+                            fontWeight: DesignTokens.fontWeightSemiBold,
+                          ),
+                        ),
+                ),
+              ),
+              
+              const SizedBox(height: DesignTokens.spaceLG),
+              
+              // Resend Code
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Vous n\'avez pas re�u le code ? '),
+                  TextButton(
+                    onPressed: _canResend ? _onResendPressed : null,
+                    child: Text(
+                      _canResend ? 'Renvoyer' : 'Renvoyer ($_resendCountdown)',
+                      style: TextStyle(
+                        color: _canResend ? DesignTokens.primaryColor : DesignTokens.textSecondary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              
+              const Spacer(),
+              
+              // Change Number
+              TextButton(
+                onPressed: () => context.pop(),
+                child: const Text('Changer le num�ro de t�l�phone'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

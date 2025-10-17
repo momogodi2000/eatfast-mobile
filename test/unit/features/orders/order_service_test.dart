@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/features/cart/domain/models/cart.dart';
-import 'package:eatfast_mobile/features/profile/domain/user_address.dart';
-import 'package:eatfast_mobile/features/payments/domain/models/payment.dart';
-import 'package:eatfast_mobile/features/restaurants/domain/models/menu_item.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/user_address.dart';
+import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_models.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
 
 void main() {
   group('Order Service Tests', () {
@@ -68,14 +68,14 @@ void main() {
           updatedAt: DateTime.now(),
         );
 
-        final paymentMethod = PaymentMethod.cash;
+        final paymentProvider = PaymentProvider.cash;
 
         // Act & Assert
         expect(cartItems, hasLength(2));
         expect(cartItems.first.menuItem.name, equals('Burger'));
         expect(cartItems.first.quantity, equals(2));
         expect(deliveryAddress.fullAddress, contains('123 Main St'));
-        expect(paymentMethod, equals(PaymentMethod.cash));
+        expect(paymentProvider, equals(PaymentProvider.cash));
       });
 
       test('should calculate order totals correctly', () async {
@@ -107,7 +107,7 @@ void main() {
           customerId: 'customer-1',
           amount: 30.00,
           currency: 'XAF',
-          method: PaymentMethod.cash,
+          method: PaymentProvider.cash,
           status: PaymentStatus.pending,
           createdAt: DateTime.now(),
         );
@@ -115,29 +115,29 @@ void main() {
         // Act & Assert
         expect(cartItem.totalPrice, equals(30.00));
         expect(payment.amount, equals(30.00));
-        expect(payment.method, equals(PaymentMethod.cash));
+        expect(payment.method, equals(PaymentProvider.cash));
         expect(payment.status, equals(PaymentStatus.pending));
       });
 
       test('should handle different payment methods', () {
         // Arrange & Act & Assert
-        expect(PaymentMethod.cash.displayName, equals('Cash on Delivery'));
-        expect(PaymentMethod.noupay.displayName, equals('NouPay'));
-        expect(PaymentMethod.campay.displayName, equals('CamPay'));
-        expect(PaymentMethod.stripe.displayName, equals('Credit/Debit Card'));
-        expect(PaymentMethod.wallet.displayName, equals('EatFast Wallet'));
-        expect(PaymentMethod.mtn.displayName, equals('MTN Mobile Money'));
-        expect(PaymentMethod.orange.displayName, equals('Orange Money'));
+        expect(PaymentProvider.cash.displayName, equals('Cash on Delivery'));
+        expect(PaymentProvider.noupay.displayName, equals('NouPay'));
+        expect(PaymentProvider.campay.displayName, equals('CamPay'));
+        expect(PaymentProvider.stripe.displayName, equals('Credit/Debit Card'));
+        expect(PaymentProvider.wallet.displayName, equals('EatFast Wallet'));
+        expect(PaymentProvider.mtnMomo.displayName, equals('MTN Mobile Money'));
+        expect(PaymentProvider.orangeMoney.displayName, equals('Orange Money'));
 
-        expect(PaymentMethod.mtn.requiresPhoneNumber, isTrue);
-        expect(PaymentMethod.orange.requiresPhoneNumber, isTrue);
-        expect(PaymentMethod.cash.requiresPhoneNumber, isFalse);
+        expect(PaymentProvider.mtnMomo.requiresPhoneNumber, isTrue);
+        expect(PaymentProvider.orangeMoney.requiresPhoneNumber, isTrue);
+        expect(PaymentProvider.cash.requiresPhoneNumber, isFalse);
 
-        expect(PaymentMethod.wallet.isDigitalWallet, isTrue);
-        expect(PaymentMethod.cash.isDigitalWallet, isFalse);
+        expect(PaymentProvider.wallet.isDigitalWallet, isTrue);
+        expect(PaymentProvider.cash.isDigitalWallet, isFalse);
 
-        expect(PaymentMethod.mtn.isMobileMoney, isTrue);
-        expect(PaymentMethod.stripe.isMobileMoney, isFalse);
+        expect(PaymentProvider.mtnMomo.isMobileMoney, isTrue);
+        expect(PaymentProvider.stripe.isMobileMoney, isFalse);
       });
 
       test('should validate address information correctly', () {
@@ -185,7 +185,7 @@ void main() {
           orderId: 'order-1',
           amount: 25.99,
           currency: 'XAF',
-          method: PaymentMethod.mtn,
+          method: PaymentProvider.mtnMomo,
           status: PaymentStatus.pending,
           phoneNumber: '+237697123456',
           createdAt: DateTime.now(),
@@ -223,7 +223,7 @@ void main() {
           customerId: 'customer-1',
           amount: 15.50,
           currency: 'XAF',
-          method: PaymentMethod.campay,
+          method: PaymentProvider.campay,
           status: PaymentStatus.completed,
           transactionId: 'txn-abc123',
           phoneNumber: '+237677123456',
@@ -272,7 +272,7 @@ void main() {
         expect(payment.customerId, equals('customer-1'));
         expect(payment.amount, equals(25.99));
         expect(payment.currency, equals('XAF'));
-        expect(payment.method, equals(PaymentMethod.noupay));
+        expect(payment.method, equals(PaymentProvider.noupay));
         expect(payment.status, equals(PaymentStatus.pending));
         expect(payment.transactionId, equals('txn-xyz789'));
         expect(payment.phoneNumber, equals('+237698123456'));

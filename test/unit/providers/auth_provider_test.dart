@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mockito/mockito.dart';
-import 'package:eatfast_mobile/core/auth/models/app_user.dart';
+import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 
 // Mock classes for testing
 class MockAuthRepository extends Mock {

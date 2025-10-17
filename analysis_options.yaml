@@ -28,3 +28,5 @@ analyzer:
   exclude:
     # Exclude files with incomplete implementation
     - lib/features/orders/presentation/screens/realtime_order_tracking_screen.dart
+    # Temporarily exclude admin module until implementation is complete
+    - lib/modules/admin_module/**

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/core/constants/api_constants.dart';
+import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 
 // Generate mocks
 @GenerateMocks([Dio])

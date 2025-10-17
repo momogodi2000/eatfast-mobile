@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'core/constants/app_constants.dart';
-import 'core/router/app_router.dart';
-import 'core/theme/app_theme.dart';
-import 'core/theme/theme_provider.dart';
-import 'core/l10n/language_provider.dart';
-import 'core/l10n/app_localizations.dart';
-import 'core/auth/providers/unified_auth_provider.dart';
+import 'shared/constants/app_constants.dart';
+import 'shared/config/router/app_router.dart';
+import 'shared/themes/app_theme.dart';
+import 'shared/themes/theme_provider.dart';
+import 'shared/l10n/language_provider.dart';
+import 'shared/l10n/arb/app_localizations.dart';
+import 'shared/services/auth/providers/unified_auth_provider.dart';
 
 void main() async {
   // Ensure Flutter bindings are initialized
@@ -36,12 +35,7 @@ class EatFastApp extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: themeState.effectiveThemeMode,
       locale: currentLanguage,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: AppRouter.createRouter(authState),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/core/services/websocket/websocket_service.dart';
+import 'package:eatfast_mobile/shared/services/websocket/websocket_service.dart';
 
 void main() {
   group('WebSocketService Tests', () {

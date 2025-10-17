@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/l10n/language_provider.dart';
-import '../../../core/theme/design_tokens.dart';
+import 'package:eatfast_mobile/shared/l10n/language_provider.dart';
+import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 
 /// Language selector widget for changing app language
 class LanguageSelector extends ConsumerWidget {

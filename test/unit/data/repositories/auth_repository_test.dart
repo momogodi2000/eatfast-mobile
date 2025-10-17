@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/core/auth/models/app_user.dart';
+import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 
 // Simple mock API client for testing
 class MockApiClient {
