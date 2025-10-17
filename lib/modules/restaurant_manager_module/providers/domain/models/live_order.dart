@@ -1,5 +1,5 @@
 ﻿import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:eatfast_mobile/shared/models/exports.dart' as shared_models;
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 part 'live_order.freezed.dart';
 part 'live_order.g.dart';
@@ -12,7 +12,7 @@ class LiveOrder with _$LiveOrder {
     required String customerPhone,
     required DateTime orderTime,
     required double totalAmount,
-  required shared_models.OrderStatus status,
+    required OrderStatus status,
     required int estimatedPrepTime,
     required PaymentStatus paymentStatus,
     required DeliveryType deliveryType,

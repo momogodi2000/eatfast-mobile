@@ -25,7 +25,7 @@ mixin _$LiveOrder {
   String get customerPhone => throw _privateConstructorUsedError;
   DateTime get orderTime => throw _privateConstructorUsedError;
   double get totalAmount => throw _privateConstructorUsedError;
-  shared_models.OrderStatus get status => throw _privateConstructorUsedError;
+  OrderStatus get status => throw _privateConstructorUsedError;
   int get estimatedPrepTime => throw _privateConstructorUsedError;
   PaymentStatus get paymentStatus => throw _privateConstructorUsedError;
   DeliveryType get deliveryType => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $LiveOrderCopyWith<$Res> {
       String customerPhone,
       DateTime orderTime,
       double totalAmount,
-      shared_models.OrderStatus status,
+      OrderStatus status,
       int estimatedPrepTime,
       PaymentStatus paymentStatus,
       DeliveryType deliveryType,
@@ -133,7 +133,7 @@ class _$LiveOrderCopyWithImpl<$Res, $Val extends LiveOrder>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as shared_models.OrderStatus,
+              as OrderStatus,
       estimatedPrepTime: null == estimatedPrepTime
           ? _value.estimatedPrepTime
           : estimatedPrepTime // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,7 @@ abstract class _$$LiveOrderImplCopyWith<$Res>
       String customerPhone,
       DateTime orderTime,
       double totalAmount,
-      shared_models.OrderStatus status,
+      OrderStatus status,
       int estimatedPrepTime,
       PaymentStatus paymentStatus,
       DeliveryType deliveryType,
@@ -271,7 +271,7 @@ class __$$LiveOrderImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as shared_models.OrderStatus,
+              as OrderStatus,
       estimatedPrepTime: null == estimatedPrepTime
           ? _value.estimatedPrepTime
           : estimatedPrepTime // ignore: cast_nullable_to_non_nullable
@@ -362,7 +362,7 @@ class _$LiveOrderImpl implements _LiveOrder {
   @override
   final double totalAmount;
   @override
-  final shared_models.OrderStatus status;
+  final OrderStatus status;
   @override
   final int estimatedPrepTime;
   @override
@@ -486,7 +486,7 @@ abstract class _LiveOrder implements LiveOrder {
       required final String customerPhone,
       required final DateTime orderTime,
       required final double totalAmount,
-      required final shared_models.OrderStatus status,
+      required final OrderStatus status,
       required final int estimatedPrepTime,
       required final PaymentStatus paymentStatus,
       required final DeliveryType deliveryType,
@@ -514,7 +514,7 @@ abstract class _LiveOrder implements LiveOrder {
   @override
   double get totalAmount;
   @override
-  shared_models.OrderStatus get status;
+  OrderStatus get status;
   @override
   int get estimatedPrepTime;
   @override

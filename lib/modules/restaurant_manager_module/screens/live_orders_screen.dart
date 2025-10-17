@@ -5,8 +5,17 @@ import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import 'package:eatfast_mobile/shared/models/live_order.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 import '../widgets/order_detail_card.dart';
 import '../widgets/widgets/restaurant_manager_drawer.dart';
+
+enum OrderFilter {
+  all,
+  pending,
+  preparing,
+  ready,
+  completed,
+}
 
 class LiveOrdersScreen extends ConsumerStatefulWidget {
   final String restaurantId;

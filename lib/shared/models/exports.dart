@@ -4,6 +4,7 @@
 // Restaurant models
 export 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
 export 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
+export 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant_review.dart';
 
 // User and Auth models
 export 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
