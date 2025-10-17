@@ -58,6 +58,19 @@ final dashboardStatsProvider = FutureProvider.family<RestaurantStats, String>((
   return await repository.getRestaurantStats(restaurantId);
 });
 
+// Item Performance Provider
+final itemPerformanceProvider = FutureProvider.family<List<local_models.MenuItemPerformance>, String>((
+  ref,
+  restaurantId,
+) async {
+  final repository = ref.watch(restaurantOwnerRepositoryProvider);
+  final result = await repository.getItemPerformance(restaurantId);
+  return result.when(
+    success: (performance) => performance,
+    failure: (error) => throw Exception(error),
+  );
+});
+
 // ============================================================================
 // State Classes
 // ============================================================================
@@ -140,6 +153,20 @@ class MenuCategoriesState {
       categories: categories ?? this.categories,
     );
   }
+
+  // Add .when() method for pattern matching
+  T when<T>({
+    required T Function() loading,
+    required T Function(List<local_models.MenuCategory>) data,
+    required T Function(String) error,
+  }) {
+    if (this.error != null) return error(this.error!);
+    if (isLoading) return loading();
+    return data(categories);
+  }
+
+  // Add .value getter for convenience
+  List<local_models.MenuCategory> get value => categories;
 }
 
 // ============================================================================
@@ -171,17 +198,28 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
   }
 
   // Wallet management methods
-  Future<void> getWalletBalance() async {
-    // Implementation for wallet balance
-    // This would typically call repository method
+  Future<shared_models.Result<Map<String, dynamic>, String>> getWalletBalance() async {
+    try {
+      return await _repository.getWalletBalance(restaurantId);
+    } catch (e) {
+      return shared_models.Result.failure(e.toString());
+    }
   }
 
-  Future<void> getWalletTransactions() async {
-    // Implementation for wallet transactions
+  Future<shared_models.Result<List<Map<String, dynamic>>, String>> getWalletTransactions() async {
+    try {
+      return await _repository.getWalletTransactions(restaurantId);
+    } catch (e) {
+      return shared_models.Result.failure(e.toString());
+    }
   }
 
-  Future<void> requestWithdrawal(double amount, String method) async {
-    // Implementation for withdrawal request
+  Future<shared_models.Result<void, String>> requestWithdrawal(double amount, String description) async {
+    try {
+      return await _repository.requestWithdrawal(restaurantId, amount, description);
+    } catch (e) {
+      return shared_models.Result.failure(e.toString());
+    }
   }
 }
 
@@ -200,10 +238,10 @@ class LiveOrdersNotifier extends StateNotifier<AsyncValue<List<LiveOrder>>> {
     try {
       final ordersResult = await _repository.getLiveOrders(restaurantId);
 
-      // Handle Result type properly
-      final orders = ordersResult.fold(
-        (success) => success,
-        (error) => throw Exception(error),
+      // Handle Result type properly using .when()
+      final orders = ordersResult.when(
+        success: (value) => value,
+        failure: (error) => throw Exception(error),
       );
 
       state = AsyncValue.data(orders);
@@ -262,9 +300,15 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
   Future<void> loadCategories() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      // This would call the repository method when implemented
-      // For now, returning empty list
-      state = state.copyWith(isLoading: false, categories: []);
+      final result = await _repository.getMenuCategories(restaurantId);
+      result.when(
+        success: (categories) {
+          state = state.copyWith(isLoading: false, categories: categories);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+        },
+      );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
@@ -303,82 +347,211 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
   }
 
   // Menu item management methods
-  Future<void> createMenuItem(local_models.MenuItemDetails item) async {
+  Future<shared_models.Result<local_models.MenuItemDetails, String>> createMenuItem(String categoryId, local_models.MenuItemDetails item) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for creating menu item
-      await loadCategories(); // Reload to get updated data
+      final result = await _repository.createMenuItem(categoryId, item);
+      return result.when(
+        success: (createdItem) async {
+          await loadCategories(); // Reload to get updated data
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(createdItem);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> updateMenuItem(local_models.MenuItemDetails item) async {
+  Future<shared_models.Result<local_models.MenuItemDetails, String>> updateMenuItem(local_models.MenuItemDetails item) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for updating menu item
-      await loadCategories();
+      final result = await _repository.updateMenuItem(item);
+      return result.when(
+        success: (updatedItem) async {
+          await loadCategories();
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(updatedItem);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> deleteMenuItem(String itemId) async {
+  Future<shared_models.Result<void, String>> deleteMenuItem(String itemId) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for deleting menu item
-      await loadCategories();
+      final result = await _repository.deleteMenuItem(itemId);
+      return result.when(
+        success: (_) async {
+          await loadCategories();
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(null);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> toggleItemAvailability(String itemId, bool available) async {
+  Future<shared_models.Result<void, String>> toggleItemAvailability(String itemId, bool available) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for toggling availability
-      await loadCategories();
+      final result = await _repository.toggleItemAvailability(itemId, available);
+      return result.when(
+        success: (_) async {
+          await loadCategories();
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(null);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> bulkUpdateAvailability(List<String> itemIds, bool available) async {
+  Future<shared_models.Result<void, String>> bulkUpdateAvailability(List<String> itemIds, bool available) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for bulk update
-      await loadCategories();
+      final result = await _repository.bulkUpdateAvailability(itemIds, available);
+      return result.when(
+        success: (_) async {
+          await loadCategories();
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(null);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<String?> uploadItemImage(String itemId, String imagePath) async {
+  Future<shared_models.Result<String, String>> uploadItemImage(String itemId, dynamic imageFile) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      // Implementation for image upload
-      return 'uploaded_url';
+      // Convert dynamic imageFile to File if it's not already
+      final file = imageFile is String ? null : imageFile;
+      if (file == null) {
+        state = state.copyWith(isLoading: false);
+        return shared_models.Result.failure('Invalid image file');
+      }
+
+      final result = await _repository.uploadItemImage(itemId, file);
+      return result.when(
+        success: (imageUrl) {
+          state = state.copyWith(isLoading: false);
+          return shared_models.Result.success(imageUrl);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
-      return null;
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> createMenuCategory(local_models.MenuCategory category) async {
+  Future<shared_models.Result<local_models.MenuCategory, String>> createMenuCategory(local_models.MenuCategory category) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      await addCategory(category);
+      final result = await _repository.createMenuCategory(restaurantId, category);
+      return result.when(
+        success: (createdCategory) {
+          final updatedCategories = [...state.categories, createdCategory];
+          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          return shared_models.Result.success(createdCategory);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> updateMenuCategory(local_models.MenuCategory category) async {
+  Future<shared_models.Result<local_models.MenuCategory, String>> updateMenuCategory(local_models.MenuCategory category) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      await updateCategory(category);
+      final result = await _repository.updateMenuCategory(category);
+      return result.when(
+        success: (updatedCategory) {
+          final updatedCategories = state.categories
+              .map((c) => c.categoryId == updatedCategory.categoryId ? updatedCategory : c)
+              .toList();
+          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          return shared_models.Result.success(updatedCategory);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 
-  Future<void> deleteMenuCategory(String categoryId) async {
+  Future<shared_models.Result<void, String>> deleteMenuCategory(String categoryId) async {
+    state = state.copyWith(isLoading: true, error: null);
     try {
-      await deleteCategory(categoryId);
+      final result = await _repository.deleteMenuCategory(categoryId);
+      return result.when(
+        success: (_) {
+          final updatedCategories = state.categories
+              .where((c) => c.categoryId != categoryId)
+              .toList();
+          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          return shared_models.Result.success(null);
+        },
+        failure: (error) {
+          state = state.copyWith(isLoading: false, error: error);
+          return shared_models.Result.failure(error);
+        },
+      );
     } catch (e) {
-      state = state.copyWith(error: e.toString());
+      final errorMessage = e.toString();
+      state = state.copyWith(isLoading: false, error: errorMessage);
+      return shared_models.Result.failure(errorMessage);
     }
   }
 }

@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
-import 'package:eatfast_mobile/shared/models/menu_management.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import '../widgets/widgets/restaurant_manager_drawer.dart';
 
@@ -1412,7 +1412,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     );
 
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .createMenuCategory(category);
 
     result.when(
@@ -1438,7 +1438,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   Future<void> _updateCategory(MenuCategory category) async {
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .updateMenuCategory(category);
 
     result.when(
@@ -1464,7 +1464,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   Future<void> _deleteCategory(String categoryId) async {
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .deleteMenuCategory(categoryId);
 
     result.when(
@@ -1490,7 +1490,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   Future<void> _deleteItem(String itemId) async {
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .deleteMenuItem(itemId);
 
     result.when(
@@ -1516,7 +1516,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   Future<void> _toggleItemAvailability(String itemId, bool isAvailable) async {
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .toggleItemAvailability(itemId, isAvailable);
 
     result.when(
@@ -1550,7 +1550,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     if (allItemIds.isEmpty) return;
 
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .bulkUpdateAvailability(allItemIds, isAvailable);
 
     result.when(
@@ -1602,7 +1602,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     );
 
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .createMenuItem(category.categoryId, item);
 
     await result.when(
@@ -1610,7 +1610,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         // Upload image if provided
         if (imageFile != null && createdItem.itemId.isNotEmpty) {
           final imageResult = await ref
-              .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+              .read(menuCategoriesProvider(widget.restaurantId).notifier)
               .uploadItemImage(createdItem.itemId, imageFile);
 
           imageResult.when(
@@ -1653,7 +1653,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   Future<void> _updateMenuItem(MenuItemDetails item, File? imageFile) async {
     final result = await ref
-        .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+        .read(menuCategoriesProvider(widget.restaurantId).notifier)
         .updateMenuItem(item);
 
     await result.when(
@@ -1661,7 +1661,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         // Upload image if provided
         if (imageFile != null) {
           final imageResult = await ref
-              .read(restaurantOwnerProvider(widget.restaurantId).notifier)
+              .read(menuCategoriesProvider(widget.restaurantId).notifier)
               .uploadItemImage(item.itemId, imageFile);
 
           imageResult.when(

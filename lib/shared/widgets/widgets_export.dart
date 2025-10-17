@@ -16,7 +16,7 @@ export 'common/error_display_widget.dart';
 export 'buttons/app_button.dart';
 
 // Cards
-export 'cards/restaurant_card.dart';
+export '../services/restaurants/presentation/widgets/restaurant_card.dart';
 
 // Overlays
 export 'overlays/loading_overlay.dart';

@@ -371,9 +371,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<MenuItemDetails, String>> createMenuItem(
+  Future<Result<menu_mgmt.MenuItemDetails, String>> createMenuItem(
     String categoryId,
-    MenuItemDetails item,
+    menu_mgmt.MenuItemDetails item,
   ) async {
     try {
       final response = await _apiClient.post(
@@ -382,7 +382,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
       );
 
       if (response.statusCode == 201) {
-        return Result.success(MenuItemDetails.fromJson(response.data['item']));
+        return Result.success(menu_mgmt.MenuItemDetails.fromJson(response.data['item']));
       } else {
         return Result.failure('Erreur lors de la cr?ation de l\'article');
       }
@@ -392,8 +392,8 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<MenuItemDetails, String>> updateMenuItem(
-    MenuItemDetails item,
+  Future<Result<menu_mgmt.MenuItemDetails, String>> updateMenuItem(
+    menu_mgmt.MenuItemDetails item,
   ) async {
     try {
       final response = await _apiClient.put(
@@ -402,7 +402,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
       );
 
       if (response.statusCode == 200) {
-        return Result.success(MenuItemDetails.fromJson(response.data['item']));
+        return Result.success(menu_mgmt.MenuItemDetails.fromJson(response.data['item']));
       } else {
         return Result.failure('Erreur lors de la mise ? jour de l\'article');
       }
@@ -541,7 +541,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<List<MenuItemPerformance>, String>> getItemPerformance(
+  Future<Result<List<menu_mgmt.MenuItemPerformance>, String>> getItemPerformance(
     String restaurantId,
   ) async {
     try {
@@ -554,7 +554,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
             response.data['item_performance'] ??
             [];
         final performance = data
-            .map((json) => MenuItemPerformance.fromJson(json))
+            .map((json) => menu_mgmt.MenuItemPerformance.fromJson(json))
             .toList();
         return Result.success(performance);
       } else {
@@ -797,6 +797,16 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
     } catch (e) {
       return Result.failure('Erreur de connexion: $e');
     }
+  }
+
+  @override
+  Future<RestaurantStats> getRestaurantStats(String restaurantId) async {
+    // This is a legacy method, delegate to getDashboardStats
+    final result = await getDashboardStats(restaurantId);
+    return result.when(
+      success: (stats) => stats,
+      failure: (error) => throw Exception(error),
+    );
   }
 
   void dispose() {

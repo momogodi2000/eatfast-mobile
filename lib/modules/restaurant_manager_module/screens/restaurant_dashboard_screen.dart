@@ -354,10 +354,11 @@ class _RestaurantDashboardScreenState extends ConsumerState<RestaurantDashboardS
   }
 
   Future<void> _refreshData() async {
-    await Future.wait([
-      ref.refresh(dashboardStatsProvider(widget.restaurantId).future),
-      ref.refresh(liveOrdersProvider(widget.restaurantId).future),
-    ]);
+    // Refresh dashboard stats
+    ref.invalidate(dashboardStatsProvider(widget.restaurantId));
+
+    // Refresh live orders by calling the notifier's loadOrders method
+    await ref.read(liveOrdersProvider(widget.restaurantId).notifier).loadOrders();
   }
 
   void _showNewOrderDialog() {

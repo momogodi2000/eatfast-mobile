@@ -44,7 +44,7 @@ export '../widgets/common/app_loading_indicator.dart';
 export '../widgets/common/loading_widget.dart';
 export '../widgets/common/error_display_widget.dart';
 export '../widgets/buttons/app_button.dart';
-export '../widgets/cards/restaurant_card.dart';
+export '../services/restaurants/presentation/widgets/restaurant_card.dart';
 export '../widgets/overlays/loading_overlay.dart';
 
 // Services - API
