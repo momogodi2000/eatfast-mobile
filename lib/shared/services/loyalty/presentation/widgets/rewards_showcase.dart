@@ -40,43 +40,38 @@ class RewardsShowcase extends StatelessWidget {
     return [
       LoyaltyReward(
         id: 'reward_1',
-        name: 'Livraison Gratuite',
+        title: 'Livraison Gratuite',
         description: 'Livraison gratuite sur votre prochaine commande',
         pointsCost: 500,
         type: RewardType.freeDelivery,
-        rewardData: {'deliveryValue': 1000},
       ),
       LoyaltyReward(
         id: 'reward_2',
-        name: 'Réduction 10%',
+        title: 'Réduction 10%',
         description: 'Réduction de 10% sur votre prochaine commande',
         pointsCost: 750,
         type: RewardType.discount,
-        rewardData: {'discountPercentage': 10, 'maxDiscount': 5000},
       ),
       LoyaltyReward(
         id: 'reward_3',
-        name: 'Boisson Gratuite',
+        title: 'Boisson Gratuite',
         description: 'Une boisson gratuite avec votre commande',
         pointsCost: 300,
         type: RewardType.freeItem,
-        rewardData: {'itemType': 'beverage'},
       ),
       LoyaltyReward(
         id: 'reward_4',
-        name: 'Cashback 1000 XAF',
+        title: 'Cashback 1000 XAF',
         description: 'Remboursement de 1000 XAF sur votre portefeuille',
         pointsCost: 1000,
         type: RewardType.cashback,
-        rewardData: {'amount': 1000},
       ),
       LoyaltyReward(
         id: 'reward_5',
-        name: 'Réduction 15%',
+        title: 'Réduction 15%',
         description: 'Réduction de 15% sur les commandes de plus de 10000 XAF',
         pointsCost: 1200,
         type: RewardType.discount,
-        rewardData: {'discountPercentage': 15, 'minOrderAmount': 10000},
       ),
     ];
   }

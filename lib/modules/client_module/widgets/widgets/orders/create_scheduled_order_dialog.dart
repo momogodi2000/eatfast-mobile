@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/scheduled_order.dart';
-import '../providers/scheduled_orders_provider.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/scheduled_orders_provider.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
 

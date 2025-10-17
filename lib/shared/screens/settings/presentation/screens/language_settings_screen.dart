@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/shared/services/l10n/language_provider.dart';
+import 'package:eatfast_mobile/shared/l10n/language_provider.dart';
 import 'package:eatfast_mobile/shared/l10n/arb/app_localizations.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 
@@ -136,7 +136,9 @@ class LanguageSettingsScreen extends ConsumerWidget {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Language changed to ${language.languageCode == 'fr' ? 'Fran�ais' : 'English'}'),
+                  content: Text(
+                    'Language changed to ${language.languageCode == 'fr' ? 'Fran�ais' : 'English'}',
+                  ),
                   backgroundColor: DesignTokens.successColor,
                 ),
               );
@@ -158,7 +160,9 @@ class LanguageSettingsScreen extends ConsumerWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  language.languageCode == 'fr' ? Icons.language : Icons.translate,
+                  language.languageCode == 'fr'
+                      ? Icons.language
+                      : Icons.translate,
                   color: isSelected
                       ? DesignTokens.primaryColor
                       : DesignTokens.textSecondary,

@@ -8,10 +8,10 @@ class AdminRepositoryImpl implements AdminRepository {
   final AdminApiService _apiService;
 
   AdminRepositoryImpl({required AdminApiService apiService})
-      : _apiService = apiService;
+    : _apiService = apiService;
 
   @override
-  Future<Result<AdminStats>> getAdminStats() async {
+  Future<Result<AdminStats, String>> getAdminStats() async {
     try {
       // TODO: Implement actual API call
       // For now, return mock data
@@ -23,13 +23,15 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
-  Future<Result<AdminStats>> refreshStats() async {
+  Future<Result<AdminStats, String>> refreshStats() async {
     // Same as getAdminStats for now
     return getAdminStats();
   }
 
   @override
-  Future<Result<Map<String, dynamic>, String>> getDashboardStats({required String timeframe}) async {
+  Future<Result<Map<String, dynamic>, String>> getDashboardStats({
+    required String timeframe,
+  }) async {
     try {
       final data = await _apiService.getDashboardStats(timeframe: timeframe);
       return Result.success(data);
@@ -101,7 +103,10 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
-  Future<Result<void, String>> updateUserStatus(String userId, String status) async {
+  Future<Result<void, String>> updateUserStatus(
+    String userId,
+    String status,
+  ) async {
     try {
       await _apiService.updateUserStatus(userId, status);
       return Result.success(null);
@@ -151,7 +156,10 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
-  Future<Result<void, String>> setCommissionRate(String restaurantId, double rate) async {
+  Future<Result<void, String>> setCommissionRate(
+    String restaurantId,
+    double rate,
+  ) async {
     try {
       await _apiService.setCommissionRate(restaurantId, rate);
       return Result.success(null);
@@ -191,7 +199,9 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
-  Future<Result<Map<String, dynamic>, String>> getFinancialReport({required String timeframe}) async {
+  Future<Result<Map<String, dynamic>, String>> getFinancialReport({
+    required String timeframe,
+  }) async {
     try {
       final data = await _apiService.getFinancialReport(timeframe: timeframe);
       return Result.success(data);

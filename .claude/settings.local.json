@@ -36,7 +36,8 @@
       "Bash(rm:*)",
       "Bash(awk:*)",
       "Bash(cat:*)",
-      "Bash(dart format:*)"
+      "Bash(dart format:*)",
+      "Bash(dart fix_errors.dart:*)"
     ],
     "deny": [],
     "ask": []

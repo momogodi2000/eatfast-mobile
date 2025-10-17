@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
@@ -8,6 +8,7 @@ import 'package:eatfast_mobile/shared/services/orders/providers/order_provider.d
 import '../widgets/order_status_timeline.dart';
 import '../widgets/order_items_summary.dart';
 import '../widgets/delivery_address_card.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class OrderTrackingScreen extends ConsumerStatefulWidget {
   final String orderId;

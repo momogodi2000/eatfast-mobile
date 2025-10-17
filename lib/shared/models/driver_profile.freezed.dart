@@ -34,7 +34,7 @@ mixin _$DriverProfile {
       throw _privateConstructorUsedError; // Additional fields for UI
   bool get isAvailable => throw _privateConstructorUsedError;
   double get totalEarnings => throw _privateConstructorUsedError;
-  List<double> get weeklyStats => throw _privateConstructorUsedError;
+  List<DriverWeeklyStat> get weeklyStats => throw _privateConstructorUsedError;
 
   /// Serializes this DriverProfile to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -66,7 +66,7 @@ abstract class $DriverProfileCopyWith<$Res> {
       DateTime updatedAt,
       bool isAvailable,
       double totalEarnings,
-      List<double> weeklyStats});
+      List<DriverWeeklyStat> weeklyStats});
 }
 
 /// @nodoc
@@ -155,7 +155,7 @@ class _$DriverProfileCopyWithImpl<$Res, $Val extends DriverProfile>
       weeklyStats: null == weeklyStats
           ? _value.weeklyStats
           : weeklyStats // ignore: cast_nullable_to_non_nullable
-              as List<double>,
+              as List<DriverWeeklyStat>,
     ) as $Val);
   }
 }
@@ -182,7 +182,7 @@ abstract class _$$DriverProfileImplCopyWith<$Res>
       DateTime updatedAt,
       bool isAvailable,
       double totalEarnings,
-      List<double> weeklyStats});
+      List<DriverWeeklyStat> weeklyStats});
 }
 
 /// @nodoc
@@ -269,7 +269,7 @@ class __$$DriverProfileImplCopyWithImpl<$Res>
       weeklyStats: null == weeklyStats
           ? _value._weeklyStats
           : weeklyStats // ignore: cast_nullable_to_non_nullable
-              as List<double>,
+              as List<DriverWeeklyStat>,
     ));
   }
 }
@@ -291,7 +291,7 @@ class _$DriverProfileImpl implements _DriverProfile {
       required this.updatedAt,
       required this.isAvailable,
       required this.totalEarnings,
-      required final List<double> weeklyStats})
+      required final List<DriverWeeklyStat> weeklyStats})
       : _weeklyStats = weeklyStats;
 
   factory _$DriverProfileImpl.fromJson(Map<String, dynamic> json) =>
@@ -324,9 +324,9 @@ class _$DriverProfileImpl implements _DriverProfile {
   final bool isAvailable;
   @override
   final double totalEarnings;
-  final List<double> _weeklyStats;
+  final List<DriverWeeklyStat> _weeklyStats;
   @override
-  List<double> get weeklyStats {
+  List<DriverWeeklyStat> get weeklyStats {
     if (_weeklyStats is EqualUnmodifiableListView) return _weeklyStats;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_weeklyStats);
@@ -416,7 +416,7 @@ abstract class _DriverProfile implements DriverProfile {
       required final DateTime updatedAt,
       required final bool isAvailable,
       required final double totalEarnings,
-      required final List<double> weeklyStats}) = _$DriverProfileImpl;
+      required final List<DriverWeeklyStat> weeklyStats}) = _$DriverProfileImpl;
 
   factory _DriverProfile.fromJson(Map<String, dynamic> json) =
       _$DriverProfileImpl.fromJson;
@@ -448,7 +448,7 @@ abstract class _DriverProfile implements DriverProfile {
   @override
   double get totalEarnings;
   @override
-  List<double> get weeklyStats;
+  List<DriverWeeklyStat> get weeklyStats;
 
   /// Create a copy of DriverProfile
   /// with the given fields replaced by the non-null parameter values.

@@ -1,7 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/models/models_export.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -97,7 +98,7 @@ class OrderCard extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
                             child: CachedNetworkImage(
-                              imageUrl: item.menuItem.imageUrl ?? '',
+                              imageUrl: item.imageUrl ?? '',
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,

@@ -8,12 +8,7 @@ class OrderCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onReorder;
 
-  const OrderCard({
-    super.key,
-    required this.order,
-    this.onTap,
-    this.onReorder,
-  });
+  const OrderCard({super.key, required this.order, this.onTap, this.onReorder});
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +35,19 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           'Commande #${order.id.split('_').last.substring(0, 8)}',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: DesignTokens.fontWeightBold,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontWeight: DesignTokens.fontWeightBold,
+                              ),
                         ),
                         const SizedBox(height: DesignTokens.spaceXXS),
                         Text(
                           order.restaurantName,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: DesignTokens.primaryColor,
-                            fontWeight: DesignTokens.fontWeightMedium,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: DesignTokens.primaryColor,
+                                fontWeight: DesignTokens.fontWeightMedium,
+                              ),
                         ),
                       ],
                     ),
@@ -61,8 +58,12 @@ class OrderCard extends StatelessWidget {
                       vertical: DesignTokens.spaceXS,
                     ),
                     decoration: BoxDecoration(
-                      color: _getStatusColor(order.status).withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                      color: _getStatusColor(
+                        order.status,
+                      ).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(
+                        DesignTokens.radiusSM,
+                      ),
                     ),
                     child: Text(
                       order.status.displayName,
@@ -75,9 +76,9 @@ class OrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceMD),
-              
+
               // Order items preview
               Row(
                 children: [
@@ -87,7 +88,9 @@ class OrderCard extends StatelessWidget {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: (order.items.length > 3 ? 3 : order.items.length),
+                      itemCount: (order.items.length > 3
+                          ? 3
+                          : order.items.length),
                       itemBuilder: (context, index) {
                         final item = order.items[index];
                         return Container(
@@ -95,16 +98,20 @@ class OrderCard extends StatelessWidget {
                             right: index < 2 ? DesignTokens.spaceXS : 0,
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                            borderRadius: BorderRadius.circular(
+                              DesignTokens.radiusSM,
+                            ),
                             child: CachedNetworkImage(
-                              imageUrl: item.menuItem.imageUrl ?? '',
+                              imageUrl: item.imageUrl ?? '',
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Container(
                                 width: 40,
                                 height: 40,
-                                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
+                                color: DesignTokens.lightGrey.withValues(
+                                  alpha: 0.3,
+                                ),
                                 child: const Icon(
                                   Icons.fastfood,
                                   size: 16,
@@ -114,7 +121,9 @@ class OrderCard extends StatelessWidget {
                               errorWidget: (context, url, error) => Container(
                                 width: 40,
                                 height: 40,
-                                color: DesignTokens.lightGrey.withValues(alpha: 0.3),
+                                color: DesignTokens.lightGrey.withValues(
+                                  alpha: 0.3,
+                                ),
                                 child: const Icon(
                                   Icons.fastfood,
                                   size: 16,
@@ -127,9 +136,9 @@ class OrderCard extends StatelessWidget {
                       },
                     ),
                   ),
-                  
+
                   const SizedBox(width: DesignTokens.spaceSM),
-                  
+
                   // Order summary
                   Expanded(
                     child: Column(
@@ -137,25 +146,27 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           '${order.itemCount} article(s)',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: DesignTokens.fontWeightMedium,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                fontWeight: DesignTokens.fontWeightMedium,
+                              ),
                         ),
                         Text(
                           '${order.total.toInt()} FCFA',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: DesignTokens.primaryColor,
-                            fontWeight: DesignTokens.fontWeightBold,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                color: DesignTokens.primaryColor,
+                                fontWeight: DesignTokens.fontWeightBold,
+                              ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceMD),
-              
+
               // Order date and actions
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,7 +180,7 @@ class OrderCard extends StatelessWidget {
                     )
                   else
                     const SizedBox.shrink(),
-                  
+
                   Row(
                     children: [
                       if (order.isActive)
@@ -180,7 +191,9 @@ class OrderCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: DesignTokens.primaryColor,
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
+                            borderRadius: BorderRadius.circular(
+                              DesignTokens.radiusXS,
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -193,17 +206,18 @@ class OrderCard extends StatelessWidget {
                               const SizedBox(width: 2),
                               Text(
                                 'Suivre',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: DesignTokens.white,
-                                  fontSize: 10,
-                                  fontWeight: DesignTokens.fontWeightMedium,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: DesignTokens.white,
+                                      fontSize: 10,
+                                      fontWeight: DesignTokens.fontWeightMedium,
+                                    ),
                               ),
                             ],
                           ),
                         ),
-                      
-                      if (onReorder != null) ...[ 
+
+                      if (onReorder != null) ...[
                         const SizedBox(width: DesignTokens.spaceXS),
                         GestureDetector(
                           onTap: onReorder,
@@ -213,10 +227,16 @@ class OrderCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: DesignTokens.successColor.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(DesignTokens.radiusXS),
+                              color: DesignTokens.successColor.withValues(
+                                alpha: 0.1,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                DesignTokens.radiusXS,
+                              ),
                               border: Border.all(
-                                color: DesignTokens.successColor.withValues(alpha: 0.3),
+                                color: DesignTokens.successColor.withValues(
+                                  alpha: 0.3,
+                                ),
                               ),
                             ),
                             child: Row(
@@ -230,11 +250,13 @@ class OrderCard extends StatelessWidget {
                                 const SizedBox(width: 2),
                                 Text(
                                   'Recommander',
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: DesignTokens.successColor,
-                                    fontSize: 10,
-                                    fontWeight: DesignTokens.fontWeightMedium,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color: DesignTokens.successColor,
+                                        fontSize: 10,
+                                        fontWeight:
+                                            DesignTokens.fontWeightMedium,
+                                      ),
                                 ),
                               ],
                             ),
@@ -255,15 +277,18 @@ class OrderCard extends StatelessWidget {
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
       case OrderStatus.created:
+      case OrderStatus.pending:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
       case OrderStatus.accepted:
       case OrderStatus.preparing:
         return DesignTokens.infoColor;
       case OrderStatus.readyForPickup:
+      case OrderStatus.ready:
       case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
       case OrderStatus.inTransit:
+      case OrderStatus.onTheWay:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:
       case OrderStatus.completed:

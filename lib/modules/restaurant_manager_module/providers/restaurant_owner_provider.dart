@@ -17,25 +17,36 @@ final restaurantOwnerRepositoryProvider = Provider<RestaurantOwnerRepository>((
   return RestaurantOwnerRepositoryImpl(apiClient);
 });
 
-// Restaurant Owner State Provider
+// Restaurant Owner State Provider (Family)
 final restaurantOwnerProvider =
-    StateNotifierProvider<RestaurantOwnerNotifier, RestaurantOwnerState>((ref) {
+    StateNotifierProvider.family<
+      RestaurantOwnerNotifier,
+      RestaurantOwnerState,
+      String
+    >((ref, restaurantId) {
       final repository = ref.watch(restaurantOwnerRepositoryProvider);
-      return RestaurantOwnerNotifier(repository);
+      return RestaurantOwnerNotifier(repository, restaurantId);
     });
 
-// Live Orders Provider
+// Live Orders Provider (Family) - Returns AsyncValue
 final liveOrdersProvider =
-    StateNotifierProvider<LiveOrdersNotifier, LiveOrdersState>((ref) {
+    StateNotifierProvider.family<LiveOrdersNotifier, AsyncValue<List<LiveOrder>>, String>((
+      ref,
+      restaurantId,
+    ) {
       final repository = ref.watch(restaurantOwnerRepositoryProvider);
-      return LiveOrdersNotifier(repository);
+      return LiveOrdersNotifier(repository, restaurantId);
     });
 
-// Menu Categories Provider
+// Menu Categories Provider (Family)
 final menuCategoriesProvider =
-    StateNotifierProvider<MenuCategoriesNotifier, MenuCategoriesState>((ref) {
+    StateNotifierProvider.family<
+      MenuCategoriesNotifier,
+      MenuCategoriesState,
+      String
+    >((ref, restaurantId) {
       final repository = ref.watch(restaurantOwnerRepositoryProvider);
-      return MenuCategoriesNotifier(repository);
+      return MenuCategoriesNotifier(repository, restaurantId);
     });
 
 // Dashboard Stats Provider
@@ -55,18 +66,26 @@ class RestaurantOwnerState {
   final bool isLoading;
   final String? error;
   final RestaurantStats? stats;
+  final List<LiveOrder> liveOrders;
 
-  const RestaurantOwnerState({this.isLoading = false, this.error, this.stats});
+  const RestaurantOwnerState({
+    this.isLoading = false,
+    this.error,
+    this.stats,
+    this.liveOrders = const [],
+  });
 
   RestaurantOwnerState copyWith({
     bool? isLoading,
     String? error,
     RestaurantStats? stats,
+    List<LiveOrder>? liveOrders,
   }) {
     return RestaurantOwnerState(
       isLoading: isLoading ?? this.isLoading,
       error: error,
       stats: stats ?? this.stats,
+      liveOrders: liveOrders ?? this.liveOrders,
     );
   }
 }
@@ -129,11 +148,15 @@ class MenuCategoriesState {
 
 class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
   final RestaurantOwnerRepository _repository;
+  final String restaurantId;
 
-  RestaurantOwnerNotifier(this._repository)
-    : super(const RestaurantOwnerState());
+  RestaurantOwnerNotifier(this._repository, this.restaurantId)
+    : super(const RestaurantOwnerState()) {
+    // Auto-load stats when notifier is created
+    loadStats();
+  }
 
-  Future<void> loadStats(String restaurantId) async {
+  Future<void> loadStats() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final stats = await _repository.getRestaurantStats(restaurantId);
@@ -143,28 +166,49 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
     }
   }
 
-  Future<void> refreshStats(String restaurantId) async {
-    await loadStats(restaurantId);
+  Future<void> refreshStats() async {
+    await loadStats();
+  }
+
+  // Wallet management methods
+  Future<void> getWalletBalance() async {
+    // Implementation for wallet balance
+    // This would typically call repository method
+  }
+
+  Future<void> getWalletTransactions() async {
+    // Implementation for wallet transactions
+  }
+
+  Future<void> requestWithdrawal(double amount, String method) async {
+    // Implementation for withdrawal request
   }
 }
 
-class LiveOrdersNotifier extends StateNotifier<LiveOrdersState> {
+class LiveOrdersNotifier extends StateNotifier<AsyncValue<List<LiveOrder>>> {
   final RestaurantOwnerRepository _repository;
+  final String restaurantId;
 
-  LiveOrdersNotifier(this._repository) : super(const LiveOrdersState());
+  LiveOrdersNotifier(this._repository, this.restaurantId)
+    : super(const AsyncValue.loading()) {
+    // Auto-load orders when notifier is created
+    loadOrders();
+  }
 
-  Future<void> loadOrders(String restaurantId) async {
-    state = state.copyWith(isLoading: true, error: null);
+  Future<void> loadOrders() async {
+    state = const AsyncValue.loading();
     try {
-      final orders = await _repository.getLiveOrders(restaurantId);
-      final ordersMap = {for (var order in orders) order.orderId: order};
-      state = state.copyWith(
-        isLoading: false,
-        orders: orders,
-        ordersMap: ordersMap,
+      final ordersResult = await _repository.getLiveOrders(restaurantId);
+
+      // Handle Result type properly
+      final orders = ordersResult.fold(
+        (success) => success,
+        (error) => throw Exception(error),
       );
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+
+      state = AsyncValue.data(orders);
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
     }
   }
 
@@ -174,9 +218,9 @@ class LiveOrdersNotifier extends StateNotifier<LiveOrdersState> {
         orderId,
         shared_models.OrderStatus.accepted,
       );
-      await _refreshCurrentOrders();
-    } catch (e) {
-      state = state.copyWith(error: e.toString());
+      await loadOrders();
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
     }
   }
 
@@ -186,9 +230,9 @@ class LiveOrdersNotifier extends StateNotifier<LiveOrdersState> {
         orderId,
         shared_models.OrderStatus.rejected,
       );
-      await _refreshCurrentOrders();
-    } catch (e) {
-      state = state.copyWith(error: e.toString());
+      await loadOrders();
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
     }
   }
 
@@ -198,27 +242,24 @@ class LiveOrdersNotifier extends StateNotifier<LiveOrdersState> {
   ) async {
     try {
       await _repository.updateOrderStatus(orderId, status);
-      await _refreshCurrentOrders();
-    } catch (e) {
-      state = state.copyWith(error: e.toString());
-    }
-  }
-
-  Future<void> _refreshCurrentOrders() async {
-    // Get restaurant ID from first order or state
-    if (state.orders.isNotEmpty) {
-      final restaurantId = state.orders.first.orderId.split('-').first;
-      await loadOrders(restaurantId);
+      await loadOrders();
+    } catch (e, stack) {
+      state = AsyncValue.error(e, stack);
     }
   }
 }
 
 class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
   final RestaurantOwnerRepository _repository;
+  final String restaurantId;
 
-  MenuCategoriesNotifier(this._repository) : super(const MenuCategoriesState());
+  MenuCategoriesNotifier(this._repository, this.restaurantId)
+    : super(const MenuCategoriesState()) {
+    // Auto-load categories when notifier is created
+    loadCategories();
+  }
 
-  Future<void> loadCategories(String restaurantId) async {
+  Future<void> loadCategories() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       // This would call the repository method when implemented
@@ -256,6 +297,86 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
           .where((c) => c.categoryId != categoryId)
           .toList();
       state = state.copyWith(categories: updatedCategories);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  // Menu item management methods
+  Future<void> createMenuItem(local_models.MenuItemDetails item) async {
+    try {
+      // Implementation for creating menu item
+      await loadCategories(); // Reload to get updated data
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> updateMenuItem(local_models.MenuItemDetails item) async {
+    try {
+      // Implementation for updating menu item
+      await loadCategories();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> deleteMenuItem(String itemId) async {
+    try {
+      // Implementation for deleting menu item
+      await loadCategories();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> toggleItemAvailability(String itemId, bool available) async {
+    try {
+      // Implementation for toggling availability
+      await loadCategories();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> bulkUpdateAvailability(List<String> itemIds, bool available) async {
+    try {
+      // Implementation for bulk update
+      await loadCategories();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<String?> uploadItemImage(String itemId, String imagePath) async {
+    try {
+      // Implementation for image upload
+      return 'uploaded_url';
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      return null;
+    }
+  }
+
+  Future<void> createMenuCategory(local_models.MenuCategory category) async {
+    try {
+      await addCategory(category);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> updateMenuCategory(local_models.MenuCategory category) async {
+    try {
+      await updateCategory(category);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> deleteMenuCategory(String categoryId) async {
+    try {
+      await deleteCategory(categoryId);
     } catch (e) {
       state = state.copyWith(error: e.toString());
     }

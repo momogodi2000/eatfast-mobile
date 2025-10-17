@@ -1,4 +1,7 @@
-﻿import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+export 'menu_item_details.dart';
+export 'menu_item_performance.dart';
 
 part 'menu_management.freezed.dart';
 part 'menu_management.g.dart';

@@ -115,11 +115,11 @@ class OrderStatusTimeline extends StatelessWidget {
 
   Widget _buildTimelineItem(
     BuildContext context, {
-    required OrderStatus status,
+    required shared_models.OrderStatus status,
     required bool isActive,
     required bool isCurrent,
     required bool isLast,
-    OrderStatusUpdate? statusUpdate,
+    shared_models.OrderStatusUpdate? statusUpdate,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

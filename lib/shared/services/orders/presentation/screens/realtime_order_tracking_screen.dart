@@ -1,4 +1,4 @@
-﻿/// Real-time Order Tracking Screen
+/// Real-time Order Tracking Screen
 /// Enhanced version with WebSocket integration for live updates
 /// TODO: Fix WebSocket integration and complete implementation
 library;
@@ -12,6 +12,7 @@ import 'package:eatfast_mobile/shared/services/websocket/websocket_service.dart'
 import 'package:eatfast_mobile/shared/constants/app_constants.dart';
 import '../../domain/models/order.dart';
 import '../widgets/order_status_timeline.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class RealtimeOrderTrackingScreen extends ConsumerStatefulWidget {
   final String orderId;

@@ -22,7 +22,7 @@ _$DriverProfileImpl _$$DriverProfileImplFromJson(Map<String, dynamic> json) =>
       isAvailable: json['isAvailable'] as bool,
       totalEarnings: (json['totalEarnings'] as num).toDouble(),
       weeklyStats: (json['weeklyStats'] as List<dynamic>)
-          .map((e) => (e as num).toDouble())
+          .map((e) => DriverWeeklyStat.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

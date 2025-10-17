@@ -1,8 +1,9 @@
-﻿import 'package:eatfast_mobile/shared/utils/result.dart';
+import 'package:eatfast_mobile/shared/utils/result.dart';
 import '../models/order.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 abstract class OrderRepository {
   /// Place a new order

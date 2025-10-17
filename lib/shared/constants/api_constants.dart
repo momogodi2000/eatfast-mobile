@@ -148,6 +148,10 @@ class ApiConstants {
   static const String guestDeliveryFee = '/guest/delivery-fee';
   static const String guestConvert = '/guest/convert';
 
+  // ==================== Public/Company ====================
+  static const String publicContact = '/api/public/contact';
+  static const String publicNewsletter = '/api/public/newsletter';
+
   // ==================== Cart ====================
   static const String cart = '/cart';
   static const String addToCart = '/cart/items';

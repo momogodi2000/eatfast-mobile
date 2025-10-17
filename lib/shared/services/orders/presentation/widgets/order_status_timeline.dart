@@ -1,6 +1,7 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/models/models_export.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class OrderStatusTimeline extends StatelessWidget {
   final OrderStatus currentStatus;

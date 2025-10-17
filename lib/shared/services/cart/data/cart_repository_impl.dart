@@ -3,20 +3,23 @@ import 'package:eatfast_mobile/shared/config/app_config.dart';
 import 'package:eatfast_mobile/shared/utils/result.dart';
 import 'package:eatfast_mobile/shared/constants/app_constants.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/repositories/cart_repository.dart';
 import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
 
 class CartRepositoryImpl implements CartRepository {
   // In-memory cart storage for mock implementation
-  static Cart _currentCart = const Cart(
+  static Cart _currentCart = Cart(
     id: 'cart_1',
     userId: 'user_123',
-    items: [],
+    items: const [],
     subtotal: 0.0,
     deliveryFee: AppConstants.deliveryFee,
     tax: 0.0,
     discount: 0.0,
     total: 0.0,
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
   );
 
   // Simulate network delay
@@ -43,19 +46,16 @@ class CartRepositoryImpl implements CartRepository {
 
       // Check if item with same configuration already exists
       final existingItemIndex = _currentCart.items.indexWhere((existingItem) =>
-          existingItem.menuItem.id == item.menuItem.id &&
+          existingItem.menuItemId == item.menuItemId &&
           _haveSameCustomizations(existingItem.customizations, item.customizations));
 
       if (existingItemIndex != -1) {
         // Update quantity of existing item
         final existingItem = _currentCart.items[existingItemIndex];
+        final newQuantity = existingItem.quantity + item.quantity;
         final updatedItem = existingItem.copyWith(
-          quantity: existingItem.quantity + item.quantity,
-          itemTotal: _calculateItemTotal(
-            existingItem.menuItem,
-            existingItem.quantity + item.quantity,
-            existingItem.customizations,
-          ),
+          quantity: newQuantity,
+          total: existingItem.price * newQuantity,
         );
 
         final updatedItems = List<CartItem>.from(_currentCart.items);
@@ -71,8 +71,8 @@ class CartRepositoryImpl implements CartRepository {
       // Update restaurant info if this is the first item
       if (_currentCart.items.length == 1) {
         _currentCart = _currentCart.copyWith(
-          restaurantId: item.menuItem.restaurantId,
-          restaurantName: 'Restaurant', // In real app, get from restaurant data
+          restaurantId: item.restaurantId,
+          restaurantName: item.restaurantName ?? 'Restaurant',
         );
       }
 
@@ -196,7 +196,7 @@ class CartRepositoryImpl implements CartRepository {
     double subtotal = 0.0;
     
     for (final item in _currentCart.items) {
-      subtotal += item.totalPrice;
+      subtotal += item.total;
     }
 
     // Calculate tax (10% in Cameroon)
@@ -223,47 +223,17 @@ class CartRepositoryImpl implements CartRepository {
     );
   }
 
-  double _calculateItemTotal(
-    MenuItem menuItem,
-    int quantity,
-    List<SelectedCustomization> customizations,
-  ) {
-    final double basePrice = menuItem.price * quantity;
-    double customizationPrice = 0.0;
-
-    for (final customization in customizations) {
-      for (final option in customization.options) {
-        customizationPrice += option.additionalPrice * quantity;
-      }
-    }
-
-    return basePrice + customizationPrice;
-  }
-
   bool _haveSameCustomizations(
-    List<SelectedCustomization> customizations1,
-    List<SelectedCustomization> customizations2,
+    Map<String, dynamic>? customizations1,
+    Map<String, dynamic>? customizations2,
   ) {
-    if (customizations1.length != customizations2.length) {
+    if (customizations1 == null && customizations2 == null) {
+      return true;
+    }
+    if (customizations1 == null || customizations2 == null) {
       return false;
     }
-
-    for (int i = 0; i < customizations1.length; i++) {
-      final custom1 = customizations1[i];
-      final custom2 = customizations2[i];
-
-      if (custom1.customizationId != custom2.customizationId ||
-          custom1.options.length != custom2.options.length) {
-        return false;
-      }
-
-      for (int j = 0; j < custom1.options.length; j++) {
-        if (custom1.options[j].id != custom2.options[j].id) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    // Simple comparison - in production, this should be more sophisticated
+    return customizations1.toString() == customizations2.toString();
   }
 }

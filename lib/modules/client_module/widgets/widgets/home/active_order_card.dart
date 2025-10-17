@@ -13,7 +13,10 @@ class ActiveOrderCard extends ConsumerWidget {
     final activeOrderState = ref.watch(activeOrderProvider);
 
     return switch (activeOrderState) {
-      ActiveOrderTracking(:final order) => _buildActiveOrderCard(context, order),
+      ActiveOrderTracking(:final order) => _buildActiveOrderCard(
+        context,
+        order,
+      ),
       _ => const SizedBox.shrink(),
     };
   }
@@ -80,9 +83,9 @@ class ActiveOrderCard extends ConsumerWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: DesignTokens.spaceSM),
-          
+
           Text(
             order.restaurantName,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -90,9 +93,9 @@ class ActiveOrderCard extends ConsumerWidget {
               fontWeight: DesignTokens.fontWeightMedium,
             ),
           ),
-          
+
           const SizedBox(height: DesignTokens.spaceXS),
-          
+
           Row(
             children: [
               Text(
@@ -101,12 +104,7 @@ class ActiveOrderCard extends ConsumerWidget {
                   color: DesignTokens.white.withValues(alpha: 0.8),
                 ),
               ),
-              const Text(
-                ' � ',
-                style: TextStyle(
-                  color: DesignTokens.white,
-                ),
-              ),
+              const Text(' � ', style: TextStyle(color: DesignTokens.white)),
               Text(
                 '${order.total.toInt()} FCFA',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -116,8 +114,8 @@ class ActiveOrderCard extends ConsumerWidget {
               ),
             ],
           ),
-          
-          if (order.estimatedDeliveryTime != null) ...[ 
+
+          if (order.estimatedDeliveryTime != null) ...[
             const SizedBox(height: DesignTokens.spaceSM),
             Row(
               children: [
@@ -136,9 +134,9 @@ class ActiveOrderCard extends ConsumerWidget {
               ],
             ),
           ],
-          
+
           const SizedBox(height: DesignTokens.spaceMD),
-          
+
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -154,9 +152,7 @@ class ActiveOrderCard extends ConsumerWidget {
               ),
               child: const Text(
                 'Suivre la commande',
-                style: TextStyle(
-                  fontWeight: DesignTokens.fontWeightSemiBold,
-                ),
+                style: TextStyle(fontWeight: DesignTokens.fontWeightSemiBold),
               ),
             ),
           ),
@@ -168,15 +164,18 @@ class ActiveOrderCard extends ConsumerWidget {
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
       case OrderStatus.created:
+      case OrderStatus.pending:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
       case OrderStatus.accepted:
       case OrderStatus.preparing:
         return DesignTokens.infoColor;
       case OrderStatus.readyForPickup:
+      case OrderStatus.ready:
       case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
       case OrderStatus.inTransit:
+      case OrderStatus.onTheWay:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:
       case OrderStatus.completed:
@@ -192,6 +191,7 @@ class ActiveOrderCard extends ConsumerWidget {
   IconData _getStatusIcon(OrderStatus status) {
     switch (status) {
       case OrderStatus.created:
+      case OrderStatus.pending:
         return Icons.schedule;
       case OrderStatus.confirmed:
       case OrderStatus.accepted:
@@ -199,11 +199,13 @@ class ActiveOrderCard extends ConsumerWidget {
       case OrderStatus.preparing:
         return Icons.restaurant;
       case OrderStatus.readyForPickup:
+      case OrderStatus.ready:
         return Icons.check_circle;
       case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
         return Icons.local_shipping;
       case OrderStatus.inTransit:
+      case OrderStatus.onTheWay:
         return Icons.delivery_dining;
       case OrderStatus.delivered:
       case OrderStatus.completed:
@@ -219,7 +221,7 @@ class ActiveOrderCard extends ConsumerWidget {
   String _formatDeliveryTime(DateTime dateTime) {
     final now = DateTime.now();
     final difference = dateTime.difference(now);
-    
+
     if (difference.inMinutes <= 0) {
       return 'Livraison imminente';
     } else if (difference.inMinutes < 60) {

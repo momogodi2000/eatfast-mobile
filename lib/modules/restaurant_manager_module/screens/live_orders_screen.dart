@@ -6,7 +6,7 @@ import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart'
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import 'package:eatfast_mobile/shared/models/live_order.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';
-import '../widgets/order_detail_card.dart';
+import '../widgets/widgets/order_detail_card.dart';
 import '../widgets/widgets/restaurant_manager_drawer.dart';
 
 enum OrderFilter {
@@ -78,10 +78,21 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('Toutes'),
-                  if (_getOrderCount(restaurantState.liveOrders, OrderFilter.all) > 0) ...[
-                    const SizedBox(width: 4),
-                    _buildBadge(_getOrderCount(restaurantState.liveOrders, OrderFilter.all)),
-                  ],
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.all);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
                 ],
               ),
             ),
@@ -90,10 +101,21 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('Attente'),
-                  if (_getOrderCount(restaurantState.liveOrders, OrderFilter.pending) > 0) ...[
-                    const SizedBox(width: 4),
-                    _buildBadge(_getOrderCount(restaurantState.liveOrders, OrderFilter.pending)),
-                  ],
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.pending);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
                 ],
               ),
             ),
@@ -102,10 +124,21 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('Pr�paration'),
-                  if (_getOrderCount(restaurantState.liveOrders, OrderFilter.preparing) > 0) ...[
-                    const SizedBox(width: 4),
-                    _buildBadge(_getOrderCount(restaurantState.liveOrders, OrderFilter.preparing)),
-                  ],
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.preparing);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
                 ],
               ),
             ),
@@ -114,10 +147,21 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text('Pr�t'),
-                  if (_getOrderCount(restaurantState.liveOrders, OrderFilter.ready) > 0) ...[
-                    const SizedBox(width: 4),
-                    _buildBadge(_getOrderCount(restaurantState.liveOrders, OrderFilter.ready)),
-                  ],
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.ready);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
                 ],
               ),
             ),
@@ -319,17 +363,17 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
   }
 
   void _acceptOrder(String orderId, int estimatedTime) {
-    ref.read(restaurantOwnerProvider(widget.restaurantId).notifier)
-        .acceptOrder(orderId, estimatedTime);
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
+        .acceptOrder(orderId);
   }
 
   void _rejectOrder(String orderId, String reason) {
-    ref.read(restaurantOwnerProvider(widget.restaurantId).notifier)
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
         .rejectOrder(orderId, reason);
   }
 
   void _updateOrderStatus(String orderId, OrderStatus status) {
-    ref.read(restaurantOwnerProvider(widget.restaurantId).notifier)
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
         .updateOrderStatus(orderId, status);
   }
 

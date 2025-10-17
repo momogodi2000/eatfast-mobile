@@ -91,3 +91,89 @@ extension EarningTypeExtension on EarningType {
     }
   }
 }
+
+/// Earnings Summary - simplified version for quick stats
+class EarningsSummary {
+  final double totalEarnings;
+  final double todayEarnings;
+  final double weekEarnings;
+  final double monthEarnings;
+  final int deliveries;
+  final int todayDeliveries;
+  final double onlineHours;
+  final double rating;
+
+  const EarningsSummary({
+    this.totalEarnings = 0.0,
+    this.todayEarnings = 0.0,
+    this.weekEarnings = 0.0,
+    this.monthEarnings = 0.0,
+    this.deliveries = 0,
+    this.todayDeliveries = 0,
+    this.onlineHours = 0.0,
+    this.rating = 0.0,
+  });
+
+  factory EarningsSummary.fromJson(Map<String, dynamic> json) {
+    return EarningsSummary(
+      totalEarnings: (json['totalEarnings'] as num?)?.toDouble() ?? 0.0,
+      todayEarnings: (json['todayEarnings'] as num?)?.toDouble() ?? 0.0,
+      weekEarnings: (json['weekEarnings'] as num?)?.toDouble() ?? 0.0,
+      monthEarnings: (json['monthEarnings'] as num?)?.toDouble() ?? 0.0,
+      deliveries: json['deliveries'] as int? ?? 0,
+      todayDeliveries: json['todayDeliveries'] as int? ?? 0,
+      onlineHours: (json['onlineHours'] as num?)?.toDouble() ?? 0.0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'totalEarnings': totalEarnings,
+      'todayEarnings': todayEarnings,
+      'weekEarnings': weekEarnings,
+      'monthEarnings': monthEarnings,
+      'deliveries': deliveries,
+      'todayDeliveries': todayDeliveries,
+      'onlineHours': onlineHours,
+      'rating': rating,
+    };
+  }
+}
+
+/// Driver Weekly Stat - for tracking daily/weekly performance
+class DriverWeeklyStat {
+  final int deliveries;
+  final double earnings;
+  final int onlineHours;
+  final double rating;
+  final DateTime? date;
+
+  const DriverWeeklyStat({
+    this.deliveries = 0,
+    this.earnings = 0.0,
+    this.onlineHours = 0,
+    this.rating = 0.0,
+    this.date,
+  });
+
+  factory DriverWeeklyStat.fromJson(Map<String, dynamic> json) {
+    return DriverWeeklyStat(
+      deliveries: json['deliveries'] as int? ?? 0,
+      earnings: (json['earnings'] as num?)?.toDouble() ?? 0.0,
+      onlineHours: json['onlineHours'] as int? ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      date: json['date'] != null ? DateTime.parse(json['date'] as String) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'deliveries': deliveries,
+      'earnings': earnings,
+      'onlineHours': onlineHours,
+      'rating': rating,
+      if (date != null) 'date': date!.toIso8601String(),
+    };
+  }
+}

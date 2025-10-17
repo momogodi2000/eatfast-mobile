@@ -1,5 +1,6 @@
 ﻿import 'package:eatfast_mobile/shared/utils/result.dart';
 import '../models/cart.dart';
+import '../models/cart_item.dart';
 
 abstract class CartRepository {
   /// Get the current cart

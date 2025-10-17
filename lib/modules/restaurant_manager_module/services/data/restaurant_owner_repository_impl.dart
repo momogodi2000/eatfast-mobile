@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:eatfast_mobile/shared/utils/result.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
-import '../providers/domain/models/restaurant_stats.dart';
-import '../providers/domain/models/live_order.dart';
-import '../../providers/domain/models/menu_management.dart';
-import '../providers/domain/repositories/restaurant_owner_repository.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/restaurant_stats.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/live_order.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart'
+    as menu_mgmt;
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/repositories/restaurant_owner_repository.dart';
 
 class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   final ApiClient _apiClient;
@@ -256,7 +258,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<List<MenuCategory>, String>> getMenuCategories(
+  Future<Result<List<menu_mgmt.MenuCategory>, String>> getMenuCategories(
     String restaurantId,
   ) async {
     try {
@@ -267,7 +269,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
         final List<dynamic> data =
             response.data['categories'] ?? response.data['menus'] ?? [];
         final categories = data
-            .map((json) => MenuCategory.fromJson(json))
+            .map((json) => menu_mgmt.MenuCategory.fromJson(json))
             .toList();
         return Result.success(categories);
       } else {
@@ -279,9 +281,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<MenuCategory, String>> createMenuCategory(
+  Future<Result<menu_mgmt.MenuCategory, String>> createMenuCategory(
     String restaurantId,
-    MenuCategory category,
+    menu_mgmt.MenuCategory category,
   ) async {
     try {
       // Backend route: POST /restaurant/menus
@@ -292,7 +294,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return Result.success(
-          MenuCategory.fromJson(
+          menu_mgmt.MenuCategory.fromJson(
             response.data['category'] ?? response.data['menu'],
           ),
         );
@@ -305,8 +307,8 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<MenuCategory, String>> updateMenuCategory(
-    MenuCategory category,
+  Future<Result<menu_mgmt.MenuCategory, String>> updateMenuCategory(
+    menu_mgmt.MenuCategory category,
   ) async {
     try {
       // Backend route: PUT /restaurant/menus/:menuId
@@ -317,7 +319,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
 
       if (response.statusCode == 200) {
         return Result.success(
-          MenuCategory.fromJson(
+          menu_mgmt.MenuCategory.fromJson(
             response.data['category'] ?? response.data['menu'],
           ),
         );

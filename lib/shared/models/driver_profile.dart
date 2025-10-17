@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:eatfast_mobile/shared/models/driver_earnings.dart';
 
 part 'driver_profile.freezed.dart';
 part 'driver_profile.g.dart';
@@ -20,7 +21,7 @@ class DriverProfile with _$DriverProfile {
     // Additional fields for UI
     required bool isAvailable,
     required double totalEarnings,
-    required List<double> weeklyStats,
+    required List<DriverWeeklyStat> weeklyStats,
   }) = _DriverProfile;
 
   factory DriverProfile.fromJson(Map<String, dynamic> json) =>

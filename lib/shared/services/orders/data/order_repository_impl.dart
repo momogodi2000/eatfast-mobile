@@ -1,11 +1,9 @@
 ﻿import 'dart:async';
 import 'package:eatfast_mobile/shared/config/app_config.dart';
 import 'package:eatfast_mobile/shared/utils/result.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/repositories/order_repository.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
-import 'package:eatfast_mobile/shared/services/profile/domain/models/user_address.dart';
-import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
   // Mock orders storage
