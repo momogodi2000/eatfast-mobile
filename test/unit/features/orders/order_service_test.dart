@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 import 'package:eatfast_mobile/modules/client_module/providers/domain/user_address.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_models.dart';
 import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
@@ -36,18 +36,24 @@ void main() {
         final cartItems = [
           CartItem(
             id: 'item-1',
-            menuItem: menuItem1,
+            menuItemId: menuItem1.id,
+            name: menuItem1.name,
+            description: menuItem1.description,
             quantity: 2,
+            price: menuItem1.price,
+            total: 25.98,
             specialInstructions: 'No onions',
-            itemTotal: 25.98,
-            addedAt: DateTime.now(),
+            restaurantId: menuItem1.restaurantId,
           ),
           CartItem(
             id: 'item-2',
-            menuItem: menuItem2,
+            menuItemId: menuItem2.id,
+            name: menuItem2.name,
+            description: menuItem2.description,
             quantity: 1,
-            itemTotal: 4.99,
-            addedAt: DateTime.now(),
+            price: menuItem2.price,
+            total: 4.99,
+            restaurantId: menuItem2.restaurantId,
           ),
         ];
 
@@ -72,7 +78,7 @@ void main() {
 
         // Act & Assert
         expect(cartItems, hasLength(2));
-        expect(cartItems.first.menuItem.name, equals('Burger'));
+        expect(cartItems.first.name, equals('Burger'));
         expect(cartItems.first.quantity, equals(2));
         expect(deliveryAddress.fullAddress, contains('123 Main St'));
         expect(paymentProvider, equals(PaymentProvider.cash));
@@ -94,12 +100,14 @@ void main() {
 
         final cartItem = CartItem(
           id: 'item-1',
-          menuItem: menuItem,
+          menuItemId: menuItem.id,
+          name: menuItem.name,
+          description: menuItem.description,
           quantity: 3,
-          itemTotal: 30.00,
-          addedAt: DateTime.now(),
+          price: menuItem.price,
+          total: 30.00,
+          restaurantId: menuItem.restaurantId,
         );
-
 
         final payment = Payment(
           id: 'pay-1',
@@ -113,7 +121,7 @@ void main() {
         );
 
         // Act & Assert
-        expect(cartItem.totalPrice, equals(30.00));
+        expect(cartItem.total, equals(30.00));
         expect(payment.amount, equals(30.00));
         expect(payment.method, equals(PaymentProvider.cash));
         expect(payment.status, equals(PaymentStatus.pending));

@@ -84,6 +84,10 @@ dependencies:
   # Push Notifications (using backend web push instead of Firebase)
   # firebase_messaging: ^15.1.3  # REMOVED: Using backend web push
   # firebase_core: ^3.6.0  # REMOVED: Using backend web push
+  # firebase_crashlytics: ^4.1.3  # REMOVED: Using backend web push
+
+  # Monitoring & Error Tracking
+  sentry_flutter: ^8.11.0
 
   # Real-time Communication
   socket_io_client: ^2.0.3+1

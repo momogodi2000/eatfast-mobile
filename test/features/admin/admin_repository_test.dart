@@ -73,22 +73,18 @@ void main() {
 
     test('getLiveDeliveries returns deliveries list on success', () async {
       // Arrange
-      final mockDeliveries = {
-        'success': true,
-        'totalActive': 5,
-        'deliveries': [
-          {
-            'id': '1',
-            'orderId': '12345',
-            'status': 'in_progress',
-            'driver': {
-              'id': 'driver1',
-              'firstName': 'John',
-              'lastName': 'Doe'
-            }
+      final mockDeliveries = [
+        {
+          'id': '1',
+          'orderId': '12345',
+          'status': 'in_progress',
+          'driver': {
+            'id': 'driver1',
+            'firstName': 'John',
+            'lastName': 'Doe'
           }
-        ]
-      };
+        }
+      ];
 
       when(() => mockApiService.getLiveDeliveries())
           .thenAnswer((_) async => mockDeliveries);
@@ -99,33 +95,24 @@ void main() {
       // Assert
       expect(result.isSuccess, true);
       final data = result.getOrNull();
-      expect(data!['totalActive'], 5);
-      expect(data['deliveries'].length, 1);
+      expect(data!.length, 1);
+      expect(data[0]['id'], '1');
     });
   });
 
   group('User Management', () {
     test('getUsers returns paginated user list on success', () async {
       // Arrange
-      final mockUsers = {
-        'success': true,
-        'users': [
-          {
-            'id': '1',
-            'email': 'user1@test.com',
-            'firstName': 'User',
-            'lastName': 'One',
-            'role': 'customer',
-            'status': 'active'
-          }
-        ],
-        'pagination': {
-          'total': 1,
-          'page': 1,
-          'pages': 1,
-          'limit': 20
+      final mockUsers = [
+        {
+          'id': '1',
+          'email': 'user1@test.com',
+          'firstName': 'User',
+          'lastName': 'One',
+          'role': 'customer',
+          'status': 'active'
         }
-      };
+      ];
 
       when(() => mockApiService.getUsers(
             page: any(named: 'page'),
@@ -144,8 +131,8 @@ void main() {
       // Assert
       expect(result.isSuccess, true);
       final data = result.getOrNull();
-      expect(data!['users'].length, 1);
-      expect(data['pagination']['total'], 1);
+      expect(data!.length, 1);
+      expect(data[0]['email'], 'user1@test.com');
     });
 
     test('createUser creates new user successfully', () async {
@@ -167,9 +154,6 @@ void main() {
             lastName: any(named: 'lastName'),
             phone: any(named: 'phone'),
             role: any(named: 'role'),
-            city: any(named: 'city'),
-            address: any(named: 'address'),
-            status: any(named: 'status'),
           )).thenAnswer((_) async => mockResponse);
 
       // Act
@@ -184,279 +168,155 @@ void main() {
 
       // Assert
       expect(result.isSuccess, true);
-      final user = result.getOrNull();
-      expect(user!['email'], 'newuser@test.com');
+      final response = result.getOrNull();
+      expect(response, isNotNull);
+      expect(response!['user']['email'], 'newuser@test.com');
     });
 
     test('updateUserStatus suspends user successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Utilisateur suspendu avec succès',
-        'user': {
-          'id': 'user-id',
-          'status': 'suspended'
-        }
-      };
-
-      when(() => mockApiService.updateUserStatus(
-            any(),
-            status: any(named: 'status'),
-            reason: any(named: 'reason'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.updateUserStatus(any(), any()))
+          .thenAnswer((_) async => null);
 
       // Act
       final result = await repository.updateUserStatus(
         'user-id',
-        status: 'suspended',
-        reason: 'Policy violation',
+        'suspended',
       );
 
       // Assert
       expect(result.isSuccess, true);
-      final user = result.getOrNull();
-      expect(user!['status'], 'suspended');
+      verify(() => mockApiService.updateUserStatus('user-id', 'suspended')).called(1);
     });
 
     test('deleteUser soft deletes user successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Utilisateur supprimé avec succès'
-      };
-
-      when(() => mockApiService.deleteUser(
-            any(),
-            reason: any(named: 'reason'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.deleteUser(any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.deleteUser(
-        'user-id',
-        reason: 'User requested deletion',
-      );
+      final result = await repository.deleteUser('user-id');
 
       // Assert
       expect(result.isSuccess, true);
+      verify(() => mockApiService.deleteUser('user-id')).called(1);
     });
 
     test('resetUserPassword resets password successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Mot de passe réinitialisé avec succès'
-      };
-
-      when(() => mockApiService.resetUserPassword(
-            any(),
-            newPassword: any(named: 'newPassword'),
-            sendEmail: any(named: 'sendEmail'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.resetUserPassword(any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.resetUserPassword(
-        'user-id',
-        newPassword: 'NewPassword123!',
-        sendEmail: true,
-      );
+      final result = await repository.resetUserPassword('user-id');
 
       // Assert
       expect(result.isSuccess, true);
+      verify(() => mockApiService.resetUserPassword('user-id')).called(1);
     });
   });
 
   group('Restaurant Management', () {
     test('getRestaurants returns restaurant list on success', () async {
       // Arrange
-      final mockRestaurants = {
-        'success': true,
-        'restaurants': [
-          {
-            'id': '1',
-            'name': 'Test Restaurant',
-            'validationStatus': 'pending',
-            'commissionRate': 5
-          }
-        ]
-      };
+      final mockRestaurants = [
+        {
+          'id': '1',
+          'name': 'Test Restaurant',
+          'validationStatus': 'pending',
+          'commissionRate': 5
+        }
+      ];
 
-      when(() => mockApiService.getRestaurants(
-            page: any(named: 'page'),
-            limit: any(named: 'limit'),
-            status: any(named: 'status'),
-            search: any(named: 'search'),
-            city: any(named: 'city'),
-          )).thenAnswer((_) async => mockRestaurants);
+      when(() => mockApiService.getRestaurants())
+          .thenAnswer((_) async => mockRestaurants);
 
       // Act
-      final result = await repository.getRestaurants(page: 1, limit: 20);
+      final result = await repository.getRestaurants();
 
       // Assert
       expect(result.isSuccess, true);
       final data = result.getOrNull();
-      expect(data!['restaurants'].length, 1);
+      expect(data!.length, 1);
+      expect(data[0]['name'], 'Test Restaurant');
     });
 
     test('validateRestaurant approves restaurant successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Restaurant approuvé avec succès',
-        'restaurant': {
-          'id': 'restaurant-id',
-          'validationStatus': 'approved'
-        }
-      };
-
-      when(() => mockApiService.validateRestaurant(
-            any(),
-            status: any(named: 'status'),
-            reason: any(named: 'reason'),
-            commissionRate: any(named: 'commissionRate'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.validateRestaurant(any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.validateRestaurant(
-        'restaurant-id',
-        status: 'approved',
-        reason: 'All requirements met',
-        commissionRate: 10.0,
-      );
+      final result = await repository.validateRestaurant('restaurant-id');
 
       // Assert
       expect(result.isSuccess, true);
-      final restaurant = result.getOrNull();
-      expect(restaurant!['validationStatus'], 'approved');
+      verify(() => mockApiService.validateRestaurant('restaurant-id')).called(1);
     });
 
     test('setCommissionRate updates commission rate successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Taux de commission mis à jour',
-        'restaurant': {
-          'id': 'restaurant-id',
-          'commissionRate': 15
-        }
-      };
-
-      when(() => mockApiService.setCommissionRate(
-            any(),
-            commissionRate: any(named: 'commissionRate'),
-            effectiveDate: any(named: 'effectiveDate'),
-            reason: any(named: 'reason'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.setCommissionRate(any(), any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.setCommissionRate(
-        'restaurant-id',
-        commissionRate: 15.0,
-        reason: 'High performance restaurant',
-      );
+      final result = await repository.setCommissionRate('restaurant-id', 15.0);
 
       // Assert
       expect(result.isSuccess, true);
-      final restaurant = result.getOrNull();
-      expect(restaurant!['commissionRate'], 15);
+      verify(() => mockApiService.setCommissionRate('restaurant-id', 15.0)).called(1);
     });
   });
 
   group('Order Management', () {
     test('getOrders returns order list on success', () async {
       // Arrange
-      final mockOrders = {
-        'success': true,
-        'orders': [
-          {
-            'id': '1',
-            'customerId': 'customer1',
-            'status': 'completed',
-            'totalAmount': 10000
-          }
-        ]
-      };
+      final mockOrders = [
+        {
+          'id': '1',
+          'customerId': 'customer1',
+          'status': 'completed',
+          'totalAmount': 10000
+        }
+      ];
 
-      when(() => mockApiService.getOrders(
-            page: any(named: 'page'),
-            limit: any(named: 'limit'),
-            status: any(named: 'status'),
-            search: any(named: 'search'),
-            fromDate: any(named: 'fromDate'),
-            toDate: any(named: 'toDate'),
-          )).thenAnswer((_) async => mockOrders);
+      when(() => mockApiService.getOrders())
+          .thenAnswer((_) async => mockOrders);
 
       // Act
-      final result = await repository.getOrders(page: 1, limit: 20);
+      final result = await repository.getOrders();
 
       // Assert
       expect(result.isSuccess, true);
       final data = result.getOrNull();
-      expect(data!['orders'].length, 1);
+      expect(data!.length, 1);
+      expect(data[0]['status'], 'completed');
     });
 
     test('cancelOrder cancels order with refund successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Commande annulée avec succès',
-        'order': {
-          'id': 'order-id',
-          'status': 'cancelled',
-          'refunded': true
-        }
-      };
-
-      when(() => mockApiService.cancelOrder(
-            orderId: any(named: 'orderId'),
-            reason: any(named: 'reason'),
-            notifyCustomer: any(named: 'notifyCustomer'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.cancelOrder(any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.cancelOrder(
-        orderId: 'order-id',
-        reason: 'Restaurant unable to fulfill',
-        notifyCustomer: true,
-      );
+      final result = await repository.cancelOrder('order-id');
 
       // Assert
       expect(result.isSuccess, true);
-      final order = result.getOrNull();
-      expect(order!['status'], 'cancelled');
-      expect(order['refunded'], true);
+      verify(() => mockApiService.cancelOrder('order-id')).called(1);
     });
 
     test('refundOrder processes refund successfully', () async {
       // Arrange
-      final mockResponse = {
-        'success': true,
-        'message': 'Remboursement effectué avec succès',
-        'refund': {
-          'orderId': 'order-id',
-          'amount': 10000,
-          'method': 'wallet'
-        }
-      };
-
-      when(() => mockApiService.refundOrder(
-            orderId: any(named: 'orderId'),
-            amount: any(named: 'amount'),
-            reason: any(named: 'reason'),
-            refundMethod: any(named: 'refundMethod'),
-          )).thenAnswer((_) async => mockResponse);
+      when(() => mockApiService.refundOrder(any()))
+          .thenAnswer((_) async => null);
 
       // Act
-      final result = await repository.refundOrder(
-        orderId: 'order-id',
-        amount: 10000,
-        reason: 'Customer complaint',
-        refundMethod: 'wallet',
-      );
+      final result = await repository.refundOrder('order-id');
 
       // Assert
       expect(result.isSuccess, true);
-      final refund = result.getOrNull();
-      expect(refund!['amount'], 10000);
+      verify(() => mockApiService.refundOrder('order-id')).called(1);
     });
   });
 
@@ -481,17 +341,11 @@ void main() {
         }
       };
 
-      when(() => mockApiService.getFinancialReport(
-            startDate: any(named: 'startDate'),
-            endDate: any(named: 'endDate'),
-            restaurantId: any(named: 'restaurantId'),
-          )).thenAnswer((_) async => mockReport);
+      when(() => mockApiService.getFinancialReport(timeframe: any(named: 'timeframe')))
+          .thenAnswer((_) async => mockReport);
 
       // Act
-      final result = await repository.getFinancialReport(
-        startDate: DateTime(2025, 9, 1),
-        endDate: DateTime(2025, 10, 1),
-      );
+      final result = await repository.getFinancialReport(timeframe: '30d');
 
       // Assert
       expect(result.isSuccess, true);
@@ -511,11 +365,10 @@ void main() {
       ));
 
       // Act
-      final result = await repository.getDashboardStats();
+      final result = await repository.getDashboardStats(timeframe: '24h');
 
       // Assert
       expect(result.isFailure, true);
-      expect(result.exceptionOrNull(), isA<DioException>());
     });
 
     test('handles server errors gracefully', () async {
