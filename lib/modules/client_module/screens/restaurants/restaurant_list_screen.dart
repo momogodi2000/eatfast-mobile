@@ -5,6 +5,7 @@ import 'package:eatfast_mobile/shared/config/router/route_names.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart' as app_design_tokens;
 import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
 import 'package:eatfast_mobile/shared/services/restaurants/providers/restaurant_provider.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
 import 'package:eatfast_mobile/shared/services/restaurants/presentation/widgets/restaurant_card.dart';
 import 'package:eatfast_mobile/modules/client_module/widgets/widgets/restaurants/restaurant_filter_bottom_sheet.dart';
 import 'restaurant_search_screen.dart';

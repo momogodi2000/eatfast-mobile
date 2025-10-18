@@ -115,6 +115,7 @@ class SubscriptionUsageWidget extends StatelessWidget {
       SubscriptionStatus.trial => (Colors.blue, 'Période d\'essai'),
       SubscriptionStatus.inactive => (Colors.grey, 'Inactif'),
       SubscriptionStatus.suspended => (Colors.red, 'Suspendu'),
+      SubscriptionStatus.pending => (Colors.amber, 'En attente'),
     };
 
     return Chip(

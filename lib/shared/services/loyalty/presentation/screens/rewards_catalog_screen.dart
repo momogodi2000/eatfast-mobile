@@ -2,6 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart';
 import 'package:eatfast_mobile/shared/models/loyalty_models.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/domain/models/rewards_filter_state.dart';
 
 class RewardsCatalogScreen extends ConsumerStatefulWidget {
   const RewardsCatalogScreen({super.key});
@@ -249,21 +250,31 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
         onRedeem: () async {
           final navigator = Navigator.of(context);
           final messenger = ScaffoldMessenger.of(context);
-          final request = LoyaltyRedemptionRequest(rewardId: reward.id);
-          final success = await ref
-              .read(loyaltyProvider.notifier)
-              .redeemPoints(request);
+          try {
+            await ref
+                .read(loyaltyProvider.notifier)
+                .redeemReward(reward.id);
 
-          if (success && mounted) {
-            navigator.pop();
-            messenger.showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Récompense ${reward.name} échangée avec succès!',
+            if (mounted) {
+              navigator.pop();
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Récompense ${reward.name} échangée avec succès!',
+                  ),
+                  backgroundColor: Colors.green,
                 ),
-                backgroundColor: Colors.green,
-              ),
-            );
+              );
+            }
+          } catch (e) {
+            if (mounted) {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text('Erreur lors de l\'échange: $e'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
           }
         },
       ),
@@ -271,9 +282,7 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
   }
 
   bool _hasActiveFilters(RewardsFilterState filterState) {
-    return filterState.selectedType != null ||
-        filterState.maxPointsCost != null ||
-        !filterState.showOnlyAffordable;
+    return filterState.hasActiveFilters;
   }
 
   List<Widget> _buildActiveFilterChips(
@@ -282,40 +291,37 @@ class _RewardsCatalogScreenState extends ConsumerState<RewardsCatalogScreen> {
   ) {
     final List<Widget> chips = [];
 
-    if (filterState.selectedType != null) {
+    if (filterState.category != null) {
       chips.add(
         Chip(
-          label: Text(filterState.selectedType!.displayName),
+          label: Text(filterState.category!),
           deleteIcon: const Icon(Icons.close, size: 16),
           onDeleted: () {
-            final current = ref.read(rewardsFilterProvider);
-            ref.read(rewardsFilterProvider.notifier).state = current.copyWith(selectedType: null);
+            ref.read(rewardsFilterProvider.notifier).setCategory(null);
           },
         ),
       );
     }
 
-    if (filterState.maxPointsCost != null) {
+    if (filterState.maxPoints != null) {
       chips.add(
         Chip(
-          label: Text('Max ${filterState.maxPointsCost} pts'),
+          label: Text('Max ${filterState.maxPoints} pts'),
           deleteIcon: const Icon(Icons.close, size: 16),
           onDeleted: () {
-            final current = ref.read(rewardsFilterProvider);
-            ref.read(rewardsFilterProvider.notifier).state = current.copyWith(maxPointsCost: null);
+            ref.read(rewardsFilterProvider.notifier).setMaxPoints(null);
           },
         ),
       );
     }
 
-    if (!filterState.showOnlyAffordable) {
+    if (filterState.availableOnly) {
       chips.add(
         Chip(
-          label: const Text('Tout afficher'),
+          label: const Text('Disponibles uniquement'),
           deleteIcon: const Icon(Icons.close, size: 16),
           onDeleted: () {
-            final current = ref.read(rewardsFilterProvider);
-            ref.read(rewardsFilterProvider.notifier).state = current.copyWith(showOnlyAffordable: true);
+            ref.read(rewardsFilterProvider.notifier).setAvailableOnly(false);
           },
         ),
       );
@@ -545,19 +551,17 @@ class _FilterBottomSheet extends ConsumerWidget {
               children: [
                 FilterChip(
                   label: const Text('Tous'),
-                  selected: filterState.selectedType == null,
+                  selected: filterState.category == null,
                   onSelected: (_) {
-                    final current = ref.read(rewardsFilterProvider);
-                    ref.read(rewardsFilterProvider.notifier).state = current.copyWith(selectedType: null);
+                    ref.read(rewardsFilterProvider.notifier).setCategory(null);
                   },
                 ),
                 ...RewardType.values.map(
                   (type) => FilterChip(
                     label: Text(type.displayName),
-                    selected: filterState.selectedType == type,
+                    selected: filterState.category == type.toString(),
                     onSelected: (_) {
-                      final current = ref.read(rewardsFilterProvider);
-                      ref.read(rewardsFilterProvider.notifier).state = current.copyWith(selectedType: type);
+                      ref.read(rewardsFilterProvider.notifier).setCategory(type.toString());
                     },
                   ),
                 ),
@@ -568,11 +572,11 @@ class _FilterBottomSheet extends ConsumerWidget {
 
             SwitchListTile(
               title: const Text('Montrer seulement les récompenses abordables'),
-              value: filterState.showOnlyAffordable,
+              value: filterState.availableOnly,
               onChanged: (value) {
                 ref
                     .read(rewardsFilterProvider.notifier)
-                    .setShowOnlyAffordable(value);
+                    .setAvailableOnly(value);
               },
             ),
 

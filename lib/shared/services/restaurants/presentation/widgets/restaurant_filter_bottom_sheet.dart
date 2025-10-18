@@ -1,46 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-
-// Simple filter class for restaurants
-class RestaurantFilter {
-  final String? searchQuery;
-  final List<String>? cuisineTypes;
-  final double? minRating;
-  final double? maxDeliveryFee;
-  final String? priceRange;
-  final int? maxDeliveryTime;
-  final bool? isOpen;
-
-  const RestaurantFilter({
-    this.searchQuery,
-    this.cuisineTypes,
-    this.minRating,
-    this.maxDeliveryFee,
-    this.priceRange,
-    this.maxDeliveryTime,
-    this.isOpen,
-  });
-
-  RestaurantFilter copyWith({
-    String? searchQuery,
-    List<String>? cuisineTypes,
-    double? minRating,
-    double? maxDeliveryFee,
-    String? priceRange,
-    int? maxDeliveryTime,
-    bool? isOpen,
-  }) {
-    return RestaurantFilter(
-      searchQuery: searchQuery ?? this.searchQuery,
-      cuisineTypes: cuisineTypes ?? this.cuisineTypes,
-      minRating: minRating ?? this.minRating,
-      maxDeliveryFee: maxDeliveryFee ?? this.maxDeliveryFee,
-      priceRange: priceRange ?? this.priceRange,
-      maxDeliveryTime: maxDeliveryTime ?? this.maxDeliveryTime,
-      isOpen: isOpen ?? this.isOpen,
-    );
-  }
-}
+import '../../domain/models/restaurant.dart';
 
 /// A bottom sheet for filtering restaurants by various criteria
 class RestaurantFilterBottomSheet extends StatefulWidget {

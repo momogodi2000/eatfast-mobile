@@ -1,6 +1,6 @@
 ﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/models/loyalty_models.dart';
-import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart' hide rewardsFilterProvider, filteredRewardsProvider;
 
 class RewardsFilterState {
   final RewardType? type;

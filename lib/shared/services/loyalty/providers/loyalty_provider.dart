@@ -5,11 +5,90 @@ import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/services/loyalty/data/unified_loyalty_service.dart';
 import 'package:eatfast_mobile/shared/services/loyalty/domain/models/loyalty.dart' as base;
 import 'package:eatfast_mobile/shared/models/loyalty_models.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/domain/models/rewards_filter_state.dart';
 
 /// Loyalty service provider
 final loyaltyServiceProvider = Provider<UnifiedLoyaltyService>((ref) {
   final apiClient = ref.read(apiClientProvider);
   return UnifiedLoyaltyService(apiClient);
+});
+
+/// Rewards filter state provider
+final rewardsFilterProvider = StateNotifierProvider<RewardsFilterNotifier, RewardsFilterState>(
+  (ref) => RewardsFilterNotifier(),
+);
+
+/// Rewards filter notifier
+class RewardsFilterNotifier extends StateNotifier<RewardsFilterState> {
+  RewardsFilterNotifier() : super(const RewardsFilterState());
+
+  void setCategory(String? category) {
+    state = state.copyWith(category: category);
+  }
+
+  void setMinPoints(int? minPoints) {
+    state = state.copyWith(minPoints: minPoints);
+  }
+
+  void setMaxPoints(int? maxPoints) {
+    state = state.copyWith(maxPoints: maxPoints);
+  }
+
+  void setAvailableOnly(bool availableOnly) {
+    state = state.copyWith(availableOnly: availableOnly);
+  }
+
+  void setSortBy(String? sortBy) {
+    state = state.copyWith(sortBy: sortBy);
+  }
+
+  void reset() {
+    state = state.clear();
+  }
+}
+
+/// Filtered rewards provider
+final filteredRewardsProvider = Provider<List<LoyaltyReward>>((ref) {
+  final loyaltyState = ref.watch(loyaltyProvider);
+  final filterState = ref.watch(rewardsFilterProvider);
+
+  List<LoyaltyReward> rewards = loyaltyState.availableRewards;
+
+  // Filter by category
+  if (filterState.category != null) {
+    rewards = rewards.where((r) => r.type.toString().contains(filterState.category!)).toList();
+  }
+
+  // Filter by points range
+  if (filterState.minPoints != null) {
+    rewards = rewards.where((r) => r.pointsCost >= filterState.minPoints!).toList();
+  }
+  if (filterState.maxPoints != null) {
+    rewards = rewards.where((r) => r.pointsCost <= filterState.maxPoints!).toList();
+  }
+
+  // Filter by availability
+  if (filterState.availableOnly) {
+    final availablePoints = loyaltyState.availablePoints;
+    rewards = rewards.where((r) => r.pointsCost <= availablePoints).toList();
+  }
+
+  // Sort rewards
+  if (filterState.sortBy != null) {
+    switch (filterState.sortBy) {
+      case 'points_asc':
+        rewards.sort((a, b) => a.pointsCost.compareTo(b.pointsCost));
+        break;
+      case 'points_desc':
+        rewards.sort((a, b) => b.pointsCost.compareTo(a.pointsCost));
+        break;
+      case 'name':
+        rewards.sort((a, b) => a.name.compareTo(b.name));
+        break;
+    }
+  }
+
+  return rewards;
 });
 
 /// Loyalty provider - manages loyalty program state

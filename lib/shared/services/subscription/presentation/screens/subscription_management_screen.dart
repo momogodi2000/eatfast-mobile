@@ -103,9 +103,10 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                   ),
                 ),
                 const SizedBox(height: 16),
-                SubscriptionBenefitsList(
-                  plan: subscription!.plan,
-                ),
+                if (subscription?.plan != null)
+                  SubscriptionBenefitsList(
+                    plan: subscription!.plan!,
+                  ),
                 const SizedBox(height: 24),
               ],
 
@@ -158,7 +159,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        subscription?.plan.name ?? 'Aucun abonnement',
+                        subscription?.plan?.name ?? 'Aucun abonnement',
                         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -178,7 +179,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                     ],
                   ),
                 ),
-                if (subscription?.isActive == true)
+                if (subscription?.isActive == true && subscription?.plan != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
@@ -186,7 +187,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      subscription!.plan.type.name,
+                      subscription!.plan!.type.toString().split('.').last,
                       style: const TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.w500,
@@ -214,7 +215,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${subscription.plan.price.toStringAsFixed(0)} XAF',
+                          '${subscription.plan?.price?.toStringAsFixed(0) ?? "0"} XAF',
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
@@ -343,13 +344,16 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
           itemBuilder: (context, index) {
             final plan = plans[index];
             final userSubscription = userSubscriptionAsync.valueOrNull;
-            final isCurrentPlan = userSubscription?.plan.id == plan.id;
+            final isCurrentPlan = userSubscription?.plan?.id == plan.id;
 
             return SubscriptionPlanCard(
               plan: plan,
               isCurrentPlan: isCurrentPlan,
               isUpgrade: userSubscription != null &&
-                         plan.price > userSubscription.plan.price,
+                         userSubscription.plan != null &&
+                         plan.price != null &&
+                         userSubscription.plan!.price != null &&
+                         plan.price! > userSubscription.plan!.price!,
               onSelectPlan: () => _handlePlanSelection(plan, userSubscription),
             );
           },
@@ -444,7 +448,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
             ),
             const SizedBox(height: 8),
             Text(
-              'Montant: ${subscription.plan.price.toStringAsFixed(0)} XAF',
+              'Montant: ${subscription.plan?.price?.toStringAsFixed(0) ?? "0"} XAF',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
@@ -457,20 +461,20 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
   }
 
   void _handlePlanSelection(SubscriptionPlan plan, UserSubscription? currentSubscription) {
-    if (currentSubscription?.plan.id == plan.id) return;
+    if (currentSubscription?.plan?.id == plan.id) return;
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Souscrire � ${plan.name}'),
+        title: Text('Souscrire à ${plan.name ?? "Plan"}'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (currentSubscription != null)
-              Text('Vous allez passer de ${currentSubscription.plan.name} � ${plan.name}.'),
+            if (currentSubscription != null && currentSubscription.plan != null)
+              Text('Vous allez passer de ${currentSubscription.plan!.name ?? "Plan actuel"} à ${plan.name ?? "nouveau plan"}.'),
             const SizedBox(height: 16),
-            Text('Prix: ${plan.price.toStringAsFixed(0)} XAF/mois'),
+            Text('Prix: ${plan.price?.toStringAsFixed(0) ?? "0"} XAF/mois'),
             const SizedBox(height: 8),
             Text('Facturation: ${plan.billingCycle}'),
           ],

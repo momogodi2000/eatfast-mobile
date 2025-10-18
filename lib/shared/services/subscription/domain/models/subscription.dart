@@ -23,6 +23,7 @@ enum SubscriptionStatus {
   expired('expired'),
   pending('pending'),
   suspended('suspended'),
+  paused('paused'),
   trial('trial');
 
   const SubscriptionStatus(this.value);

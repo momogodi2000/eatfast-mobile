@@ -2,7 +2,6 @@
 
 /// Menu Item Model
 part 'menu_item.g.dart';
-part 'customization_option.g.dart';
 
 @JsonSerializable()
 class MenuItem {

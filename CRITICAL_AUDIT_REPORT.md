@@ -471,7 +471,7 @@ test('complete order flow from cart to payment', () async {
 - ✅ iOS Info.plist present
 - ✅ Launcher icons and splash screens configured
 
-### CI/CD Readiness:
+### CI/CD Readiness: implement it
 - ❌ No CI/CD pipeline configured
 - ❌ No automated testing in pipeline
 - ❌ No deployment scripts for stores

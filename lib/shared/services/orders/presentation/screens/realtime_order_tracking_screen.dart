@@ -122,9 +122,12 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
       setState(() {
         // Update order status
         if (_currentOrder != null) {
+          final DateTime? estimatedTime = update.estimatedDeliveryTime != null
+              ? DateTime.tryParse(update.estimatedDeliveryTime!)
+              : null;
           _currentOrder = _currentOrder!.copyWith(
             status: _mapOrderStatus(update.status),
-            estimatedDeliveryTime: update.estimatedDeliveryTime,
+            estimatedDeliveryTime: estimatedTime,
           );
         }
 
@@ -506,8 +509,9 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
           const SizedBox(height: 16),
           Expanded(
             child: OrderStatusTimeline(
-              order: _currentOrder!,
-              showEstimatedTimes: true,
+              currentStatus: _currentOrder!.status,
+              statusUpdates: _currentOrder!.statusUpdates ?? [],
+              estimatedDeliveryTime: _currentOrder!.estimatedDeliveryTime,
             ),
           ),
         ],
@@ -532,22 +536,38 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
 
   String _getStatusDisplayName(OrderStatus status) {
     switch (status) {
-      case OrderStatus.created:
+      case OrderStatus.pending:
         return 'En attente';
+      case OrderStatus.created:
+        return 'Créée';
       case OrderStatus.confirmed:
         return 'Confirmée';
+      case OrderStatus.accepted:
+        return 'Acceptée';
       case OrderStatus.preparing:
         return 'En préparation';
+      case OrderStatus.ready:
       case OrderStatus.readyForPickup:
         return 'Prête';
+      case OrderStatus.assignedDriver:
+        return 'Chauffeur assigné';
       case OrderStatus.pickedUp:
         return 'Récupérée';
+      case OrderStatus.onTheWay:
       case OrderStatus.inTransit:
         return 'En transit';
       case OrderStatus.delivered:
         return 'Livrée';
+      case OrderStatus.completed:
+        return 'Terminée';
       case OrderStatus.cancelled:
         return 'Annulée';
+      case OrderStatus.rejected:
+        return 'Rejetée';
+      case OrderStatus.refunded:
+        return 'Remboursée';
+      case OrderStatus.expired:
+        return 'Expirée';
     }
   }
 

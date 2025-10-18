@@ -38,7 +38,8 @@
       "Bash(cat:*)",
       "Bash(dart format:*)",
       "Bash(dart fix_errors.dart:*)",
-      "Bash(timeout 120 bash -c \"while [ ! -f .dart_tool/build/generated/eatfast_mobile/lib/shared/models/driver_profile.freezed.dart ]; do sleep 2; done; echo ''Build completed''\")"
+      "Bash(timeout 120 bash -c \"while [ ! -f .dart_tool/build/generated/eatfast_mobile/lib/shared/models/driver_profile.freezed.dart ]; do sleep 2; done; echo ''Build completed''\")",
+      "Bash(timeout 60 bash -c \"while ! test -f ''E:\\project\\Eat Fast App\\eatfatsApp\\fresh_analyze.txt'' || ! grep -q ''issues found'' ''E:\\project\\Eat Fast App\\eatfatsApp\\fresh_analyze.txt''; do sleep 2; done; cat ''E:\\project\\Eat Fast App\\eatfatsApp\\fresh_analyze.txt'' | tail -5\")"
     ],
     "deny": [],
     "ask": []

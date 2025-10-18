@@ -3,7 +3,6 @@ import 'package:eatfast_mobile/shared/services/restaurant/restaurant_service.dar
     as restaurant_service;
 import 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
 import '../domain/models/menu_item.dart' as domain;
-import '../presentation/widgets/restaurant_filter_bottom_sheet.dart';
 
 // Restaurant service provider
 final restaurantServiceProvider =

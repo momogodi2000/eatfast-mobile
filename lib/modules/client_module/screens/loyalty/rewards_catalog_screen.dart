@@ -2,7 +2,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/models/loyalty_models.dart';
 import '../../providers/rewards_provider.dart';
-import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart' show loyaltyProvider;
 
 class RewardsCatalogScreen extends ConsumerStatefulWidget {
   const RewardsCatalogScreen({super.key});
