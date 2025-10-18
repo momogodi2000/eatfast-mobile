@@ -2,7 +2,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/l10n/arb/app_localizations.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';

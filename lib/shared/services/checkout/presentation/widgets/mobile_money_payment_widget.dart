@@ -5,7 +5,6 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:eatfast_mobile/shared/services/payment/data/unified_payment_service.dart';
-import 'package:eatfast_mobile/shared/services/payment/domain/models/payment.dart' hide PaymentMethod;
 import 'package:eatfast_mobile/shared/config/app_config.dart';
 
 class MobileMoneyPaymentWidget extends StatefulWidget {

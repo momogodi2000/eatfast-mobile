@@ -1,5 +1,6 @@
 ﻿/// Centralized export file for all shared models
 /// Single source of truth for model imports across the app
+library;
 
 // Restaurant models
 export 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';

@@ -297,7 +297,7 @@ class OrderStatusUpdate {
   status: shared_models.OrderStatus.fromString(json['status'] as String? ?? 'pending'),
       timestamp: DateTime.parse(json['timestamp'] as String),
       note: noteOrMessage as String?,
-      message: noteOrMessage as String?,
+      message: noteOrMessage,
       updatedBy: json['updatedBy'] as String?,
     );
   }

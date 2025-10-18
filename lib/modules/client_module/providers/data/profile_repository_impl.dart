@@ -1,6 +1,5 @@
 import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
-import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 import '../domain/profile_repository.dart';
 
 /// Profile Repository Implementation

@@ -1,8 +1,6 @@
 ﻿import 'dart:async';
 import 'package:eatfast_mobile/shared/config/app_config.dart';
-import 'package:eatfast_mobile/shared/utils/result.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';
-import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/repositories/order_repository.dart';
 
 class OrderRepositoryImpl implements OrderRepository {

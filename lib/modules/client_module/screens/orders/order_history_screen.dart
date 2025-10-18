@@ -233,8 +233,7 @@ class _OrderHistoryScreenState extends ConsumerState<OrderHistoryScreen>
             _buildOrderDetailRow('Statut', order.status.displayName),
             _buildOrderDetailRow('Articles', '${order.itemCount} article(s)'),
             _buildOrderDetailRow('Total', '${order.total.toInt()} FCFA'),
-            if (order.createdAt != null)
-              _buildOrderDetailRow('Date', _formatDate(order.createdAt!)),
+            _buildOrderDetailRow('Date', _formatDate(order.createdAt!)),
             if (order.actualDeliveryTime != null)
               _buildOrderDetailRow('Livré le', _formatDate(order.actualDeliveryTime!)),
           ],

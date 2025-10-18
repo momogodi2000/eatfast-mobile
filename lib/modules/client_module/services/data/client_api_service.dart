@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:eatfast_mobile/shared/constants/api_constants.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/client_models.dart';
 
 class ClientApiService {
   final http.Client _httpClient;

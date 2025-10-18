@@ -5,7 +5,6 @@ import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 import 'package:eatfast_mobile/modules/guest_module/providers/domain/models/guest_models.dart';
 import 'package:eatfast_mobile/shared/services/payment/data/unified_payment_service.dart';
-import 'package:eatfast_mobile/shared/services/payment/domain/models/payment.dart' hide PaymentMethod;
 
 class GuestService {
   static final GuestService _instance = GuestService._internal();

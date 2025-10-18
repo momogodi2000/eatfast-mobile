@@ -75,7 +75,7 @@ class CartItemCard extends StatelessWidget {
   Widget _buildItemImage() {
     final imageUrl = cartItem.menuItem.imageUrl;
     
-    if (imageUrl == null || imageUrl.isEmpty) {
+    if (imageUrl.isEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         child: Container(

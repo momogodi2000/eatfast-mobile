@@ -5,7 +5,6 @@ import 'package:eatfast_mobile/modules/guest_module/providers/domain/models/gues
 import 'package:eatfast_mobile/modules/guest_module/services/data/guest_service.dart';
 import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 import 'package:eatfast_mobile/shared/config/app_config.dart';
-import 'package:eatfast_mobile/shared/models/exports.dart' as shared_models;
 
 class EnhancedOrderTrackingScreen extends ConsumerStatefulWidget {
   final String orderId;

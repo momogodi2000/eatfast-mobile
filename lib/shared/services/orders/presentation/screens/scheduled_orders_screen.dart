@@ -140,7 +140,7 @@ class _ScheduledOrdersScreenState extends ConsumerState<ScheduledOrdersScreen>
       },
       loading: () => const LoadingWidget(),
       error: (error, stack) => ErrorDisplayWidget(
-        error: error.toString(),
+        message: error.toString(),
         onRetry: () => ref.invalidate(scheduledOrdersProvider),
       ),
     );
@@ -200,7 +200,7 @@ class _ScheduledOrdersScreenState extends ConsumerState<ScheduledOrdersScreen>
       },
       loading: () => const LoadingWidget(),
       error: (error, stack) => ErrorDisplayWidget(
-        error: error.toString(),
+        message: error.toString(),
         onRetry: () => ref.invalidate(scheduledOrdersProvider),
       ),
     );
@@ -253,7 +253,7 @@ class _ScheduledOrdersScreenState extends ConsumerState<ScheduledOrdersScreen>
       },
       loading: () => const LoadingWidget(),
       error: (error, stack) => ErrorDisplayWidget(
-        error: error.toString(),
+        message: error.toString(),
         onRetry: () => ref.invalidate(scheduledOrdersProvider),
       ),
     );

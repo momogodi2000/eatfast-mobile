@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:eatfast_mobile/shared/services/websocket/websocket_service.dart' as ws;
-import 'package:eatfast_mobile/shared/constants/app_constants.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/order_status.dart';
 import 'package:eatfast_mobile/shared/services/orders/presentation/widgets/order_status_timeline.dart';

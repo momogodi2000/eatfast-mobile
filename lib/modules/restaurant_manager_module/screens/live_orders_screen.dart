@@ -2,7 +2,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import 'package:eatfast_mobile/shared/models/live_order.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';

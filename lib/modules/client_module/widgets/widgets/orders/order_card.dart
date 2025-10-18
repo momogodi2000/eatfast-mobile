@@ -171,15 +171,12 @@ class OrderCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (order.createdAt != null)
-                    Text(
-                      _formatDate(order.createdAt!),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: DesignTokens.textSecondary,
-                      ),
-                    )
-                  else
-                    const SizedBox.shrink(),
+                  Text(
+                    _formatDate(order.createdAt!),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: DesignTokens.textSecondary,
+                    ),
+                  ),
 
                   Row(
                     children: [

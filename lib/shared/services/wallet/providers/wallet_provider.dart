@@ -1,12 +1,14 @@
 ﻿/// Wallet provider for state management
 library;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/services/wallet/data/wallet_service.dart';
 import 'package:eatfast_mobile/shared/services/wallet/domain/models/wallet.dart';
 
 /// Wallet service provider
 final walletServiceProvider = Provider<WalletService>((ref) {
-  return WalletService();
+  final apiClient = ref.read(apiClientProvider);
+  return WalletService(apiClient);
 });
 
 /// Wallet provider - manages wallet balance and transactions
@@ -31,27 +33,21 @@ class WalletNotifier extends StateNotifier<AsyncValue<Wallet?>> {
   Future<void> loadWallet() async {
     state = const AsyncValue.loading();
     try {
-      final wallet = await _walletService.getWallet();
-      state = AsyncValue.data(wallet);
+      final response = await _walletService.getWallet();
+      if (response.success && response.wallet != null) {
+        state = AsyncValue.data(response.wallet);
+      } else {
+        state = AsyncValue.error(
+          response.error ?? 'Failed to load wallet',
+          StackTrace.current,
+        );
+      }
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
     }
   }
 
-  Future<void> refreshBalance() async {
-    try {
-      final balance = await _walletService.getBalance();
-      state.whenData((wallet) {
-        if (wallet != null) {
-          state = AsyncValue.data(wallet.copyWith(balance: balance));
-        }
-      });
-    } catch (error, stackTrace) {
-      state = AsyncValue.error(error, stackTrace);
-    }
-  }
-
-  /// Refresh wallet data (alias for loadWallet for consistency)
+  /// Refresh wallet data
   Future<void> refresh() async {
     await loadWallet();
   }
@@ -78,7 +74,11 @@ class WalletNotifier extends StateNotifier<AsyncValue<Wallet?>> {
 
   Future<void> topUp(double amount, String paymentMethodId) async {
     try {
-      await _walletService.topUp(amount, paymentMethodId);
+      final request = TopUpRequest(
+        amount: amount,
+        paymentMethod: paymentMethodId,
+      );
+      await _walletService.topUpWallet(request);
       await loadWallet();
     } catch (error) {
       rethrow;
@@ -164,12 +164,22 @@ class TopUpNotifier extends StateNotifier<TopUpState> {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      await _walletService.topUp(
-        state.amount!,
-        state.paymentMethod!.value,
+      final request = TopUpRequest(
+        amount: state.amount!,
+        paymentMethod: state.paymentMethod!.value,
+        phoneNumber: state.phoneNumber,
       );
-      state = const TopUpState(); // Reset state on success
-      return true;
+      final response = await _walletService.topUpWallet(request);
+      if (response.success) {
+        state = const TopUpState(); // Reset state on success
+        return true;
+      } else {
+        state = state.copyWith(
+          isLoading: false,
+          error: response.error ?? 'Top-up failed',
+        );
+        return false;
+      }
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
       return false;

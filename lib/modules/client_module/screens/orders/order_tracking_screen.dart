@@ -260,7 +260,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
               ),
               const SizedBox(width: DesignTokens.spaceXS),
               Text(
-                'Commandé le ${_formatDateTime(order.createdAt!)}',
+                'Commandé le ${_formatDateTime(order.createdAt)}',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: DesignTokens.textSecondary,
                 ),

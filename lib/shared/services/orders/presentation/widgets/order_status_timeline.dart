@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/shared/models/models_export.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class OrderStatusTimeline extends StatelessWidget {
@@ -185,7 +184,7 @@ class OrderStatusTimeline extends StatelessWidget {
                 if (statusUpdate != null) ...[
                   const SizedBox(height: DesignTokens.spaceXS),
                   Text(
-                    statusUpdate.message ?? status.description,
+                    statusUpdate.message ?? _getStatusDescription(status),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: isActive ? DesignTokens.textSecondary : DesignTokens.textTertiary,
                     ),
@@ -349,6 +348,43 @@ class OrderStatusTimeline extends StatelessWidget {
       case OrderStatus.refunded:
       case OrderStatus.expired:
         return Icons.cancel;
+    }
+  }
+
+  String _getStatusDescription(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.pending:
+        return 'Commande en attente';
+      case OrderStatus.created:
+        return 'Commande créée';
+      case OrderStatus.confirmed:
+        return 'Commande confirmée';
+      case OrderStatus.accepted:
+        return 'Commande acceptée';
+      case OrderStatus.preparing:
+        return 'En préparation';
+      case OrderStatus.ready:
+        return 'Prête';
+      case OrderStatus.readyForPickup:
+        return 'Prête pour ramassage';
+      case OrderStatus.assignedDriver:
+        return 'Livreur assigné';
+      case OrderStatus.pickedUp:
+        return 'Récupérée par le livreur';
+      case OrderStatus.inTransit:
+        return 'En transit';
+      case OrderStatus.delivered:
+        return 'Livrée';
+      case OrderStatus.completed:
+        return 'Complétée';
+      case OrderStatus.cancelled:
+        return 'Annulée';
+      case OrderStatus.rejected:
+        return 'Rejetée';
+      case OrderStatus.refunded:
+        return 'Remboursée';
+      case OrderStatus.expired:
+        return 'Expirée';
     }
   }
 

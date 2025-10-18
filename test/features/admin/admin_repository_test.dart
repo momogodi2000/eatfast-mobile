@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:eatfast_mobile/shared/services/admin/data/repositories/admin_repository_impl.dart';
 import 'package:eatfast_mobile/shared/services/admin/data/services/admin_api_service.dart';
-import 'package:eatfast_mobile/shared/utils/result.dart';
 
 class MockAdminApiService extends Mock implements AdminApiService {}
 

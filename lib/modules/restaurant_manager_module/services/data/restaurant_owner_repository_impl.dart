@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/shared/utils/result.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/restaurant_stats.dart';

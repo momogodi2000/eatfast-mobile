@@ -13,8 +13,6 @@ final filteredRewardsProvider = Provider<List<LoyaltyReward>>((ref) {
   final loyaltyState = ref.watch(loyaltyProvider);
   final filter = ref.watch(rewardsFilterProvider);
 
-  if (loyaltyState == null) return [];
-
   var rewards = loyaltyState.availableRewards;
 
   // Apply category filter

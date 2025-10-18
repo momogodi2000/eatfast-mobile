@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/restaurant_stats.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/live_order.dart';
-import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/repositories/restaurant_owner_repository.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/services/data/restaurant_owner_repository_impl.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
