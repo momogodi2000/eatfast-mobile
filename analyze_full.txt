@@ -1,0 +1,183 @@
+Analyzing eatfatsApp...                                         
+
+warning - The value of the field '_apiClient' isn't used - lib\modules\client_module\providers\data\profile_repository_impl.dart:8:19 - unused_field
+warning - The '!' will have no effect because the receiver can't be null - lib\modules\client_module\screens\orders\order_history_screen.dart:236:69 - unnecessary_non_null_assertion
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\client_module\screens\orders\order_tracking_screen.dart:175:47 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\client_module\screens\orders\order_tracking_screen.dart:176:47 - dead_null_aware_expression
+   info - The imported package 'http' isn't a dependency of the importing package - lib\modules\client_module\services\data\client_api_service.dart:6:8 - depend_on_referenced_packages
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\client_module\widgets\widgets\orders\delivery_address_card.dart:93:36 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\client_module\widgets\widgets\orders\delivery_address_card.dart:94:63 - dead_null_aware_expression
+warning - The '!' will have no effect because the receiver can't be null - lib\modules\client_module\widgets\widgets\orders\order_card.dart:175:48 - unnecessary_non_null_assertion
+warning - This default clause is covered by the previous cases - lib\modules\client_module\widgets\widgets\orders\order_status_timeline.dart:327:7 - unreachable_switch_default
+warning - This default clause is covered by the previous cases - lib\modules\client_module\widgets\widgets\orders\order_status_timeline.dart:359:7 - unreachable_switch_default
+warning - The value of the local variable 'restaurantState' isn't used - lib\modules\restaurant_manager_module\screens\live_orders_screen.dart:49:11 - unused_local_variable
+  error - The argument type 'Widget Function(String, dynamic)' can't be assigned to the parameter type 'Widget? Function(String)'.  - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:91:16 - argument_type_not_assignable
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:592:89 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1326:87 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1544:87 - dead_null_aware_expression
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\shared\models\analytics_data.dart:44:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\shared\models\analytics_data.dart:45:6 - invalid_annotation_target
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\cart\data\cart_repository_impl.dart:73:49 - dead_null_aware_expression
+   info - The import of 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart' is unnecessary because all of the used elements are also provided by the import of 'package:eatfast_mobile/shared/models/exports.dart' - lib\shared\services\orders\presentation\screens\order_tracking_screen.dart:5:8 - unnecessary_import
+   info - The import of 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart' is unnecessary because all of the used elements are also provided by the import of 'package:eatfast_mobile/shared/models/exports.dart' - lib\shared\services\orders\presentation\screens\order_tracking_screen.dart:6:8 - unnecessary_import
+warning - Unused import: '../widgets/delivery_address_card.dart' - lib\shared\services\orders\presentation\screens\order_tracking_screen.dart:10:8 - unused_import
+warning - Unused import: 'package:eatfast_mobile/shared/constants/app_constants.dart' - lib\shared\services\orders\presentation\screens\realtime_order_tracking_screen.dart:12:8 - unused_import
+   info - The import of '../../domain/models/order.dart' is unnecessary because all of the used elements are also provided by the import of 'package:eatfast_mobile/shared/models/exports.dart' - lib\shared\services\orders\presentation\screens\realtime_order_tracking_screen.dart:13:8 - unnecessary_import
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\orders\presentation\widgets\delivery_address_card.dart:93:36 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\orders\presentation\widgets\delivery_address_card.dart:94:63 - dead_null_aware_expression
+   info - The import of 'package:eatfast_mobile/shared/models/models_export.dart' is unnecessary because all of the used elements are also provided by the import of 'package:eatfast_mobile/shared/models/exports.dart' - lib\shared\services\orders\presentation\widgets\order_card.dart:4:8 - unnecessary_import
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\orders\presentation\widgets\order_card.dart:165:48 - unnecessary_non_null_assertion
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:218:54 - invalid_null_aware_operator
+warning - The operand can't be 'null', so the condition is always 'true' - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:354:37 - unnecessary_null_comparison
+warning - The operand can't be 'null', so the condition is always 'true' - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:355:55 - unnecessary_null_comparison
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:356:36 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:356:68 - unnecessary_non_null_assertion
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:451:51 - invalid_null_aware_operator
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:469:49 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:475:78 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:475:110 - dead_null_aware_expression
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:477:37 - invalid_null_aware_operator
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\wallet\presentation\screens\top_up_screen.dart:70:58 - invalid_null_aware_operator
+  error - The getter 'transactionsPagination' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:52:36 - undefined_getter
+  error - The getter 'balance' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:149:43 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:156:40 - undefined_getter
+  error - The getter 'isLoadingTransactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:167:31 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:168:35 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:170:33 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:200:39 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:203:50 - undefined_getter
+  error - The getter 'transactions' isn't defined for the type 'AsyncValue<Wallet?>' - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:211:52 - undefined_getter
+  error - The argument type 'Object' can't be assigned to the parameter type 'String'.  - lib\shared\services\wallet\presentation\screens\transaction_history_screen.dart:234:25 - argument_type_not_assignable
+  error - The returned type 'Map<String, Object>' isn't returnable from a 'Future<List<Map<String, dynamic>>>' function, as required by the closure's context - test\features\admin\admin_repository_test.dart:94:36 - return_of_invalid_type_from_closure
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:102:20 - argument_type_not_assignable
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:103:19 - argument_type_not_assignable
+  error - The returned type 'Map<String, Object>' isn't returnable from a 'Future<List<Map<String, dynamic>>>' function, as required by the closure's context - test\features\admin\admin_repository_test.dart:139:38 - return_of_invalid_type_from_closure
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:147:20 - argument_type_not_assignable
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:148:19 - argument_type_not_assignable
+  error - The named parameter 'city' isn't defined - test\features\admin\admin_repository_test.dart:170:13 - undefined_named_parameter
+  error - The named parameter 'address' isn't defined - test\features\admin\admin_repository_test.dart:171:13 - undefined_named_parameter
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:172:13 - undefined_named_parameter
+  error - 2 positional arguments expected by 'updateUserStatus', but 1 found - test\features\admin\admin_repository_test.dart:203:18 - not_enough_positional_arguments
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:204:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:205:13 - undefined_named_parameter
+  error - 2 positional arguments expected by 'updateUserStatus', but 1 found - test\features\admin\admin_repository_test.dart:210:18 - not_enough_positional_arguments
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:211:9 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:212:9 - undefined_named_parameter
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:218:14 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:218:19 - use_of_void_result
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:230:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:236:9 - undefined_named_parameter
+  error - The named parameter 'newPassword' isn't defined - test\features\admin\admin_repository_test.dart:252:13 - undefined_named_parameter
+  error - The named parameter 'sendEmail' isn't defined - test\features\admin\admin_repository_test.dart:253:13 - undefined_named_parameter
+  error - The named parameter 'newPassword' isn't defined - test\features\admin\admin_repository_test.dart:259:9 - undefined_named_parameter
+  error - The named parameter 'sendEmail' isn't defined - test\features\admin\admin_repository_test.dart:260:9 - undefined_named_parameter
+  error - The named parameter 'page' isn't defined - test\features\admin\admin_repository_test.dart:284:13 - undefined_named_parameter
+  error - The named parameter 'limit' isn't defined - test\features\admin\admin_repository_test.dart:285:13 - undefined_named_parameter
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:286:13 - undefined_named_parameter
+  error - The named parameter 'search' isn't defined - test\features\admin\admin_repository_test.dart:287:13 - undefined_named_parameter
+  error - The named parameter 'city' isn't defined - test\features\admin\admin_repository_test.dart:288:13 - undefined_named_parameter
+  error - The returned type 'Map<String, Object>' isn't returnable from a 'Future<List<Map<String, dynamic>>>' function, as required by the closure's context - test\features\admin\admin_repository_test.dart:289:38 - return_of_invalid_type_from_closure
+  error - The named parameter 'page' isn't defined - test\features\admin\admin_repository_test.dart:292:54 - undefined_named_parameter
+  error - The named parameter 'limit' isn't defined - test\features\admin\admin_repository_test.dart:292:63 - undefined_named_parameter
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:297:20 - argument_type_not_assignable
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:313:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:314:13 - undefined_named_parameter
+  error - The named parameter 'commissionRate' isn't defined - test\features\admin\admin_repository_test.dart:315:13 - undefined_named_parameter
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:321:9 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:322:9 - undefined_named_parameter
+  error - The named parameter 'commissionRate' isn't defined - test\features\admin\admin_repository_test.dart:323:9 - undefined_named_parameter
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:329:14 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:329:25 - use_of_void_result
+  error - 2 positional arguments expected by 'setCommissionRate', but 1 found - test\features\admin\admin_repository_test.dart:344:18 - not_enough_positional_arguments
+  error - The named parameter 'commissionRate' isn't defined - test\features\admin\admin_repository_test.dart:345:13 - undefined_named_parameter
+  error - The named parameter 'effectiveDate' isn't defined - test\features\admin\admin_repository_test.dart:346:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:347:13 - undefined_named_parameter
+  error - 2 positional arguments expected by 'setCommissionRate', but 1 found - test\features\admin\admin_repository_test.dart:352:24 - not_enough_positional_arguments
+  error - The named parameter 'commissionRate' isn't defined - test\features\admin\admin_repository_test.dart:353:9 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:354:9 - undefined_named_parameter
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:360:14 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:360:25 - use_of_void_result
+  error - The named parameter 'page' isn't defined - test\features\admin\admin_repository_test.dart:380:13 - undefined_named_parameter
+  error - The named parameter 'limit' isn't defined - test\features\admin\admin_repository_test.dart:381:13 - undefined_named_parameter
+  error - The named parameter 'status' isn't defined - test\features\admin\admin_repository_test.dart:382:13 - undefined_named_parameter
+  error - The named parameter 'search' isn't defined - test\features\admin\admin_repository_test.dart:383:13 - undefined_named_parameter
+  error - The named parameter 'fromDate' isn't defined - test\features\admin\admin_repository_test.dart:384:13 - undefined_named_parameter
+  error - The named parameter 'toDate' isn't defined - test\features\admin\admin_repository_test.dart:385:13 - undefined_named_parameter
+  error - The returned type 'Map<String, Object>' isn't returnable from a 'Future<List<Map<String, dynamic>>>' function, as required by the closure's context - test\features\admin\admin_repository_test.dart:386:38 - return_of_invalid_type_from_closure
+  error - The named parameter 'page' isn't defined - test\features\admin\admin_repository_test.dart:389:49 - undefined_named_parameter
+  error - The named parameter 'limit' isn't defined - test\features\admin\admin_repository_test.dart:389:58 - undefined_named_parameter
+  error - The argument type 'String' can't be assigned to the parameter type 'int'.  - test\features\admin\admin_repository_test.dart:394:20 - argument_type_not_assignable
+  error - 1 positional argument expected by 'cancelOrder', but 0 found - test\features\admin\admin_repository_test.dart:410:13 - not_enough_positional_arguments
+  error - The named parameter 'orderId' isn't defined - test\features\admin\admin_repository_test.dart:410:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:411:13 - undefined_named_parameter
+  error - The named parameter 'notifyCustomer' isn't defined - test\features\admin\admin_repository_test.dart:412:13 - undefined_named_parameter
+  error - 1 positional argument expected by 'cancelOrder', but 0 found - test\features\admin\admin_repository_test.dart:417:9 - not_enough_positional_arguments
+  error - The named parameter 'orderId' isn't defined - test\features\admin\admin_repository_test.dart:417:9 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:418:9 - undefined_named_parameter
+  error - The named parameter 'notifyCustomer' isn't defined - test\features\admin\admin_repository_test.dart:419:9 - undefined_named_parameter
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:425:14 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:425:20 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:426:19 - use_of_void_result
+  error - 1 positional argument expected by 'refundOrder', but 0 found - test\features\admin\admin_repository_test.dart:442:13 - not_enough_positional_arguments
+  error - The named parameter 'orderId' isn't defined - test\features\admin\admin_repository_test.dart:442:13 - undefined_named_parameter
+  error - The named parameter 'amount' isn't defined - test\features\admin\admin_repository_test.dart:443:13 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:444:13 - undefined_named_parameter
+  error - The named parameter 'refundMethod' isn't defined - test\features\admin\admin_repository_test.dart:445:13 - undefined_named_parameter
+  error - 1 positional argument expected by 'refundOrder', but 0 found - test\features\admin\admin_repository_test.dart:450:9 - not_enough_positional_arguments
+  error - The named parameter 'orderId' isn't defined - test\features\admin\admin_repository_test.dart:450:9 - undefined_named_parameter
+  error - The named parameter 'amount' isn't defined - test\features\admin\admin_repository_test.dart:451:9 - undefined_named_parameter
+  error - The named parameter 'reason' isn't defined - test\features\admin\admin_repository_test.dart:452:9 - undefined_named_parameter
+  error - The named parameter 'refundMethod' isn't defined - test\features\admin\admin_repository_test.dart:453:9 - undefined_named_parameter
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:459:14 - use_of_void_result
+  error - This expression has a type of 'void' so its value can't be used - test\features\admin\admin_repository_test.dart:459:21 - use_of_void_result
+  error - The named parameter 'timeframe' is required, but there's no corresponding argument - test\features\admin\admin_repository_test.dart:484:33 - missing_required_argument
+  error - The named parameter 'startDate' isn't defined - test\features\admin\admin_repository_test.dart:485:13 - undefined_named_parameter
+  error - The named parameter 'endDate' isn't defined - test\features\admin\admin_repository_test.dart:486:13 - undefined_named_parameter
+  error - The named parameter 'restaurantId' isn't defined - test\features\admin\admin_repository_test.dart:487:13 - undefined_named_parameter
+  error - The named parameter 'timeframe' is required, but there's no corresponding argument - test\features\admin\admin_repository_test.dart:491:39 - missing_required_argument
+  error - The named parameter 'startDate' isn't defined - test\features\admin\admin_repository_test.dart:492:9 - undefined_named_parameter
+  error - The named parameter 'endDate' isn't defined - test\features\admin\admin_repository_test.dart:493:9 - undefined_named_parameter
+  error - The named parameter 'timeframe' is required, but there's no corresponding argument - test\features\admin\admin_repository_test.dart:514:39 - missing_required_argument
+  error - 1 positional argument expected by 'RestaurantOwnerRepositoryImpl.new', but 0 found - test\features\restaurant_owner\restaurant_owner_repository_test.dart:10:48 - not_enough_positional_arguments
+  error - The function 'CartItem' isn't defined - test\unit\features\orders\order_service_test.dart:37:11 - undefined_function
+  error - The function 'CartItem' isn't defined - test\unit\features\orders\order_service_test.dart:45:11 - undefined_function
+  error - The function 'CartItem' isn't defined - test\unit\features\orders\order_service_test.dart:95:26 - undefined_function
+warning - The value of the local variable 'mockDio' isn't used - test\unit\services\api_client_test.dart:11:16 - unused_local_variable
+  error - Too many positional arguments: 0 expected, but 4 found - test\unit\services\payment_manager_test.dart:28:37 - extra_positional_arguments
+  error - The function 'PaymentRequest' isn't defined - test\unit\services\payment_manager_test.dart:34:23 - undefined_function
+  error - The named parameter 'provider' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:41:23 - missing_required_argument
+  error - The returned type 'Map<String, String>' isn't returnable from a 'Future<PaymentInitResponse>' function, as required by the closure's context - test\unit\services\payment_manager_test.dart:45:34 - return_of_invalid_type_from_closure
+  error - Undefined name 'PaymentStatus' - test\unit\services\payment_manager_test.dart:60:29 - undefined_identifier
+  error - The getter 'method' isn't defined for the type 'PaymentResult' - test\unit\services\payment_manager_test.dart:61:21 - undefined_getter
+  error - Undefined name 'PaymentMethod' - test\unit\services\payment_manager_test.dart:61:29 - undefined_identifier
+  error - The named parameter 'provider' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:62:25 - missing_required_argument
+  error - The function 'PaymentRequest' isn't defined - test\unit\services\payment_manager_test.dart:71:23 - undefined_function
+  error - The named parameter 'amount' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:78:23 - missing_required_argument
+  error - The named parameter 'orderId' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:78:23 - missing_required_argument
+  error - The named parameter 'phoneNumber' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:78:23 - missing_required_argument
+  error - The named parameter 'provider' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:78:23 - missing_required_argument
+  error - Too many positional arguments: 0 expected, but 3 found - test\unit\services\payment_manager_test.dart:78:39 - extra_positional_arguments_could_be_named
+  error - The named parameter 'provider' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:81:23 - missing_required_argument
+  error - The argument type 'Null' can't be assigned to the parameter type 'double'.  - test\unit\services\payment_manager_test.dart:82:17 - argument_type_not_assignable
+  error - The argument type 'Null' can't be assigned to the parameter type 'String'.  - test\unit\services\payment_manager_test.dart:83:22 - argument_type_not_assignable
+  error - The argument type 'Null' can't be assigned to the parameter type 'String'.  - test\unit\services\payment_manager_test.dart:84:18 - argument_type_not_assignable
+  error - The returned type 'Map<String, String>' isn't returnable from a 'Future<PaymentInitResponse>' function, as required by the closure's context - test\unit\services\payment_manager_test.dart:85:34 - return_of_invalid_type_from_closure
+  error - The argument type 'Null' can't be assigned to the parameter type 'String'.  - test\unit\services\payment_manager_test.dart:87:31 - argument_type_not_assignable
+  error - Undefined name 'PaymentStatus' - test\unit\services\payment_manager_test.dart:94:29 - undefined_identifier
+  error - The getter 'method' isn't defined for the type 'PaymentResult' - test\unit\services\payment_manager_test.dart:95:21 - undefined_getter
+  error - Undefined name 'PaymentMethod' - test\unit\services\payment_manager_test.dart:95:29 - undefined_identifier
+  error - The named parameter 'provider' is required, but there's no corresponding argument - test\unit\services\payment_manager_test.dart:96:25 - missing_required_argument
+  error - The function 'PaymentRequest' isn't defined - test\unit\services\payment_manager_test.dart:105:23 - undefined_function
+  error - The argument type 'Null' can't be assigned to the parameter type 'double'.  - test\unit\services\payment_manager_test.dart:113:17 - argument_type_not_assignable
+  error - The named parameter 'currency' isn't defined - test\unit\services\payment_manager_test.dart:114:9 - undefined_named_parameter
+  error - The argument type 'Null' can't be assigned to the parameter type 'String'.  - test\unit\services\payment_manager_test.dart:115:18 - argument_type_not_assignable
+  error - The returned type 'Map<String, String>' isn't returnable from a 'Future<PaymentInitResponse>' function, as required by the closure's context - test\unit\services\payment_manager_test.dart:116:34 - return_of_invalid_type_from_closure
+  error - 2 positional arguments expected by 'confirmPayment', but 0 found - test\unit\services\payment_manager_test.dart:119:9 - not_enough_positional_arguments
+  error - The named parameter 'paymentIntentId' isn't defined - test\unit\services\payment_manager_test.dart:119:9 - undefined_named_parameter
+  error - The named parameter 'paymentMethodId' isn't defined - test\unit\services\payment_manager_test.dart:120:9 - undefined_named_parameter
+  error - The returned type 'Map<String, String>' isn't returnable from a 'Future<PaymentStatusResponse>' function, as required by the closure's context - test\unit\services\payment_manager_test.dart:121:34 - return_of_invalid_type_from_closure
+  error - The argument type 'Null' can't be assigned to the parameter type 'String'.  - test\unit\services\payment_manager_test.dart:123:31 - argument_type_not_assignable
+  error - Undefined name 'PaymentStatus' - test\unit\services\payment_manager_test.dart:130:29 - undefined_identifier
+  error - The getter 'method' isn't defined for the type 'PaymentResult' - test\unit\services\payment_manager_test.dart:131:21 - undefined_getter
+  error - Undefined name 'PaymentMethod' - test\unit\services\payment_manager_test.dart:131:29 - undefined_identifier
+
