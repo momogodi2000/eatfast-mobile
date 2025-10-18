@@ -15,7 +15,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.language),
+        title: Text(l10n?.language ?? 'Language'),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -31,7 +31,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
             children: [
               // Header
               Text(
-                l10n.changeLanguage,
+                'Change Language',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: DesignTokens.fontWeightBold,
                   color: DesignTokens.textPrimary,
@@ -41,7 +41,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
               const SizedBox(height: DesignTokens.spaceMD),
 
               Text(
-                l10n.selectLanguage,
+                'Select your preferred language',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: DesignTokens.textSecondary,
                 ),
@@ -92,7 +92,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
                     const SizedBox(width: DesignTokens.spaceXS),
                     Expanded(
                       child: Text(
-                        l10n.appRestartLanguage,
+                        'The app may need to restart to apply the language change.',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: DesignTokens.infoColor,
                         ),

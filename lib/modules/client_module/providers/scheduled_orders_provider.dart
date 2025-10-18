@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/scheduled_order.dart';
-import 'package:eatfast_mobile/shared/models/restaurant_models.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
 
 final scheduledOrdersNotifierProvider =
     StateNotifierProvider<ScheduledOrdersNotifier, List<ScheduledOrder>>((ref) {
@@ -41,9 +41,7 @@ class ScheduledOrdersNotifier extends StateNotifier<List<ScheduledOrder>> {
   ScheduledOrder _createOrderFromRequest(CreateScheduledOrderRequest request) {
     // Calculate totals with null safety
     final subtotal = request.items.fold<double>(0.0, (sum, item) {
-      final price = item.price ?? 0.0;
-      final quantity = item.quantity ?? 1;
-      return sum + (price * quantity);
+      return sum + item.itemTotal;
     });
     final deliveryFee = 2.5; // Default delivery fee
     final total = subtotal + deliveryFee;
@@ -55,13 +53,11 @@ class ScheduledOrdersNotifier extends StateNotifier<List<ScheduledOrder>> {
       restaurant: Restaurant(
         id: request.restaurantId,
         name: 'Restaurant', // TODO: Get from cart or API
-        description: '',
-        imageUrl: '',
-        rating: 0.0,
-        reviewCount: 0,
-        cuisine: '',
+        cuisineType: 'General',
+        priceRange: '\$\$',
+        status: RestaurantStatus.active,
         deliveryFee: deliveryFee,
-        deliveryTime: 30,
+        estimatedDeliveryTime: 30,
       ),
       items: request.items,
       subtotal: subtotal,
@@ -84,9 +80,7 @@ class ScheduledOrdersNotifier extends StateNotifier<List<ScheduledOrder>> {
   ScheduledOrder _updateOrderFromRequest(ScheduledOrder existing, CreateScheduledOrderRequest request) {
     // Calculate new totals with null safety
     final subtotal = request.items.fold<double>(0.0, (sum, item) {
-      final price = item.price ?? 0.0;
-      final quantity = item.quantity ?? 1;
-      return sum + (price * quantity);
+      return sum + item.itemTotal;
     });
     final total = subtotal + existing.deliveryFee;
 

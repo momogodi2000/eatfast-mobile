@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/scheduled_order.dart';
 import 'package:eatfast_mobile/modules/client_module/providers/scheduled_orders_provider.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 
 class CreateScheduledOrderDialog extends ConsumerStatefulWidget {
   final ScheduledOrder? existingOrder;

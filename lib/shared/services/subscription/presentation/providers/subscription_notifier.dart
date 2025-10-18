@@ -25,19 +25,19 @@ class SubscriptionNotifier
       final subscription = UserSubscription(
         id: 'sub_123',
         userId: 'user_123',
+        planId: plan.id,
         plan: plan,
         status: SubscriptionStatus.active,
+        billingInterval: plan.billingInterval,
+        amount: plan.price,
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 30)),
         nextBillingDate: DateTime.now().add(const Duration(days: 30)),
-        currentUsage: SubscriptionUsage(
-          ordersUsed: 0,
-          deliveriesUsed: 0,
-          storageUsed: 0.0,
-          apiCallsUsed: 0,
-          lastUpdated: DateTime.now(),
-        ),
-        billingHistory: [],
+        autoRenew: true,
+        ordersLimit: plan.ordersLimit,
+        ordersUsed: 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
 
       state = AsyncValue.data(subscription);
@@ -76,8 +76,7 @@ class SubscriptionNotifier
 
       final updatedSubscription = currentSubscription.copyWith(
         status: SubscriptionStatus.cancelled,
-        cancelledAt: DateTime.now(),
-        cancellationReason: reason,
+        updatedAt: DateTime.now(),
       );
 
       state = AsyncValue.data(updatedSubscription);

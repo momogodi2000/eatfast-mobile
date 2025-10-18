@@ -6,7 +6,7 @@ import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';
-import '../../domain/models/cart.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 
 /// Checkout screen for placing orders
 class CheckoutScreen extends ConsumerStatefulWidget {
@@ -28,7 +28,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.checkout),
+        title: Text(l10n?.checkout ?? 'Checkout'),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -37,7 +37,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         CartError(:final message) => Center(
           child: Text('Error: $message'),
         ),
-        CartLoaded(:final cart) => _buildCheckoutContent(context, l10n, cart),
+        CartLoaded(:final cart) => _buildCheckoutContent(context, l10n!, cart),
         _ => const Center(child: Text('Loading...')),
       },
     );
@@ -50,7 +50,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Delivery Address Section
-          _buildSectionHeader(l10n.selectAddress),
+          _buildSectionHeader('Delivery Address'),
           const SizedBox(height: DesignTokens.spaceMD),
           _buildAddressSelection(l10n),
           
@@ -120,7 +120,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       child: ListTile(
         leading: const Icon(Icons.location_on),
         title: Text(
-          selectedAddress?.label ?? l10n.selectAddress,
+          selectedAddress?.label ?? 'Select Address',
           style: const TextStyle(fontWeight: DesignTokens.fontWeightMedium),
         ),
         subtitle: selectedAddress != null 
@@ -227,8 +227,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   void _placeOrder(BuildContext context, AppLocalizations l10n) {
     // TODO: Implement order placement logic
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.orderPlaced),
+      const SnackBar(
+        content: Text('Order Placed Successfully!'),
         backgroundColor: DesignTokens.successColor,
       ),
     );

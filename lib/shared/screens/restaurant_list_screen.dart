@@ -70,7 +70,16 @@ class RestaurantListScreen extends ConsumerWidget {
         final restaurant = restaurants[index];
         return Padding(
           padding: EdgeInsets.only(bottom: DesignTokens.spaceMD),
-          child: RestaurantCard(restaurant: restaurant),
+          child: RestaurantCard(
+            restaurant: restaurant,
+            isFavorite: false, // TODO: Implement favorite tracking
+            onTap: () {
+              // TODO: Navigate to restaurant details
+            },
+            onFavoriteToggle: () {
+              // TODO: Implement favorite toggle
+            },
+          ),
         );
       },
     );

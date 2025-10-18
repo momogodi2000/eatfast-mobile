@@ -36,7 +36,8 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final order = Order(
         id: orderId,
-        userId: cart.userId,
+        orderNumber: 'ORD-${_orderCounter.toString().padLeft(6, '0')}',
+        customerId: cart.userId,
         restaurantId: cart.restaurantId!,
         restaurantName: cart.restaurantName!,
         items: List.from(cart.items),
@@ -46,16 +47,15 @@ class OrderRepositoryImpl implements OrderRepository {
         tax: cart.tax,
         discount: cart.discount,
         total: cart.total,
-        deliveryAddress: deliveryAddress,
-        paymentMethod: paymentMethod,
+        deliveryAddress: deliveryAddress.fullAddress,
+        paymentMethod: paymentMethod.toString(),
         specialInstructions: specialInstructions,
         estimatedDeliveryTime: now.add(const Duration(minutes: 35)),
         statusUpdates: [
           OrderStatusUpdate(
-            id: '${orderId}_status_1',
             status: OrderStatus.created,
             timestamp: now,
-            message: 'Commande re�ue et en attente de confirmation',
+            message: 'Commande reçue et en attente de confirmation',
             updatedBy: 'system',
           ),
         ],
@@ -143,12 +143,11 @@ class OrderRepositoryImpl implements OrderRepository {
       final updatedOrder = order.copyWith(
         status: OrderStatus.cancelled,
         statusUpdates: [
-          ...order.statusUpdates,
+          ...?order.statusUpdates,
           OrderStatusUpdate(
-            id: '${orderId}_cancel',
             status: OrderStatus.cancelled,
             timestamp: DateTime.now(),
-            message: 'Commande annul�e par le client',
+            message: 'Commande annulée par le client',
             updatedBy: 'customer',
           ),
         ],
@@ -179,15 +178,14 @@ class OrderRepositoryImpl implements OrderRepository {
 
       final newOrder = originalOrder.copyWith(
         id: newOrderId,
+        orderNumber: 'ORD-${_orderCounter.toString().padLeft(6, '0')}',
         status: OrderStatus.created,
         estimatedDeliveryTime: now.add(const Duration(minutes: 35)),
-        actualDeliveryTime: null,
         statusUpdates: [
           OrderStatusUpdate(
-            id: '${newOrderId}_status_1',
             status: OrderStatus.created,
             timestamp: now,
-            message: 'Nouvelle commande (recomande)',
+            message: 'Nouvelle commande (recommande)',
             updatedBy: 'system',
           ),
         ],
@@ -226,16 +224,14 @@ class OrderRepositoryImpl implements OrderRepository {
       final updatedOrder = order.copyWith(
         status: status,
         statusUpdates: [
-          ...order.statusUpdates,
+          ...?order.statusUpdates,
           OrderStatusUpdate(
-            id: '${orderId}_status_${order.statusUpdates.length + 1}',
             status: status,
             timestamp: now,
-            message: message ?? status.description,
+            message: message ?? _getStatusMessage(status),
             updatedBy: 'system',
           ),
         ],
-        actualDeliveryTime: status == OrderStatus.delivered ? now : order.actualDeliveryTime,
         updatedAt: now,
       );
 
@@ -268,6 +264,44 @@ class OrderRepositoryImpl implements OrderRepository {
       return Result.success(null);
     } catch (e) {
       return Result.failure('Erreur lors de l\'�valuation: ${e.toString()}');
+    }
+  }
+
+  // Get status message for OrderStatus
+  String _getStatusMessage(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.pending:
+        return 'Commande en attente';
+      case OrderStatus.created:
+        return 'Commande créée';
+      case OrderStatus.confirmed:
+        return 'Commande confirmée';
+      case OrderStatus.accepted:
+        return 'Commande acceptée';
+      case OrderStatus.preparing:
+        return 'En préparation';
+      case OrderStatus.ready:
+        return 'Prête';
+      case OrderStatus.readyForPickup:
+        return 'Prête pour ramassage';
+      case OrderStatus.assignedDriver:
+        return 'Livreur assigné';
+      case OrderStatus.pickedUp:
+        return 'Récupérée par le livreur';
+      case OrderStatus.inTransit:
+        return 'En transit';
+      case OrderStatus.delivered:
+        return 'Livrée';
+      case OrderStatus.completed:
+        return 'Complétée';
+      case OrderStatus.cancelled:
+        return 'Annulée';
+      case OrderStatus.rejected:
+        return 'Rejetée';
+      case OrderStatus.refunded:
+        return 'Remboursée';
+      case OrderStatus.expired:
+        return 'Expirée';
     }
   }
 

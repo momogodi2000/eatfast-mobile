@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/shared/services/payment/campay_service.dart';
-import 'package:eatfast_mobile/shared/services/payment/noupai_service.dart';
-import 'package:eatfast_mobile/shared/services/payment/stripe_service.dart';
-import 'package:eatfast_mobile/shared/services/payment/payment_manager.dart';
-import 'package:eatfast_mobile/shared/services/api_client.dart';
+import 'package:eatfast_mobile/shared/services/payment/data/campay_service.dart';
+import 'package:eatfast_mobile/shared/services/payment/data/noupay_service.dart';
+import 'package:eatfast_mobile/shared/services/payment/data/stripe_service.dart';
+import 'package:eatfast_mobile/shared/services/payment/domain/payment_manager.dart';
+import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 
 // Mocks
 class MockCamPayService extends Mock implements CamPayService {}

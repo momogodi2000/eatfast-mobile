@@ -151,7 +151,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
             // Status timeline
             OrderStatusTimeline(
               currentStatus: order.status,
-              statusUpdates: order.statusUpdates,
+              statusUpdates: order.statusUpdates ?? [],
               estimatedDeliveryTime: order.estimatedDeliveryTime,
             ),
             
@@ -160,9 +160,29 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
             // Driver info (if order is on the way)
             if (order.status == OrderStatus.inTransit && order.driverName != null)
               _buildDriverInfo(order),
-            
+
             // Delivery address
-            DeliveryAddressCard(address: order.deliveryAddress),
+            if (order.deliveryAddress != null)
+              Container(
+                padding: const EdgeInsets.all(DesignTokens.spaceMD),
+                margin: const EdgeInsets.only(bottom: DesignTokens.spaceLG),
+                decoration: BoxDecoration(
+                  color: DesignTokens.white,
+                  borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on, color: DesignTokens.primaryColor),
+                    const SizedBox(width: DesignTokens.spaceSM),
+                    Expanded(
+                      child: Text(
+                        order.deliveryAddress!,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             
             const SizedBox(height: DesignTokens.spaceLG),
             
@@ -528,11 +548,13 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
 
   Color _getStatusColor(OrderStatus status) {
     switch (status) {
+      case OrderStatus.pending:
       case OrderStatus.created:
         return DesignTokens.warningColor;
       case OrderStatus.confirmed:
       case OrderStatus.accepted:
       case OrderStatus.preparing:
+      case OrderStatus.ready:
         return DesignTokens.infoColor;
       case OrderStatus.readyForPickup:
       case OrderStatus.assignedDriver:

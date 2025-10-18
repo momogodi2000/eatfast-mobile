@@ -4,11 +4,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/constants/api_constants.dart';
-import 'package:eatfast_mobile/modules/guest_module/services/data/services/guest_session_service.dart';
+import 'package:eatfast_mobile/modules/guest_module/services/data/guest_service.dart';
 
 class ApiTest {
   static final ApiClient _apiClient = ApiClient();
-  static final GuestSessionService _guestService = GuestSessionService();
+  static final GuestService _guestService = GuestService();
 
   /// Test basic API connectivity
   static Future<bool> testConnectivity() async {

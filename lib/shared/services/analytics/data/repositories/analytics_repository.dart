@@ -1,5 +1,5 @@
-import 'package:eatfast_mobile/shared/models/analytics_data.dart';
-import 'package:eatfast_mobile/shared/models/analytics_request.dart';
+import 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_data.dart';
+import 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_request.dart';
 import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 
 class AnalyticsRepository {

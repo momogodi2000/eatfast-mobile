@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
-import 'package:eatfast_mobile/shared/services/api_client.dart';
+import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 
 // Mock Dio
 class MockDio extends Mock implements Dio {}

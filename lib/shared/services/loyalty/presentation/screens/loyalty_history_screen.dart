@@ -122,9 +122,9 @@ class _LoyaltyHistoryScreenState extends ConsumerState<LoyaltyHistoryScreen>
       padding: const EdgeInsets.all(16),
       itemCount:
           transactions.length +
-          (loyaltyState.transactionsPagination?.totalPages != null &&
-                  loyaltyState.transactionsPagination!.page <
-                      loyaltyState.transactionsPagination!.totalPages
+          (loyaltyState.transactionsPagination?['totalPages'] != null &&
+                  loyaltyState.transactionsPagination!['page'] <
+                      loyaltyState.transactionsPagination!['totalPages']
               ? 1
               : 0),
       itemBuilder: (context, index) {
@@ -145,7 +145,7 @@ class _LoyaltyHistoryScreenState extends ConsumerState<LoyaltyHistoryScreen>
         onPressed: () {
           ref
               .read(loyaltyProvider.notifier)
-              .loadTransactionHistory(loadMore: true, type: _selectedFilter);
+              .loadTransactionHistory();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.primary,

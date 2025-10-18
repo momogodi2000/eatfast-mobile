@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:eatfatsApp/features/restaurant_owner/data/restaurant_owner_repository_impl.dart';
-import 'package:eatfatsApp/features/restaurant_owner/domain/models/menu_management.dart';
-import 'package:eatfatsApp/features/restaurant_owner/domain/models/live_order.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/services/data/restaurant_owner_repository_impl.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/live_order.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/order_status.dart';
 
 void main() {

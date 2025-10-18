@@ -50,8 +50,8 @@ class LoyaltyNotifier extends StateNotifier<LoyaltyState> {
           currentTier: program.currentTier,
           pointsToNextTier: program.pointsToNextTier,
           tierProgress: program.tierProgress,
-          transactions: program.recentTransactions,
-          availableRewards: rewardsResponse.rewards as List<LoyaltyReward>,
+          transactions: program.recentTransactions.cast<LoyaltyTransaction>(),
+          availableRewards: rewardsResponse.rewards.cast<LoyaltyReward>(),
           isLoading: false,
           error: null,
         );
@@ -98,7 +98,7 @@ class LoyaltyNotifier extends StateNotifier<LoyaltyState> {
     try {
       final response = await _loyaltyService.getAvailableRewards();
       state = state.copyWith(
-        availableRewards: response.rewards,
+        availableRewards: response.rewards.cast<LoyaltyReward>(),
         isLoadingRewards: false,
       );
     } catch (error) {

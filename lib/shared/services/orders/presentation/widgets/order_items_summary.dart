@@ -104,8 +104,8 @@ class _OrderItemsSummaryState extends State<OrderItemsSummary> {
                   _buildSummaryRow('Sous-total', '${widget.order.subtotal.toInt()} FCFA'),
                   _buildSummaryRow('Livraison', '${widget.order.deliveryFee.toInt()} FCFA'),
                   _buildSummaryRow('Taxes', '${widget.order.tax.toInt()} FCFA'),
-                  if (widget.order.discount > 0)
-                    _buildSummaryRow('Remise', '-${widget.order.discount.toInt()} FCFA', isDiscount: true),
+                  if ((widget.order.discount ?? 0) > 0)
+                    _buildSummaryRow('Remise', '-${(widget.order.discount ?? 0).toInt()} FCFA', isDiscount: true),
                   const Divider(),
                   _buildSummaryRow(
                     'Total',

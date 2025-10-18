@@ -1,8 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-import 'package:eatfast_mobile/modules/guest_module/domain/models/guest_models.dart';
-import 'package:eatfast_mobile/modules/guest_module/services/guest_service.dart';
+import 'package:eatfast_mobile/modules/guest_module/providers/domain/models/guest_models.dart';
+import 'package:eatfast_mobile/modules/guest_module/services/data/guest_service.dart';
 import 'package:eatfast_mobile/shared/constants/api_constants.dart';
 import 'package:eatfast_mobile/shared/config/app_config.dart';
 

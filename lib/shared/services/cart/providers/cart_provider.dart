@@ -1,5 +1,5 @@
 ﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../domain/models/cart.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 import '../domain/repositories/cart_repository.dart';
 import '../data/cart_repository_impl.dart';
 import 'package:eatfast_mobile/shared/models/menu_item.dart';

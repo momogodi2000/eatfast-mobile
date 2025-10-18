@@ -277,7 +277,7 @@ class OrderItem {
 
 /// Order status update model
 class OrderStatusUpdate {
-  final OrderStatus status;
+  final shared_models.OrderStatus status;
   final DateTime timestamp;
   final String? note;
   final String? message;

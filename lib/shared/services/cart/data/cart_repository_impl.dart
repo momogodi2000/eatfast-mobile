@@ -2,10 +2,8 @@
 import 'package:eatfast_mobile/shared/config/app_config.dart';
 import 'package:eatfast_mobile/shared/utils/result.dart';
 import 'package:eatfast_mobile/shared/constants/app_constants.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/repositories/cart_repository.dart';
-import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
 
 class CartRepositoryImpl implements CartRepository {
   // In-memory cart storage for mock implementation
@@ -46,7 +44,7 @@ class CartRepositoryImpl implements CartRepository {
 
       // Check if item with same configuration already exists
       final existingItemIndex = _currentCart.items.indexWhere((existingItem) =>
-          existingItem.menuItemId == item.menuItemId &&
+          existingItem.menuItem.id == item.menuItem.id &&
           _haveSameCustomizations(existingItem.customizations, item.customizations));
 
       if (existingItemIndex != -1) {
@@ -55,7 +53,7 @@ class CartRepositoryImpl implements CartRepository {
         final newQuantity = existingItem.quantity + item.quantity;
         final updatedItem = existingItem.copyWith(
           quantity: newQuantity,
-          total: existingItem.price * newQuantity,
+          itemTotal: existingItem.menuItem.price * newQuantity,
         );
 
         final updatedItems = List<CartItem>.from(_currentCart.items);
@@ -71,8 +69,8 @@ class CartRepositoryImpl implements CartRepository {
       // Update restaurant info if this is the first item
       if (_currentCart.items.length == 1) {
         _currentCart = _currentCart.copyWith(
-          restaurantId: item.restaurantId,
-          restaurantName: item.restaurantName ?? 'Restaurant',
+          restaurantId: item.menuItem.restaurantId,
+          restaurantName: item.menuItem.name ?? 'Restaurant',
         );
       }
 
@@ -121,10 +119,10 @@ class CartRepositoryImpl implements CartRepository {
 
       final updatedItems = List<CartItem>.from(_currentCart.items);
       final item = updatedItems[itemIndex];
-      
+
       final updatedItem = item.copyWith(
         quantity: quantity,
-        itemTotal: _calculateItemTotal(item.menuItem, quantity, item.customizations),
+        itemTotal: item.menuItem.price * quantity,
       );
 
       updatedItems[itemIndex] = updatedItem;
@@ -194,9 +192,9 @@ class CartRepositoryImpl implements CartRepository {
 
   Future<void> _recalculateTotals() async {
     double subtotal = 0.0;
-    
+
     for (final item in _currentCart.items) {
-      subtotal += item.total;
+      subtotal += item.itemTotal;
     }
 
     // Calculate tax (10% in Cameroon)
@@ -224,13 +222,10 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   bool _haveSameCustomizations(
-    Map<String, dynamic>? customizations1,
-    Map<String, dynamic>? customizations2,
+    List<SelectedCustomization> customizations1,
+    List<SelectedCustomization> customizations2,
   ) {
-    if (customizations1 == null && customizations2 == null) {
-      return true;
-    }
-    if (customizations1 == null || customizations2 == null) {
+    if (customizations1.length != customizations2.length) {
       return false;
     }
     // Simple comparison - in production, this should be more sophisticated

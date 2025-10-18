@@ -4,7 +4,7 @@ import 'package:eatfast_mobile/shared/l10n/generated/app_localizations.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';
 
 /// Checkout screen for placing orders

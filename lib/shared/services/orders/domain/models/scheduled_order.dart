@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:eatfast_mobile/shared/models/restaurant_models.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
 
 class ScheduledOrder {
   final String id;
