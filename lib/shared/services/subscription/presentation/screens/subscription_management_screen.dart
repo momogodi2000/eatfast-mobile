@@ -95,7 +95,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
               const SizedBox(height: 24),
 
               // Benefits overview
-              if (subscription != null) ...[
+              if (subscription?.plan != null) ...[
                 Text(
                   'Avantages inclus',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -104,7 +104,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                 ),
                 const SizedBox(height: 16),
                 SubscriptionBenefitsList(
-                  plan: subscription.plan,
+                  plan: subscription!.plan,
                 ),
                 const SizedBox(height: 24),
               ],
@@ -186,7 +186,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      subscription!.plan.type,
+                      subscription!.plan.type.name,
                       style: const TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.w500,
@@ -621,7 +621,8 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
     }
   }
 
-  String _formatDate(DateTime date) {
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'N/A';
     return '${date.day}/${date.month}/${date.year}';
   }
 }

@@ -145,6 +145,26 @@ class PaymentMethod {
   bool get isWallet => type == PaymentMethodType.wallet;
   bool get isCash => type == PaymentMethodType.cash;
 
+  /// Whether this payment method requires a phone number
+  bool get requiresPhoneNumber => isMobileMoney;
+
+  /// Icon name for this payment method type
+  String get icon {
+    switch (type) {
+      case PaymentMethodType.campay:
+      case PaymentMethodType.noupay:
+        return 'phone';
+      case PaymentMethodType.stripe:
+        return 'credit_card';
+      case PaymentMethodType.wallet:
+        return 'account_balance_wallet';
+      case PaymentMethodType.cash:
+        return 'money';
+      case PaymentMethodType.bankTransfer:
+        return 'account_balance';
+    }
+  }
+
   String get shortDescription {
     if (isCard && last4Digits != null) {
       return '${cardBrand ?? 'Card'} •••• $last4Digits';

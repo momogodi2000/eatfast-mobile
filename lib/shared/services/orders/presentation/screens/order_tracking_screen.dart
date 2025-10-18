@@ -559,6 +559,7 @@ class _OrderTrackingScreenState extends ConsumerState<OrderTrackingScreen> {
       case OrderStatus.readyForPickup:
       case OrderStatus.assignedDriver:
       case OrderStatus.pickedUp:
+      case OrderStatus.onTheWay:
       case OrderStatus.inTransit:
         return DesignTokens.primaryColor;
       case OrderStatus.delivered:

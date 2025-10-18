@@ -4,7 +4,7 @@ import 'package:eatfast_mobile/shared/models/driver_earnings.dart';
 part 'driver_profile.freezed.dart';
 part 'driver_profile.g.dart';
 
-@freezed
+@Freezed(toJson: true, fromJson: true)
 class DriverProfile with _$DriverProfile {
   const factory DriverProfile({
     required String id,

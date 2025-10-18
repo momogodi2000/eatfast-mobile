@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:eatfast_mobile/shared/models/exports.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart' hide MenuCategory;
 import '../models/restaurant_stats.dart';
 import '../models/live_order.dart';
 import '../models/menu_management.dart' as menu_mgmt;

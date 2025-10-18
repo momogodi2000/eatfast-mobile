@@ -72,7 +72,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
   }
 
   Future<void> _initializeTracking() async {
-    final webSocketService = WebSocketService();
+    final webSocketService = ws.WebSocketService();
 
     // Subscribe to real-time updates
     _orderSubscription = webSocketService.orderUpdates.listen(_handleOrderUpdate);
@@ -96,16 +96,15 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
       }
 
       // Load restaurant location from order (using delivery address as fallback)
-      if (_currentOrder?.deliveryAddress.latitude != null && _currentOrder?.deliveryAddress.longitude != null) {
-        _restaurantLocation = LatLng(
-          _currentOrder!.deliveryAddress.latitude!,
-          _currentOrder!.deliveryAddress.longitude!,
-        );
+      // TODO: Fix this when deliveryAddress structure includes coordinates
+      // For now, use a default location if customer location is available
+      if (_customerLocation != null) {
+        _restaurantLocation = _customerLocation; // Temporary fallback
       }
 
       // Subscribe to driver location if order has driver
       if (_currentOrder?.driverId != null) {
-        WebSocketService().subscribeToDriverLocation(_currentOrder!.driverId!);
+        ws.WebSocketService().subscribeToDriverLocation(_currentOrder!.driverId!);
       }
 
       _updateMapMarkers();
@@ -118,7 +117,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
     }
   }
 
-  void _handleOrderUpdate(WsOrderStatusUpdate update) {
+  void _handleOrderUpdate(ws.OrderStatusUpdate update) {
     if (update.orderId == widget.orderId) {
       setState(() {
         // Update order status
@@ -134,7 +133,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
 
         // Subscribe to driver location when assigned
         if (update.driverId != null && _currentOrder?.driverId != update.driverId) {
-          WebSocketService().subscribeToDriverLocation(update.driverId!);
+          ws.WebSocketService().subscribeToDriverLocation(update.driverId!);
         }
       });
 
@@ -143,7 +142,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
     }
   }
 
-  void _handleDriverLocation(DriverLocationUpdate update) {
+  void _handleDriverLocation(ws.DriverLocationUpdate update) {
     if (update.orderId == widget.orderId ||
         (_currentOrder?.driverId != null && update.driverId == _currentOrder!.driverId)) {
 
@@ -160,7 +159,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
     }
   }
 
-  void _handleConnectionStatus(SocketConnectionStatus status) {
+  void _handleConnectionStatus(ws.SocketConnectionStatus status) {
     setState(() {
       _connectionStatus = status;
     });
@@ -291,10 +290,10 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  _connectionStatus == SocketConnectionStatus.connected
+                  _connectionStatus == ws.SocketConnectionStatus.connected
                       ? Icons.wifi
                       : Icons.wifi_off,
-                  color: _connectionStatus == SocketConnectionStatus.connected
+                  color: _connectionStatus == ws.SocketConnectionStatus.connected
                       ? Colors.green
                       : Colors.red,
                   size: 20,
@@ -518,15 +517,15 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
 
   String _getConnectionStatusText() {
     switch (_connectionStatus) {
-      case SocketConnectionStatus.connected:
+      case ws.SocketConnectionStatus.connected:
         return 'En ligne';
-      case SocketConnectionStatus.connecting:
+      case ws.SocketConnectionStatus.connecting:
         return 'Connexion...';
-      case SocketConnectionStatus.reconnecting:
+      case ws.SocketConnectionStatus.reconnecting:
         return 'Reconnexion...';
-      case SocketConnectionStatus.disconnected:
+      case ws.SocketConnectionStatus.disconnected:
         return 'Hors ligne';
-      case SocketConnectionStatus.error:
+      case ws.SocketConnectionStatus.error:
         return 'Erreur';
     }
   }
@@ -584,7 +583,7 @@ class _RealtimeOrderTrackingScreenState extends ConsumerState<RealtimeOrderTrack
     _connectionSubscription?.cancel();
 
     // Unsubscribe from WebSocket events
-    WebSocketService().unsubscribeFromOrder(widget.orderId);
+    ws.WebSocketService().unsubscribeFromOrder(widget.orderId);
 
     super.dispose();
   }

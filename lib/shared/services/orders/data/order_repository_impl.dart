@@ -286,6 +286,8 @@ class OrderRepositoryImpl implements OrderRepository {
         return 'Livreur assigné';
       case OrderStatus.pickedUp:
         return 'Récupérée par le livreur';
+      case OrderStatus.onTheWay:
+        return 'En cours de livraison';
       case OrderStatus.inTransit:
         return 'En transit';
       case OrderStatus.delivered:

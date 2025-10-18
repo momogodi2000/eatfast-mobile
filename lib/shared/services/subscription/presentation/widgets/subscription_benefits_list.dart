@@ -41,7 +41,7 @@ class SubscriptionBenefitsList extends StatelessWidget {
                 title: 'Support prioritaire',
                 value: 'Inclus',
               ),
-            ...plan.features.map(
+            ...plan.benefits.map(
               (feature) => _buildBenefitItem(
                 icon: Icons.check_circle,
                 title: feature,

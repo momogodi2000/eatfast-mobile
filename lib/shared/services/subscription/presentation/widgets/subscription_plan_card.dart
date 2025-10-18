@@ -64,7 +64,7 @@ class SubscriptionPlanCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...plan.features.map(
+            ...plan.benefits.map(
               (feature) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: Row(
