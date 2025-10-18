@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/wallet/providers/wallet_provider.dart';
 import 'package:eatfast_mobile/shared/services/wallet/domain/models/wallet.dart';
@@ -19,7 +19,6 @@ class _TransactionHistoryScreenState
   final ScrollController _scrollController = ScrollController();
 
   TransactionType? _currentFilter;
-  bool _isLoadingMore = false;
 
   @override
   void initState() {
@@ -43,28 +42,7 @@ class _TransactionHistoryScreenState
   void _onScroll() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      _loadMore();
-    }
-  }
-
-  Future<void> _loadMore() async {
-    final walletState = ref.read(walletProvider);
-    final pagination = walletState.transactionsPagination;
-
-    if (pagination != null &&
-        pagination.page < pagination.totalPages &&
-        !_isLoadingMore) {
-      setState(() {
-        _isLoadingMore = true;
-      });
-
-      await ref
-          .read(walletProvider.notifier)
-          .loadTransactionHistory(loadMore: true, type: _currentFilter);
-
-      setState(() {
-        _isLoadingMore = false;
-      });
+      // Pagination can be added here later if needed
     }
   }
 
@@ -77,7 +55,7 @@ class _TransactionHistoryScreenState
 
   @override
   Widget build(BuildContext context) {
-    final walletState = ref.watch(walletProvider);
+    final walletAsyncValue = ref.watch(walletProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -112,167 +90,151 @@ class _TransactionHistoryScreenState
           ],
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: () => ref
-            .read(walletProvider.notifier)
-            .loadTransactionHistory(type: _currentFilter),
-        child: Column(
-          children: [
-            // Summary Card
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.1),
-                    Theme.of(
-                      context,
-                    ).colorScheme.primary.withValues(alpha: 0.05),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.2),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _SummaryItem(
-                    title: 'Solde Actuel',
-                    value: '${walletState.balance.toStringAsFixed(0)} XAF',
-                    icon: Icons.account_balance_wallet,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  Container(width: 1, height: 40, color: Colors.grey[300]),
-                  _SummaryItem(
-                    title: 'Transactions',
-                    value: walletState.transactions.length.toString(),
-                    icon: Icons.receipt_long,
-                    color: Colors.blue,
-                  ),
+      body: walletAsyncValue.when(
+        data: (wallet) => _buildWalletContent(context, wallet),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => _buildErrorView(context, error),
+      ),
+    );
+  }
+
+  Widget _buildWalletContent(BuildContext context, Wallet? wallet) {
+    if (wallet == null) {
+      return const Center(
+        child: Text('Aucun portefeuille disponible'),
+      );
+    }
+
+    // Filter transactions based on current filter
+    final transactions = _currentFilter == null
+        ? wallet.recentTransactions
+        : wallet.recentTransactions
+            .where((t) => t.type == _currentFilter)
+            .toList();
+
+    return RefreshIndicator(
+      onRefresh: () =>
+          ref.read(walletProvider.notifier).loadTransactionHistory(type: _currentFilter),
+      child: Column(
+        children: [
+          // Summary Card
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
                 ],
               ),
-            ),
-
-            // Transactions List
-            Expanded(
-              child:
-                  walletState.isLoadingTransactions &&
-                      walletState.transactions.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
-                  : walletState.transactions.isEmpty
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.receipt_long,
-                            size: 64,
-                            color: Colors.grey[400],
-                          ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Aucune transaction trouvée',
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: Colors.grey[600]),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _getEmptyMessage(_currentFilter),
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.grey[500]),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    )
-                  : ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount:
-                          walletState.transactions.length +
-                          (_isLoadingMore ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == walletState.transactions.length) {
-                          return const Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Center(child: CircularProgressIndicator()),
-                          );
-                        }
-
-                        return TransactionTile(
-                          transaction: walletState.transactions[index],
-                        );
-                      },
-                    ),
-            ),
-
-            // Error Display
-            if (walletState.error != null)
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.red[200]!),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.error_outline, color: Colors.red[600]),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        walletState.error!,
-                        style: TextStyle(
-                          color: Colors.red[800],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      color: Colors.red[600],
-                      onPressed: () {
-                        ref.read(walletProvider.notifier).clearError();
-                      },
-                    ),
-                  ],
-                ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
               ),
-          ],
-        ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _SummaryItem(
+                  title: 'Solde Actuel',
+                  value: '${wallet.balance.toStringAsFixed(0)} XAF',
+                  icon: Icons.account_balance_wallet,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                Container(width: 1, height: 40, color: Colors.grey[300]),
+                _SummaryItem(
+                  title: 'Transactions',
+                  value: transactions.length.toString(),
+                  icon: Icons.receipt_long,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+          ),
+
+          // Transactions List
+          Expanded(
+            child: transactions.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.receipt_long,
+                          size: 64,
+                          color: Colors.grey[400],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Aucune transaction trouvée',
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: Colors.grey[600]),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _getEmptyMessage(_currentFilter),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: Colors.grey[500]),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      return TransactionTile(
+                        transaction: transactions[index],
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorView(BuildContext context, Object error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error_outline, size: 64, color: Colors.red[400]),
+          const SizedBox(height: 16),
+          Text(
+            'Erreur de chargement',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              error.toString(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: Colors.grey[600]),
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: () => ref.read(walletProvider.notifier).loadTransactionHistory(),
+            icon: const Icon(Icons.refresh),
+            label: const Text('Réessayer'),
+          ),
+        ],
       ),
     );
   }
 
   String _getEmptyMessage(TransactionType? filter) {
     if (filter == null) {
-      return 'Commencez à utiliser votre portefeuille pour voir vos transactions ici';
+      return 'Votre historique de transactions apparaîtra ici';
     }
-
-    switch (filter) {
-      case TransactionType.topup:
-        return 'Aucune recharge effectuée pour le moment';
-      case TransactionType.payment:
-        return 'Aucun paiement effectué pour le moment';
-      case TransactionType.refund:
-        return 'Aucun remboursement reçu pour le moment';
-      case TransactionType.bonus:
-        return 'Aucun bonus reçu pour le moment';
-      case TransactionType.transfer:
-        return 'Aucun transfert effectué pour le moment';
-      case TransactionType.withdrawal:
-        return 'Aucun retrait effectué pour le moment';
-    }
+    return 'Aucune transaction de type "${filter.displayName}" trouvée';
   }
 }
 
@@ -293,21 +255,21 @@ class _SummaryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 28, color: color),
+        Icon(icon, size: 32, color: color),
         const SizedBox(height: 8),
         Text(
           title,
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.grey[600],
+              ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
         ),
       ],
     );
