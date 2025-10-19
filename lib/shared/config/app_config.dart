@@ -21,7 +21,7 @@ class AppConfig {
     'DEBUG_MODE',
     defaultValue: true,
   );
-  static const bool enableDebugLogging = true;
+  static const bool enableDebugLogging = !isProduction; // Only in development
   static const bool enableMockData = false;
 
   // API Configuration
@@ -139,4 +139,50 @@ class AppConfig {
   static const int defaultDeliveryTime = 30; // minutes
   static const String currency = 'XAF';
   static const String currencySymbol = 'FCFA';
+
+  // ==================== Validation Methods ====================
+
+  /// Validates that all required API keys are set in production
+  static void validateProductionConfig() {
+    if (!isProduction) return;
+
+    // Validate API base URL uses HTTPS in production
+    if (!baseUrl.startsWith('https://')) {
+      throw StateError(
+        'Production API must use HTTPS. Current: $baseUrl',
+      );
+    }
+
+    // Validate payment API keys are set
+    if (enableCamPayPayments && campayApiKey.isEmpty) {
+      throw StateError('CamPay API key must be set in production');
+    }
+
+    if (enableNouPayPayments && noupayApiKey.isEmpty) {
+      throw StateError('NouPay API key must be set in production');
+    }
+
+    if (enableStripePayments && stripePublishableKey.isEmpty) {
+      throw StateError('Stripe publishable key must be set in production');
+    }
+  }
+
+  /// Validates that webhook URLs use HTTPS in production
+  static void validateWebhookUrls() {
+    if (!isProduction) return;
+
+    if (enableCamPayPayments && !campayWebhookUrl.startsWith('https://')) {
+      throw StateError('CamPay webhook URL must use HTTPS in production');
+    }
+
+    if (enableNouPayPayments && !noupayWebhookUrl.startsWith('https://')) {
+      throw StateError('NouPay webhook URL must use HTTPS in production');
+    }
+  }
+
+  /// Initializes and validates the configuration
+  static void initialize() {
+    validateProductionConfig();
+    validateWebhookUrls();
+  }
 }

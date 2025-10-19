@@ -7,7 +7,7 @@ import 'package:eatfast_mobile/shared/config/router/route_names.dart';
 import 'package:eatfast_mobile/modules/client_module/widgets/widgets/home/active_order_card.dart';
 import 'package:eatfast_mobile/modules/client_module/widgets/widgets/home/popular_restaurants_section.dart';
 import 'package:eatfast_mobile/modules/client_module/widgets/widgets/home/featured_dishes_section.dart';
-import '../restaurants/restaurant_list_screen.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/presentation/screens/restaurant_list_screen.dart';
 import '../orders/order_history_screen.dart';
 
 /// Home Screen - Main application screen

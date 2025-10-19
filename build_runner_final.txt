@@ -1,0 +1,50 @@
+[INFO] Generating build script...
+[INFO] Generating build script completed, took 1.3s
+
+[WARNING] Invalidated precompiled build script due to missing asset graph.
+[INFO] Precompiling build script......
+[INFO] Precompiling build script... completed, took 3.7s
+
+[INFO] Initializing inputs
+[INFO] Building new asset graph...
+[INFO] Building new asset graph completed, took 6.6s
+
+[INFO] Checking for unexpected pre-existing outputs....
+[INFO] Deleting 30 declared outputs which already existed on disk.
+[INFO] Checking for unexpected pre-existing outputs. completed, took 3ms
+
+[INFO] Running build...
+[INFO] 1.4s elapsed, 0/16 actions completed.
+[INFO] 2.4s elapsed, 15/31 actions completed.
+[WARNING] riverpod_generator on lib/core/monitoring/firebase_monitoring_service.dart:
+Your current `analyzer` version may not fully support your current SDK version.
+
+Analyzer language version: 3.7.0
+SDK language version: 3.8.0
+
+Please update to the latest `analyzer` version (8.4.0) by running
+`flutter packages upgrade`.
+
+If you are not getting the latest version by running the above command, you
+can try adding a constraint like the following to your pubspec to start
+diagnosing why you can't get the latest version:
+
+dev_dependencies:
+  analyzer: ^8.4.0
+
+[INFO] 3.7s elapsed, 44/63 actions completed.
+[INFO] 4.8s elapsed, 48/81 actions completed.
+[INFO] 5.9s elapsed, 66/100 actions completed.
+[INFO] 9.5s elapsed, 81/112 actions completed.
+[INFO] 10.8s elapsed, 87/119 actions completed.
+[INFO] 11.8s elapsed, 100/127 actions completed.
+[INFO] 12.9s elapsed, 133/143 actions completed.
+[INFO] 13.9s elapsed, 150/159 actions completed.
+[INFO] 14.9s elapsed, 188/210 actions completed.
+[INFO] 16.0s elapsed, 193/214 actions completed.
+[INFO] 17.1s elapsed, 215/237 actions completed.
+[INFO] 18.2s elapsed, 282/302 actions completed.
+[INFO] 19.3s elapsed, 323/330 actions completed.
+[INFO] 20.4s elapsed, 372/381 actions completed.
+[INFO] 21.4s elapsed, 431/439 actions completed.
+[INFO] 22.5s elapsed, 432/440 actions completed.

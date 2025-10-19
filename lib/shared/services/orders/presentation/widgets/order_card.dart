@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/shared/models/models_export.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart';
 
 class OrderCard extends StatelessWidget {

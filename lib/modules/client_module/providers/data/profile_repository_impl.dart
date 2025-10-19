@@ -5,6 +5,7 @@ import '../domain/profile_repository.dart';
 /// Profile Repository Implementation
 /// TODO: Replace mock data with actual API calls when backend is ready
 class ProfileRepositoryImpl implements ProfileRepository {
+  // ignore: unused_field
   final ApiClient _apiClient;
 
   ProfileRepositoryImpl({ApiClient? apiClient})

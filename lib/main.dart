@@ -1,10 +1,10 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'shared/constants/app_constants.dart';
 import 'shared/config/router/app_router.dart';
+import 'shared/config/app_config.dart';
 import 'shared/themes/app_theme.dart';
 import 'shared/themes/theme_provider.dart';
 import 'shared/l10n/language_provider.dart';
@@ -15,6 +15,9 @@ import 'core/monitoring/firebase_monitoring_service.dart';
 void main() async {
   // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Validate configuration (throws in production if invalid)
+  AppConfig.initialize();
 
   // Initialize Firebase
   await Firebase.initializeApp(

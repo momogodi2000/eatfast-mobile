@@ -1,0 +1,50 @@
+[INFO] Generating build script...
+[INFO] Generating build script completed, took 1.4s
+
+[INFO] Initializing inputs
+[INFO] Reading cached asset graph...
+[WARNING] Throwing away cached asset graph because the build phases have changed. This most commonly would happen as a result of adding a new dependency or updating your dependencies.
+[WARNING] Throwing away cached asset graph because the language version of some package(s) changed. This would most commonly happen when updating dependencies or changing your min sdk constraint.
+[INFO] Cleaning up outputs from previous builds....
+[INFO] Cleaning up outputs from previous builds. completed, took 574ms
+
+[INFO] Generating build script...
+[INFO] Generating build script completed, took 633ms
+
+[WARNING] Invalidated precompiled build script due to missing asset graph.
+[INFO] Precompiling build script......
+[INFO] Precompiling build script... completed, took 9.6s
+
+[INFO] Initializing inputs
+[INFO] Building new asset graph...
+[INFO] Building new asset graph completed, took 14.1s
+
+[INFO] Checking for unexpected pre-existing outputs....
+[INFO] Deleting 51 declared outputs which already existed on disk.
+[INFO] Checking for unexpected pre-existing outputs. completed, took 3ms
+
+[INFO] Running build...
+[INFO] 1.3s elapsed, 0/16 actions completed.
+[INFO] 2.3s elapsed, 14/31 actions completed.
+[WARNING] riverpod_generator on lib/core/monitoring/firebase_monitoring_service.dart:
+Your current `analyzer` version may not fully support your current SDK version.
+
+Analyzer language version: 3.7.0
+SDK language version: 3.8.0
+
+Please update to the latest `analyzer` version (8.4.0) by running
+`flutter packages upgrade`.
+
+If you are not getting the latest version by running the above command, you
+can try adding a constraint like the following to your pubspec to start
+diagnosing why you can't get the latest version:
+
+dev_dependencies:
+  analyzer: ^8.4.0
+
+[INFO] 3.9s elapsed, 37/72 actions completed.
+[INFO] 5.0s elapsed, 50/76 actions completed.
+[INFO] 6.0s elapsed, 56/92 actions completed.
+[INFO] 9.1s elapsed, 56/92 actions completed.
+[INFO] 10.1s elapsed, 64/101 actions completed.
+[INFO] 11.7s elapsed, 73/104 actions completed.

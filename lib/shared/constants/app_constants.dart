@@ -15,9 +15,9 @@ class AppConstants {
   static const int splashDuration = 2500;
 
   // Company Information
-  static const String companyPhone = '+237 6XX XXX XXX';
+  static const String companyPhone = '+237 699 999 999'; // TODO: Update with actual number
   static const String companyEmail = 'contact@eatfast.cm';
-  static const String companyWhatsApp = '+237 6XX XXX XXX';
+  static const String companyWhatsApp = '+237 699 999 999'; // TODO: Update with actual number
   static const String companyAddress = 'Yaoundé, Cameroon';
 
   // Social Media URLs

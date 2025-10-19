@@ -21,11 +21,11 @@ import 'package:eatfast_mobile/shared/services/company/presentation/screens/abou
 import 'package:eatfast_mobile/shared/services/company/presentation/screens/our_team_screen.dart';
 import 'package:eatfast_mobile/shared/services/company/presentation/screens/contact_us_screen.dart';
 import 'package:eatfast_mobile/modules/client_module/screens/home/home_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/restaurants/restaurant_list_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/restaurants/restaurant_detail_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/cart/cart_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/cart/checkout_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/orders/order_tracking_screen.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/presentation/screens/restaurant_list_screen.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/presentation/screens/restaurant_detail_screen.dart';
+import 'package:eatfast_mobile/shared/services/cart/presentation/screens/cart_screen.dart';
+import 'package:eatfast_mobile/shared/services/cart/presentation/screens/checkout_screen.dart';
+import 'package:eatfast_mobile/shared/services/orders/presentation/screens/order_tracking_screen.dart';
 import 'package:eatfast_mobile/modules/client_module/screens/orders/order_history_screen.dart';
 import 'package:eatfast_mobile/shared/screens/settings/presentation/screens/language_settings_screen.dart';
 import 'package:eatfast_mobile/shared/screens/settings/presentation/screens/settings_screen.dart';
@@ -33,7 +33,7 @@ import 'package:eatfast_mobile/modules/client_module/screens/profile/profile_scr
 import 'package:eatfast_mobile/modules/client_module/screens/profile/edit_profile_screen.dart';
 import 'package:eatfast_mobile/modules/guest_module/screens/guest_landing_screen.dart';
 import 'package:eatfast_mobile/modules/guest_module/screens/guest_checkout_screen.dart';
-import 'package:eatfast_mobile/modules/client_module/screens/promotions/promotions_screen.dart';
+import 'package:eatfast_mobile/shared/services/promotions/presentation/screens/promotions_screen.dart';
 import 'package:eatfast_mobile/modules/guest_module/screens/guest_restaurant_discovery_screen.dart';
 // import 'package:eatfast_mobile/modules/admin_module/screens/admin_dashboard_screen.dart';
 // import 'package:eatfast_mobile/modules/admin_module/screens/user_management_screen.dart';

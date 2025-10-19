@@ -46,6 +46,8 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Watch restaurant state for future use
+    // ignore: unused_local_variable
     final restaurantState = ref.watch(restaurantOwnerProvider(widget.restaurantId));
     final liveOrdersAsync = ref.watch(liveOrdersProvider(widget.restaurantId));
     
