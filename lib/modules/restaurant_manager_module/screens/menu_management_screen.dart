@@ -88,7 +88,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
           ],
         ),
         loading: () => const Center(child: AppLoadingIndicator()),
-        error: (error, stackTrace) => _buildErrorView(error.toString()),
+        error: (error) => _buildErrorView(error),
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: 'menu_management_fab',

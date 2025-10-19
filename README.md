@@ -117,12 +117,18 @@ riverpod_annotation: ^2.3.5
 
 # Internationalization
 flutter_localizations: (SDK)
-intl: ^0.19.0
+intl: ^0.20.2
 
 # Networking
 dio: ^5.4.3+1
 retrofit: ^4.1.0
 pretty_dio_logger: ^1.3.1
+
+# Monitoring & Analytics
+firebase_core: ^3.6.0
+firebase_crashlytics: ^4.1.3
+firebase_performance: ^0.10.0+8
+firebase_analytics: ^11.3.3
 
 # Local Storage
 shared_preferences: ^2.2.3
@@ -170,8 +176,9 @@ flutter_stripe: ^10.1.1
 - Flutter 3.8.1+
 - Dart 3.8.1+
 - Android Studio / VS Code
+- Firebase project (for monitoring)
 - Google Maps API key
-- Backend web push notifications (replaces Firebase)
+- Backend web push notifications (for messaging)
 
 ### Installation
 1. **Clone the repository**
@@ -185,18 +192,34 @@ flutter_stripe: ^10.1.1
    flutter pub get
    ```
 
-3. **Configure API keys**
+3. **Configure Firebase (for monitoring)**
+   ```bash
+   # Install FlutterFire CLI
+   dart pub global activate flutterfire_cli
+
+   # Configure Firebase project
+   flutterfire configure
+   ```
+   This will create `lib/firebase_options.dart` with your Firebase project configuration.
+   See [docs/FIREBASE_MONITORING.md](docs/FIREBASE_MONITORING.md) for detailed setup instructions.
+
+4. **Configure Google Maps API keys**
    ```bash
    # Add to android/app/src/main/AndroidManifest.xml
    <meta-data
        android:name="com.google.android.geo.API_KEY"
        android:value="YOUR_GOOGLE_MAPS_API_KEY"/>
-   
+
    # Add to ios/Runner/AppDelegate.swift
    GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
    ```
 
-4. **Run the app**
+5. **Generate code (Freezed, Riverpod, JSON)**
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+6. **Run the app**
    ```bash
    flutter run
    ```
