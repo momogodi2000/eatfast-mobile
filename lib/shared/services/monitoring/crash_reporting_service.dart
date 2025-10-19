@@ -43,9 +43,9 @@ class CrashReportingService {
       };
 
       _isInitialized = true;
-      if (kDebugMode) print('Crash reporting initialized');
+      debugPrint('Crash reporting initialized');
     } catch (e) {
-      if (kDebugMode) print('Error initializing crash reporting: $e');
+      debugPrint('Error initializing crash reporting: $e');
     }
   }
 
@@ -78,7 +78,7 @@ class CrashReportingService {
         };
       }
     } catch (e) {
-      if (kDebugMode) print('Error collecting device info: $e');
+      debugPrint('Error collecting device info: $e');
       _deviceInfo = {
         'platform': Platform.operatingSystem,
         'osVersion': Platform.operatingSystemVersion,
@@ -97,7 +97,7 @@ class CrashReportingService {
         'buildNumber': packageInfo.buildNumber,
       };
     } catch (e) {
-      if (kDebugMode) print('Error collecting app info: $e');
+      debugPrint('Error collecting app info: $e');
       _appInfo = {'appName': 'EatFast', 'version': 'unknown'};
     }
   }
@@ -128,8 +128,8 @@ class CrashReportingService {
   void _handlePlatformError(Object error, StackTrace stack) {
     // Log to console in debug mode
     if (kDebugMode) {
-      print('Platform Error: $error');
-      print('Stack trace:\n$stack');
+      debugPrint('Platform Error: $error');
+      debugPrint('Stack trace:\n$stack');
     }
 
     // Send to backend in production
@@ -153,9 +153,9 @@ class CrashReportingService {
   }) async {
     // Log to console in debug mode
     if (kDebugMode) {
-      print('Error: $error');
-      if (stackTrace != null) print('Stack trace:\n$stackTrace');
-      if (reason != null) print('Reason: $reason');
+      debugPrint('Error: $error');
+      if (stackTrace != null) debugPrint('Stack trace:\n$stackTrace');
+      if (reason != null) debugPrint('Reason: $reason');
     }
 
     // Send to backend
@@ -201,18 +201,18 @@ class CrashReportingService {
             // Success - crash report sent
           })
           .catchError((e) {
-            if (kDebugMode) print('Error sending crash report: $e');
+            debugPrint('Error sending crash report: $e');
           });
     } catch (e) {
-      if (kDebugMode) print('Error preparing crash report: $e');
+      debugPrint('Error preparing crash report: $e');
     }
   }
 
   /// Log message (for tracking app flow)
   Future<void> log(String message, {Map<String, dynamic>? data}) async {
     if (kDebugMode) {
-      print('Log: $message');
-      if (data != null) print('Data: $data');
+      debugPrint('Log: $message');
+      if (data != null) debugPrint('Data: $data');
     }
 
     // Optionally send important logs to backend
@@ -229,7 +229,7 @@ class CrashReportingService {
           },
         );
       } catch (e) {
-        if (kDebugMode) print('Error sending log: $e');
+        debugPrint('Error sending log: $e');
       }
     }
   }
@@ -260,7 +260,7 @@ class CrashReportingService {
     String message, {
     Map<String, dynamic>? data,
   }) async {
-    if (kDebugMode) print('Breadcrumb: $message');
+    debugPrint('Breadcrumb: $message');
 
     // In production, you might want to maintain a local queue of breadcrumbs
     // and send them with crash reports

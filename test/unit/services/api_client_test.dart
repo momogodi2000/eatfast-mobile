@@ -8,12 +8,10 @@ class MockDio extends Mock implements Dio {}
 
 void main() {
   late ApiClient apiClient;
-  late MockDio mockDio;
 
   setUp(() {
-    mockDio = MockDio();
     apiClient = ApiClient();
-    // Note: In real test, we'd inject mockDio, but for simplicity, test basic functionality
+    // Note: In real test, we'd inject mock Dio for better testing
   });
 
   group('ApiClient', () {

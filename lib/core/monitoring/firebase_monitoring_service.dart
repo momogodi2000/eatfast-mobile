@@ -325,7 +325,7 @@ class FirebaseMonitoringService {
     if (!_isInitialized) return false;
 
     try {
-      return await _crashlytics!.isCrashlyticsCollectionEnabled;
+      return _crashlytics!.isCrashlyticsCollectionEnabled;
     } catch (e) {
       debugPrint('[FirebaseMonitoring] Failed to check status: $e');
       return false;

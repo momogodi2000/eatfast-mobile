@@ -40,9 +40,9 @@ class OfflineStorageService {
       _monitorConnectivity();
 
       _isInitialized = true;
-      if (kDebugMode) print('Offline storage initialized');
+      debugPrint('Offline storage initialized');
     } catch (e) {
-      if (kDebugMode) print('Error initializing offline storage: $e');
+      debugPrint('Error initializing offline storage: $e');
     }
   }
 
@@ -53,7 +53,7 @@ class OfflineStorageService {
       _isOnline = !results.contains(ConnectivityResult.none);
       _connectionStreamController.add(_isOnline);
 
-      if (kDebugMode) print('Connection status: ${_isOnline ? "Online" : "Offline"}');
+      debugPrint('Connection status: ${_isOnline ? "Online" : "Offline"}');
 
       // Sync pending actions when coming back online
       if (!wasOnline && _isOnline) {
@@ -75,9 +75,9 @@ class OfflineStorageService {
   Future<void> saveOfflineData(String key, dynamic data) async {
     try {
       await _offlineBox.put(key, data);
-      if (kDebugMode) print('Saved offline data: $key');
+      debugPrint('Saved offline data: $key');
     } catch (e) {
-      if (kDebugMode) print('Error saving offline data: $e');
+      debugPrint('Error saving offline data: $e');
     }
   }
 
@@ -86,7 +86,7 @@ class OfflineStorageService {
     try {
       return _offlineBox.get(key, defaultValue: defaultValue);
     } catch (e) {
-      if (kDebugMode) print('Error getting offline data: $e');
+      debugPrint('Error getting offline data: $e');
       return defaultValue;
     }
   }
@@ -96,7 +96,7 @@ class OfflineStorageService {
     try {
       await _offlineBox.delete(key);
     } catch (e) {
-      if (kDebugMode) print('Error deleting offline data: $e');
+      debugPrint('Error deleting offline data: $e');
     }
   }
 
@@ -105,7 +105,7 @@ class OfflineStorageService {
     try {
       await _offlineBox.clear();
     } catch (e) {
-      if (kDebugMode) print('Error clearing offline data: $e');
+      debugPrint('Error clearing offline data: $e');
     }
   }
 
@@ -115,14 +115,14 @@ class OfflineStorageService {
       final actions = getPendingActions();
       actions.add(action.toJson());
       await _pendingActionsBox.put('actions', actions);
-      if (kDebugMode) print('Added pending action: ${action.type}');
+      debugPrint('Added pending action: ${action.type}');
 
       // Try to sync immediately if online
       if (_isOnline) {
         _syncPendingActions();
       }
     } catch (e) {
-      if (kDebugMode) print('Error adding pending action: $e');
+      debugPrint('Error adding pending action: $e');
     }
   }
 
@@ -134,7 +134,7 @@ class OfflineStorageService {
         data.map((item) => Map<String, dynamic>.from(item)),
       );
     } catch (e) {
-      if (kDebugMode) print('Error getting pending actions: $e');
+      debugPrint('Error getting pending actions: $e');
       return [];
     }
   }
@@ -147,7 +147,7 @@ class OfflineStorageService {
       final actions = getPendingActions();
       if (actions.isEmpty) return;
 
-      if (kDebugMode) print('Syncing ${actions.length} pending actions...');
+      debugPrint('Syncing ${actions.length} pending actions...');
 
       // Process each action
       final failedActions = <Map<String, dynamic>>[];
@@ -163,11 +163,9 @@ class OfflineStorageService {
       // Keep only failed actions
       await _pendingActionsBox.put('actions', failedActions);
 
-      if (kDebugMode) {
-        print('Sync complete. ${failedActions.length} actions failed.');
-      }
+      debugPrint('Sync complete. ${failedActions.length} actions failed.');
     } catch (e) {
-      if (kDebugMode) print('Error syncing pending actions: $e');
+      debugPrint('Error syncing pending actions: $e');
     }
   }
 
@@ -176,7 +174,7 @@ class OfflineStorageService {
     try {
       // This would call the appropriate service based on action type
       // For now, we'll just log it
-      if (kDebugMode) print('Processing action: ${action.type}');
+      debugPrint('Processing action: ${action.type}');
 
       // TODO: Implement actual processing based on action.type
       // Example:
@@ -191,7 +189,7 @@ class OfflineStorageService {
 
       return true;
     } catch (e) {
-      if (kDebugMode) print('Error processing action ${action.type}: $e');
+      debugPrint('Error processing action ${action.type}: $e');
       return false;
     }
   }
