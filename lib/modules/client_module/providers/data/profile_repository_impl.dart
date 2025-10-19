@@ -59,6 +59,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
+  Future<bool> deleteAvatar(String userId) async {
+    try {
+      // TODO: Implement actual API call
+      // await _apiClient.delete('${ApiConstants.profile}/$userId/avatar');
+
+      // Mock implementation
+      await Future.delayed(const Duration(milliseconds: 500));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
   Future<List<Address>> getAddresses(String userId) async {
     try {
       // TODO: Implement actual API call
@@ -183,6 +197,38 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  @override
+  Future<bool> setDefaultPaymentMethod(String userId, String paymentMethodId) async {
+    try {
+      // TODO: Implement actual API call
+      // await _apiClient.put(
+      //   '${ApiConstants.paymentMethods}/$paymentMethodId/set-default',
+      //   data: {'userId': userId},
+      // );
+
+      // Mock implementation
+      await Future.delayed(const Duration(milliseconds: 500));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<NotificationPreferences> getNotificationPreferences(String userId) async {
+    try {
+      // TODO: Implement actual API call
+      // final response = await _apiClient.get('${ApiConstants.notificationPreferences}?userId=$userId');
+      // return NotificationPreferences.fromJson(response.data);
+
+      // Mock implementation - return default preferences
+      await Future.delayed(const Duration(milliseconds: 500));
+      return const NotificationPreferences();
+    } catch (e) {
+      return const NotificationPreferences();
     }
   }
 

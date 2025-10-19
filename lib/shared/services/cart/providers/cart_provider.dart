@@ -1,8 +1,9 @@
 ﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 import '../domain/repositories/cart_repository.dart';
 import '../data/cart_repository_impl.dart';
-import 'package:eatfast_mobile/shared/models/menu_item.dart';
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
 
 // Repository provider
 final cartRepositoryProvider = Provider<CartRepository>((ref) {
@@ -23,9 +24,9 @@ class CartNotifier extends StateNotifier<CartState> {
 
   Future<void> _loadCart() async {
     state = const CartState.loading();
-    
+
     final result = await _repository.getCart();
-    
+
     state = result.when(
       success: (cart) => CartState.loaded(cart),
       failure: (error) => CartState.error(error),
@@ -41,11 +42,12 @@ class CartNotifier extends StateNotifier<CartState> {
     // Check if cart has items from different restaurants
     if (state is CartLoaded) {
       final currentCart = (state as CartLoaded).cart;
-      if (currentCart.restaurantId != null && 
+      if (currentCart.restaurantId != null &&
           currentCart.restaurantId != menuItem.restaurantId) {
         // Show dialog to clear cart or cancel
         state = CartState.conflictingRestaurant(
-          currentRestaurantName: currentCart.restaurantName ?? 'Restaurant actuel',
+          currentRestaurantName:
+              currentCart.restaurantName ?? 'Restaurant actuel',
           newRestaurantName: 'Nouveau restaurant',
           pendingItem: menuItem,
           pendingQuantity: quantity,
@@ -67,7 +69,7 @@ class CartNotifier extends StateNotifier<CartState> {
     );
 
     final result = await _repository.addItem(cartItem);
-    
+
     result.when(
       success: (cart) => state = CartState.loaded(cart),
       failure: (error) => state = CartState.error(error),
@@ -76,7 +78,7 @@ class CartNotifier extends StateNotifier<CartState> {
 
   Future<void> removeItem(String itemId) async {
     final result = await _repository.removeItem(itemId);
-    
+
     result.when(
       success: (cart) => state = CartState.loaded(cart),
       failure: (error) => state = CartState.error(error),
@@ -90,16 +92,22 @@ class CartNotifier extends StateNotifier<CartState> {
     }
 
     final result = await _repository.updateItemQuantity(itemId, quantity);
-    
+
     result.when(
       success: (cart) => state = CartState.loaded(cart),
       failure: (error) => state = CartState.error(error),
     );
   }
 
-  Future<void> updateItemInstructions(String itemId, String? instructions) async {
-    final result = await _repository.updateItemInstructions(itemId, instructions);
-    
+  Future<void> updateItemInstructions(
+    String itemId,
+    String? instructions,
+  ) async {
+    final result = await _repository.updateItemInstructions(
+      itemId,
+      instructions,
+    );
+
     result.when(
       success: (cart) => state = CartState.loaded(cart),
       failure: (error) => state = CartState.error(error),
@@ -108,7 +116,7 @@ class CartNotifier extends StateNotifier<CartState> {
 
   Future<void> clearCart() async {
     final result = await _repository.clearCart();
-    
+
     result.when(
       success: (cart) => state = CartState.loaded(cart),
       failure: (error) => state = CartState.error(error),
@@ -138,19 +146,19 @@ class CartNotifier extends StateNotifier<CartState> {
   }
 
   double _calculateItemTotal(
-    MenuItem menuItem, 
-    int quantity, 
+    MenuItem menuItem,
+    int quantity,
     List<SelectedCustomization> customizations,
   ) {
     final double basePrice = menuItem.price * quantity;
     double customizationPrice = 0.0;
-    
+
     for (final customization in customizations) {
       for (final option in customization.options) {
         customizationPrice += option.additionalPrice * quantity;
       }
     }
-    
+
     return basePrice + customizationPrice;
   }
 }

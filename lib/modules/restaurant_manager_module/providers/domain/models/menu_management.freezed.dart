@@ -28,7 +28,7 @@ mixin _$MenuCategory {
   String? get imageUrl => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  List<MenuItemDetails> get items => throw _privateConstructorUsedError;
+  List<MenuItemDetails>? get items => throw _privateConstructorUsedError;
 
   /// Serializes this MenuCategory to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +55,7 @@ abstract class $MenuCategoryCopyWith<$Res> {
       String? imageUrl,
       DateTime? createdAt,
       DateTime? updatedAt,
-      List<MenuItemDetails> items});
+      List<MenuItemDetails>? items});
 }
 
 /// @nodoc
@@ -81,7 +81,7 @@ class _$MenuCategoryCopyWithImpl<$Res, $Val extends MenuCategory>
     Object? imageUrl = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? items = null,
+    Object? items = freezed,
   }) {
     return _then(_value.copyWith(
       categoryId: null == categoryId
@@ -116,10 +116,10 @@ class _$MenuCategoryCopyWithImpl<$Res, $Val extends MenuCategory>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      items: null == items
+      items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<MenuItemDetails>,
+              as List<MenuItemDetails>?,
     ) as $Val);
   }
 }
@@ -141,7 +141,7 @@ abstract class _$$MenuCategoryImplCopyWith<$Res>
       String? imageUrl,
       DateTime? createdAt,
       DateTime? updatedAt,
-      List<MenuItemDetails> items});
+      List<MenuItemDetails>? items});
 }
 
 /// @nodoc
@@ -165,7 +165,7 @@ class __$$MenuCategoryImplCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? items = null,
+    Object? items = freezed,
   }) {
     return _then(_$MenuCategoryImpl(
       categoryId: null == categoryId
@@ -200,10 +200,10 @@ class __$$MenuCategoryImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      items: null == items
+      items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
-              as List<MenuItemDetails>,
+              as List<MenuItemDetails>?,
     ));
   }
 }
@@ -220,7 +220,7 @@ class _$MenuCategoryImpl implements _MenuCategory {
       this.imageUrl,
       this.createdAt,
       this.updatedAt,
-      final List<MenuItemDetails> items = const []})
+      final List<MenuItemDetails>? items})
       : _items = items;
 
   factory _$MenuCategoryImpl.fromJson(Map<String, dynamic> json) =>
@@ -242,13 +242,14 @@ class _$MenuCategoryImpl implements _MenuCategory {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  final List<MenuItemDetails> _items;
+  final List<MenuItemDetails>? _items;
   @override
-  @JsonKey()
-  List<MenuItemDetails> get items {
+  List<MenuItemDetails>? get items {
+    final value = _items;
+    if (value == null) return null;
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_items);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -319,7 +320,7 @@ abstract class _MenuCategory implements MenuCategory {
       final String? imageUrl,
       final DateTime? createdAt,
       final DateTime? updatedAt,
-      final List<MenuItemDetails> items}) = _$MenuCategoryImpl;
+      final List<MenuItemDetails>? items}) = _$MenuCategoryImpl;
 
   factory _MenuCategory.fromJson(Map<String, dynamic> json) =
       _$MenuCategoryImpl.fromJson;
@@ -341,7 +342,7 @@ abstract class _MenuCategory implements MenuCategory {
   @override
   DateTime? get updatedAt;
   @override
-  List<MenuItemDetails> get items;
+  List<MenuItemDetails>? get items;
 
   /// Create a copy of MenuCategory
   /// with the given fields replaced by the non-null parameter values.
@@ -362,16 +363,16 @@ mixin _$MenuItemDetails {
   String get description => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   bool get isAvailable => throw _privateConstructorUsedError;
-  bool get isPopular => throw _privateConstructorUsedError;
   int get preparationTime => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
-  List<String> get allergens => throw _privateConstructorUsedError;
-  List<String> get dietaryTags => throw _privateConstructorUsedError;
-  List<CustomizationOption> get customizations =>
+  List<String>? get allergens => throw _privateConstructorUsedError;
+  List<String>? get dietaryTags => throw _privateConstructorUsedError;
+  List<CustomizationOption>? get customizations =>
       throw _privateConstructorUsedError;
-  int get orderCount => throw _privateConstructorUsedError;
-  double get rating => throw _privateConstructorUsedError;
-  int get reviewCount => throw _privateConstructorUsedError;
+  int? get orderCount => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  int? get reviewCount => throw _privateConstructorUsedError;
+  bool get isPopular => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -397,15 +398,15 @@ abstract class $MenuItemDetailsCopyWith<$Res> {
       String description,
       double price,
       bool isAvailable,
-      bool isPopular,
       int preparationTime,
       String? imageUrl,
-      List<String> allergens,
-      List<String> dietaryTags,
-      List<CustomizationOption> customizations,
-      int orderCount,
-      double rating,
-      int reviewCount,
+      List<String>? allergens,
+      List<String>? dietaryTags,
+      List<CustomizationOption>? customizations,
+      int? orderCount,
+      double? rating,
+      int? reviewCount,
+      bool isPopular,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -430,15 +431,15 @@ class _$MenuItemDetailsCopyWithImpl<$Res, $Val extends MenuItemDetails>
     Object? description = null,
     Object? price = null,
     Object? isAvailable = null,
-    Object? isPopular = null,
     Object? preparationTime = null,
     Object? imageUrl = freezed,
-    Object? allergens = null,
-    Object? dietaryTags = null,
-    Object? customizations = null,
-    Object? orderCount = null,
-    Object? rating = null,
-    Object? reviewCount = null,
+    Object? allergens = freezed,
+    Object? dietaryTags = freezed,
+    Object? customizations = freezed,
+    Object? orderCount = freezed,
+    Object? rating = freezed,
+    Object? reviewCount = freezed,
+    Object? isPopular = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -463,10 +464,6 @@ class _$MenuItemDetailsCopyWithImpl<$Res, $Val extends MenuItemDetails>
           ? _value.isAvailable
           : isAvailable // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPopular: null == isPopular
-          ? _value.isPopular
-          : isPopular // ignore: cast_nullable_to_non_nullable
-              as bool,
       preparationTime: null == preparationTime
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -475,30 +472,34 @@ class _$MenuItemDetailsCopyWithImpl<$Res, $Val extends MenuItemDetails>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      allergens: null == allergens
+      allergens: freezed == allergens
           ? _value.allergens
           : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      dietaryTags: null == dietaryTags
+              as List<String>?,
+      dietaryTags: freezed == dietaryTags
           ? _value.dietaryTags
           : dietaryTags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      customizations: null == customizations
+              as List<String>?,
+      customizations: freezed == customizations
           ? _value.customizations
           : customizations // ignore: cast_nullable_to_non_nullable
-              as List<CustomizationOption>,
-      orderCount: null == orderCount
+              as List<CustomizationOption>?,
+      orderCount: freezed == orderCount
           ? _value.orderCount
           : orderCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      rating: null == rating
+              as int?,
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
-      reviewCount: null == reviewCount
+              as double?,
+      reviewCount: freezed == reviewCount
           ? _value.reviewCount
           : reviewCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      isPopular: null == isPopular
+          ? _value.isPopular
+          : isPopular // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -525,15 +526,15 @@ abstract class _$$MenuItemDetailsImplCopyWith<$Res>
       String description,
       double price,
       bool isAvailable,
-      bool isPopular,
       int preparationTime,
       String? imageUrl,
-      List<String> allergens,
-      List<String> dietaryTags,
-      List<CustomizationOption> customizations,
-      int orderCount,
-      double rating,
-      int reviewCount,
+      List<String>? allergens,
+      List<String>? dietaryTags,
+      List<CustomizationOption>? customizations,
+      int? orderCount,
+      double? rating,
+      int? reviewCount,
+      bool isPopular,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -556,15 +557,15 @@ class __$$MenuItemDetailsImplCopyWithImpl<$Res>
     Object? description = null,
     Object? price = null,
     Object? isAvailable = null,
-    Object? isPopular = null,
     Object? preparationTime = null,
     Object? imageUrl = freezed,
-    Object? allergens = null,
-    Object? dietaryTags = null,
-    Object? customizations = null,
-    Object? orderCount = null,
-    Object? rating = null,
-    Object? reviewCount = null,
+    Object? allergens = freezed,
+    Object? dietaryTags = freezed,
+    Object? customizations = freezed,
+    Object? orderCount = freezed,
+    Object? rating = freezed,
+    Object? reviewCount = freezed,
+    Object? isPopular = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -589,10 +590,6 @@ class __$$MenuItemDetailsImplCopyWithImpl<$Res>
           ? _value.isAvailable
           : isAvailable // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPopular: null == isPopular
-          ? _value.isPopular
-          : isPopular // ignore: cast_nullable_to_non_nullable
-              as bool,
       preparationTime: null == preparationTime
           ? _value.preparationTime
           : preparationTime // ignore: cast_nullable_to_non_nullable
@@ -601,30 +598,34 @@ class __$$MenuItemDetailsImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      allergens: null == allergens
+      allergens: freezed == allergens
           ? _value._allergens
           : allergens // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      dietaryTags: null == dietaryTags
+              as List<String>?,
+      dietaryTags: freezed == dietaryTags
           ? _value._dietaryTags
           : dietaryTags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      customizations: null == customizations
+              as List<String>?,
+      customizations: freezed == customizations
           ? _value._customizations
           : customizations // ignore: cast_nullable_to_non_nullable
-              as List<CustomizationOption>,
-      orderCount: null == orderCount
+              as List<CustomizationOption>?,
+      orderCount: freezed == orderCount
           ? _value.orderCount
           : orderCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      rating: null == rating
+              as int?,
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
-      reviewCount: null == reviewCount
+              as double?,
+      reviewCount: freezed == reviewCount
           ? _value.reviewCount
           : reviewCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      isPopular: null == isPopular
+          ? _value.isPopular
+          : isPopular // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -646,15 +647,15 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
       required this.description,
       required this.price,
       required this.isAvailable,
-      required this.isPopular,
       required this.preparationTime,
       this.imageUrl,
-      final List<String> allergens = const [],
-      final List<String> dietaryTags = const [],
-      final List<CustomizationOption> customizations = const [],
-      this.orderCount = 0,
-      this.rating = 0.0,
-      this.reviewCount = 0,
+      final List<String>? allergens,
+      final List<String>? dietaryTags,
+      final List<CustomizationOption>? customizations,
+      this.orderCount,
+      this.rating,
+      this.reviewCount,
+      this.isPopular = false,
       this.createdAt,
       this.updatedAt})
       : _allergens = allergens,
@@ -675,47 +676,48 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
   @override
   final bool isAvailable;
   @override
-  final bool isPopular;
-  @override
   final int preparationTime;
   @override
   final String? imageUrl;
-  final List<String> _allergens;
+  final List<String>? _allergens;
   @override
-  @JsonKey()
-  List<String> get allergens {
+  List<String>? get allergens {
+    final value = _allergens;
+    if (value == null) return null;
     if (_allergens is EqualUnmodifiableListView) return _allergens;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_allergens);
+    return EqualUnmodifiableListView(value);
   }
 
-  final List<String> _dietaryTags;
+  final List<String>? _dietaryTags;
   @override
-  @JsonKey()
-  List<String> get dietaryTags {
+  List<String>? get dietaryTags {
+    final value = _dietaryTags;
+    if (value == null) return null;
     if (_dietaryTags is EqualUnmodifiableListView) return _dietaryTags;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_dietaryTags);
+    return EqualUnmodifiableListView(value);
   }
 
-  final List<CustomizationOption> _customizations;
+  final List<CustomizationOption>? _customizations;
   @override
-  @JsonKey()
-  List<CustomizationOption> get customizations {
+  List<CustomizationOption>? get customizations {
+    final value = _customizations;
+    if (value == null) return null;
     if (_customizations is EqualUnmodifiableListView) return _customizations;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_customizations);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
-  @JsonKey()
-  final int orderCount;
+  final int? orderCount;
+  @override
+  final double? rating;
+  @override
+  final int? reviewCount;
   @override
   @JsonKey()
-  final double rating;
-  @override
-  @JsonKey()
-  final int reviewCount;
+  final bool isPopular;
   @override
   final DateTime? createdAt;
   @override
@@ -723,7 +725,7 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
 
   @override
   String toString() {
-    return 'MenuItemDetails(itemId: $itemId, name: $name, description: $description, price: $price, isAvailable: $isAvailable, isPopular: $isPopular, preparationTime: $preparationTime, imageUrl: $imageUrl, allergens: $allergens, dietaryTags: $dietaryTags, customizations: $customizations, orderCount: $orderCount, rating: $rating, reviewCount: $reviewCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'MenuItemDetails(itemId: $itemId, name: $name, description: $description, price: $price, isAvailable: $isAvailable, preparationTime: $preparationTime, imageUrl: $imageUrl, allergens: $allergens, dietaryTags: $dietaryTags, customizations: $customizations, orderCount: $orderCount, rating: $rating, reviewCount: $reviewCount, isPopular: $isPopular, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -738,8 +740,6 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.isAvailable, isAvailable) ||
                 other.isAvailable == isAvailable) &&
-            (identical(other.isPopular, isPopular) ||
-                other.isPopular == isPopular) &&
             (identical(other.preparationTime, preparationTime) ||
                 other.preparationTime == preparationTime) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -755,6 +755,8 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
             (identical(other.rating, rating) || other.rating == rating) &&
             (identical(other.reviewCount, reviewCount) ||
                 other.reviewCount == reviewCount) &&
+            (identical(other.isPopular, isPopular) ||
+                other.isPopular == isPopular) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -770,7 +772,6 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
       description,
       price,
       isAvailable,
-      isPopular,
       preparationTime,
       imageUrl,
       const DeepCollectionEquality().hash(_allergens),
@@ -779,6 +780,7 @@ class _$MenuItemDetailsImpl implements _MenuItemDetails {
       orderCount,
       rating,
       reviewCount,
+      isPopular,
       createdAt,
       updatedAt);
 
@@ -806,15 +808,15 @@ abstract class _MenuItemDetails implements MenuItemDetails {
       required final String description,
       required final double price,
       required final bool isAvailable,
-      required final bool isPopular,
       required final int preparationTime,
       final String? imageUrl,
-      final List<String> allergens,
-      final List<String> dietaryTags,
-      final List<CustomizationOption> customizations,
-      final int orderCount,
-      final double rating,
-      final int reviewCount,
+      final List<String>? allergens,
+      final List<String>? dietaryTags,
+      final List<CustomizationOption>? customizations,
+      final int? orderCount,
+      final double? rating,
+      final int? reviewCount,
+      final bool isPopular,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$MenuItemDetailsImpl;
 
@@ -832,23 +834,23 @@ abstract class _MenuItemDetails implements MenuItemDetails {
   @override
   bool get isAvailable;
   @override
-  bool get isPopular;
-  @override
   int get preparationTime;
   @override
   String? get imageUrl;
   @override
-  List<String> get allergens;
+  List<String>? get allergens;
   @override
-  List<String> get dietaryTags;
+  List<String>? get dietaryTags;
   @override
-  List<CustomizationOption> get customizations;
+  List<CustomizationOption>? get customizations;
   @override
-  int get orderCount;
+  int? get orderCount;
   @override
-  double get rating;
+  double? get rating;
   @override
-  int get reviewCount;
+  int? get reviewCount;
+  @override
+  bool get isPopular;
   @override
   DateTime? get createdAt;
   @override
@@ -868,11 +870,13 @@ CustomizationOption _$CustomizationOptionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomizationOption {
-  String get optionId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   CustomizationType get type => throw _privateConstructorUsedError;
-  bool get isRequired => throw _privateConstructorUsedError;
-  List<CustomizationChoice> get choices => throw _privateConstructorUsedError;
+  bool get required => throw _privateConstructorUsedError;
+  int get maxSelections => throw _privateConstructorUsedError;
+  List<CustomizationChoice>? get choices => throw _privateConstructorUsedError;
 
   /// Serializes this CustomizationOption to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -891,11 +895,13 @@ abstract class $CustomizationOptionCopyWith<$Res> {
       _$CustomizationOptionCopyWithImpl<$Res, CustomizationOption>;
   @useResult
   $Res call(
-      {String optionId,
+      {String id,
       String name,
+      String description,
       CustomizationType type,
-      bool isRequired,
-      List<CustomizationChoice> choices});
+      bool required,
+      int maxSelections,
+      List<CustomizationChoice>? choices});
 }
 
 /// @nodoc
@@ -913,33 +919,43 @@ class _$CustomizationOptionCopyWithImpl<$Res, $Val extends CustomizationOption>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? optionId = null,
+    Object? id = null,
     Object? name = null,
+    Object? description = null,
     Object? type = null,
-    Object? isRequired = null,
-    Object? choices = null,
+    Object? required = null,
+    Object? maxSelections = null,
+    Object? choices = freezed,
   }) {
     return _then(_value.copyWith(
-      optionId: null == optionId
-          ? _value.optionId
-          : optionId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as CustomizationType,
-      isRequired: null == isRequired
-          ? _value.isRequired
-          : isRequired // ignore: cast_nullable_to_non_nullable
+      required: null == required
+          ? _value.required
+          : required // ignore: cast_nullable_to_non_nullable
               as bool,
-      choices: null == choices
+      maxSelections: null == maxSelections
+          ? _value.maxSelections
+          : maxSelections // ignore: cast_nullable_to_non_nullable
+              as int,
+      choices: freezed == choices
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
-              as List<CustomizationChoice>,
+              as List<CustomizationChoice>?,
     ) as $Val);
   }
 }
@@ -953,11 +969,13 @@ abstract class _$$CustomizationOptionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String optionId,
+      {String id,
       String name,
+      String description,
       CustomizationType type,
-      bool isRequired,
-      List<CustomizationChoice> choices});
+      bool required,
+      int maxSelections,
+      List<CustomizationChoice>? choices});
 }
 
 /// @nodoc
@@ -973,33 +991,43 @@ class __$$CustomizationOptionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? optionId = null,
+    Object? id = null,
     Object? name = null,
+    Object? description = null,
     Object? type = null,
-    Object? isRequired = null,
-    Object? choices = null,
+    Object? required = null,
+    Object? maxSelections = null,
+    Object? choices = freezed,
   }) {
     return _then(_$CustomizationOptionImpl(
-      optionId: null == optionId
-          ? _value.optionId
-          : optionId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as CustomizationType,
-      isRequired: null == isRequired
-          ? _value.isRequired
-          : isRequired // ignore: cast_nullable_to_non_nullable
+      required: null == required
+          ? _value.required
+          : required // ignore: cast_nullable_to_non_nullable
               as bool,
-      choices: null == choices
+      maxSelections: null == maxSelections
+          ? _value.maxSelections
+          : maxSelections // ignore: cast_nullable_to_non_nullable
+              as int,
+      choices: freezed == choices
           ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
-              as List<CustomizationChoice>,
+              as List<CustomizationChoice>?,
     ));
   }
 }
@@ -1008,36 +1036,43 @@ class __$$CustomizationOptionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomizationOptionImpl implements _CustomizationOption {
   const _$CustomizationOptionImpl(
-      {required this.optionId,
+      {required this.id,
       required this.name,
+      required this.description,
       required this.type,
-      required this.isRequired,
-      final List<CustomizationChoice> choices = const []})
+      required this.required,
+      required this.maxSelections,
+      final List<CustomizationChoice>? choices})
       : _choices = choices;
 
   factory _$CustomizationOptionImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomizationOptionImplFromJson(json);
 
   @override
-  final String optionId;
+  final String id;
   @override
   final String name;
   @override
+  final String description;
+  @override
   final CustomizationType type;
   @override
-  final bool isRequired;
-  final List<CustomizationChoice> _choices;
+  final bool required;
   @override
-  @JsonKey()
-  List<CustomizationChoice> get choices {
+  final int maxSelections;
+  final List<CustomizationChoice>? _choices;
+  @override
+  List<CustomizationChoice>? get choices {
+    final value = _choices;
+    if (value == null) return null;
     if (_choices is EqualUnmodifiableListView) return _choices;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_choices);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'CustomizationOption(optionId: $optionId, name: $name, type: $type, isRequired: $isRequired, choices: $choices)';
+    return 'CustomizationOption(id: $id, name: $name, description: $description, type: $type, required: $required, maxSelections: $maxSelections, choices: $choices)';
   }
 
   @override
@@ -1045,19 +1080,22 @@ class _$CustomizationOptionImpl implements _CustomizationOption {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CustomizationOptionImpl &&
-            (identical(other.optionId, optionId) ||
-                other.optionId == optionId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.isRequired, isRequired) ||
-                other.isRequired == isRequired) &&
+            (identical(other.required, required) ||
+                other.required == required) &&
+            (identical(other.maxSelections, maxSelections) ||
+                other.maxSelections == maxSelections) &&
             const DeepCollectionEquality().equals(other._choices, _choices));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, optionId, name, type, isRequired,
-      const DeepCollectionEquality().hash(_choices));
+  int get hashCode => Object.hash(runtimeType, id, name, description, type,
+      required, maxSelections, const DeepCollectionEquality().hash(_choices));
 
   /// Create a copy of CustomizationOption
   /// with the given fields replaced by the non-null parameter values.
@@ -1078,25 +1116,31 @@ class _$CustomizationOptionImpl implements _CustomizationOption {
 
 abstract class _CustomizationOption implements CustomizationOption {
   const factory _CustomizationOption(
-      {required final String optionId,
+      {required final String id,
       required final String name,
+      required final String description,
       required final CustomizationType type,
-      required final bool isRequired,
-      final List<CustomizationChoice> choices}) = _$CustomizationOptionImpl;
+      required final bool required,
+      required final int maxSelections,
+      final List<CustomizationChoice>? choices}) = _$CustomizationOptionImpl;
 
   factory _CustomizationOption.fromJson(Map<String, dynamic> json) =
       _$CustomizationOptionImpl.fromJson;
 
   @override
-  String get optionId;
+  String get id;
   @override
   String get name;
   @override
+  String get description;
+  @override
   CustomizationType get type;
   @override
-  bool get isRequired;
+  bool get required;
   @override
-  List<CustomizationChoice> get choices;
+  int get maxSelections;
+  @override
+  List<CustomizationChoice>? get choices;
 
   /// Create a copy of CustomizationOption
   /// with the given fields replaced by the non-null parameter values.
@@ -1112,11 +1156,11 @@ CustomizationChoice _$CustomizationChoiceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CustomizationChoice {
-  String get choiceId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  double get additionalPrice => throw _privateConstructorUsedError;
-  bool get isDefault => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
   bool get isAvailable => throw _privateConstructorUsedError;
+  bool get isDefault => throw _privateConstructorUsedError;
 
   /// Serializes this CustomizationChoice to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1135,11 +1179,7 @@ abstract class $CustomizationChoiceCopyWith<$Res> {
       _$CustomizationChoiceCopyWithImpl<$Res, CustomizationChoice>;
   @useResult
   $Res call(
-      {String choiceId,
-      String name,
-      double additionalPrice,
-      bool isDefault,
-      bool isAvailable});
+      {String id, String name, double price, bool isAvailable, bool isDefault});
 }
 
 /// @nodoc
@@ -1157,32 +1197,32 @@ class _$CustomizationChoiceCopyWithImpl<$Res, $Val extends CustomizationChoice>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? choiceId = null,
+    Object? id = null,
     Object? name = null,
-    Object? additionalPrice = null,
-    Object? isDefault = null,
+    Object? price = null,
     Object? isAvailable = null,
+    Object? isDefault = null,
   }) {
     return _then(_value.copyWith(
-      choiceId: null == choiceId
-          ? _value.choiceId
-          : choiceId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      additionalPrice: null == additionalPrice
-          ? _value.additionalPrice
-          : additionalPrice // ignore: cast_nullable_to_non_nullable
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as double,
-      isDefault: null == isDefault
-          ? _value.isDefault
-          : isDefault // ignore: cast_nullable_to_non_nullable
-              as bool,
       isAvailable: null == isAvailable
           ? _value.isAvailable
           : isAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDefault: null == isDefault
+          ? _value.isDefault
+          : isDefault // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -1197,11 +1237,7 @@ abstract class _$$CustomizationChoiceImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String choiceId,
-      String name,
-      double additionalPrice,
-      bool isDefault,
-      bool isAvailable});
+      {String id, String name, double price, bool isAvailable, bool isDefault});
 }
 
 /// @nodoc
@@ -1217,32 +1253,32 @@ class __$$CustomizationChoiceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? choiceId = null,
+    Object? id = null,
     Object? name = null,
-    Object? additionalPrice = null,
-    Object? isDefault = null,
+    Object? price = null,
     Object? isAvailable = null,
+    Object? isDefault = null,
   }) {
     return _then(_$CustomizationChoiceImpl(
-      choiceId: null == choiceId
-          ? _value.choiceId
-          : choiceId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      additionalPrice: null == additionalPrice
-          ? _value.additionalPrice
-          : additionalPrice // ignore: cast_nullable_to_non_nullable
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as double,
-      isDefault: null == isDefault
-          ? _value.isDefault
-          : isDefault // ignore: cast_nullable_to_non_nullable
-              as bool,
       isAvailable: null == isAvailable
           ? _value.isAvailable
           : isAvailable // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDefault: null == isDefault
+          ? _value.isDefault
+          : isDefault // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -1252,29 +1288,29 @@ class __$$CustomizationChoiceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomizationChoiceImpl implements _CustomizationChoice {
   const _$CustomizationChoiceImpl(
-      {required this.choiceId,
+      {required this.id,
       required this.name,
-      required this.additionalPrice,
-      required this.isDefault,
-      required this.isAvailable});
+      required this.price,
+      required this.isAvailable,
+      required this.isDefault});
 
   factory _$CustomizationChoiceImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomizationChoiceImplFromJson(json);
 
   @override
-  final String choiceId;
+  final String id;
   @override
   final String name;
   @override
-  final double additionalPrice;
-  @override
-  final bool isDefault;
+  final double price;
   @override
   final bool isAvailable;
+  @override
+  final bool isDefault;
 
   @override
   String toString() {
-    return 'CustomizationChoice(choiceId: $choiceId, name: $name, additionalPrice: $additionalPrice, isDefault: $isDefault, isAvailable: $isAvailable)';
+    return 'CustomizationChoice(id: $id, name: $name, price: $price, isAvailable: $isAvailable, isDefault: $isDefault)';
   }
 
   @override
@@ -1282,21 +1318,19 @@ class _$CustomizationChoiceImpl implements _CustomizationChoice {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CustomizationChoiceImpl &&
-            (identical(other.choiceId, choiceId) ||
-                other.choiceId == choiceId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.additionalPrice, additionalPrice) ||
-                other.additionalPrice == additionalPrice) &&
-            (identical(other.isDefault, isDefault) ||
-                other.isDefault == isDefault) &&
+            (identical(other.price, price) || other.price == price) &&
             (identical(other.isAvailable, isAvailable) ||
-                other.isAvailable == isAvailable));
+                other.isAvailable == isAvailable) &&
+            (identical(other.isDefault, isDefault) ||
+                other.isDefault == isDefault));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, choiceId, name, additionalPrice, isDefault, isAvailable);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, price, isAvailable, isDefault);
 
   /// Create a copy of CustomizationChoice
   /// with the given fields replaced by the non-null parameter values.
@@ -1317,533 +1351,30 @@ class _$CustomizationChoiceImpl implements _CustomizationChoice {
 
 abstract class _CustomizationChoice implements CustomizationChoice {
   const factory _CustomizationChoice(
-      {required final String choiceId,
+      {required final String id,
       required final String name,
-      required final double additionalPrice,
-      required final bool isDefault,
-      required final bool isAvailable}) = _$CustomizationChoiceImpl;
+      required final double price,
+      required final bool isAvailable,
+      required final bool isDefault}) = _$CustomizationChoiceImpl;
 
   factory _CustomizationChoice.fromJson(Map<String, dynamic> json) =
       _$CustomizationChoiceImpl.fromJson;
 
   @override
-  String get choiceId;
+  String get id;
   @override
   String get name;
   @override
-  double get additionalPrice;
-  @override
-  bool get isDefault;
+  double get price;
   @override
   bool get isAvailable;
+  @override
+  bool get isDefault;
 
   /// Create a copy of CustomizationChoice
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomizationChoiceImplCopyWith<_$CustomizationChoiceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-MenuItemPerformance _$MenuItemPerformanceFromJson(Map<String, dynamic> json) {
-  return _MenuItemPerformance.fromJson(json);
-}
-
-/// @nodoc
-mixin _$MenuItemPerformance {
-  String get itemId => throw _privateConstructorUsedError;
-  String get itemName => throw _privateConstructorUsedError;
-  int get totalOrders => throw _privateConstructorUsedError;
-  double get totalRevenue => throw _privateConstructorUsedError;
-  double get averageRating => throw _privateConstructorUsedError;
-  int get reviewCount => throw _privateConstructorUsedError;
-  double get profitMargin => throw _privateConstructorUsedError;
-  List<DailyPerformance> get dailyStats => throw _privateConstructorUsedError;
-
-  /// Serializes this MenuItemPerformance to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of MenuItemPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $MenuItemPerformanceCopyWith<MenuItemPerformance> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MenuItemPerformanceCopyWith<$Res> {
-  factory $MenuItemPerformanceCopyWith(
-          MenuItemPerformance value, $Res Function(MenuItemPerformance) then) =
-      _$MenuItemPerformanceCopyWithImpl<$Res, MenuItemPerformance>;
-  @useResult
-  $Res call(
-      {String itemId,
-      String itemName,
-      int totalOrders,
-      double totalRevenue,
-      double averageRating,
-      int reviewCount,
-      double profitMargin,
-      List<DailyPerformance> dailyStats});
-}
-
-/// @nodoc
-class _$MenuItemPerformanceCopyWithImpl<$Res, $Val extends MenuItemPerformance>
-    implements $MenuItemPerformanceCopyWith<$Res> {
-  _$MenuItemPerformanceCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MenuItemPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? itemId = null,
-    Object? itemName = null,
-    Object? totalOrders = null,
-    Object? totalRevenue = null,
-    Object? averageRating = null,
-    Object? reviewCount = null,
-    Object? profitMargin = null,
-    Object? dailyStats = null,
-  }) {
-    return _then(_value.copyWith(
-      itemId: null == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
-              as String,
-      itemName: null == itemName
-          ? _value.itemName
-          : itemName // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalOrders: null == totalOrders
-          ? _value.totalOrders
-          : totalOrders // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalRevenue: null == totalRevenue
-          ? _value.totalRevenue
-          : totalRevenue // ignore: cast_nullable_to_non_nullable
-              as double,
-      averageRating: null == averageRating
-          ? _value.averageRating
-          : averageRating // ignore: cast_nullable_to_non_nullable
-              as double,
-      reviewCount: null == reviewCount
-          ? _value.reviewCount
-          : reviewCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      profitMargin: null == profitMargin
-          ? _value.profitMargin
-          : profitMargin // ignore: cast_nullable_to_non_nullable
-              as double,
-      dailyStats: null == dailyStats
-          ? _value.dailyStats
-          : dailyStats // ignore: cast_nullable_to_non_nullable
-              as List<DailyPerformance>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$MenuItemPerformanceImplCopyWith<$Res>
-    implements $MenuItemPerformanceCopyWith<$Res> {
-  factory _$$MenuItemPerformanceImplCopyWith(_$MenuItemPerformanceImpl value,
-          $Res Function(_$MenuItemPerformanceImpl) then) =
-      __$$MenuItemPerformanceImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String itemId,
-      String itemName,
-      int totalOrders,
-      double totalRevenue,
-      double averageRating,
-      int reviewCount,
-      double profitMargin,
-      List<DailyPerformance> dailyStats});
-}
-
-/// @nodoc
-class __$$MenuItemPerformanceImplCopyWithImpl<$Res>
-    extends _$MenuItemPerformanceCopyWithImpl<$Res, _$MenuItemPerformanceImpl>
-    implements _$$MenuItemPerformanceImplCopyWith<$Res> {
-  __$$MenuItemPerformanceImplCopyWithImpl(_$MenuItemPerformanceImpl _value,
-      $Res Function(_$MenuItemPerformanceImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of MenuItemPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? itemId = null,
-    Object? itemName = null,
-    Object? totalOrders = null,
-    Object? totalRevenue = null,
-    Object? averageRating = null,
-    Object? reviewCount = null,
-    Object? profitMargin = null,
-    Object? dailyStats = null,
-  }) {
-    return _then(_$MenuItemPerformanceImpl(
-      itemId: null == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
-              as String,
-      itemName: null == itemName
-          ? _value.itemName
-          : itemName // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalOrders: null == totalOrders
-          ? _value.totalOrders
-          : totalOrders // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalRevenue: null == totalRevenue
-          ? _value.totalRevenue
-          : totalRevenue // ignore: cast_nullable_to_non_nullable
-              as double,
-      averageRating: null == averageRating
-          ? _value.averageRating
-          : averageRating // ignore: cast_nullable_to_non_nullable
-              as double,
-      reviewCount: null == reviewCount
-          ? _value.reviewCount
-          : reviewCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      profitMargin: null == profitMargin
-          ? _value.profitMargin
-          : profitMargin // ignore: cast_nullable_to_non_nullable
-              as double,
-      dailyStats: null == dailyStats
-          ? _value._dailyStats
-          : dailyStats // ignore: cast_nullable_to_non_nullable
-              as List<DailyPerformance>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$MenuItemPerformanceImpl implements _MenuItemPerformance {
-  const _$MenuItemPerformanceImpl(
-      {required this.itemId,
-      required this.itemName,
-      required this.totalOrders,
-      required this.totalRevenue,
-      required this.averageRating,
-      required this.reviewCount,
-      required this.profitMargin,
-      final List<DailyPerformance> dailyStats = const []})
-      : _dailyStats = dailyStats;
-
-  factory _$MenuItemPerformanceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MenuItemPerformanceImplFromJson(json);
-
-  @override
-  final String itemId;
-  @override
-  final String itemName;
-  @override
-  final int totalOrders;
-  @override
-  final double totalRevenue;
-  @override
-  final double averageRating;
-  @override
-  final int reviewCount;
-  @override
-  final double profitMargin;
-  final List<DailyPerformance> _dailyStats;
-  @override
-  @JsonKey()
-  List<DailyPerformance> get dailyStats {
-    if (_dailyStats is EqualUnmodifiableListView) return _dailyStats;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_dailyStats);
-  }
-
-  @override
-  String toString() {
-    return 'MenuItemPerformance(itemId: $itemId, itemName: $itemName, totalOrders: $totalOrders, totalRevenue: $totalRevenue, averageRating: $averageRating, reviewCount: $reviewCount, profitMargin: $profitMargin, dailyStats: $dailyStats)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MenuItemPerformanceImpl &&
-            (identical(other.itemId, itemId) || other.itemId == itemId) &&
-            (identical(other.itemName, itemName) ||
-                other.itemName == itemName) &&
-            (identical(other.totalOrders, totalOrders) ||
-                other.totalOrders == totalOrders) &&
-            (identical(other.totalRevenue, totalRevenue) ||
-                other.totalRevenue == totalRevenue) &&
-            (identical(other.averageRating, averageRating) ||
-                other.averageRating == averageRating) &&
-            (identical(other.reviewCount, reviewCount) ||
-                other.reviewCount == reviewCount) &&
-            (identical(other.profitMargin, profitMargin) ||
-                other.profitMargin == profitMargin) &&
-            const DeepCollectionEquality()
-                .equals(other._dailyStats, _dailyStats));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      itemId,
-      itemName,
-      totalOrders,
-      totalRevenue,
-      averageRating,
-      reviewCount,
-      profitMargin,
-      const DeepCollectionEquality().hash(_dailyStats));
-
-  /// Create a copy of MenuItemPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MenuItemPerformanceImplCopyWith<_$MenuItemPerformanceImpl> get copyWith =>
-      __$$MenuItemPerformanceImplCopyWithImpl<_$MenuItemPerformanceImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MenuItemPerformanceImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _MenuItemPerformance implements MenuItemPerformance {
-  const factory _MenuItemPerformance(
-      {required final String itemId,
-      required final String itemName,
-      required final int totalOrders,
-      required final double totalRevenue,
-      required final double averageRating,
-      required final int reviewCount,
-      required final double profitMargin,
-      final List<DailyPerformance> dailyStats}) = _$MenuItemPerformanceImpl;
-
-  factory _MenuItemPerformance.fromJson(Map<String, dynamic> json) =
-      _$MenuItemPerformanceImpl.fromJson;
-
-  @override
-  String get itemId;
-  @override
-  String get itemName;
-  @override
-  int get totalOrders;
-  @override
-  double get totalRevenue;
-  @override
-  double get averageRating;
-  @override
-  int get reviewCount;
-  @override
-  double get profitMargin;
-  @override
-  List<DailyPerformance> get dailyStats;
-
-  /// Create a copy of MenuItemPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MenuItemPerformanceImplCopyWith<_$MenuItemPerformanceImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-DailyPerformance _$DailyPerformanceFromJson(Map<String, dynamic> json) {
-  return _DailyPerformance.fromJson(json);
-}
-
-/// @nodoc
-mixin _$DailyPerformance {
-  DateTime get date => throw _privateConstructorUsedError;
-  int get orders => throw _privateConstructorUsedError;
-  double get revenue => throw _privateConstructorUsedError;
-
-  /// Serializes this DailyPerformance to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of DailyPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $DailyPerformanceCopyWith<DailyPerformance> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DailyPerformanceCopyWith<$Res> {
-  factory $DailyPerformanceCopyWith(
-          DailyPerformance value, $Res Function(DailyPerformance) then) =
-      _$DailyPerformanceCopyWithImpl<$Res, DailyPerformance>;
-  @useResult
-  $Res call({DateTime date, int orders, double revenue});
-}
-
-/// @nodoc
-class _$DailyPerformanceCopyWithImpl<$Res, $Val extends DailyPerformance>
-    implements $DailyPerformanceCopyWith<$Res> {
-  _$DailyPerformanceCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of DailyPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? orders = null,
-    Object? revenue = null,
-  }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      orders: null == orders
-          ? _value.orders
-          : orders // ignore: cast_nullable_to_non_nullable
-              as int,
-      revenue: null == revenue
-          ? _value.revenue
-          : revenue // ignore: cast_nullable_to_non_nullable
-              as double,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$DailyPerformanceImplCopyWith<$Res>
-    implements $DailyPerformanceCopyWith<$Res> {
-  factory _$$DailyPerformanceImplCopyWith(_$DailyPerformanceImpl value,
-          $Res Function(_$DailyPerformanceImpl) then) =
-      __$$DailyPerformanceImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({DateTime date, int orders, double revenue});
-}
-
-/// @nodoc
-class __$$DailyPerformanceImplCopyWithImpl<$Res>
-    extends _$DailyPerformanceCopyWithImpl<$Res, _$DailyPerformanceImpl>
-    implements _$$DailyPerformanceImplCopyWith<$Res> {
-  __$$DailyPerformanceImplCopyWithImpl(_$DailyPerformanceImpl _value,
-      $Res Function(_$DailyPerformanceImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DailyPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? date = null,
-    Object? orders = null,
-    Object? revenue = null,
-  }) {
-    return _then(_$DailyPerformanceImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      orders: null == orders
-          ? _value.orders
-          : orders // ignore: cast_nullable_to_non_nullable
-              as int,
-      revenue: null == revenue
-          ? _value.revenue
-          : revenue // ignore: cast_nullable_to_non_nullable
-              as double,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$DailyPerformanceImpl implements _DailyPerformance {
-  const _$DailyPerformanceImpl(
-      {required this.date, required this.orders, required this.revenue});
-
-  factory _$DailyPerformanceImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DailyPerformanceImplFromJson(json);
-
-  @override
-  final DateTime date;
-  @override
-  final int orders;
-  @override
-  final double revenue;
-
-  @override
-  String toString() {
-    return 'DailyPerformance(date: $date, orders: $orders, revenue: $revenue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DailyPerformanceImpl &&
-            (identical(other.date, date) || other.date == date) &&
-            (identical(other.orders, orders) || other.orders == orders) &&
-            (identical(other.revenue, revenue) || other.revenue == revenue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, date, orders, revenue);
-
-  /// Create a copy of DailyPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DailyPerformanceImplCopyWith<_$DailyPerformanceImpl> get copyWith =>
-      __$$DailyPerformanceImplCopyWithImpl<_$DailyPerformanceImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DailyPerformanceImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _DailyPerformance implements DailyPerformance {
-  const factory _DailyPerformance(
-      {required final DateTime date,
-      required final int orders,
-      required final double revenue}) = _$DailyPerformanceImpl;
-
-  factory _DailyPerformance.fromJson(Map<String, dynamic> json) =
-      _$DailyPerformanceImpl.fromJson;
-
-  @override
-  DateTime get date;
-  @override
-  int get orders;
-  @override
-  double get revenue;
-
-  /// Create a copy of DailyPerformance
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DailyPerformanceImplCopyWith<_$DailyPerformanceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

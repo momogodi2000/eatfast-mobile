@@ -6,6 +6,30 @@ part of 'live_order.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
+    _$OrderItemImpl(
+      itemId: json['itemId'] as String,
+      name: json['name'] as String,
+      price: (json['price'] as num).toDouble(),
+      quantity: (json['quantity'] as num).toInt(),
+      imageUrl: json['imageUrl'] as String?,
+      customizations: (json['customizations'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      specialNotes: json['specialNotes'] as String?,
+    );
+
+Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
+    <String, dynamic>{
+      'itemId': instance.itemId,
+      'name': instance.name,
+      'price': instance.price,
+      'quantity': instance.quantity,
+      'imageUrl': instance.imageUrl,
+      'customizations': instance.customizations,
+      'specialNotes': instance.specialNotes,
+    };
+
 _$LiveOrderImpl _$$LiveOrderImplFromJson(Map<String, dynamic> json) =>
     _$LiveOrderImpl(
       orderId: json['orderId'] as String,
@@ -17,15 +41,13 @@ _$LiveOrderImpl _$$LiveOrderImplFromJson(Map<String, dynamic> json) =>
       estimatedPrepTime: (json['estimatedPrepTime'] as num).toInt(),
       paymentStatus: $enumDecode(_$PaymentStatusEnumMap, json['paymentStatus']),
       deliveryType: $enumDecode(_$DeliveryTypeEnumMap, json['deliveryType']),
-      deliveryAddress: json['deliveryAddress'] as String,
-      specialInstructions: json['specialInstructions'] as String,
-      items: (json['items'] as List<dynamic>?)
-              ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
       driverId: json['driverId'] as String?,
       driverName: json['driverName'] as String?,
       driverPhone: json['driverPhone'] as String?,
+      specialInstructions: json['specialInstructions'] as String?,
+      items: (json['items'] as List<dynamic>)
+          .map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
       acceptedAt: json['acceptedAt'] == null
           ? null
           : DateTime.parse(json['acceptedAt'] as String),
@@ -48,12 +70,11 @@ Map<String, dynamic> _$$LiveOrderImplToJson(_$LiveOrderImpl instance) =>
       'estimatedPrepTime': instance.estimatedPrepTime,
       'paymentStatus': _$PaymentStatusEnumMap[instance.paymentStatus]!,
       'deliveryType': _$DeliveryTypeEnumMap[instance.deliveryType]!,
-      'deliveryAddress': instance.deliveryAddress,
-      'specialInstructions': instance.specialInstructions,
-      'items': instance.items,
       'driverId': instance.driverId,
       'driverName': instance.driverName,
       'driverPhone': instance.driverPhone,
+      'specialInstructions': instance.specialInstructions,
+      'items': instance.items,
       'acceptedAt': instance.acceptedAt?.toIso8601String(),
       'preparedAt': instance.preparedAt?.toIso8601String(),
       'deliveredAt': instance.deliveredAt?.toIso8601String(),
@@ -87,32 +108,7 @@ const _$PaymentStatusEnumMap = {
 };
 
 const _$DeliveryTypeEnumMap = {
-  DeliveryType.delivery: 'delivery',
   DeliveryType.pickup: 'pickup',
-  DeliveryType.dineIn: 'dine_in',
+  DeliveryType.delivery: 'delivery',
+  DeliveryType.dineIn: 'dineIn',
 };
-
-_$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
-    _$OrderItemImpl(
-      itemId: json['itemId'] as String,
-      itemName: json['itemName'] as String,
-      quantity: (json['quantity'] as num).toInt(),
-      unitPrice: (json['unitPrice'] as num).toDouble(),
-      totalPrice: (json['totalPrice'] as num).toDouble(),
-      customizations: (json['customizations'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      specialNotes: json['specialNotes'] as String?,
-    );
-
-Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
-    <String, dynamic>{
-      'itemId': instance.itemId,
-      'itemName': instance.itemName,
-      'quantity': instance.quantity,
-      'unitPrice': instance.unitPrice,
-      'totalPrice': instance.totalPrice,
-      'customizations': instance.customizations,
-      'specialNotes': instance.specialNotes,
-    };

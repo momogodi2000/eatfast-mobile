@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/widgets/buttons/app_button.dart';
 import 'package:eatfast_mobile/shared/services/favorites/providers/favorites_provider.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/favorite.dart';
+import 'package:eatfast_mobile/shared/services/favorites/domain/models/favorite.dart';
 
 class FavoritesScreen extends ConsumerStatefulWidget {
   const FavoritesScreen({super.key});
@@ -23,7 +23,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    
+
     // Load data when screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(favoritesProvider.notifier).loadFavorites();
@@ -48,18 +48,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(
-              icon: Icon(Icons.favorite),
-              text: 'Tous',
-            ),
-            Tab(
-              icon: Icon(Icons.restaurant),
-              text: 'Restaurants',
-            ),
-            Tab(
-              icon: Icon(Icons.refresh),
-              text: 'Recommander',
-            ),
+            Tab(icon: Icon(Icons.favorite), text: 'Tous'),
+            Tab(icon: Icon(Icons.restaurant), text: 'Restaurants'),
+            Tab(icon: Icon(Icons.refresh), text: 'Recommander'),
           ],
         ),
       ),
@@ -148,15 +139,20 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
     }
 
     final restaurants = state.favorites
-        .where((f) => f.favorite.type == FavoriteType.restaurant)
+        .where((f) => f.type == FavoriteType.restaurant)
         .toList();
 
     final List<FavoriteItem> displayRestaurants = _searchQuery.isEmpty
         ? restaurants
-        : restaurants.where((r) => 
-            r.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            r.description.toLowerCase().contains(_searchQuery.toLowerCase())
-          ).toList();
+        : restaurants
+              .where(
+                (r) =>
+                    r.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+                    (r.description?.toLowerCase() ?? '').contains(
+                      _searchQuery.toLowerCase(),
+                    ),
+              )
+              .toList();
 
     if (displayRestaurants.isEmpty) {
       return _searchQuery.isEmpty
@@ -211,15 +207,15 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                 height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage(favorite.imageUrl),
+                  image: favorite.imageUrl != null ? DecorationImage(
+                    image: AssetImage(favorite.imageUrl!),
                     fit: BoxFit.cover,
-                  ),
+                  ) : null,
                 ),
               ),
-              
+
               const SizedBox(width: 16),
-              
+
               // Info
               Expanded(
                 child: Column(
@@ -233,17 +229,21 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: favorite.favorite.type == FavoriteType.restaurant
+                            color:
+                                favorite.type ==
+                                    FavoriteType.restaurant
                                 ? Colors.blue.withValues(alpha: 0.1)
                                 : Colors.orange.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            favorite.favorite.type.displayName,
+                            favorite.type.displayName,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: favorite.favorite.type == FavoriteType.restaurant
+                              color:
+                                  favorite.type ==
+                                      FavoriteType.restaurant
                                   ? Colors.blue
                                   : Colors.orange,
                             ),
@@ -259,9 +259,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                         ),
                       ],
                     ),
-                    
+
                     const SizedBox(height: 8),
-                    
+
                     Text(
                       favorite.name,
                       style: const TextStyle(
@@ -271,19 +271,16 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    
+
                     const SizedBox(height: 4),
-                    
+
                     Text(
-                      favorite.description,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14,
-                      ),
+                      favorite.description ?? '',
+                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    
+
                     if (favorite.restaurantName != null) ...[
                       const SizedBox(height: 4),
                       Text(
@@ -295,17 +292,13 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                         ),
                       ),
                     ],
-                    
+
                     const SizedBox(height: 8),
-                    
+
                     Row(
                       children: [
                         if (favorite.rating != null) ...[
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 16,
-                          ),
+                          const Icon(Icons.star, color: Colors.amber, size: 16),
                           const SizedBox(width: 4),
                           Text(
                             favorite.formattedRating,
@@ -324,9 +317,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                               ),
                             ),
                         ],
-                        
+
                         const Spacer(),
-                        
+
                         if (favorite.price != null)
                           Text(
                             favorite.formattedPrice,
@@ -340,9 +333,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                   ],
                 ),
               ),
-              
+
               const SizedBox(width: 8),
-              
+
               // Actions
               Column(
                 children: [
@@ -350,7 +343,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                     icon: const Icon(Icons.favorite, color: Colors.red),
                     onPressed: () => _removeFavorite(favorite),
                   ),
-                  if (favorite.favorite.type == FavoriteType.item)
+                  if (favorite.type == FavoriteType.menuItem)
                     IconButton(
                       icon: const Icon(
                         Icons.add_shopping_cart,
@@ -381,11 +374,13 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
               width: double.infinity,
               height: 160,
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
-                image: DecorationImage(
-                  image: AssetImage(restaurant.imageUrl),
-                  fit: BoxFit.cover,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(8),
                 ),
+                image: restaurant.imageUrl != null ? DecorationImage(
+                  image: AssetImage(restaurant.imageUrl!),
+                  fit: BoxFit.cover,
+                ) : null,
               ),
               child: Stack(
                 children: [
@@ -404,7 +399,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                 ],
               ),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -417,27 +412,20 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 4),
-                  
+
                   Text(
-                    restaurant.description,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                    ),
+                    restaurant.description ?? '',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                   ),
-                  
+
                   const SizedBox(height: 12),
-                  
+
                   Row(
                     children: [
                       if (restaurant.rating != null) ...[
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 18,
-                        ),
+                        const Icon(Icons.star, color: Colors.amber, size: 18),
                         const SizedBox(width: 4),
                         Text(
                           restaurant.formattedRating,
@@ -456,15 +444,12 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                             ),
                           ),
                       ],
-                      
+
                       const Spacer(),
-                      
+
                       Text(
                         restaurant.timeAgo,
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: Colors.grey[500], fontSize: 12),
                       ),
                     ],
                   ),
@@ -499,9 +484,9 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(width: 16),
-                
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -516,17 +501,14 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                       const SizedBox(height: 4),
                       Text(
                         reorder.itemSummary,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
                 ),
-                
+
                 Text(
                   reorder.formattedTotal,
                   style: const TextStyle(
@@ -536,21 +518,18 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
                 ),
               ],
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             Row(
               children: [
                 Text(
                   'Commandï¿½ le ${DateTime.parse(reorder.orderDate).day}/${DateTime.parse(reorder.orderDate).month}/${DateTime.parse(reorder.orderDate).year}',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey[500], fontSize: 12),
                 ),
-                
+
                 const Spacer(),
-                
+
                 AppButton(
                   onPressed: ref.watch(favoritesProvider).isSubmitting
                       ? null
@@ -572,26 +551,17 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.favorite_border,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.favorite_border, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'Aucun favori pour le moment',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           Text(
             'Explorez nos restaurants et plats,\najoutez vos prï¿½fï¿½rï¿½s ici!',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(color: Colors.grey[500]),
           ),
           const SizedBox(height: 24),
           AppButton(
@@ -609,26 +579,17 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.restaurant_outlined,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.restaurant_outlined, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'Aucun restaurant favori',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           Text(
             'Ajoutez vos restaurants prï¿½fï¿½rï¿½s\npour les retrouver facilement',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(color: Colors.grey[500]),
           ),
         ],
       ),
@@ -640,26 +601,17 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.refresh_outlined,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.refresh_outlined, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'Aucune commande ï¿½ recommander',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           Text(
             'Vos commandes prï¿½cï¿½dentes apparaï¿½tront ici\npour une nouvelle commande rapide',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(color: Colors.grey[500]),
           ),
         ],
       ),
@@ -671,25 +623,16 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.search_off,
-            size: 64,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
             'Aucun rï¿½sultat trouvï¿½',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
           const SizedBox(height: 8),
           Text(
             'Essayez avec d\'autres mots-clï¿½s',
-            style: TextStyle(
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(color: Colors.grey[500]),
           ),
         ],
       ),
@@ -701,11 +644,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: Colors.red[300],
-          ),
+          Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
           const SizedBox(height: 16),
           Text(
             error,
@@ -727,22 +666,23 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
   }
 
   void _navigateToItem(FavoriteItem favorite) {
-    if (favorite.favorite.type == FavoriteType.restaurant) {
+    if (favorite.type == FavoriteType.restaurant) {
       _navigateToRestaurant(favorite);
     } else {
       // Navigate to item details
-      context.push('/items/${favorite.favorite.itemId}');
+      context.push('/items/${favorite.itemId}');
     }
   }
 
   void _navigateToRestaurant(FavoriteItem restaurant) {
-    context.push('/restaurants/${restaurant.favorite.itemId}');
+    context.push('/restaurants/${restaurant.itemId}');
   }
 
   Future<void> _removeFavorite(FavoriteItem favorite) async {
-    final success = await ref.read(favoritesProvider.notifier)
-        .removeFavorite(favorite.favorite.id);
-        
+    final success = await ref
+        .read(favoritesProvider.notifier)
+        .removeFavorite(favorite.id);
+
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -751,18 +691,20 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
             label: 'Annuler',
             onPressed: () {
               // Re-add to favorites
-              ref.read(favoritesProvider.notifier).toggleFavorite(
-                itemId: favorite.favorite.itemId,
-                type: favorite.favorite.type,
-                name: favorite.name,
-                description: favorite.description,
-                imageUrl: favorite.imageUrl,
-                price: favorite.price,
-                rating: favorite.rating,
-                reviewCount: favorite.reviewCount,
-                restaurantName: favorite.restaurantName,
-                restaurantId: favorite.restaurantId,
-              );
+              ref
+                  .read(favoritesProvider.notifier)
+                  .toggleFavorite(
+                    itemId: favorite.itemId,
+                    type: favorite.type,
+                    name: favorite.name,
+                    description: favorite.description,
+                    imageUrl: favorite.imageUrl,
+                    price: favorite.price,
+                    rating: favorite.rating,
+                    reviewCount: favorite.reviewCount,
+                    restaurantName: favorite.restaurantName,
+                    restaurantId: favorite.restaurantId,
+                  );
             },
           ),
         ),
@@ -781,9 +723,10 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen>
   }
 
   Future<void> _reorderItems(ReorderItem reorder) async {
-    final success = await ref.read(favoritesProvider.notifier)
+    final success = await ref
+        .read(favoritesProvider.notifier)
         .reorderItems(reorder.orderId);
-        
+
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

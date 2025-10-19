@@ -6,11 +6,15 @@ import 'package:eatfast_mobile/shared/models/exports.dart' as shared_models;
 class LiveOrdersPreview extends StatelessWidget {
   final List<LiveOrder> orders;
   final Function(String orderId) onOrderTap;
+  final Function(String orderId, int estimatedPrepTime)? onAcceptOrder;
+  final Function(String orderId, String reason)? onRejectOrder;
 
   const LiveOrdersPreview({
     super.key,
     required this.orders,
     required this.onOrderTap,
+    this.onAcceptOrder,
+    this.onRejectOrder,
   });
 
   @override
@@ -342,7 +346,9 @@ class LiveOrdersPreview extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                // TODO: Call accept order with estimated time
+                if (onAcceptOrder != null) {
+                  onAcceptOrder!(order.orderId, estimatedTime);
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: DesignTokens.successColor,
@@ -356,6 +362,8 @@ class LiveOrdersPreview extends StatelessWidget {
   }
 
   void _showRejectDialog(BuildContext context, LiveOrder order) {
+    final reasonController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -372,6 +380,7 @@ class LiveOrdersPreview extends StatelessWidget {
             const Text('Pourquoi rejetez-vous cette commande?'),
             const SizedBox(height: DesignTokens.spaceMD),
             TextField(
+              controller: reasonController,
               decoration: InputDecoration(
                 hintText: 'Raison du rejet...',
                 border: OutlineInputBorder(
@@ -384,13 +393,21 @@ class LiveOrdersPreview extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              reasonController.dispose();
+              Navigator.pop(context);
+            },
             child: const Text('Annuler'),
           ),
           ElevatedButton(
             onPressed: () {
+              final reason = reasonController.text.trim();
+              reasonController.dispose();
               Navigator.pop(context);
-              // TODO: Call reject order with reason
+
+              if (reason.isNotEmpty && onRejectOrder != null) {
+                onRejectOrder!(order.orderId, reason);
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: DesignTokens.errorColor,

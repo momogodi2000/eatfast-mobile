@@ -1,7 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem cartItem;
@@ -34,12 +35,12 @@ class CartItemCard extends StatelessWidget {
               children: [
                 // Item image
                 _buildItemImage(),
-                
+
                 const SizedBox(width: DesignTokens.spaceMD),
-                
+
                 // Item details
                 Expanded(child: _buildItemDetails(context)),
-                
+
                 // Remove button
                 IconButton(
                   icon: const Icon(
@@ -51,19 +52,19 @@ class CartItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             // Customizations
             if (cartItem.customizations.isNotEmpty) ...[
               const SizedBox(height: DesignTokens.spaceSM),
               _buildCustomizations(context),
             ],
-            
+
             // Special instructions
             const SizedBox(height: DesignTokens.spaceSM),
             _buildSpecialInstructions(context),
-            
+
             const SizedBox(height: DesignTokens.spaceSM),
-            
+
             // Quantity controls and total
             _buildBottomRow(context),
           ],
@@ -74,7 +75,7 @@ class CartItemCard extends StatelessWidget {
 
   Widget _buildItemImage() {
     final imageUrl = cartItem.menuItem.imageUrl;
-    
+
     if (imageUrl.isEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
@@ -90,7 +91,7 @@ class CartItemCard extends StatelessWidget {
         ),
       );
     }
-    
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
       child: CachedNetworkImage(
@@ -102,9 +103,7 @@ class CartItemCard extends StatelessWidget {
           width: 60,
           height: 60,
           color: DesignTokens.lightGrey.withValues(alpha: 0.3),
-          child: const Center(
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
+          child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
         ),
         errorWidget: (context, url, error) => Container(
           width: 60,
@@ -132,16 +131,16 @@ class CartItemCard extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        
+
         const SizedBox(height: DesignTokens.spaceXS),
-        
+
         Text(
           '${cartItem.menuItem.price.toInt()} FCFA chacun',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: DesignTokens.textSecondary,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: DesignTokens.textSecondary),
         ),
-        
+
         if (cartItem.customizations.isNotEmpty) ...[
           const SizedBox(height: DesignTokens.spaceXS),
           Text(
@@ -176,12 +175,14 @@ class CartItemCard extends StatelessWidget {
           ),
           const SizedBox(height: DesignTokens.spaceXS),
           ...cartItem.customizations.map((customization) {
-            final optionNames = customization.options.map((option) => option.name).join(', ');
+            final optionNames = customization.options
+                .map((option) => option.name)
+                .join(', ');
             final additionalPrice = customization.options.fold<double>(
-              0.0, 
+              0.0,
               (sum, option) => sum + option.additionalPrice,
             );
-            
+
             return Padding(
               padding: const EdgeInsets.only(bottom: DesignTokens.spaceXXS),
               child: Row(
@@ -216,7 +217,7 @@ class CartItemCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(DesignTokens.spaceSM),
         decoration: BoxDecoration(
-          color: cartItem.specialInstructions?.isNotEmpty == true 
+          color: cartItem.specialInstructions?.isNotEmpty == true
               ? DesignTokens.infoColor.withValues(alpha: 0.1)
               : DesignTokens.lightGrey.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
@@ -271,12 +272,12 @@ class CartItemCard extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.remove_circle_outline),
-              onPressed: cartItem.quantity > 1 
+              onPressed: cartItem.quantity > 1
                   ? () => onQuantityChanged(cartItem.quantity - 1)
                   : null,
               iconSize: 32,
-              color: cartItem.quantity > 1 
-                  ? DesignTokens.primaryColor 
+              color: cartItem.quantity > 1
+                  ? DesignTokens.primaryColor
                   : DesignTokens.textTertiary,
             ),
             Container(
@@ -304,7 +305,7 @@ class CartItemCard extends StatelessWidget {
             ),
           ],
         ),
-        
+
         // Total price
         Text(
           '${cartItem.totalPrice.toInt()} FCFA',
@@ -318,8 +319,10 @@ class CartItemCard extends StatelessWidget {
   }
 
   void _showInstructionsDialog(BuildContext context) {
-    final controller = TextEditingController(text: cartItem.specialInstructions ?? '');
-    
+    final controller = TextEditingController(
+      text: cartItem.specialInstructions ?? '',
+    );
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

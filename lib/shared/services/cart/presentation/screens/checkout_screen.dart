@@ -5,7 +5,7 @@ import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
 import 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
 
 /// Checkout screen for placing orders
 class CheckoutScreen extends ConsumerStatefulWidget {
@@ -33,16 +33,18 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ),
       body: switch (cartState) {
         CartLoading() => const Center(child: CircularProgressIndicator()),
-        CartError(:final message) => Center(
-          child: Text('Error: $message'),
-        ),
+        CartError(:final message) => Center(child: Text('Error: $message')),
         CartLoaded(:final cart) => _buildCheckoutContent(context, l10n!, cart),
         _ => const Center(child: Text('Loading...')),
       },
     );
   }
 
-  Widget _buildCheckoutContent(BuildContext context, AppLocalizations l10n, Cart cart) {
+  Widget _buildCheckoutContent(
+    BuildContext context,
+    AppLocalizations l10n,
+    Cart cart,
+  ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(DesignTokens.spaceMD),
       child: Column(
@@ -52,16 +54,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           _buildSectionHeader('Delivery Address'),
           const SizedBox(height: DesignTokens.spaceMD),
           _buildAddressSelection(l10n),
-          
+
           const SizedBox(height: DesignTokens.spaceXL),
-          
+
           // Payment Method Section
           _buildSectionHeader(l10n.paymentMethod),
           const SizedBox(height: DesignTokens.spaceMD),
           _buildPaymentMethodSelection(l10n),
-          
+
           const SizedBox(height: DesignTokens.spaceXL),
-          
+
           // Special Instructions
           _buildSectionHeader('Special Instructions'),
           const SizedBox(height: DesignTokens.spaceMD),
@@ -73,21 +75,25 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             maxLines: 3,
             onChanged: (value) => specialInstructions = value,
           ),
-          
+
           const SizedBox(height: DesignTokens.spaceXL),
-          
+
           // Order Summary
           _buildOrderSummary(l10n, cart),
-          
+
           const SizedBox(height: DesignTokens.spaceXL),
-          
+
           // Place Order Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: _canPlaceOrder() ? () => _placeOrder(context, l10n) : null,
+              onPressed: _canPlaceOrder()
+                  ? () => _placeOrder(context, l10n)
+                  : null,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMD),
+                padding: const EdgeInsets.symmetric(
+                  vertical: DesignTokens.spaceMD,
+                ),
                 child: Text(
                   l10n.placeOrder,
                   style: const TextStyle(
@@ -122,7 +128,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           selectedAddress?.label ?? 'Select Address',
           style: const TextStyle(fontWeight: DesignTokens.fontWeightMedium),
         ),
-        subtitle: selectedAddress != null 
+        subtitle: selectedAddress != null
             ? Text(selectedAddress!.fullAddress)
             : const Text('Tap to select delivery address'),
         trailing: const Icon(Icons.chevron_right),
@@ -144,14 +150,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
           selectedPaymentMethod?.displayName ?? l10n.paymentMethod,
           style: const TextStyle(fontWeight: DesignTokens.fontWeightMedium),
         ),
-        subtitle: selectedPaymentMethod != null 
+        subtitle: selectedPaymentMethod != null
             ? Text(selectedPaymentMethod!.type.toString())
             : const Text('Tap to select payment method'),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
           // TODO: Navigate to payment method selection screen
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Payment method selection coming soon')),
+            const SnackBar(
+              content: Text('Payment method selection coming soon'),
+            ),
           );
         },
       ),
@@ -181,11 +189,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             const SizedBox(height: DesignTokens.spaceXS),
             _buildSummaryRow(l10n.deliveryFee, deliveryFee),
             const Divider(),
-            _buildSummaryRow(
-              l10n.total, 
-              total,
-              isTotal: true,
-            ),
+            _buildSummaryRow(l10n.total, total, isTotal: true),
           ],
         ),
       ),
@@ -199,20 +203,26 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         Text(
           label,
           style: TextStyle(
-            fontSize: isTotal ? DesignTokens.fontSizeMD : DesignTokens.fontSizeSM,
-            fontWeight: isTotal 
-                ? DesignTokens.fontWeightSemiBold 
+            fontSize: isTotal
+                ? DesignTokens.fontSizeMD
+                : DesignTokens.fontSizeSM,
+            fontWeight: isTotal
+                ? DesignTokens.fontWeightSemiBold
                 : DesignTokens.fontWeightNormal,
           ),
         ),
         Text(
           '${amount.toStringAsFixed(0)} FCFA',
           style: TextStyle(
-            fontSize: isTotal ? DesignTokens.fontSizeMD : DesignTokens.fontSizeSM,
-            fontWeight: isTotal 
-                ? DesignTokens.fontWeightSemiBold 
+            fontSize: isTotal
+                ? DesignTokens.fontSizeMD
+                : DesignTokens.fontSizeSM,
+            fontWeight: isTotal
+                ? DesignTokens.fontWeightSemiBold
                 : DesignTokens.fontWeightNormal,
-            color: isTotal ? DesignTokens.primaryColor : DesignTokens.textPrimary,
+            color: isTotal
+                ? DesignTokens.primaryColor
+                : DesignTokens.textPrimary,
           ),
         ),
       ],
@@ -231,7 +241,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         backgroundColor: DesignTokens.successColor,
       ),
     );
-    
+
     // Navigate back or to order tracking
     Navigator.of(context).pop();
   }

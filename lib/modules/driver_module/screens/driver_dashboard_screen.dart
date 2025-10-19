@@ -9,6 +9,7 @@ import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/available_o
 import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/active_delivery_card.dart';
 import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/quick_stats_row.dart';
 import 'package:eatfast_mobile/modules/driver_module/providers/domain/providers/driver_providers.dart';
+import 'package:eatfast_mobile/modules/driver_module/services/data/driver_service.dart' as driver_service_legacy;
 
 class DriverDashboardScreen extends ConsumerStatefulWidget {
   final String driverId;
@@ -513,12 +514,21 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
 
   // Removed unused _showStatusChangeSnackbar method
 
-  void _showSnackbar(String message) {
+  void _showSnackbar(String message, {bool isSuccess = false, bool isError = false}) {
+    Color backgroundColor = DesignTokens.warningColor;
+
+    if (isSuccess) {
+      backgroundColor = Colors.green;
+    } else if (isError) {
+      backgroundColor = DesignTokens.errorColor;
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: DesignTokens.warningColor,
+        backgroundColor: backgroundColor,
         behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
       ),
     );
   }
@@ -540,14 +550,64 @@ class _DriverDashboardScreenState extends ConsumerState<DriverDashboardScreen>
     }
   }
 
-  void _acceptOrder(String orderId) {
-    // TODO: Implement order acceptance
-    _showSnackbar('Commande accept�e');
+  Future<void> _acceptOrder(String orderId) async {
+    try {
+      final driverService = ref.read(driverServiceProvider);
+
+      // Show loading indicator
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Acceptation de la commande...'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+
+      await driverService.acceptOrder(
+        driverId: widget.driverId,
+        orderId: orderId,
+      );
+
+      // Refresh available orders and active delivery
+      await ref.read(availableOrdersProvider.notifier).fetchAvailableOrders();
+      await ref.read(activeDeliveryProvider.notifier).fetchActiveDelivery(widget.driverId);
+
+      if (!mounted) return;
+      _showSnackbar('Commande acceptée avec succès!', isSuccess: true);
+    } catch (e) {
+      if (!mounted) return;
+      _showSnackbar('Erreur: ${e.toString()}', isError: true);
+    }
   }
 
-  void _rejectOrder(String orderId, String reason) {
-    // TODO: Implement order rejection
-    _showSnackbar('Commande rejet�e');
+  Future<void> _rejectOrder(String orderId, String reason) async {
+    try {
+      final driverService = ref.read(driverServiceProvider);
+
+      // Show loading indicator
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Rejet de la commande...'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+
+      await driverService.rejectOrder(
+        driverId: widget.driverId,
+        orderId: orderId,
+        reason: reason,
+      );
+
+      // Refresh available orders
+      await ref.read(availableOrdersProvider.notifier).fetchAvailableOrders();
+
+      if (!mounted) return;
+      _showSnackbar('Commande rejetée', isSuccess: true);
+    } catch (e) {
+      if (!mounted) return;
+      _showSnackbar('Erreur: ${e.toString()}', isError: true);
+    }
   }
 
   void _showEmergencyDialog() {

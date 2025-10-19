@@ -28,7 +28,13 @@ mixin _$FavoriteItem {
   String? get description => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   Map<String, dynamic>? get metadata => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt =>
+      throw _privateConstructorUsedError; // Additional properties for restaurant/dish favorites
+  String? get restaurantName => throw _privateConstructorUsedError;
+  String? get restaurantId => throw _privateConstructorUsedError;
+  double? get rating => throw _privateConstructorUsedError;
+  int? get reviewCount => throw _privateConstructorUsedError;
+  double? get price => throw _privateConstructorUsedError;
 
   /// Serializes this FavoriteItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,7 +61,12 @@ abstract class $FavoriteItemCopyWith<$Res> {
       String? description,
       String? imageUrl,
       Map<String, dynamic>? metadata,
-      DateTime createdAt});
+      DateTime createdAt,
+      String? restaurantName,
+      String? restaurantId,
+      double? rating,
+      int? reviewCount,
+      double? price});
 }
 
 /// @nodoc
@@ -82,6 +93,11 @@ class _$FavoriteItemCopyWithImpl<$Res, $Val extends FavoriteItem>
     Object? imageUrl = freezed,
     Object? metadata = freezed,
     Object? createdAt = null,
+    Object? restaurantName = freezed,
+    Object? restaurantId = freezed,
+    Object? rating = freezed,
+    Object? reviewCount = freezed,
+    Object? price = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -120,6 +136,26 @@ class _$FavoriteItemCopyWithImpl<$Res, $Val extends FavoriteItem>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      restaurantName: freezed == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      restaurantId: freezed == restaurantId
+          ? _value.restaurantId
+          : restaurantId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      reviewCount: freezed == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -141,7 +177,12 @@ abstract class _$$FavoriteItemImplCopyWith<$Res>
       String? description,
       String? imageUrl,
       Map<String, dynamic>? metadata,
-      DateTime createdAt});
+      DateTime createdAt,
+      String? restaurantName,
+      String? restaurantId,
+      double? rating,
+      int? reviewCount,
+      double? price});
 }
 
 /// @nodoc
@@ -166,6 +207,11 @@ class __$$FavoriteItemImplCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? metadata = freezed,
     Object? createdAt = null,
+    Object? restaurantName = freezed,
+    Object? restaurantId = freezed,
+    Object? rating = freezed,
+    Object? reviewCount = freezed,
+    Object? price = freezed,
   }) {
     return _then(_$FavoriteItemImpl(
       id: null == id
@@ -204,13 +250,33 @@ class __$$FavoriteItemImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      restaurantName: freezed == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      restaurantId: freezed == restaurantId
+          ? _value.restaurantId
+          : restaurantId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      reviewCount: freezed == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$FavoriteItemImpl implements _FavoriteItem {
+class _$FavoriteItemImpl extends _FavoriteItem {
   const _$FavoriteItemImpl(
       {required this.id,
       required this.userId,
@@ -220,8 +286,14 @@ class _$FavoriteItemImpl implements _FavoriteItem {
       this.description,
       this.imageUrl,
       final Map<String, dynamic>? metadata,
-      required this.createdAt})
-      : _metadata = metadata;
+      required this.createdAt,
+      this.restaurantName,
+      this.restaurantId,
+      this.rating,
+      this.reviewCount,
+      this.price})
+      : _metadata = metadata,
+        super._();
 
   factory _$FavoriteItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$FavoriteItemImplFromJson(json);
@@ -252,10 +324,21 @@ class _$FavoriteItemImpl implements _FavoriteItem {
 
   @override
   final DateTime createdAt;
+// Additional properties for restaurant/dish favorites
+  @override
+  final String? restaurantName;
+  @override
+  final String? restaurantId;
+  @override
+  final double? rating;
+  @override
+  final int? reviewCount;
+  @override
+  final double? price;
 
   @override
   String toString() {
-    return 'FavoriteItem(id: $id, userId: $userId, itemId: $itemId, type: $type, name: $name, description: $description, imageUrl: $imageUrl, metadata: $metadata, createdAt: $createdAt)';
+    return 'FavoriteItem(id: $id, userId: $userId, itemId: $itemId, type: $type, name: $name, description: $description, imageUrl: $imageUrl, metadata: $metadata, createdAt: $createdAt, restaurantName: $restaurantName, restaurantId: $restaurantId, rating: $rating, reviewCount: $reviewCount, price: $price)';
   }
 
   @override
@@ -274,7 +357,15 @@ class _$FavoriteItemImpl implements _FavoriteItem {
                 other.imageUrl == imageUrl) &&
             const DeepCollectionEquality().equals(other._metadata, _metadata) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.restaurantName, restaurantName) ||
+                other.restaurantName == restaurantName) &&
+            (identical(other.restaurantId, restaurantId) ||
+                other.restaurantId == restaurantId) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.reviewCount, reviewCount) ||
+                other.reviewCount == reviewCount) &&
+            (identical(other.price, price) || other.price == price));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -289,7 +380,12 @@ class _$FavoriteItemImpl implements _FavoriteItem {
       description,
       imageUrl,
       const DeepCollectionEquality().hash(_metadata),
-      createdAt);
+      createdAt,
+      restaurantName,
+      restaurantId,
+      rating,
+      reviewCount,
+      price);
 
   /// Create a copy of FavoriteItem
   /// with the given fields replaced by the non-null parameter values.
@@ -307,7 +403,7 @@ class _$FavoriteItemImpl implements _FavoriteItem {
   }
 }
 
-abstract class _FavoriteItem implements FavoriteItem {
+abstract class _FavoriteItem extends FavoriteItem {
   const factory _FavoriteItem(
       {required final String id,
       required final String userId,
@@ -317,7 +413,13 @@ abstract class _FavoriteItem implements FavoriteItem {
       final String? description,
       final String? imageUrl,
       final Map<String, dynamic>? metadata,
-      required final DateTime createdAt}) = _$FavoriteItemImpl;
+      required final DateTime createdAt,
+      final String? restaurantName,
+      final String? restaurantId,
+      final double? rating,
+      final int? reviewCount,
+      final double? price}) = _$FavoriteItemImpl;
+  const _FavoriteItem._() : super._();
 
   factory _FavoriteItem.fromJson(Map<String, dynamic> json) =
       _$FavoriteItemImpl.fromJson;
@@ -339,12 +441,281 @@ abstract class _FavoriteItem implements FavoriteItem {
   @override
   Map<String, dynamic>? get metadata;
   @override
-  DateTime get createdAt;
+  DateTime get createdAt; // Additional properties for restaurant/dish favorites
+  @override
+  String? get restaurantName;
+  @override
+  String? get restaurantId;
+  @override
+  double? get rating;
+  @override
+  int? get reviewCount;
+  @override
+  double? get price;
 
   /// Create a copy of FavoriteItem
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FavoriteItemImplCopyWith<_$FavoriteItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ReorderItem _$ReorderItemFromJson(Map<String, dynamic> json) {
+  return _ReorderItem.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ReorderItem {
+  String get orderId => throw _privateConstructorUsedError;
+  String get restaurantName => throw _privateConstructorUsedError;
+  String get restaurantImage => throw _privateConstructorUsedError;
+  String get itemSummary => throw _privateConstructorUsedError;
+  String get formattedTotal => throw _privateConstructorUsedError;
+  String get orderDate => throw _privateConstructorUsedError;
+
+  /// Serializes this ReorderItem to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ReorderItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ReorderItemCopyWith<ReorderItem> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReorderItemCopyWith<$Res> {
+  factory $ReorderItemCopyWith(
+          ReorderItem value, $Res Function(ReorderItem) then) =
+      _$ReorderItemCopyWithImpl<$Res, ReorderItem>;
+  @useResult
+  $Res call(
+      {String orderId,
+      String restaurantName,
+      String restaurantImage,
+      String itemSummary,
+      String formattedTotal,
+      String orderDate});
+}
+
+/// @nodoc
+class _$ReorderItemCopyWithImpl<$Res, $Val extends ReorderItem>
+    implements $ReorderItemCopyWith<$Res> {
+  _$ReorderItemCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ReorderItem
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orderId = null,
+    Object? restaurantName = null,
+    Object? restaurantImage = null,
+    Object? itemSummary = null,
+    Object? formattedTotal = null,
+    Object? orderDate = null,
+  }) {
+    return _then(_value.copyWith(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurantName: null == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurantImage: null == restaurantImage
+          ? _value.restaurantImage
+          : restaurantImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      itemSummary: null == itemSummary
+          ? _value.itemSummary
+          : itemSummary // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedTotal: null == formattedTotal
+          ? _value.formattedTotal
+          : formattedTotal // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderDate: null == orderDate
+          ? _value.orderDate
+          : orderDate // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ReorderItemImplCopyWith<$Res>
+    implements $ReorderItemCopyWith<$Res> {
+  factory _$$ReorderItemImplCopyWith(
+          _$ReorderItemImpl value, $Res Function(_$ReorderItemImpl) then) =
+      __$$ReorderItemImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String orderId,
+      String restaurantName,
+      String restaurantImage,
+      String itemSummary,
+      String formattedTotal,
+      String orderDate});
+}
+
+/// @nodoc
+class __$$ReorderItemImplCopyWithImpl<$Res>
+    extends _$ReorderItemCopyWithImpl<$Res, _$ReorderItemImpl>
+    implements _$$ReorderItemImplCopyWith<$Res> {
+  __$$ReorderItemImplCopyWithImpl(
+      _$ReorderItemImpl _value, $Res Function(_$ReorderItemImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ReorderItem
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? orderId = null,
+    Object? restaurantName = null,
+    Object? restaurantImage = null,
+    Object? itemSummary = null,
+    Object? formattedTotal = null,
+    Object? orderDate = null,
+  }) {
+    return _then(_$ReorderItemImpl(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurantName: null == restaurantName
+          ? _value.restaurantName
+          : restaurantName // ignore: cast_nullable_to_non_nullable
+              as String,
+      restaurantImage: null == restaurantImage
+          ? _value.restaurantImage
+          : restaurantImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      itemSummary: null == itemSummary
+          ? _value.itemSummary
+          : itemSummary // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedTotal: null == formattedTotal
+          ? _value.formattedTotal
+          : formattedTotal // ignore: cast_nullable_to_non_nullable
+              as String,
+      orderDate: null == orderDate
+          ? _value.orderDate
+          : orderDate // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ReorderItemImpl implements _ReorderItem {
+  const _$ReorderItemImpl(
+      {required this.orderId,
+      required this.restaurantName,
+      required this.restaurantImage,
+      required this.itemSummary,
+      required this.formattedTotal,
+      required this.orderDate});
+
+  factory _$ReorderItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReorderItemImplFromJson(json);
+
+  @override
+  final String orderId;
+  @override
+  final String restaurantName;
+  @override
+  final String restaurantImage;
+  @override
+  final String itemSummary;
+  @override
+  final String formattedTotal;
+  @override
+  final String orderDate;
+
+  @override
+  String toString() {
+    return 'ReorderItem(orderId: $orderId, restaurantName: $restaurantName, restaurantImage: $restaurantImage, itemSummary: $itemSummary, formattedTotal: $formattedTotal, orderDate: $orderDate)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReorderItemImpl &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.restaurantName, restaurantName) ||
+                other.restaurantName == restaurantName) &&
+            (identical(other.restaurantImage, restaurantImage) ||
+                other.restaurantImage == restaurantImage) &&
+            (identical(other.itemSummary, itemSummary) ||
+                other.itemSummary == itemSummary) &&
+            (identical(other.formattedTotal, formattedTotal) ||
+                other.formattedTotal == formattedTotal) &&
+            (identical(other.orderDate, orderDate) ||
+                other.orderDate == orderDate));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, orderId, restaurantName,
+      restaurantImage, itemSummary, formattedTotal, orderDate);
+
+  /// Create a copy of ReorderItem
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReorderItemImplCopyWith<_$ReorderItemImpl> get copyWith =>
+      __$$ReorderItemImplCopyWithImpl<_$ReorderItemImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ReorderItemImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ReorderItem implements ReorderItem {
+  const factory _ReorderItem(
+      {required final String orderId,
+      required final String restaurantName,
+      required final String restaurantImage,
+      required final String itemSummary,
+      required final String formattedTotal,
+      required final String orderDate}) = _$ReorderItemImpl;
+
+  factory _ReorderItem.fromJson(Map<String, dynamic> json) =
+      _$ReorderItemImpl.fromJson;
+
+  @override
+  String get orderId;
+  @override
+  String get restaurantName;
+  @override
+  String get restaurantImage;
+  @override
+  String get itemSummary;
+  @override
+  String get formattedTotal;
+  @override
+  String get orderDate;
+
+  /// Create a copy of ReorderItem
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ReorderItemImplCopyWith<_$ReorderItemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

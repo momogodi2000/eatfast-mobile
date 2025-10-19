@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/favorite.dart';
+import 'package:eatfast_mobile/shared/services/favorites/domain/models/favorite.dart';
 
 /// Favorites state
 class FavoritesState {
@@ -34,10 +34,15 @@ class FavoritesState {
   }
 
   List<FavoriteItem> get restaurants =>
-      favorites.where((item) => item.favorite.type == FavoriteType.restaurant).toList();
+      favorites.where((item) => item.type == FavoriteType.restaurant).toList();
 
-  List<FavoriteItem> get items =>
-      favorites.where((item) => item.favorite.type == FavoriteType.item).toList();
+  List<FavoriteItem> get items => favorites
+      .where(
+        (item) =>
+            item.type == FavoriteType.dish ||
+            item.type == FavoriteType.menuItem,
+      )
+      .toList();
 }
 
 /// Favorites notifier
@@ -72,10 +77,13 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
 
   List<FavoriteItem> searchFavorites(String query) {
     final lowerQuery = query.toLowerCase();
-    return state.favorites.where((item) =>
-      item.name.toLowerCase().contains(lowerQuery) ||
-      item.description.toLowerCase().contains(lowerQuery)
-    ).toList();
+    return state.favorites
+        .where(
+          (item) =>
+              item.name.toLowerCase().contains(lowerQuery) ||
+              (item.description?.toLowerCase().contains(lowerQuery) ?? false),
+        )
+        .toList();
   }
 
   Future<void> addFavorite(FavoriteItem item) async {
@@ -91,7 +99,9 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   Future<bool> removeFavorite(String favoriteId) async {
     try {
       // TODO: Implement API call to remove favorite
-      final updatedItems = state.favorites.where((item) => item.favorite.id != favoriteId).toList();
+      final updatedItems = state.favorites
+          .where((item) => item.id != favoriteId)
+          .toList();
       state = state.copyWith(favorites: updatedItems);
       return true;
     } catch (e) {
@@ -118,36 +128,44 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
       await Future.delayed(const Duration(milliseconds: 500));
 
       final existingIndex = state.favorites.indexWhere(
-        (item) => item.favorite.itemId == itemId
+        (item) => item.itemId == itemId,
       );
 
       if (existingIndex >= 0) {
         // Remove from favorites
         final updatedFavorites = [...state.favorites];
         updatedFavorites.removeAt(existingIndex);
-        state = state.copyWith(favorites: updatedFavorites, isSubmitting: false);
+        state = state.copyWith(
+          favorites: updatedFavorites,
+          isSubmitting: false,
+        );
       } else {
         // Add to favorites
+        final metadata = <String, dynamic>{
+          if (price != null) 'price': price,
+          if (rating != null) 'rating': rating,
+          if (reviewCount != null) 'reviewCount': reviewCount,
+          if (restaurantName != null) 'restaurantName': restaurantName,
+          if (restaurantId != null) 'restaurantId': restaurantId,
+        };
+
         final newFavorite = FavoriteItem(
-          favorite: Favorite(
-            id: DateTime.now().millisecondsSinceEpoch.toString(),
-            userId: 'current_user_id', // TODO: Get from auth
-            itemId: itemId,
-            type: type,
-            createdAt: DateTime.now(),
-          ),
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          userId: 'current_user_id', // TODO: Get from auth
+          itemId: itemId,
+          type: type,
           name: name,
           description: description,
           imageUrl: imageUrl,
-          price: price,
-          rating: rating,
-          reviewCount: reviewCount,
-          restaurantName: restaurantName,
-          restaurantId: restaurantId,
+          metadata: metadata.isNotEmpty ? metadata : null,
+          createdAt: DateTime.now(),
         );
 
         final updatedFavorites = [...state.favorites, newFavorite];
-        state = state.copyWith(favorites: updatedFavorites, isSubmitting: false);
+        state = state.copyWith(
+          favorites: updatedFavorites,
+          isSubmitting: false,
+        );
       }
     } catch (e) {
       state = state.copyWith(
@@ -174,14 +192,14 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
   }
 
   bool isFavorite(String itemId) {
-    return state.favorites.any((item) => item.favorite.itemId == itemId);
+    return state.favorites.any((item) => item.itemId == itemId);
   }
 }
 
 /// Favorites provider
 final favoritesProvider =
     StateNotifierProvider<FavoritesNotifier, FavoritesState>((ref) {
-  final notifier = FavoritesNotifier();
-  notifier.loadFavorites();
-  return notifier;
-});
+      final notifier = FavoritesNotifier();
+      notifier.loadFavorites();
+      return notifier;
+    });

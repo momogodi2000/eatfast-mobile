@@ -336,12 +336,13 @@ class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
   List<LiveOrder> _filterOrders(List<LiveOrder> orders, OrderFilter filter) {
     switch (filter) {
       case OrderFilter.all:
-        return orders.where((order) => order.status.isActive).toList();
+        return orders.where((order) => order.status != OrderStatus.cancelled &&
+                                     order.status != OrderStatus.completed).toList();
       case OrderFilter.pending:
         return orders.where((order) => order.status == OrderStatus.pending).toList();
       case OrderFilter.preparing:
-        return orders.where((order) => 
-          order.status == OrderStatus.accepted || 
+        return orders.where((order) =>
+          order.status == OrderStatus.confirmed ||
           order.status == OrderStatus.preparing
         ).toList();
       case OrderFilter.ready:

@@ -21,8 +21,8 @@ export '../services/restaurants/presentation/widgets/restaurant_card.dart';
 // Overlays
 export 'overlays/loading_overlay.dart';
 
-// Selectors
-export 'selectors/payment_method_selector.dart';
+// Selectors (moved to services/wallet)
+// export 'selectors/payment_method_selector.dart'; // Removed - use services/wallet version
 
 // Tiles
 export 'tiles/loyalty_redemption_request_tile.dart';

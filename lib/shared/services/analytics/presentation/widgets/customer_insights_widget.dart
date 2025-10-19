@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_data.dart';
+import 'package:eatfast_mobile/shared/models/analytics_data.dart';
 
 class CustomerInsightsWidget extends StatelessWidget {
   final CustomerInsights insights;

@@ -52,6 +52,11 @@ class WalletNotifier extends StateNotifier<AsyncValue<Wallet?>> {
     await loadWallet();
   }
 
+  /// Fetch wallet - alias for loadWallet for backward compatibility
+  Future<void> fetchWallet() async {
+    await loadWallet();
+  }
+
   /// Load transaction history with pagination
   Future<void> loadTransactionHistory({
     bool loadMore = false,

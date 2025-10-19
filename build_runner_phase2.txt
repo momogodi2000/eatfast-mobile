@@ -1,0 +1,85 @@
+[INFO] Generating build script...
+[INFO] Generating build script completed, took 1.6s
+
+[INFO] Initializing inputs
+[INFO] Reading cached asset graph...
+[INFO] Reading cached asset graph completed, took 1.6s
+
+[INFO] Checking for updates since last build...
+[INFO] Checking for updates since last build completed, took 5.9s
+
+[INFO] Running build...
+[INFO] 1.3s elapsed, 0/7 actions completed.
+[INFO] 2.8s elapsed, 6/7 actions completed.
+[WARNING] riverpod_generator on lib/modules/client_module/providers/data/profile_repository_impl.dart:
+Your current `analyzer` version may not fully support your current SDK version.
+
+Analyzer language version: 3.7.0
+SDK language version: 3.8.0
+
+Please update to the latest `analyzer` version (8.4.0) by running
+`flutter packages upgrade`.
+
+If you are not getting the latest version by running the above command, you
+can try adding a constraint like the following to your pubspec to start
+diagnosing why you can't get the latest version:
+
+dev_dependencies:
+  analyzer: ^8.4.0
+
+[INFO] 7.0s elapsed, 6/7 actions completed.
+[INFO] 9.2s elapsed, 21/21 actions completed.
+[INFO] 10.2s elapsed, 21/37 actions completed.
+[INFO] 11.3s elapsed, 21/37 actions completed.
+[INFO] 12.9s elapsed, 21/37 actions completed.
+[INFO] 14.5s elapsed, 21/37 actions completed.
+[INFO] 15.5s elapsed, 21/37 actions completed.
+[INFO] 17.0s elapsed, 21/37 actions completed.
+[INFO] 18.1s elapsed, 21/37 actions completed.
+[INFO] 19.2s elapsed, 21/37 actions completed.
+[INFO] 20.7s elapsed, 21/37 actions completed.
+[INFO] 21.8s elapsed, 21/37 actions completed.
+[INFO] 22.8s elapsed, 21/37 actions completed.
+[INFO] 23.9s elapsed, 21/37 actions completed.
+[WARNING] No actions completed for 15.1s, waiting on:
+  - json_serializable on lib/modules/restaurant_manager_module/providers/domain/models/live_order.dart
+  - json_serializable on lib/modules/client_module/providers/data/profile_repository_impl.dart
+  - json_serializable on lib/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart
+  - json_serializable on lib/modules/client_module/screens/wallet/wallet_screen.dart
+  - json_serializable on lib/modules/restaurant_manager_module/screens/analytics_reports_screen.dart
+  .. and 11 more
+
+[INFO] 24.9s elapsed, 27/45 actions completed.
+[INFO] 26.0s elapsed, 27/45 actions completed.
+[INFO] 27.3s elapsed, 28/46 actions completed.
+[INFO] 28.3s elapsed, 45/90 actions completed.
+[INFO] 29.4s elapsed, 66/113 actions completed.
+[INFO] 1m 8s elapsed, 103/148 actions completed.
+[WARNING] No actions completed for 38.8s, waiting on:
+  - build_resolvers:transitive_digests on package:boolean_selector/src/impl.dart
+  - build_resolvers:transitive_digests on package:boolean_selector/src/all.dart
+  - build_resolvers:transitive_digests on package:boolean_selector/src/none.dart
+  - build_resolvers:transitive_digests on package:sqflite_common/src/mixin/import_mixin.dart
+  - build_resolvers:transitive_digests on package:sqflite_common/src/logger/sqflite_logger.dart
+  .. and 40 more
+
+[INFO] 1m 10s elapsed, 111/148 actions completed.
+[INFO] 1m 12s elapsed, 117/149 actions completed.
+[INFO] 1m 13s elapsed, 148/164 actions completed.
+[INFO] 1m 17s elapsed, 148/164 actions completed.
+[INFO] 1m 18s elapsed, 151/166 actions completed.
+[INFO] 1m 19s elapsed, 155/170 actions completed.
+[INFO] 1m 20s elapsed, 161/176 actions completed.
+[INFO] 1m 23s elapsed, 162/178 actions completed.
+[INFO] 1m 27s elapsed, 162/178 actions completed.
+[INFO] 1m 35s elapsed, 162/178 actions completed.
+[INFO] 1m 36s elapsed, 165/178 actions completed.
+[INFO] 1m 37s elapsed, 178/178 actions completed.
+[INFO] 1m 38s elapsed, 186/186 actions completed.
+[INFO] Running build completed, took 1m 39s
+
+[INFO] Caching finalized dependency graph...
+[INFO] Caching finalized dependency graph completed, took 1.0s
+
+[INFO] Succeeded after 1m 41s with 128 outputs (314 actions)
+

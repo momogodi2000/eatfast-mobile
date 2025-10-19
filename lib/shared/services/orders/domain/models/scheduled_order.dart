@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:eatfast_mobile/shared/services/restaurants/domain/models/restaurant.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 
 class ScheduledOrder {
   final String id;
@@ -61,7 +61,9 @@ class ScheduledOrder {
       id: json['id'] as String,
       userId: json['userId'] as String,
       restaurantId: json['restaurantId'] as String,
-      restaurant: Restaurant.fromJson(json['restaurant'] as Map<String, dynamic>),
+      restaurant: Restaurant.fromJson(
+        json['restaurant'] as Map<String, dynamic>,
+      ),
       items: (json['items'] as List<dynamic>)
           .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -70,12 +72,16 @@ class ScheduledOrder {
       total: (json['total'] as num).toDouble(),
       currency: json['currency'] as String,
       scheduledDate: DateTime.parse(json['scheduledDate'] as String),
-      status: ScheduledOrderStatus.values.firstWhere((e) => e.name == json['status']),
+      status: ScheduledOrderStatus.values.firstWhere(
+        (e) => e.name == json['status'],
+      ),
       deliveryAddress: json['deliveryAddress'] as String,
       deliveryInstructions: json['deliveryInstructions'] as String?,
       isRecurring: json['isRecurring'] as bool,
       recurrencePattern: json['recurrencePattern'] != null
-          ? RecurrencePattern.fromJson(json['recurrencePattern'] as Map<String, dynamic>)
+          ? RecurrencePattern.fromJson(
+              json['recurrencePattern'] as Map<String, dynamic>,
+            )
           : null,
       paymentMethodId: json['paymentMethodId'] as String?,
       lastExecutedAt: json['lastExecutedAt'] != null
@@ -163,12 +169,16 @@ class ScheduledOrder {
       'scheduledDate': scheduledDate.toIso8601String(),
       'status': status.name,
       'deliveryAddress': deliveryAddress,
-      if (deliveryInstructions != null) 'deliveryInstructions': deliveryInstructions,
+      if (deliveryInstructions != null)
+        'deliveryInstructions': deliveryInstructions,
       'isRecurring': isRecurring,
-      if (recurrencePattern != null) 'recurrencePattern': recurrencePattern!.toJson(),
+      if (recurrencePattern != null)
+        'recurrencePattern': recurrencePattern!.toJson(),
       if (paymentMethodId != null) 'paymentMethodId': paymentMethodId,
-      if (lastExecutedAt != null) 'lastExecutedAt': lastExecutedAt!.toIso8601String(),
-      if (nextExecutionAt != null) 'nextExecutionAt': nextExecutionAt!.toIso8601String(),
+      if (lastExecutedAt != null)
+        'lastExecutedAt': lastExecutedAt!.toIso8601String(),
+      if (nextExecutionAt != null)
+        'nextExecutionAt': nextExecutionAt!.toIso8601String(),
       if (executionCount != null) 'executionCount': executionCount,
       if (maxExecutions != null) 'maxExecutions': maxExecutions,
       if (pausedUntil != null) 'pausedUntil': pausedUntil!.toIso8601String(),
@@ -384,7 +394,9 @@ class CreateScheduledOrderRequest {
       deliveryInstructions: json['deliveryInstructions'] as String?,
       isRecurring: json['isRecurring'] as bool,
       recurrencePattern: json['recurrencePattern'] != null
-          ? RecurrencePattern.fromJson(json['recurrencePattern'] as Map<String, dynamic>)
+          ? RecurrencePattern.fromJson(
+              json['recurrencePattern'] as Map<String, dynamic>,
+            )
           : null,
       paymentMethodId: json['paymentMethodId'] as String?,
       maxExecutions: json['maxExecutions'] as int?,
@@ -397,9 +409,11 @@ class CreateScheduledOrderRequest {
       'items': items.map((e) => e.toJson()).toList(),
       'scheduledDate': scheduledDate.toIso8601String(),
       'deliveryAddress': deliveryAddress,
-      if (deliveryInstructions != null) 'deliveryInstructions': deliveryInstructions,
+      if (deliveryInstructions != null)
+        'deliveryInstructions': deliveryInstructions,
       'isRecurring': isRecurring,
-      if (recurrencePattern != null) 'recurrencePattern': recurrencePattern!.toJson(),
+      if (recurrencePattern != null)
+        'recurrencePattern': recurrencePattern!.toJson(),
       if (paymentMethodId != null) 'paymentMethodId': paymentMethodId,
       if (maxExecutions != null) 'maxExecutions': maxExecutions,
     };

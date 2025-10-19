@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/order.dart';
+import 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
 
 /// Client orders state
 class ClientOrdersState {

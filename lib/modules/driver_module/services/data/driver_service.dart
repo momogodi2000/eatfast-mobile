@@ -101,19 +101,55 @@ class DriverService {
     required String orderId,
   }) async {
     try {
-      final response = await _apiClient.post(
+      final endpoint = ApiConstants.replacePathParams(
         ApiConstants.acceptOrder,
+        {'id': orderId},
+      );
+
+      final response = await _apiClient.post(
+        endpoint,
         data: {
           'driverId': driverId,
           'orderId': orderId,
+          'acceptedAt': DateTime.now().toIso8601String(),
         },
       );
-      
-      if (response.statusCode != 200) {
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
         throw Exception(response.data['message'] ?? 'Failed to accept order');
       }
     } catch (e) {
       throw Exception('Error accepting order: ${e.toString()}');
+    }
+  }
+
+  // Reject order
+  Future<void> rejectOrder({
+    required String driverId,
+    required String orderId,
+    required String reason,
+  }) async {
+    try {
+      final endpoint = ApiConstants.replacePathParams(
+        ApiConstants.rejectOrder,
+        {'id': orderId},
+      );
+
+      final response = await _apiClient.post(
+        endpoint,
+        data: {
+          'driverId': driverId,
+          'orderId': orderId,
+          'reason': reason,
+          'rejectedAt': DateTime.now().toIso8601String(),
+        },
+      );
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        throw Exception(response.data['message'] ?? 'Failed to reject order');
+      }
+    } catch (e) {
+      throw Exception('Error rejecting order: ${e.toString()}');
     }
   }
   

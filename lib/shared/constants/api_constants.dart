@@ -121,6 +121,7 @@ class ApiConstants {
   static const String driverStatistics = '/driver/statistics';
   static const String driverOrders = '/driver/orders';
   static const String acceptOrder = '/driver/orders/{id}/accept';
+  static const String rejectOrder = '/driver/orders/{id}/reject';
   static const String completeDelivery = '/driver/orders/{id}/complete';
   static const String driverLocation = '/driver/location';
   static const String driverStats = '/driver/stats';

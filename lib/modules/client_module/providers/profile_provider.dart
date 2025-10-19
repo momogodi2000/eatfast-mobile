@@ -198,7 +198,8 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
 
     try {
       final newAddress = repo.Address(
-        type: label,
+        label: label,
+        type: label, // Use same value for type and label
         street: address,
         city: '', // Will be parsed from address string
         country: 'Cameroon',
@@ -241,7 +242,8 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     try {
       final updatedAddress = repo.Address(
         id: addressId,
-        type: label,
+        label: label,
+        type: label, // Use same value for type and label
         street: address,
         city: '', // Will be parsed from address string
         country: 'Cameroon',

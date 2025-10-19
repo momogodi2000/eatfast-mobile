@@ -4,21 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:eatfast_mobile/shared/services/orders/domain/models/scheduled_order.dart';
 import '../providers/scheduled_orders_provider.dart';
 import 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models/cart.dart';
+import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
 
 class CreateScheduledOrderDialog extends ConsumerStatefulWidget {
   final ScheduledOrder? existingOrder;
 
-  const CreateScheduledOrderDialog({
-    super.key,
-    this.existingOrder,
-  });
+  const CreateScheduledOrderDialog({super.key, this.existingOrder});
 
   @override
-  ConsumerState<CreateScheduledOrderDialog> createState() => _CreateScheduledOrderDialogState();
+  ConsumerState<CreateScheduledOrderDialog> createState() =>
+      _CreateScheduledOrderDialogState();
 }
 
-class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrderDialog> {
+class _CreateScheduledOrderDialogState
+    extends ConsumerState<CreateScheduledOrderDialog> {
   final _formKey = GlobalKey<FormState>();
   final _addressController = TextEditingController();
   final _instructionsController = TextEditingController();
@@ -122,19 +121,16 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.schedule,
-            color: Theme.of(context).primaryColor,
-          ),
+          Icon(Icons.schedule, color: Theme.of(context).primaryColor),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               widget.existingOrder != null
                   ? 'Modifier la commande programmée'
                   : 'Programmer une commande',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           IconButton(
@@ -152,9 +148,9 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
       children: [
         Text(
           'Date et heure',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Row(
@@ -174,7 +170,10 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
                       const SizedBox(width: 8),
                       Text(
                         _selectedDateTime != null
-                            ? DateFormat('d MMM yyyy', 'fr_FR').format(_selectedDateTime!)
+                            ? DateFormat(
+                                'd MMM yyyy',
+                                'fr_FR',
+                              ).format(_selectedDateTime!)
                             : 'Sélectionner une date',
                       ),
                     ],
@@ -220,9 +219,9 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
           children: [
             Text(
               'Récurrence',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
             Switch(
@@ -254,10 +253,7 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
             border: OutlineInputBorder(),
           ),
           items: RecurrenceType.values.map((type) {
-            return DropdownMenuItem(
-              value: type,
-              child: Text(type.displayName),
-            );
+            return DropdownMenuItem(value: type, child: Text(type.displayName));
           }).toList(),
           onChanged: (value) {
             if (value != null) {
@@ -281,7 +277,10 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 12,
+                  ),
                 ),
                 onChanged: (value) {
                   final interval = int.tryParse(value);
@@ -308,9 +307,7 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
   }
 
   Widget _buildDaysOfWeekSelector() {
-    const days = [
-      'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'
-    ];
+    const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,9 +375,9 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
       children: [
         Text(
           'Livraison',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         TextFormField(
@@ -415,9 +412,7 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.grey.shade300),
-        ),
+        border: Border(top: BorderSide(color: Colors.grey.shade300)),
       ),
       child: Row(
         children: [
@@ -437,7 +432,9 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
                       height: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : Text(widget.existingOrder != null ? 'Modifier' : 'Programmer'),
+                  : Text(
+                      widget.existingOrder != null ? 'Modifier' : 'Programmer',
+                    ),
             ),
           ),
         ],
@@ -461,7 +458,8 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
   void _selectDate() async {
     final date = await showDatePicker(
       context: context,
-      initialDate: _selectedDateTime ?? DateTime.now().add(const Duration(days: 1)),
+      initialDate:
+          _selectedDateTime ?? DateTime.now().add(const Duration(days: 1)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       locale: const Locale('fr', 'FR'),
@@ -515,7 +513,9 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
       return;
     }
 
-    if (_isRecurring && _recurrenceType == RecurrenceType.weekly && _selectedDaysOfWeek.isEmpty) {
+    if (_isRecurring &&
+        _recurrenceType == RecurrenceType.weekly &&
+        _selectedDaysOfWeek.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Veuillez sélectionner au moins un jour de la semaine'),
@@ -536,7 +536,8 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
         cart = cartState.cart;
       }
 
-      if ((cart == null || cart.items.isEmpty) && widget.existingOrder == null) {
+      if ((cart == null || cart.items.isEmpty) &&
+          widget.existingOrder == null) {
         throw Exception('Le panier est vide');
       }
 
@@ -545,9 +546,15 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
         recurrencePattern = RecurrencePattern(
           type: _recurrenceType,
           interval: _recurrenceInterval,
-          daysOfWeek: _recurrenceType == RecurrenceType.weekly ? _selectedDaysOfWeek : null,
-          dayOfMonth: _recurrenceType == RecurrenceType.monthly ? _selectedDayOfMonth : null,
-          timeOfDay: _selectedTime != null ? '${_selectedTime!.hour}:${_selectedTime!.minute}' : null,
+          daysOfWeek: _recurrenceType == RecurrenceType.weekly
+              ? _selectedDaysOfWeek
+              : null,
+          dayOfMonth: _recurrenceType == RecurrenceType.monthly
+              ? _selectedDayOfMonth
+              : null,
+          timeOfDay: _selectedTime != null
+              ? '${_selectedTime!.hour}:${_selectedTime!.minute}'
+              : null,
         );
       }
 
@@ -564,12 +571,13 @@ class _CreateScheduledOrderDialogState extends ConsumerState<CreateScheduledOrde
       );
 
       if (widget.existingOrder != null) {
-        await ref.read(scheduledOrdersNotifierProvider.notifier).updateScheduledOrder(
-          widget.existingOrder!.id,
-          request,
-        );
+        await ref
+            .read(scheduledOrdersNotifierProvider.notifier)
+            .updateScheduledOrder(widget.existingOrder!.id, request);
       } else {
-        await ref.read(scheduledOrdersNotifierProvider.notifier).createScheduledOrder(request);
+        await ref
+            .read(scheduledOrdersNotifierProvider.notifier)
+            .createScheduledOrder(request);
       }
 
       if (mounted) {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../widgets/widgets/client_drawer.dart';
 import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart';
-import '../providers/wallet_provider.dart';
+import 'package:eatfast_mobile/shared/services/wallet/providers/wallet_provider.dart';
 import '../providers/client_orders_provider.dart';
 import 'package:eatfast_mobile/shared/services/auth/providers/unified_auth_provider.dart';
 import 'package:eatfast_mobile/shared/services/orders/providers/order_provider.dart';
@@ -132,7 +132,7 @@ class _ClientDashboardScreenState extends ConsumerState<ClientDashboardScreen> {
                         icon: Icons.account_balance_wallet,
                         color: Colors.green,
                         title: 'Portefeuille',
-                        value: '${walletAsync.balance.toStringAsFixed(0)} XAF',
+                        value: '${walletAsync.value?.balance?.toStringAsFixed(0) ?? '0'} XAF',
                         onTap: () {
                           // TODO: Navigate to wallet screen
                         },

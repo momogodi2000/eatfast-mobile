@@ -1,0 +1,324 @@
+Analyzing eatfatsApp...                                         
+
+  error - Missing concrete implementations of 'abstract class ProfileRepository.deleteAvatar', 'abstract class ProfileRepository.getNotificationPreferences', and 'abstract class ProfileRepository.setDefaultPaymentMethod' - lib\modules\client_module\providers\data\profile_repository_impl.dart:7:7 - non_abstract_class_inherits_abstract_member
+warning - The method doesn't override an inherited method - lib\modules\client_module\providers\data\profile_repository_impl.dart:210:16 - override_on_non_overriding_member
+   info - Dangling library doc comment - lib\modules\client_module\providers\domain\models.dart:1:1 - dangling_library_doc_comments
+  error - The name 'PaymentMethod' is defined in the libraries 'package:eatfast_mobile/modules/client_module/providers/domain/profile_repository.dart' and 'package:eatfast_mobile/shared/services/payment/domain/models/payment_method.dart' - lib\modules\client_module\providers\domain\models.dart:12:8 - ambiguous_export
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\providers\profile_provider.dart:164:20 - argument_type_not_assignable
+  error - The named parameter 'label' is required, but there's no corresponding argument - lib\modules\client_module\providers\profile_provider.dart:335:16 - missing_required_argument
+  error - The named parameter 'accountNumber' isn't defined - lib\modules\client_module\providers\profile_provider.dart:338:11 - undefined_named_parameter
+  error - The named parameter 'accountName' isn't defined - lib\modules\client_module\providers\profile_provider.dart:339:11 - undefined_named_parameter
+  error - The named parameter 'displayName' isn't defined - lib\modules\client_module\providers\profile_provider.dart:340:11 - undefined_named_parameter
+  error - The named parameter 'createdAt' isn't defined - lib\modules\client_module\providers\profile_provider.dart:342:11 - undefined_named_parameter
+  error - The named parameter 'updatedAt' isn't defined - lib\modules\client_module\providers\profile_provider.dart:343:11 - undefined_named_parameter
+  error - The named parameter 'label' is required, but there's no corresponding argument - lib\modules\client_module\providers\profile_provider.dart:366:44 - missing_required_argument
+  error - The getter 'accountNumber' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\providers\profile_provider.dart:369:33 - undefined_getter
+  error - The getter 'accountName' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\providers\profile_provider.dart:370:37 - undefined_getter
+  error - The method 'copyWith' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\providers\profile_provider.dart:404:18 - undefined_method
+  error - The named parameter 'promotionalOffers' isn't defined - lib\modules\client_module\providers\profile_provider.dart:480:9 - undefined_named_parameter
+  error - The getter 'promotionalOffers' isn't defined for the type 'NotificationPreferences' - lib\modules\client_module\providers\profile_provider.dart:480:40 - undefined_getter
+  error - The method 'changePassword' isn't defined for the type 'ProfileRepository' - lib\modules\client_module\providers\profile_provider.dart:511:41 - undefined_method
+  error - The method 'fetchWallet' isn't defined for the type 'WalletNotifier' - lib\modules\client_module\screens\client_dashboard_screen.dart:29:41 - undefined_method
+  error - The getter 'balance' isn't defined for the type 'AsyncValue<Wallet?>' - lib\modules\client_module\screens\client_dashboard_screen.dart:135:47 - undefined_getter
+  error - The method 'fetchWallet' isn't defined for the type 'WalletNotifier' - lib\modules\client_module\screens\client_dashboard_screen.dart:506:45 - undefined_method
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\screens\favorites\favorites_screen.dart:700:34 - argument_type_not_assignable
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\screens\favorites\favorites_screen.dart:701:31 - argument_type_not_assignable
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/loyalty_tier_card.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:5:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/points_summary_card.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:6:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/rewards_showcase.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:7:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/recent_loyalty_transactions.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:8:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'rewards_catalog_screen.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:9:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'loyalty_history_screen.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:10:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'tier_benefits_screen.dart' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:11:8 - uri_does_not_exist
+  error - The name 'LoyaltyHistoryScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:33:47 - creation_with_non_type
+  error - The method 'PointsSummaryCard' isn't defined for the type 'LoyaltyScreen' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:49:15 - undefined_method
+  error - The method 'LoyaltyTierCard' isn't defined for the type 'LoyaltyScreen' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:58:15 - undefined_method
+  error - The name 'TierBenefitsScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:66:51 - creation_with_non_type
+  error - The name 'RewardsCatalogScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:87:57 - creation_with_non_type
+  error - The name 'TierBenefitsScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:104:57 - creation_with_non_type
+  error - The name 'RewardsCatalogScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:130:55 - creation_with_non_type
+  error - The method 'RewardsShowcase' isn't defined for the type 'LoyaltyScreen' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:142:15 - undefined_method
+  error - The name 'LoyaltyHistoryScreen' isn't a class - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:166:55 - creation_with_non_type
+  error - The method 'RecentLoyaltyTransactions' isn't defined for the type 'LoyaltyScreen' - lib\modules\client_module\screens\loyalty\loyalty_screen.dart:178:15 - undefined_method
+warning - The '!' will have no effect because the receiver can't be null - lib\modules\client_module\screens\orders\order_history_screen.dart:236:69 - unnecessary_non_null_assertion
+  error - The getter 'displayName' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:148:34 - undefined_getter
+  error - The getter 'accountNumber' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:179:32 - undefined_getter
+  error - The getter 'accountNumber' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:182:53 - undefined_getter
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\screens\profile\payment_methods_screen.dart:333:68 - argument_type_not_assignable
+  error - The getter 'displayName' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:347:57 - undefined_getter
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\screens\profile\payment_methods_screen.dart:358:70 - argument_type_not_assignable
+  error - The getter 'displayName' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:480:44 - undefined_getter
+  error - The getter 'accountNumber' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:481:46 - undefined_getter
+  error - The getter 'accountName' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:482:44 - undefined_getter
+  error - The method 'copyWith' isn't defined for the type 'PaymentMethod' - lib\modules\client_module\screens\profile\payment_methods_screen.dart:710:51 - undefined_method
+  error - The argument type 'String?' can't be assigned to the parameter type 'String'.  - lib\modules\client_module\screens\profile\payment_methods_screen.dart:720:9 - argument_type_not_assignable
+  error - The named parameter 'label' is required, but there's no corresponding argument - lib\modules\client_module\screens\profile\payment_methods_screen.dart:725:25 - missing_required_argument
+  error - The named parameter 'displayName' isn't defined - lib\modules\client_module\screens\profile\payment_methods_screen.dart:728:9 - undefined_named_parameter
+  error - The named parameter 'accountNumber' isn't defined - lib\modules\client_module\screens\profile\payment_methods_screen.dart:729:9 - undefined_named_parameter
+  error - The named parameter 'accountName' isn't defined - lib\modules\client_module\screens\profile\payment_methods_screen.dart:730:9 - undefined_named_parameter
+  error - The named parameter 'createdAt' isn't defined - lib\modules\client_module\screens\profile\payment_methods_screen.dart:732:9 - undefined_named_parameter
+  error - The named parameter 'updatedAt' isn't defined - lib\modules\client_module\screens\profile\payment_methods_screen.dart:733:9 - undefined_named_parameter
+  error - Target of URI doesn't exist: '../../widgets/widgets/wallet/wallet_balance_card.dart' - lib\modules\client_module\screens\wallet\wallet_screen.dart:4:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../../widgets/widgets/wallet/wallet_quick_actions.dart' - lib\modules\client_module\screens\wallet\wallet_screen.dart:5:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../../widgets/widgets/wallet/transaction_list.dart' - lib\modules\client_module\screens\wallet\wallet_screen.dart:6:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'top_up_screen.dart' - lib\modules\client_module\screens\wallet\wallet_screen.dart:7:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'transaction_history_screen.dart' - lib\modules\client_module\screens\wallet\wallet_screen.dart:8:8 - uri_does_not_exist
+  error - The name 'TransactionHistoryScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:30:47 - creation_with_non_type
+  error - The method 'WalletBalanceCard' isn't defined for the type 'WalletScreen' - lib\modules\client_module\screens\wallet\wallet_screen.dart:68:19 - undefined_method
+  error - The method 'WalletQuickActions' isn't defined for the type 'WalletScreen' - lib\modules\client_module\screens\wallet\wallet_screen.dart:77:19 - undefined_method
+  error - The name 'TopUpScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:82:55 - creation_with_non_type
+  error - The name 'TransactionHistoryScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:90:55 - creation_with_non_type
+  error - The name 'TransactionHistoryScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:113:59 - creation_with_non_type
+  error - The method 'TransactionList' isn't defined for the type 'WalletScreen' - lib\modules\client_module\screens\wallet\wallet_screen.dart:159:21 - undefined_method
+  error - The name 'TransactionHistoryScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:166:57 - creation_with_non_type
+  error - The name 'TopUpScreen' isn't a class - lib\modules\client_module\screens\wallet\wallet_screen.dart:183:43 - creation_with_non_type
+  error - The name 'driverServiceProvider' is defined in the libraries 'package:eatfast_mobile/modules/driver_module/providers/domain/providers/driver_providers.dart' and 'package:eatfast_mobile/modules/driver_module/services/data/driver_service.dart' - lib\modules\driver_module\screens\driver_dashboard_screen.dart:70:22 - ambiguous_import
+  error - The name 'driverServiceProvider' is defined in the libraries 'package:eatfast_mobile/modules/driver_module/providers/domain/providers/driver_providers.dart' and 'package:eatfast_mobile/modules/driver_module/services/data/driver_service.dart' - lib\modules\driver_module\screens\driver_dashboard_screen.dart:555:38 - ambiguous_import
+  error - The name 'driverServiceProvider' is defined in the libraries 'package:eatfast_mobile/modules/driver_module/providers/domain/providers/driver_providers.dart' and 'package:eatfast_mobile/modules/driver_module/services/data/driver_service.dart' - lib\modules\driver_module\screens\driver_dashboard_screen.dart:585:38 - ambiguous_import
+   info - The constant name 'SINGLE_SELECT' isn't a lowerCamelCase identifier - lib\modules\restaurant_manager_module\providers\domain\models\menu_management.dart:51:3 - constant_identifier_names
+   info - The constant name 'MULTI_SELECT' isn't a lowerCamelCase identifier - lib\modules\restaurant_manager_module\providers\domain\models\menu_management.dart:52:3 - constant_identifier_names
+   info - The constant name 'QUANTITY' isn't a lowerCamelCase identifier - lib\modules\restaurant_manager_module\providers\domain\models\menu_management.dart:53:3 - constant_identifier_names
+  error - The name 'MenuItemPerformance' isn't a type, so it can't be used as a type argument - lib\modules\restaurant_manager_module\providers\domain\repositories\restaurant_owner_repository.dart:41:22 - non_type_as_type_argument
+  error - The name 'MenuItemPerformance' isn't a type, so it can't be used as a type argument - lib\modules\restaurant_manager_module\providers\restaurant_owner_provider.dart:61:60 - non_type_as_type_argument
+warning - Unused import: 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart' - lib\modules\restaurant_manager_module\screens\analytics_reports_screen.dart:10:8 - unused_import
+  error - The name 'MenuItemPerformance' isn't a type, so it can't be used as a type argument - lib\modules\restaurant_manager_module\screens\analytics_reports_screen.dart:127:72 - non_type_as_type_argument
+  error - The name 'MenuItemPerformance' isn't a type, so it can't be used as a type argument - lib\modules\restaurant_manager_module\screens\analytics_reports_screen.dart:423:41 - non_type_as_type_argument
+  error - The returned type 'List<MenuItemDetails>?' isn't returnable from a 'Iterable<_>' function, as required by the closure's context - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:130:49 - return_of_invalid_type_from_closure
+  error - The property 'length' can't be unconditionally accessed because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:183:29 - unchecked_use_of_nullable_value
+  error - The property 'isEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:222:30 - unchecked_use_of_nullable_value
+  error - The method 'map' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:234:31 - unchecked_use_of_nullable_value
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:592:89 - dead_null_aware_expression
+  error - The method 'join' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:904:76 - unchecked_use_of_nullable_value
+  error - The method 'join' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:905:80 - unchecked_use_of_nullable_value
+  error - The method 'toStringAsFixed' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1181:68 - unchecked_use_of_nullable_value
+  error - The property 'isNotEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1188:34 - unchecked_use_of_nullable_value
+  error - The method 'map' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1197:44 - unchecked_use_of_nullable_value
+  error - The property 'isNotEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1207:36 - unchecked_use_of_nullable_value
+  error - The method 'map' can't be unconditionally invoked because the receiver can be 'null' - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1216:46 - unchecked_use_of_nullable_value
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1326:87 - dead_null_aware_expression
+  error - The returned type 'List<MenuItemDetails>?' isn't returnable from a 'Iterable<_>' function, as required by the closure's context - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1327:49 - return_of_invalid_type_from_closure
+warning - The left operand can't be null, so the right operand is never executed - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1544:87 - dead_null_aware_expression
+  error - The returned type 'List<MenuItemDetails>?' isn't returnable from a 'Iterable<_>' function, as required by the closure's context - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1546:26 - return_of_invalid_type_from_closure
+  error - The argument type 'List<dynamic>' can't be assigned to the parameter type 'List<String>'.  - lib\modules\restaurant_manager_module\screens\menu_management_screen.dart:1554:33 - argument_type_not_assignable
+  error - Target of URI doesn't exist: '../widgets/widgets/quick_actions_grid.dart' - lib\modules\restaurant_manager_module\screens\restaurant_dashboard_screen.dart:10:8 - uri_does_not_exist
+  error - The method 'QuickActionsGrid' isn't defined for the type '_RestaurantDashboardScreenState' - lib\modules\restaurant_manager_module\screens\restaurant_dashboard_screen.dart:231:9 - undefined_method
+  error - The name 'MenuItemPerformance' isn't a type, so it can't be used as a type argument - lib\modules\restaurant_manager_module\services\data\restaurant_owner_repository_impl.dart:543:22 - non_type_as_type_argument
+  error - The name 'MenuItemPerformance' is being referenced through the prefix 'menu_mgmt', but it isn't defined in any of the libraries imported using that prefix - lib\modules\restaurant_manager_module\services\data\restaurant_owner_repository_impl.dart:556:38 - undefined_prefixed_name
+  error - The getter 'specialInstructions' isn't defined for the type 'LiveOrder' - lib\modules\restaurant_manager_module\widgets\widgets\live_orders_preview.dart:188:25 - undefined_getter
+  error - The getter 'specialInstructions' isn't defined for the type 'LiveOrder' - lib\modules\restaurant_manager_module\widgets\widgets\live_orders_preview.dart:207:33 - undefined_getter
+  error - The getter 'specialInstructions' isn't defined for the type 'LiveOrder' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:53:25 - undefined_getter
+  error - The getter 'itemName' isn't defined for the type 'OrderItem' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:259:32 - undefined_getter
+  error - The getter 'totalPrice' isn't defined for the type 'OrderItem' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:267:33 - undefined_getter
+  error - The getter 'specialInstructions' isn't defined for the type 'LiveOrder' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:329:25 - undefined_getter
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'Color', is a potentially non-nullable type - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:518:9 - body_might_complete_normally
+  error - Undefined class 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:518:31 - undefined_class
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:520:12 - undefined_identifier
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:522:12 - undefined_identifier
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:524:12 - undefined_identifier
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'String', is a potentially non-nullable type - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:529:10 - body_might_complete_normally
+  error - Undefined class 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:529:31 - undefined_class
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:531:12 - undefined_identifier
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:533:12 - undefined_identifier
+  error - Undefined name 'DeliveryType' - lib\modules\restaurant_manager_module\widgets\widgets\order_detail_card.dart:535:12 - undefined_identifier
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/models/menu_item.dart' - lib\shared\exports\core_exports.dart:13:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: '../models/menu_item.dart' - lib\shared\exports\shared_exports.dart:31:8 - uri_does_not_exist
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\shared\models\analytics_data.dart:44:6 - invalid_annotation_target
+warning - The annotation 'JsonKey.new' can only be used on fields or getters - lib\shared\models\analytics_data.dart:45:6 - invalid_annotation_target
+  error - Undefined class 'MenuItem' - lib\shared\models\menu_item.g.dart:9:1 - undefined_class
+warning - The declaration '_$MenuItemFromJson' isn't referenced - lib\shared\models\menu_item.g.dart:9:10 - unused_element
+  error - The function 'MenuItem' isn't defined - lib\shared\models\menu_item.g.dart:9:59 - undefined_function
+  error - Undefined name 'CustomizationOption' - lib\shared\models\menu_item.g.dart:21:23 - undefined_identifier
+warning - The declaration '_$MenuItemToJson' isn't referenced - lib\shared\models\menu_item.g.dart:25:22 - unused_element
+  error - Undefined class 'MenuItem' - lib\shared\models\menu_item.g.dart:25:39 - undefined_class
+  error - Undefined class 'CustomizationOption' - lib\shared\models\menu_item.g.dart:37:1 - undefined_class
+warning - The declaration '_$CustomizationOptionFromJson' isn't referenced - lib\shared\models\menu_item.g.dart:37:21 - unused_element
+  error - The function 'CustomizationOption' isn't defined - lib\shared\models\menu_item.g.dart:38:5 - undefined_function
+warning - The declaration '_$CustomizationOptionToJson' isn't referenced - lib\shared\models\menu_item.g.dart:47:22 - unused_element
+  error - Undefined class 'CustomizationOption' - lib\shared\models\menu_item.g.dart:48:9 - undefined_class
+  error - Target of URI doesn't exist: '../services/analytics/domain/models/analytics_data.dart' - lib\shared\models\models_export.dart:47:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_data.dart' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:2:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_request.dart' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:3:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/services/analytics/data/repositories/analytics_repository.dart' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:4:8 - uri_does_not_exist
+  error - The name 'AnalyticsRepository' isn't a type, so it can't be used as a type argument - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:6:46 - non_type_as_type_argument
+  error - The function 'AnalyticsRepository' isn't defined - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:7:10 - undefined_function
+  error - The name 'AnalyticsData' isn't a type, so it can't be used as a type argument - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:10:49 - non_type_as_type_argument
+  error - The name 'AnalyticsRequest' isn't a type, so it can't be used as a type argument - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:10:64 - non_type_as_type_argument
+  error - The name 'AnalyticsData' isn't a type, so it can't be used as a type argument - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:19:58 - non_type_as_type_argument
+  error - Undefined class 'AnalyticsRepository' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:20:9 - undefined_class
+  error - Undefined class 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:27:5 - undefined_class
+  error - Undefined class 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:28:5 - undefined_class
+  error - The method 'AnalyticsRequest' isn't defined for the type 'AnalyticsNotifier' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:34:23 - undefined_method
+  error - Undefined name 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:35:33 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:36:31 - undefined_identifier
+  error - Undefined class 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:63:24 - undefined_class
+  error - Undefined class 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:67:23 - undefined_class
+  error - Undefined class 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:84:9 - undefined_class
+  error - Undefined class 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:85:9 - undefined_class
+  error - Undefined name 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:90:22 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:91:21 - undefined_identifier
+  error - Undefined class 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:97:5 - undefined_class
+  error - Undefined class 'AnalyticsUserType' - lib\shared\services\analytics\presentation\providers\analytics_provider.dart:98:5 - undefined_class
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_data.dart' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:4:8 - uri_does_not_exist
+  error - Target of URI doesn't exist: 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_request.dart' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:5:8 - uri_does_not_exist
+  error - Undefined class 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:16:9 - undefined_class
+  error - Undefined class 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:29:3 - undefined_class
+  error - Undefined name 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:29:43 - undefined_identifier
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'int', is a potentially non-nullable type - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:43:7 - body_might_complete_normally
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:45:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:47:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:49:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:51:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:53:12 - undefined_identifier
+  error - The method 'AnalyticsRequest' isn't defined for the type '_AdvancedAnalyticsScreenState' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:62:9 - undefined_method
+  error - The name 'AnalyticsTimeRange' isn't a type, so it can't be used as a type argument - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:73:27 - non_type_as_type_argument
+  error - Undefined name 'AnalyticsTimeRange' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:80:39 - undefined_identifier
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'List<Tab>', is a potentially non-nullable type - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:129:13 - body_might_complete_normally
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:131:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:140:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:146:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:153:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:159:12 - undefined_identifier
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'List<Widget>', is a potentially non-nullable type - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:170:16 - body_might_complete_normally
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:170:31 - undefined_class
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:172:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:181:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:187:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:194:12 - undefined_identifier
+  error - Undefined name 'AnalyticsUserType' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:200:12 - undefined_identifier
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:212:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:263:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:286:36 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:310:35 - undefined_class
+  error - The method 'PerformanceMetrics' isn't defined for the type '_AdvancedAnalyticsScreenState' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:362:19 - undefined_method
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:377:32 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:400:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:423:36 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:447:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:499:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:522:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:546:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:595:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:618:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:641:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:664:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:712:36 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:748:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:749:37 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:750:36 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:751:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:752:37 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:753:41 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:754:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:755:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:756:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:757:32 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:758:37 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:759:44 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:761:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:762:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:763:41 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:764:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:765:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:766:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:767:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:768:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:769:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:770:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:771:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:772:32 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:773:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:774:39 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:775:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:776:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:777:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:778:27 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:779:33 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:780:30 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:781:32 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:782:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:783:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:811:32 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:823:31 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:835:29 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:847:35 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:859:34 - undefined_class
+  error - Undefined class 'AnalyticsData' - lib\shared\services\analytics\presentation\screens\advanced_analytics_screen.dart:871:32 - undefined_class
+  error - The getter 'newCustomers' isn't defined for the type 'CustomerInsights' - lib\shared\services\analytics\presentation\widgets\customer_insights_widget.dart:30:30 - undefined_getter
+  error - The getter 'returningCustomers' isn't defined for the type 'CustomerInsights' - lib\shared\services\analytics\presentation\widgets\customer_insights_widget.dart:40:30 - undefined_getter
+  error - The getter 'customerRetentionRate' isn't defined for the type 'CustomerInsights' - lib\shared\services\analytics\presentation\widgets\customer_insights_widget.dart:54:33 - undefined_getter
+  error - The getter 'averageCustomerLifetimeValue' isn't defined for the type 'CustomerInsights' - lib\shared\services\analytics\presentation\widgets\customer_insights_widget.dart:64:33 - undefined_getter
+  error - The getter 'averageSpending' isn't defined for the type 'CustomerSegment' - lib\shared\services\analytics\presentation\widgets\customer_insights_widget.dart:162:26 - undefined_getter
+  error - The getter 'orderFulfillmentRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:27:26 - undefined_getter
+  error - The getter 'orderFulfillmentRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:29:46 - undefined_getter
+  error - The getter 'orderFulfillmentRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:30:23 - undefined_getter
+  error - The getter 'averageDeliveryTime' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:36:26 - undefined_getter
+  error - The getter 'averageDeliveryTime' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:38:48 - undefined_getter
+  error - The getter 'customerSatisfactionScore' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:45:26 - undefined_getter
+  error - The getter 'customerSatisfactionScore' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:47:48 - undefined_getter
+  error - The getter 'customerSatisfactionScore' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:48:23 - undefined_getter
+  error - The getter 'totalDeliveries' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:54:23 - undefined_getter
+  error - The getter 'cancelledOrders' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:63:23 - undefined_getter
+  error - The getter 'refundRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:72:26 - undefined_getter
+  error - The getter 'refundRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:74:52 - undefined_getter
+  error - The getter 'refundRate' isn't defined for the type 'PerformanceMetrics' - lib\shared\services\analytics\presentation\widgets\performance_metrics_widget.dart:75:29 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:51:26 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:51:46 - undefined_getter
+  error - The argument type 'Map<String, dynamic>?' can't be assigned to the parameter type 'List<InvalidType>'.  - lib\shared\services\cart\data\cart_repository_impl.dart:53:15 - argument_type_not_assignable
+  error - The argument type 'Map<String, dynamic>?' can't be assigned to the parameter type 'List<InvalidType>'.  - lib\shared\services\cart\data\cart_repository_impl.dart:54:15 - argument_type_not_assignable
+  error - The named parameter 'itemTotal' isn't defined - lib\shared\services\cart\data\cart_repository_impl.dart:64:11 - undefined_named_parameter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:64:35 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:80:30 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:81:32 - undefined_getter
+  error - The named parameter 'itemTotal' isn't defined - lib\shared\services\cart\data\cart_repository_impl.dart:142:9 - undefined_named_parameter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:142:25 - undefined_getter
+  error - The getter 'itemTotal' isn't defined for the type 'CartItem' - lib\shared\services\cart\data\cart_repository_impl.dart:221:24 - undefined_getter
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\data\cart_repository_impl.dart:249:10 - non_type_as_type_argument
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\data\cart_repository_impl.dart:250:10 - non_type_as_type_argument
+   info - Use 'isNotEmpty' rather than negating the result of 'isEmpty' - lib\shared\services\cart\presentation\screens\cart_screen.dart:56:42 - prefer_is_not_empty
+   info - Use 'isNotEmpty' rather than negating the result of 'isEmpty' - lib\shared\services\cart\presentation\screens\cart_screen.dart:67:55 - prefer_is_not_empty
+warning - Unused import: 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:4:8 - unused_import
+  error - The property 'isNotEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:57:41 - unchecked_use_of_nullable_value
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:77:31 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:127:20 - undefined_getter
+  error - The getter 'menuItem' isn't defined for the type 'CartItem' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:138:23 - undefined_getter
+  error - The property 'isNotEmpty' can't be unconditionally accessed because the receiver can be 'null' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:144:37 - unchecked_use_of_nullable_value
+  error - Spread elements in list or set literals must implement 'Iterable' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:177:14 - not_iterable_spread
+  error - The method 'map' can't be unconditionally invoked because the receiver can be 'null' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:177:38 - unchecked_use_of_nullable_value
+  error - The argument type 'MapEntry<_, _> Function(String)' can't be assigned to the parameter type 'MapEntry<dynamic, dynamic> Function(String, dynamic)'.  - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:177:42 - argument_type_not_assignable
+  error - The getter 'options' isn't defined for the type 'String' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:178:47 - undefined_getter
+  error - The getter 'options' isn't defined for the type 'String' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:181:51 - undefined_getter
+  error - The returned type 'Padding' isn't returnable from a 'MapEntry<_, _>' function, as required by the closure's context - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:186:20 - return_of_invalid_type_from_closure
+  error - The getter 'customizationName' isn't defined for the type 'String' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:192:40 - undefined_getter
+  error - The getter 'totalPrice' isn't defined for the type 'CartItem' - lib\shared\services\cart\presentation\widgets\cart_item_card.dart:311:23 - undefined_getter
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\providers\cart_provider.dart:39:10 - non_type_as_type_argument
+  error - The named parameter 'menuItemId' is required, but there's no corresponding argument - lib\shared\services\cart\providers\cart_provider.dart:61:22 - missing_required_argument
+  error - The named parameter 'name' is required, but there's no corresponding argument - lib\shared\services\cart\providers\cart_provider.dart:61:22 - missing_required_argument
+  error - The named parameter 'price' is required, but there's no corresponding argument - lib\shared\services\cart\providers\cart_provider.dart:61:22 - missing_required_argument
+  error - The named parameter 'total' is required, but there's no corresponding argument - lib\shared\services\cart\providers\cart_provider.dart:61:22 - missing_required_argument
+  error - The named parameter 'menuItem' isn't defined - lib\shared\services\cart\providers\cart_provider.dart:63:7 - undefined_named_parameter
+  error - The argument type 'List<InvalidType>' can't be assigned to the parameter type 'Map<String, dynamic>?'.  - lib\shared\services\cart\providers\cart_provider.dart:65:23 - argument_type_not_assignable
+  error - The named parameter 'itemTotal' isn't defined - lib\shared\services\cart\providers\cart_provider.dart:67:7 - undefined_named_parameter
+  error - The named parameter 'addedAt' isn't defined - lib\shared\services\cart\providers\cart_provider.dart:68:7 - undefined_named_parameter
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\providers\cart_provider.dart:129:10 - non_type_as_type_argument
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\providers\cart_provider.dart:151:10 - non_type_as_type_argument
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\providers\cart_provider.dart:179:19 - non_type_as_type_argument
+  error - The name 'SelectedCustomization' isn't a type, so it can't be used as a type argument - lib\shared\services\cart\providers\cart_provider.dart:207:14 - non_type_as_type_argument
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\orders\presentation\widgets\delivery_address_card.dart:93:36 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\orders\presentation\widgets\delivery_address_card.dart:94:63 - dead_null_aware_expression
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\orders\presentation\widgets\order_card.dart:164:48 - unnecessary_non_null_assertion
+  error - Target of URI doesn't exist: 'secure_storage_service.dart' - lib\shared\services\security\biometric_auth_service.dart:8:8 - uri_does_not_exist
+  error - Undefined class 'SecureStorageService' - lib\shared\services\security\biometric_auth_service.dart:13:9 - undefined_class
+  error - Undefined name 'secureStorageServiceProvider' - lib\shared\services\security\biometric_auth_service.dart:227:35 - undefined_identifier
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:218:54 - invalid_null_aware_operator
+warning - The operand can't be 'null', so the condition is always 'true' - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:354:37 - unnecessary_null_comparison
+warning - The operand can't be 'null', so the condition is always 'true' - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:355:55 - unnecessary_null_comparison
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:356:36 - unnecessary_non_null_assertion
+warning - The '!' will have no effect because the receiver can't be null - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:356:68 - unnecessary_non_null_assertion
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:451:51 - invalid_null_aware_operator
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:469:49 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:475:78 - dead_null_aware_expression
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:475:110 - dead_null_aware_expression
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\services\subscription\presentation\screens\subscription_management_screen.dart:477:37 - invalid_null_aware_operator
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\shared\services\wallet\presentation\screens\top_up_screen.dart:70:58 - invalid_null_aware_operator
+
+320 issues found. (ran in 14.3s)

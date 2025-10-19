@@ -2,6 +2,7 @@
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/models/live_order.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart' as shared_models;
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/enums.dart';
 
 class OrderDetailCard extends StatelessWidget {
   final LiveOrder order;
