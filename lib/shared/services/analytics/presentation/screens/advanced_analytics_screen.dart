@@ -5,10 +5,10 @@ import 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics
 import 'package:eatfast_mobile/shared/services/analytics/domain/models/analytics_request.dart';
 import '../providers/analytics_provider.dart';
 import '../widgets/analytics_card.dart';
-import '../widgets/revenue_chart.dart';
-import '../widgets/order_trends_chart.dart';
-import '../widgets/customer_insights_widget.dart';
-import '../widgets/performance_metrics_widget.dart';
+// import '../widgets/revenue_chart.dart';
+// import '../widgets/order_trends_chart.dart';
+// import '../widgets/customer_insights_widget.dart';
+// import '../widgets/performance_metrics_widget.dart';
 import 'package:eatfast_mobile/shared/widgets/common/loading_widget.dart';
 import 'package:eatfast_mobile/shared/widgets/common/error_display_widget.dart';
 
@@ -220,32 +220,28 @@ class _AdvancedAnalyticsScreenState
             _buildKPIGrid([
               KPIData(
                 title: 'Commandes totales',
-                value:
-                    analytics.customerMetrics?.totalOrders?.toString() ?? '0',
+                value: (analytics.customerMetrics['totalOrders'] as num?)?.toString() ?? '0',
                 icon: Icons.shopping_cart,
                 color: Colors.blue,
-                trend: analytics.customerMetrics?.ordersTrend,
+                trend: analytics.customerMetrics['ordersTrend'] as double?,
               ),
               KPIData(
                 title: 'Montant dépensé',
-                value:
-                    '${analytics.customerMetrics?.totalSpent?.toStringAsFixed(0) ?? '0'} XAF',
+                value: '${(analytics.customerMetrics['totalSpent'] as num?)?.toStringAsFixed(0) ?? '0'} XAF',
                 icon: Icons.attach_money,
                 color: Colors.green,
-                trend: analytics.customerMetrics?.spendingTrend,
+                trend: analytics.customerMetrics['spendingTrend'] as double?,
               ),
               KPIData(
                 title: 'Commande moyenne',
-                value:
-                    '${analytics.customerMetrics?.averageOrderValue?.toStringAsFixed(0) ?? '0'} XAF',
+                value: '${(analytics.customerMetrics['averageOrderValue'] as num?)?.toStringAsFixed(0) ?? '0'} XAF',
                 icon: Icons.analytics,
                 color: Colors.orange,
-                trend: analytics.customerMetrics?.averageOrderTrend,
+                trend: analytics.customerMetrics['averageOrderTrend'] as double?,
               ),
               KPIData(
                 title: 'Points fidélité',
-                value:
-                    analytics.customerMetrics?.loyaltyPoints?.toString() ?? '0',
+                value: (analytics.customerMetrics['loyaltyPoints'] as num?)?.toString() ?? '0',
                 icon: Icons.star,
                 color: Colors.purple,
               ),
@@ -273,7 +269,14 @@ class _AdvancedAnalyticsScreenState
             ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          OrderTrendsChart(trendData: analytics.orderTrends),
+          // TODO: Fix type conversion from List<Map<String, dynamic>> to List<OrderTrendPoint>
+          // OrderTrendsChart(trendData: analytics.orderTrends),
+          SizedBox(
+            height: 200,
+            child: Center(
+              child: Text('Order Trends Chart - Data conversion needed'),
+            ),
+          ),
           const SizedBox(height: 24),
           _buildOrderStatusBreakdown(analytics),
           const SizedBox(height: 24),
@@ -318,55 +321,52 @@ class _AdvancedAnalyticsScreenState
             _buildKPIGrid([
               KPIData(
                 title: 'Revenus',
-                value:
-                    '${analytics.restaurantMetrics?.totalRevenue?.toStringAsFixed(0) ?? '0'} XAF',
+                value: '${(analytics.restaurantMetrics['totalRevenue'] as num?)?.toStringAsFixed(0) ?? '0'} XAF',
                 icon: Icons.monetization_on,
                 color: Colors.green,
-                trend: analytics.restaurantMetrics?.revenueTrend,
+                trend: analytics.restaurantMetrics['revenueTrend'] as double?,
               ),
               KPIData(
                 title: 'Commandes',
-                value:
-                    analytics.restaurantMetrics?.totalOrders.toString() ?? '0',
+                value: (analytics.restaurantMetrics['totalOrders'] as num?)?.toString() ?? '0',
                 icon: Icons.receipt,
                 color: Colors.blue,
-                trend: analytics.restaurantMetrics?.ordersTrend,
+                trend: analytics.restaurantMetrics['ordersTrend'] as double?,
               ),
               KPIData(
                 title: 'Note moyenne',
-                value:
-                    analytics.restaurantMetrics?.averageRating?.toStringAsFixed(
-                      1,
-                    ) ??
-                    '0.0',
+                value: (analytics.restaurantMetrics['averageRating'] as num?)?.toStringAsFixed(1) ?? '0.0',
                 icon: Icons.star,
                 color: Colors.orange,
-                trend: analytics.restaurantMetrics?.ratingTrend,
+                trend: analytics.restaurantMetrics['ratingTrend'] as double?,
               ),
               KPIData(
                 title: 'Clients uniques',
-                value:
-                    analytics.restaurantMetrics?.uniqueCustomers.toString() ??
-                    '0',
+                value: (analytics.restaurantMetrics['uniqueCustomers'] as num?)?.toString() ?? '0',
                 icon: Icons.people,
                 color: Colors.purple,
-                trend: analytics.restaurantMetrics?.customersTrend,
+                trend: analytics.restaurantMetrics['customersTrend'] as double?,
               ),
             ]),
             const SizedBox(height: 24),
-            RevenueChart(revenueData: analytics.revenueData),
+            // TODO: Fix type conversion for RevenueChart
+            // RevenueChart(revenueData: analytics.revenueData),
+            SizedBox(
+              height: 200,
+              child: Center(
+                child: Text('Revenue Chart - Data conversion needed'),
+              ),
+            ),
             const SizedBox(height: 24),
-            PerformanceMetricsWidget(
-              metrics:
-                  analytics.driverMetrics ??
-                  {
-                    'orderFulfillmentRate': 0.0,
-                    'averageDeliveryTime': 0.0,
-                    'customerSatisfactionScore': 0.0,
-                    'totalDeliveries': 0,
-                    'cancelledOrders': 0,
-                    'refundRate': 0.0,
-                  },
+            // TODO: Fix PerformanceMetricsWidget type conversion
+            // PerformanceMetricsWidget(
+            //   metrics: analytics.driverMetrics ?? {},
+            // ),
+            SizedBox(
+              height: 150,
+              child: Center(
+                child: Text('Performance Metrics Widget - Type conversion needed'),
+              ),
             ),
           ],
         ),
@@ -433,7 +433,14 @@ class _AdvancedAnalyticsScreenState
             ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          CustomerInsightsWidget(insights: analytics.customerInsights),
+          // TODO: Fix CustomerInsightsWidget type conversion
+          // CustomerInsightsWidget(insights: analytics.customerInsights),
+          SizedBox(
+            height: 150,
+            child: Center(
+              child: Text('Customer Insights Widget - Type conversion needed'),
+            ),
+          ),
           const SizedBox(height: 24),
           _buildCustomerRetention(analytics),
           const SizedBox(height: 24),
@@ -455,33 +462,28 @@ class _AdvancedAnalyticsScreenState
             _buildKPIGrid([
               KPIData(
                 title: 'Livraisons',
-                value:
-                    analytics.driverMetrics?.totalDeliveries.toString() ?? '0',
+                value: (analytics.driverMetrics['totalDeliveries'] as num?)?.toString() ?? '0',
                 icon: Icons.local_shipping,
                 color: Colors.blue,
-                trend: analytics.driverMetrics?.deliveriesTrend,
+                trend: analytics.driverMetrics['deliveriesTrend'] as double?,
               ),
               KPIData(
                 title: 'Revenus',
-                value:
-                    '${analytics.driverMetrics?.totalEarnings?.toStringAsFixed(0) ?? '0'} XAF',
+                value: '${(analytics.driverMetrics['totalEarnings'] as num?)?.toStringAsFixed(0) ?? '0'} XAF',
                 icon: Icons.attach_money,
                 color: Colors.green,
-                trend: analytics.driverMetrics?.earningsTrend,
+                trend: analytics.driverMetrics['earningsTrend'] as double?,
               ),
               KPIData(
                 title: 'Note moyenne',
-                value:
-                    analytics.driverMetrics?.avgRating?.toStringAsFixed(1) ??
-                    '0.0',
+                value: (analytics.driverMetrics['avgRating'] as num?)?.toStringAsFixed(1) ?? '0.0',
                 icon: Icons.star,
                 color: Colors.orange,
                 trend: null,
               ),
               KPIData(
                 title: 'Temps actif',
-                value:
-                    '${analytics.driverMetrics?.activeHours?.toStringAsFixed(1) ?? '0.0'}h',
+                value: '${(analytics.driverMetrics['activeHours'] as num?)?.toStringAsFixed(1) ?? '0.0'}h',
                 icon: Icons.access_time,
                 color: Colors.purple,
               ),
@@ -554,25 +556,24 @@ class _AdvancedAnalyticsScreenState
             _buildKPIGrid([
               KPIData(
                 title: 'Revenus totaux',
-                value:
-                    '${analytics.adminMetrics?.totalRevenue?.toStringAsFixed(0) ?? '0'} XAF',
+                value: '${(analytics.adminMetrics['totalRevenue'] as num?)?.toStringAsFixed(0) ?? '0'} XAF',
                 icon: Icons.monetization_on,
                 color: Colors.green,
-                trend: analytics.adminMetrics?.revenueTrend,
+                trend: analytics.adminMetrics['revenueTrend'] as double?,
               ),
               KPIData(
                 title: 'Commandes totales',
-                value: analytics.adminMetrics?.totalOrders.toString() ?? '0',
+                value: (analytics.adminMetrics['totalOrders'] as num?)?.toString() ?? '0',
                 icon: Icons.receipt,
                 color: Colors.blue,
-                trend: analytics.adminMetrics?.ordersTrend,
+                trend: analytics.adminMetrics['ordersTrend'] as double?,
               ),
               KPIData(
                 title: 'Utilisateurs actifs',
-                value: analytics.activeUsers.toString(),
+                value: (analytics.activeUsers['count'] as num?)?.toString() ?? '0',
                 icon: Icons.people,
                 color: Colors.orange,
-                trend: analytics.adminMetrics?.customersTrend,
+                trend: analytics.adminMetrics['customersTrend'] as double?,
               ),
               KPIData(
                 title: 'Restaurants',
