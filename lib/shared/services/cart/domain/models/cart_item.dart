@@ -1,3 +1,36 @@
+import 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
+
+/// Selected customization for a cart item
+class SelectedCustomization {
+  final String customizationName;
+  final List<CustomizationOption> options;
+
+  const SelectedCustomization({
+    required this.customizationName,
+    required this.options,
+  });
+
+  factory SelectedCustomization.fromJson(Map<String, dynamic> json) {
+    return SelectedCustomization(
+      customizationName: json['customizationName'] as String,
+      options:
+          (json['options'] as List<dynamic>?)
+              ?.map(
+                (e) => CustomizationOption.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'customizationName': customizationName,
+      'options': options.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
 /// Cart item model
 class CartItem {
   final String id;
@@ -10,9 +43,17 @@ class CartItem {
   final String? imageUrl;
   final String? restaurantId;
   final String? restaurantName;
-  final Map<String, dynamic>? customizations;
+  final List<SelectedCustomization> customizations;
   final List<String>? selectedOptions;
   final String? specialInstructions;
+  final MenuItem? menuItem;
+  final DateTime? addedAt;
+
+  // Convenience getter for itemTotal (alias for total)
+  double get itemTotal => total;
+  
+  // Convenience getter for totalPrice (alias for total)
+  double get totalPrice => total;
 
   const CartItem({
     required this.id,
@@ -25,9 +66,11 @@ class CartItem {
     this.imageUrl,
     this.restaurantId,
     this.restaurantName,
-    this.customizations,
+    this.customizations = const [],
     this.selectedOptions,
     this.specialInstructions,
+    this.menuItem,
+    this.addedAt,
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
@@ -42,10 +85,23 @@ class CartItem {
       imageUrl: json['imageUrl'] as String?,
       restaurantId: json['restaurantId'] as String?,
       restaurantName: json['restaurantName'] as String?,
-      customizations: json['customizations'] as Map<String, dynamic>?,
+      customizations:
+          (json['customizations'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    SelectedCustomization.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          [],
       selectedOptions: (json['selectedOptions'] as List<dynamic>?)
           ?.cast<String>(),
       specialInstructions: json['specialInstructions'] as String?,
+      menuItem: json['menuItem'] != null
+          ? MenuItem.fromJson(json['menuItem'] as Map<String, dynamic>)
+          : null,
+      addedAt: json['addedAt'] != null
+          ? DateTime.parse(json['addedAt'] as String)
+          : null,
     );
   }
 
@@ -61,10 +117,12 @@ class CartItem {
       if (imageUrl != null) 'imageUrl': imageUrl,
       if (restaurantId != null) 'restaurantId': restaurantId,
       if (restaurantName != null) 'restaurantName': restaurantName,
-      if (customizations != null) 'customizations': customizations,
+      'customizations': customizations.map((e) => e.toJson()).toList(),
       if (selectedOptions != null) 'selectedOptions': selectedOptions,
       if (specialInstructions != null)
         'specialInstructions': specialInstructions,
+      if (menuItem != null) 'menuItem': menuItem!.toJson(),
+      if (addedAt != null) 'addedAt': addedAt!.toIso8601String(),
     };
   }
 
@@ -79,9 +137,11 @@ class CartItem {
     String? imageUrl,
     String? restaurantId,
     String? restaurantName,
-    Map<String, dynamic>? customizations,
+    List<SelectedCustomization>? customizations,
     List<String>? selectedOptions,
     String? specialInstructions,
+    MenuItem? menuItem,
+    DateTime? addedAt,
   }) {
     return CartItem(
       id: id ?? this.id,
@@ -97,6 +157,8 @@ class CartItem {
       customizations: customizations ?? this.customizations,
       selectedOptions: selectedOptions ?? this.selectedOptions,
       specialInstructions: specialInstructions ?? this.specialInstructions,
+      menuItem: menuItem ?? this.menuItem,
+      addedAt: addedAt ?? this.addedAt,
     );
   }
 }

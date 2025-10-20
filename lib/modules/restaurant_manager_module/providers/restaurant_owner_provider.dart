@@ -7,6 +7,7 @@ import 'package:eatfast_mobile/shared/services/api/api_client.dart';
 import 'package:eatfast_mobile/shared/models/exports.dart' as shared_models;
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart'
     as local_models;
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_item_performance.dart';
 
 // Repository provider
 final restaurantOwnerRepositoryProvider = Provider<RestaurantOwnerRepository>((
@@ -29,10 +30,11 @@ final restaurantOwnerProvider =
 
 // Live Orders Provider (Family) - Returns AsyncValue
 final liveOrdersProvider =
-    StateNotifierProvider.family<LiveOrdersNotifier, AsyncValue<List<LiveOrder>>, String>((
-      ref,
-      restaurantId,
-    ) {
+    StateNotifierProvider.family<
+      LiveOrdersNotifier,
+      AsyncValue<List<LiveOrder>>,
+      String
+    >((ref, restaurantId) {
       final repository = ref.watch(restaurantOwnerRepositoryProvider);
       return LiveOrdersNotifier(repository, restaurantId);
     });
@@ -58,17 +60,18 @@ final dashboardStatsProvider = FutureProvider.family<RestaurantStats, String>((
 });
 
 // Item Performance Provider
-final itemPerformanceProvider = FutureProvider.family<List<local_models.MenuItemPerformance>, String>((
-  ref,
-  restaurantId,
-) async {
-  final repository = ref.watch(restaurantOwnerRepositoryProvider);
-  final result = await repository.getItemPerformance(restaurantId);
-  return result.when(
-    success: (performance) => performance,
-    failure: (error) => throw Exception(error),
-  );
-});
+final itemPerformanceProvider =
+    FutureProvider.family<List<MenuItemPerformance>, String>((
+      ref,
+      restaurantId,
+    ) async {
+      final repository = ref.watch(restaurantOwnerRepositoryProvider);
+      final result = await repository.getItemPerformance(restaurantId);
+      return result.when(
+        success: (performance) => performance,
+        failure: (error) => throw Exception(error),
+      );
+    });
 
 // ============================================================================
 // State Classes
@@ -197,7 +200,8 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
   }
 
   // Wallet management methods
-  Future<shared_models.Result<Map<String, dynamic>, String>> getWalletBalance() async {
+  Future<shared_models.Result<Map<String, dynamic>, String>>
+  getWalletBalance() async {
     try {
       return await _repository.getWalletBalance(restaurantId);
     } catch (e) {
@@ -205,7 +209,8 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
     }
   }
 
-  Future<shared_models.Result<List<Map<String, dynamic>>, String>> getWalletTransactions() async {
+  Future<shared_models.Result<List<Map<String, dynamic>>, String>>
+  getWalletTransactions() async {
     try {
       return await _repository.getWalletTransactions(restaurantId);
     } catch (e) {
@@ -213,9 +218,16 @@ class RestaurantOwnerNotifier extends StateNotifier<RestaurantOwnerState> {
     }
   }
 
-  Future<shared_models.Result<void, String>> requestWithdrawal(double amount, String description) async {
+  Future<shared_models.Result<void, String>> requestWithdrawal(
+    double amount,
+    String description,
+  ) async {
     try {
-      return await _repository.requestWithdrawal(restaurantId, amount, description);
+      return await _repository.requestWithdrawal(
+        restaurantId,
+        amount,
+        description,
+      );
     } catch (e) {
       return shared_models.Result.failure(e.toString());
     }
@@ -346,7 +358,8 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
   }
 
   // Menu item management methods
-  Future<shared_models.Result<local_models.MenuItemDetails, String>> createMenuItem(String categoryId, local_models.MenuItemDetails item) async {
+  Future<shared_models.Result<local_models.MenuItemDetails, String>>
+  createMenuItem(String categoryId, local_models.MenuItemDetails item) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await _repository.createMenuItem(categoryId, item);
@@ -368,7 +381,8 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<local_models.MenuItemDetails, String>> updateMenuItem(local_models.MenuItemDetails item) async {
+  Future<shared_models.Result<local_models.MenuItemDetails, String>>
+  updateMenuItem(local_models.MenuItemDetails item) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await _repository.updateMenuItem(item);
@@ -390,7 +404,9 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<void, String>> deleteMenuItem(String itemId) async {
+  Future<shared_models.Result<void, String>> deleteMenuItem(
+    String itemId,
+  ) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await _repository.deleteMenuItem(itemId);
@@ -412,10 +428,16 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<void, String>> toggleItemAvailability(String itemId, bool available) async {
+  Future<shared_models.Result<void, String>> toggleItemAvailability(
+    String itemId,
+    bool available,
+  ) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final result = await _repository.toggleItemAvailability(itemId, available);
+      final result = await _repository.toggleItemAvailability(
+        itemId,
+        available,
+      );
       return result.when(
         success: (_) async {
           await loadCategories();
@@ -434,10 +456,16 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<void, String>> bulkUpdateAvailability(List<String> itemIds, bool available) async {
+  Future<shared_models.Result<void, String>> bulkUpdateAvailability(
+    List<String> itemIds,
+    bool available,
+  ) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final result = await _repository.bulkUpdateAvailability(itemIds, available);
+      final result = await _repository.bulkUpdateAvailability(
+        itemIds,
+        available,
+      );
       return result.when(
         success: (_) async {
           await loadCategories();
@@ -456,7 +484,10 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<String, String>> uploadItemImage(String itemId, dynamic imageFile) async {
+  Future<shared_models.Result<String, String>> uploadItemImage(
+    String itemId,
+    dynamic imageFile,
+  ) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       // Convert dynamic imageFile to File if it's not already
@@ -484,14 +515,21 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<local_models.MenuCategory, String>> createMenuCategory(local_models.MenuCategory category) async {
+  Future<shared_models.Result<local_models.MenuCategory, String>>
+  createMenuCategory(local_models.MenuCategory category) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final result = await _repository.createMenuCategory(restaurantId, category);
+      final result = await _repository.createMenuCategory(
+        restaurantId,
+        category,
+      );
       return result.when(
         success: (createdCategory) {
           final updatedCategories = [...state.categories, createdCategory];
-          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          state = state.copyWith(
+            isLoading: false,
+            categories: updatedCategories,
+          );
           return shared_models.Result.success(createdCategory);
         },
         failure: (error) {
@@ -506,16 +544,24 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<local_models.MenuCategory, String>> updateMenuCategory(local_models.MenuCategory category) async {
+  Future<shared_models.Result<local_models.MenuCategory, String>>
+  updateMenuCategory(local_models.MenuCategory category) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await _repository.updateMenuCategory(category);
       return result.when(
         success: (updatedCategory) {
           final updatedCategories = state.categories
-              .map((c) => c.categoryId == updatedCategory.categoryId ? updatedCategory : c)
+              .map(
+                (c) => c.categoryId == updatedCategory.categoryId
+                    ? updatedCategory
+                    : c,
+              )
               .toList();
-          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          state = state.copyWith(
+            isLoading: false,
+            categories: updatedCategories,
+          );
           return shared_models.Result.success(updatedCategory);
         },
         failure: (error) {
@@ -530,7 +576,9 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
     }
   }
 
-  Future<shared_models.Result<void, String>> deleteMenuCategory(String categoryId) async {
+  Future<shared_models.Result<void, String>> deleteMenuCategory(
+    String categoryId,
+  ) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final result = await _repository.deleteMenuCategory(categoryId);
@@ -539,7 +587,10 @@ class MenuCategoriesNotifier extends StateNotifier<MenuCategoriesState> {
           final updatedCategories = state.categories
               .where((c) => c.categoryId != categoryId)
               .toList();
-          state = state.copyWith(isLoading: false, categories: updatedCategories);
+          state = state.copyWith(
+            isLoading: false,
+            categories: updatedCategories,
+          );
           return shared_models.Result.success(null);
         },
         failure: (error) {

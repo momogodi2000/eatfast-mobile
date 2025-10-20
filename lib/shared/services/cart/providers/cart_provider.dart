@@ -58,13 +58,22 @@ class CartNotifier extends StateNotifier<CartState> {
       }
     }
 
+    final itemTotal = _calculateItemTotal(menuItem, quantity, customizations);
+
     final cartItem = CartItem(
       id: '${menuItem.id}_${DateTime.now().millisecondsSinceEpoch}',
-      menuItem: menuItem,
+      menuItemId: menuItem.id,
+      name: menuItem.name,
+      description: menuItem.description,
       quantity: quantity,
+      price: menuItem.price,
+      total: itemTotal,
+      imageUrl: menuItem.imageUrl,
+      restaurantId: menuItem.restaurantId,
+      restaurantName: menuItem.name, // Using menuItem name as fallback
       customizations: customizations,
       specialInstructions: specialInstructions,
-      itemTotal: _calculateItemTotal(menuItem, quantity, customizations),
+      menuItem: menuItem,
       addedAt: DateTime.now(),
     );
 

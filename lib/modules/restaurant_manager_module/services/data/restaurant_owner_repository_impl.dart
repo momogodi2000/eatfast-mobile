@@ -7,6 +7,7 @@ import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domai
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/live_order.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart'
     as menu_mgmt;
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_item_performance.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/repositories/restaurant_owner_repository.dart';
 
 class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
@@ -381,7 +382,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
       );
 
       if (response.statusCode == 201) {
-        return Result.success(menu_mgmt.MenuItemDetails.fromJson(response.data['item']));
+        return Result.success(
+          menu_mgmt.MenuItemDetails.fromJson(response.data['item']),
+        );
       } else {
         return Result.failure('Erreur lors de la cr?ation de l\'article');
       }
@@ -401,7 +404,9 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
       );
 
       if (response.statusCode == 200) {
-        return Result.success(menu_mgmt.MenuItemDetails.fromJson(response.data['item']));
+        return Result.success(
+          menu_mgmt.MenuItemDetails.fromJson(response.data['item']),
+        );
       } else {
         return Result.failure('Erreur lors de la mise ? jour de l\'article');
       }
@@ -540,7 +545,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
   }
 
   @override
-  Future<Result<List<menu_mgmt.MenuItemPerformance>, String>> getItemPerformance(
+  Future<Result<List<MenuItemPerformance>, String>> getItemPerformance(
     String restaurantId,
   ) async {
     try {
@@ -553,7 +558,7 @@ class RestaurantOwnerRepositoryImpl implements RestaurantOwnerRepository {
             response.data['item_performance'] ??
             [];
         final performance = data
-            .map((json) => menu_mgmt.MenuItemPerformance.fromJson(json))
+            .map((json) => MenuItemPerformance.fromJson(json))
             .toList();
         return Result.success(performance);
       } else {

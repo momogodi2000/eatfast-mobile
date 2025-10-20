@@ -493,6 +493,10 @@ mixin _$CustomerInsights {
   List<CustomerSegment> get segments => throw _privateConstructorUsedError;
   Map<String, double> get demographics => throw _privateConstructorUsedError;
   List<String> get topPreferences => throw _privateConstructorUsedError;
+  int get newCustomers => throw _privateConstructorUsedError;
+  int get returningCustomers => throw _privateConstructorUsedError;
+  double get customerRetentionRate => throw _privateConstructorUsedError;
+  double get averageCustomerLifetimeValue => throw _privateConstructorUsedError;
 
   /// Serializes this CustomerInsights to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -513,7 +517,11 @@ abstract class $CustomerInsightsCopyWith<$Res> {
   $Res call(
       {List<CustomerSegment> segments,
       Map<String, double> demographics,
-      List<String> topPreferences});
+      List<String> topPreferences,
+      int newCustomers,
+      int returningCustomers,
+      double customerRetentionRate,
+      double averageCustomerLifetimeValue});
 }
 
 /// @nodoc
@@ -534,6 +542,10 @@ class _$CustomerInsightsCopyWithImpl<$Res, $Val extends CustomerInsights>
     Object? segments = null,
     Object? demographics = null,
     Object? topPreferences = null,
+    Object? newCustomers = null,
+    Object? returningCustomers = null,
+    Object? customerRetentionRate = null,
+    Object? averageCustomerLifetimeValue = null,
   }) {
     return _then(_value.copyWith(
       segments: null == segments
@@ -548,6 +560,22 @@ class _$CustomerInsightsCopyWithImpl<$Res, $Val extends CustomerInsights>
           ? _value.topPreferences
           : topPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      newCustomers: null == newCustomers
+          ? _value.newCustomers
+          : newCustomers // ignore: cast_nullable_to_non_nullable
+              as int,
+      returningCustomers: null == returningCustomers
+          ? _value.returningCustomers
+          : returningCustomers // ignore: cast_nullable_to_non_nullable
+              as int,
+      customerRetentionRate: null == customerRetentionRate
+          ? _value.customerRetentionRate
+          : customerRetentionRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      averageCustomerLifetimeValue: null == averageCustomerLifetimeValue
+          ? _value.averageCustomerLifetimeValue
+          : averageCustomerLifetimeValue // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -563,7 +591,11 @@ abstract class _$$CustomerInsightsImplCopyWith<$Res>
   $Res call(
       {List<CustomerSegment> segments,
       Map<String, double> demographics,
-      List<String> topPreferences});
+      List<String> topPreferences,
+      int newCustomers,
+      int returningCustomers,
+      double customerRetentionRate,
+      double averageCustomerLifetimeValue});
 }
 
 /// @nodoc
@@ -582,6 +614,10 @@ class __$$CustomerInsightsImplCopyWithImpl<$Res>
     Object? segments = null,
     Object? demographics = null,
     Object? topPreferences = null,
+    Object? newCustomers = null,
+    Object? returningCustomers = null,
+    Object? customerRetentionRate = null,
+    Object? averageCustomerLifetimeValue = null,
   }) {
     return _then(_$CustomerInsightsImpl(
       segments: null == segments
@@ -596,6 +632,22 @@ class __$$CustomerInsightsImplCopyWithImpl<$Res>
           ? _value._topPreferences
           : topPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      newCustomers: null == newCustomers
+          ? _value.newCustomers
+          : newCustomers // ignore: cast_nullable_to_non_nullable
+              as int,
+      returningCustomers: null == returningCustomers
+          ? _value.returningCustomers
+          : returningCustomers // ignore: cast_nullable_to_non_nullable
+              as int,
+      customerRetentionRate: null == customerRetentionRate
+          ? _value.customerRetentionRate
+          : customerRetentionRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      averageCustomerLifetimeValue: null == averageCustomerLifetimeValue
+          ? _value.averageCustomerLifetimeValue
+          : averageCustomerLifetimeValue // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -606,7 +658,11 @@ class _$CustomerInsightsImpl implements _CustomerInsights {
   const _$CustomerInsightsImpl(
       {required final List<CustomerSegment> segments,
       required final Map<String, double> demographics,
-      required final List<String> topPreferences})
+      required final List<String> topPreferences,
+      required this.newCustomers,
+      required this.returningCustomers,
+      required this.customerRetentionRate,
+      required this.averageCustomerLifetimeValue})
       : _segments = segments,
         _demographics = demographics,
         _topPreferences = topPreferences;
@@ -639,8 +695,17 @@ class _$CustomerInsightsImpl implements _CustomerInsights {
   }
 
   @override
+  final int newCustomers;
+  @override
+  final int returningCustomers;
+  @override
+  final double customerRetentionRate;
+  @override
+  final double averageCustomerLifetimeValue;
+
+  @override
   String toString() {
-    return 'CustomerInsights(segments: $segments, demographics: $demographics, topPreferences: $topPreferences)';
+    return 'CustomerInsights(segments: $segments, demographics: $demographics, topPreferences: $topPreferences, newCustomers: $newCustomers, returningCustomers: $returningCustomers, customerRetentionRate: $customerRetentionRate, averageCustomerLifetimeValue: $averageCustomerLifetimeValue)';
   }
 
   @override
@@ -652,7 +717,17 @@ class _$CustomerInsightsImpl implements _CustomerInsights {
             const DeepCollectionEquality()
                 .equals(other._demographics, _demographics) &&
             const DeepCollectionEquality()
-                .equals(other._topPreferences, _topPreferences));
+                .equals(other._topPreferences, _topPreferences) &&
+            (identical(other.newCustomers, newCustomers) ||
+                other.newCustomers == newCustomers) &&
+            (identical(other.returningCustomers, returningCustomers) ||
+                other.returningCustomers == returningCustomers) &&
+            (identical(other.customerRetentionRate, customerRetentionRate) ||
+                other.customerRetentionRate == customerRetentionRate) &&
+            (identical(other.averageCustomerLifetimeValue,
+                    averageCustomerLifetimeValue) ||
+                other.averageCustomerLifetimeValue ==
+                    averageCustomerLifetimeValue));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -661,7 +736,11 @@ class _$CustomerInsightsImpl implements _CustomerInsights {
       runtimeType,
       const DeepCollectionEquality().hash(_segments),
       const DeepCollectionEquality().hash(_demographics),
-      const DeepCollectionEquality().hash(_topPreferences));
+      const DeepCollectionEquality().hash(_topPreferences),
+      newCustomers,
+      returningCustomers,
+      customerRetentionRate,
+      averageCustomerLifetimeValue);
 
   /// Create a copy of CustomerInsights
   /// with the given fields replaced by the non-null parameter values.
@@ -682,9 +761,14 @@ class _$CustomerInsightsImpl implements _CustomerInsights {
 
 abstract class _CustomerInsights implements CustomerInsights {
   const factory _CustomerInsights(
-      {required final List<CustomerSegment> segments,
-      required final Map<String, double> demographics,
-      required final List<String> topPreferences}) = _$CustomerInsightsImpl;
+          {required final List<CustomerSegment> segments,
+          required final Map<String, double> demographics,
+          required final List<String> topPreferences,
+          required final int newCustomers,
+          required final int returningCustomers,
+          required final double customerRetentionRate,
+          required final double averageCustomerLifetimeValue}) =
+      _$CustomerInsightsImpl;
 
   factory _CustomerInsights.fromJson(Map<String, dynamic> json) =
       _$CustomerInsightsImpl.fromJson;
@@ -695,6 +779,14 @@ abstract class _CustomerInsights implements CustomerInsights {
   Map<String, double> get demographics;
   @override
   List<String> get topPreferences;
+  @override
+  int get newCustomers;
+  @override
+  int get returningCustomers;
+  @override
+  double get customerRetentionRate;
+  @override
+  double get averageCustomerLifetimeValue;
 
   /// Create a copy of CustomerInsights
   /// with the given fields replaced by the non-null parameter values.
@@ -713,7 +805,7 @@ mixin _$CustomerSegment {
   String get name => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
   double get percentage => throw _privateConstructorUsedError;
-  double get avgOrderValue => throw _privateConstructorUsedError;
+  double get averageSpending => throw _privateConstructorUsedError;
 
   /// Serializes this CustomerSegment to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -731,7 +823,8 @@ abstract class $CustomerSegmentCopyWith<$Res> {
           CustomerSegment value, $Res Function(CustomerSegment) then) =
       _$CustomerSegmentCopyWithImpl<$Res, CustomerSegment>;
   @useResult
-  $Res call({String name, int count, double percentage, double avgOrderValue});
+  $Res call(
+      {String name, int count, double percentage, double averageSpending});
 }
 
 /// @nodoc
@@ -752,7 +845,7 @@ class _$CustomerSegmentCopyWithImpl<$Res, $Val extends CustomerSegment>
     Object? name = null,
     Object? count = null,
     Object? percentage = null,
-    Object? avgOrderValue = null,
+    Object? averageSpending = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -767,9 +860,9 @@ class _$CustomerSegmentCopyWithImpl<$Res, $Val extends CustomerSegment>
           ? _value.percentage
           : percentage // ignore: cast_nullable_to_non_nullable
               as double,
-      avgOrderValue: null == avgOrderValue
-          ? _value.avgOrderValue
-          : avgOrderValue // ignore: cast_nullable_to_non_nullable
+      averageSpending: null == averageSpending
+          ? _value.averageSpending
+          : averageSpending // ignore: cast_nullable_to_non_nullable
               as double,
     ) as $Val);
   }
@@ -783,7 +876,8 @@ abstract class _$$CustomerSegmentImplCopyWith<$Res>
       __$$CustomerSegmentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int count, double percentage, double avgOrderValue});
+  $Res call(
+      {String name, int count, double percentage, double averageSpending});
 }
 
 /// @nodoc
@@ -802,7 +896,7 @@ class __$$CustomerSegmentImplCopyWithImpl<$Res>
     Object? name = null,
     Object? count = null,
     Object? percentage = null,
-    Object? avgOrderValue = null,
+    Object? averageSpending = null,
   }) {
     return _then(_$CustomerSegmentImpl(
       name: null == name
@@ -817,9 +911,9 @@ class __$$CustomerSegmentImplCopyWithImpl<$Res>
           ? _value.percentage
           : percentage // ignore: cast_nullable_to_non_nullable
               as double,
-      avgOrderValue: null == avgOrderValue
-          ? _value.avgOrderValue
-          : avgOrderValue // ignore: cast_nullable_to_non_nullable
+      averageSpending: null == averageSpending
+          ? _value.averageSpending
+          : averageSpending // ignore: cast_nullable_to_non_nullable
               as double,
     ));
   }
@@ -832,7 +926,7 @@ class _$CustomerSegmentImpl implements _CustomerSegment {
       {required this.name,
       required this.count,
       required this.percentage,
-      required this.avgOrderValue});
+      required this.averageSpending});
 
   factory _$CustomerSegmentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerSegmentImplFromJson(json);
@@ -844,11 +938,11 @@ class _$CustomerSegmentImpl implements _CustomerSegment {
   @override
   final double percentage;
   @override
-  final double avgOrderValue;
+  final double averageSpending;
 
   @override
   String toString() {
-    return 'CustomerSegment(name: $name, count: $count, percentage: $percentage, avgOrderValue: $avgOrderValue)';
+    return 'CustomerSegment(name: $name, count: $count, percentage: $percentage, averageSpending: $averageSpending)';
   }
 
   @override
@@ -860,14 +954,14 @@ class _$CustomerSegmentImpl implements _CustomerSegment {
             (identical(other.count, count) || other.count == count) &&
             (identical(other.percentage, percentage) ||
                 other.percentage == percentage) &&
-            (identical(other.avgOrderValue, avgOrderValue) ||
-                other.avgOrderValue == avgOrderValue));
+            (identical(other.averageSpending, averageSpending) ||
+                other.averageSpending == averageSpending));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, count, percentage, avgOrderValue);
+      Object.hash(runtimeType, name, count, percentage, averageSpending);
 
   /// Create a copy of CustomerSegment
   /// with the given fields replaced by the non-null parameter values.
@@ -891,7 +985,7 @@ abstract class _CustomerSegment implements CustomerSegment {
       {required final String name,
       required final int count,
       required final double percentage,
-      required final double avgOrderValue}) = _$CustomerSegmentImpl;
+      required final double averageSpending}) = _$CustomerSegmentImpl;
 
   factory _CustomerSegment.fromJson(Map<String, dynamic> json) =
       _$CustomerSegmentImpl.fromJson;
@@ -903,7 +997,7 @@ abstract class _CustomerSegment implements CustomerSegment {
   @override
   double get percentage;
   @override
-  double get avgOrderValue;
+  double get averageSpending;
 
   /// Create a copy of CustomerSegment
   /// with the given fields replaced by the non-null parameter values.
@@ -1110,6 +1204,12 @@ mixin _$PerformanceMetrics {
   double get customerSatisfaction => throw _privateConstructorUsedError;
   double get orderAccuracy => throw _privateConstructorUsedError;
   PerformanceStatus get status => throw _privateConstructorUsedError;
+  double get orderFulfillmentRate => throw _privateConstructorUsedError;
+  double get averageDeliveryTime => throw _privateConstructorUsedError;
+  double get customerSatisfactionScore => throw _privateConstructorUsedError;
+  int get totalDeliveries => throw _privateConstructorUsedError;
+  int get cancelledOrders => throw _privateConstructorUsedError;
+  double get refundRate => throw _privateConstructorUsedError;
 
   /// Serializes this PerformanceMetrics to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1131,7 +1231,13 @@ abstract class $PerformanceMetricsCopyWith<$Res> {
       {double deliveryTime,
       double customerSatisfaction,
       double orderAccuracy,
-      PerformanceStatus status});
+      PerformanceStatus status,
+      double orderFulfillmentRate,
+      double averageDeliveryTime,
+      double customerSatisfactionScore,
+      int totalDeliveries,
+      int cancelledOrders,
+      double refundRate});
 }
 
 /// @nodoc
@@ -1153,6 +1259,12 @@ class _$PerformanceMetricsCopyWithImpl<$Res, $Val extends PerformanceMetrics>
     Object? customerSatisfaction = null,
     Object? orderAccuracy = null,
     Object? status = null,
+    Object? orderFulfillmentRate = null,
+    Object? averageDeliveryTime = null,
+    Object? customerSatisfactionScore = null,
+    Object? totalDeliveries = null,
+    Object? cancelledOrders = null,
+    Object? refundRate = null,
   }) {
     return _then(_value.copyWith(
       deliveryTime: null == deliveryTime
@@ -1171,6 +1283,30 @@ class _$PerformanceMetricsCopyWithImpl<$Res, $Val extends PerformanceMetrics>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PerformanceStatus,
+      orderFulfillmentRate: null == orderFulfillmentRate
+          ? _value.orderFulfillmentRate
+          : orderFulfillmentRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      averageDeliveryTime: null == averageDeliveryTime
+          ? _value.averageDeliveryTime
+          : averageDeliveryTime // ignore: cast_nullable_to_non_nullable
+              as double,
+      customerSatisfactionScore: null == customerSatisfactionScore
+          ? _value.customerSatisfactionScore
+          : customerSatisfactionScore // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalDeliveries: null == totalDeliveries
+          ? _value.totalDeliveries
+          : totalDeliveries // ignore: cast_nullable_to_non_nullable
+              as int,
+      cancelledOrders: null == cancelledOrders
+          ? _value.cancelledOrders
+          : cancelledOrders // ignore: cast_nullable_to_non_nullable
+              as int,
+      refundRate: null == refundRate
+          ? _value.refundRate
+          : refundRate // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -1187,7 +1323,13 @@ abstract class _$$PerformanceMetricsImplCopyWith<$Res>
       {double deliveryTime,
       double customerSatisfaction,
       double orderAccuracy,
-      PerformanceStatus status});
+      PerformanceStatus status,
+      double orderFulfillmentRate,
+      double averageDeliveryTime,
+      double customerSatisfactionScore,
+      int totalDeliveries,
+      int cancelledOrders,
+      double refundRate});
 }
 
 /// @nodoc
@@ -1207,6 +1349,12 @@ class __$$PerformanceMetricsImplCopyWithImpl<$Res>
     Object? customerSatisfaction = null,
     Object? orderAccuracy = null,
     Object? status = null,
+    Object? orderFulfillmentRate = null,
+    Object? averageDeliveryTime = null,
+    Object? customerSatisfactionScore = null,
+    Object? totalDeliveries = null,
+    Object? cancelledOrders = null,
+    Object? refundRate = null,
   }) {
     return _then(_$PerformanceMetricsImpl(
       deliveryTime: null == deliveryTime
@@ -1225,6 +1373,30 @@ class __$$PerformanceMetricsImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as PerformanceStatus,
+      orderFulfillmentRate: null == orderFulfillmentRate
+          ? _value.orderFulfillmentRate
+          : orderFulfillmentRate // ignore: cast_nullable_to_non_nullable
+              as double,
+      averageDeliveryTime: null == averageDeliveryTime
+          ? _value.averageDeliveryTime
+          : averageDeliveryTime // ignore: cast_nullable_to_non_nullable
+              as double,
+      customerSatisfactionScore: null == customerSatisfactionScore
+          ? _value.customerSatisfactionScore
+          : customerSatisfactionScore // ignore: cast_nullable_to_non_nullable
+              as double,
+      totalDeliveries: null == totalDeliveries
+          ? _value.totalDeliveries
+          : totalDeliveries // ignore: cast_nullable_to_non_nullable
+              as int,
+      cancelledOrders: null == cancelledOrders
+          ? _value.cancelledOrders
+          : cancelledOrders // ignore: cast_nullable_to_non_nullable
+              as int,
+      refundRate: null == refundRate
+          ? _value.refundRate
+          : refundRate // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -1236,7 +1408,13 @@ class _$PerformanceMetricsImpl implements _PerformanceMetrics {
       {required this.deliveryTime,
       required this.customerSatisfaction,
       required this.orderAccuracy,
-      required this.status});
+      required this.status,
+      required this.orderFulfillmentRate,
+      required this.averageDeliveryTime,
+      required this.customerSatisfactionScore,
+      required this.totalDeliveries,
+      required this.cancelledOrders,
+      required this.refundRate});
 
   factory _$PerformanceMetricsImpl.fromJson(Map<String, dynamic> json) =>
       _$$PerformanceMetricsImplFromJson(json);
@@ -1249,10 +1427,22 @@ class _$PerformanceMetricsImpl implements _PerformanceMetrics {
   final double orderAccuracy;
   @override
   final PerformanceStatus status;
+  @override
+  final double orderFulfillmentRate;
+  @override
+  final double averageDeliveryTime;
+  @override
+  final double customerSatisfactionScore;
+  @override
+  final int totalDeliveries;
+  @override
+  final int cancelledOrders;
+  @override
+  final double refundRate;
 
   @override
   String toString() {
-    return 'PerformanceMetrics(deliveryTime: $deliveryTime, customerSatisfaction: $customerSatisfaction, orderAccuracy: $orderAccuracy, status: $status)';
+    return 'PerformanceMetrics(deliveryTime: $deliveryTime, customerSatisfaction: $customerSatisfaction, orderAccuracy: $orderAccuracy, status: $status, orderFulfillmentRate: $orderFulfillmentRate, averageDeliveryTime: $averageDeliveryTime, customerSatisfactionScore: $customerSatisfactionScore, totalDeliveries: $totalDeliveries, cancelledOrders: $cancelledOrders, refundRate: $refundRate)';
   }
 
   @override
@@ -1266,13 +1456,36 @@ class _$PerformanceMetricsImpl implements _PerformanceMetrics {
                 other.customerSatisfaction == customerSatisfaction) &&
             (identical(other.orderAccuracy, orderAccuracy) ||
                 other.orderAccuracy == orderAccuracy) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.orderFulfillmentRate, orderFulfillmentRate) ||
+                other.orderFulfillmentRate == orderFulfillmentRate) &&
+            (identical(other.averageDeliveryTime, averageDeliveryTime) ||
+                other.averageDeliveryTime == averageDeliveryTime) &&
+            (identical(other.customerSatisfactionScore,
+                    customerSatisfactionScore) ||
+                other.customerSatisfactionScore == customerSatisfactionScore) &&
+            (identical(other.totalDeliveries, totalDeliveries) ||
+                other.totalDeliveries == totalDeliveries) &&
+            (identical(other.cancelledOrders, cancelledOrders) ||
+                other.cancelledOrders == cancelledOrders) &&
+            (identical(other.refundRate, refundRate) ||
+                other.refundRate == refundRate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, deliveryTime, customerSatisfaction, orderAccuracy, status);
+      runtimeType,
+      deliveryTime,
+      customerSatisfaction,
+      orderAccuracy,
+      status,
+      orderFulfillmentRate,
+      averageDeliveryTime,
+      customerSatisfactionScore,
+      totalDeliveries,
+      cancelledOrders,
+      refundRate);
 
   /// Create a copy of PerformanceMetrics
   /// with the given fields replaced by the non-null parameter values.
@@ -1296,7 +1509,13 @@ abstract class _PerformanceMetrics implements PerformanceMetrics {
       {required final double deliveryTime,
       required final double customerSatisfaction,
       required final double orderAccuracy,
-      required final PerformanceStatus status}) = _$PerformanceMetricsImpl;
+      required final PerformanceStatus status,
+      required final double orderFulfillmentRate,
+      required final double averageDeliveryTime,
+      required final double customerSatisfactionScore,
+      required final int totalDeliveries,
+      required final int cancelledOrders,
+      required final double refundRate}) = _$PerformanceMetricsImpl;
 
   factory _PerformanceMetrics.fromJson(Map<String, dynamic> json) =
       _$PerformanceMetricsImpl.fromJson;
@@ -1309,6 +1528,18 @@ abstract class _PerformanceMetrics implements PerformanceMetrics {
   double get orderAccuracy;
   @override
   PerformanceStatus get status;
+  @override
+  double get orderFulfillmentRate;
+  @override
+  double get averageDeliveryTime;
+  @override
+  double get customerSatisfactionScore;
+  @override
+  int get totalDeliveries;
+  @override
+  int get cancelledOrders;
+  @override
+  double get refundRate;
 
   /// Create a copy of PerformanceMetrics
   /// with the given fields replaced by the non-null parameter values.

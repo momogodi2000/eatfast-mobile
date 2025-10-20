@@ -67,6 +67,10 @@ class CustomerInsights with _$CustomerInsights {
     required List<CustomerSegment> segments,
     required Map<String, double> demographics,
     required List<String> topPreferences,
+    required int newCustomers,
+    required int returningCustomers,
+    required double customerRetentionRate,
+    required double averageCustomerLifetimeValue,
   }) = _CustomerInsights;
 
   factory CustomerInsights.fromJson(Map<String, dynamic> json) =>
@@ -79,7 +83,7 @@ class CustomerSegment with _$CustomerSegment {
     required String name,
     required int count,
     required double percentage,
-    required double avgOrderValue,
+    required double averageSpending,
   }) = _CustomerSegment;
 
   factory CustomerSegment.fromJson(Map<String, dynamic> json) =>
@@ -105,6 +109,12 @@ class PerformanceMetrics with _$PerformanceMetrics {
     required double customerSatisfaction,
     required double orderAccuracy,
     required PerformanceStatus status,
+    required double orderFulfillmentRate,
+    required double averageDeliveryTime,
+    required double customerSatisfactionScore,
+    required int totalDeliveries,
+    required int cancelledOrders,
+    required double refundRate,
   }) = _PerformanceMetrics;
 
   factory PerformanceMetrics.fromJson(Map<String, dynamic> json) =>

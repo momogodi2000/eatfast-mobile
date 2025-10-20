@@ -48,7 +48,7 @@ class CartRepositoryImpl implements CartRepository {
       // Check if item with same configuration already exists
       final existingItemIndex = _currentCart.items.indexWhere(
         (existingItem) =>
-            existingItem.menuItem.id == item.menuItem.id &&
+            existingItem.menuItemId == item.menuItemId &&
             _haveSameCustomizations(
               existingItem.customizations,
               item.customizations,
@@ -61,7 +61,9 @@ class CartRepositoryImpl implements CartRepository {
         final newQuantity = existingItem.quantity + item.quantity;
         final updatedItem = existingItem.copyWith(
           quantity: newQuantity,
-          itemTotal: existingItem.menuItem.price * newQuantity,
+          total:
+              existingItem.price *
+              newQuantity, // Use total instead of itemTotal
         );
 
         final updatedItems = List<CartItem>.from(_currentCart.items);
@@ -77,8 +79,8 @@ class CartRepositoryImpl implements CartRepository {
       // Update restaurant info if this is the first item
       if (_currentCart.items.length == 1) {
         _currentCart = _currentCart.copyWith(
-          restaurantId: item.menuItem.restaurantId,
-          restaurantName: item.menuItem.name ?? 'Restaurant',
+          restaurantId: item.restaurantId,
+          restaurantName: item.restaurantName ?? item.name,
         );
       }
 
@@ -139,7 +141,7 @@ class CartRepositoryImpl implements CartRepository {
 
       final updatedItem = item.copyWith(
         quantity: quantity,
-        itemTotal: item.menuItem.price * quantity,
+        total: item.price * quantity,
       );
 
       updatedItems[itemIndex] = updatedItem;

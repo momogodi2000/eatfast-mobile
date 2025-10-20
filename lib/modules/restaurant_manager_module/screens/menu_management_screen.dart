@@ -15,13 +15,11 @@ import '../widgets/widgets/restaurant_manager_drawer.dart';
 class MenuManagementScreen extends ConsumerStatefulWidget {
   final String restaurantId;
 
-  const MenuManagementScreen({
-    super.key,
-    required this.restaurantId,
-  });
+  const MenuManagementScreen({super.key, required this.restaurantId});
 
   @override
-  ConsumerState<MenuManagementScreen> createState() => _MenuManagementScreenState();
+  ConsumerState<MenuManagementScreen> createState() =>
+      _MenuManagementScreenState();
 }
 
 class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
@@ -43,7 +41,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
 
   @override
   Widget build(BuildContext context) {
-    final menuCategoriesAsync = ref.watch(menuCategoriesProvider(widget.restaurantId));
+    final menuCategoriesAsync = ref.watch(
+      menuCategoriesProvider(widget.restaurantId),
+    );
 
     return Scaffold(
       backgroundColor: DesignTokens.backgroundGrey,
@@ -68,14 +68,8 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
           labelColor: DesignTokens.white,
           unselectedLabelColor: DesignTokens.white.withValues(alpha: 0.7),
           tabs: const [
-            Tab(
-              icon: Icon(Icons.category),
-              text: 'Cat�gories',
-            ),
-            Tab(
-              icon: Icon(Icons.restaurant_menu),
-              text: 'Articles',
-            ),
+            Tab(icon: Icon(Icons.category), text: 'Cat�gories'),
+            Tab(icon: Icon(Icons.restaurant_menu), text: 'Articles'),
           ],
         ),
       ),
@@ -94,7 +88,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         heroTag: 'menu_management_fab',
         onPressed: () => _showAddDialog(),
         icon: const Icon(Icons.add),
-        label: Text(_tabController.index == 0 ? 'Nouvelle Cat�gorie' : 'Nouvel Article'),
+        label: Text(
+          _tabController.index == 0 ? 'Nouvelle Cat�gorie' : 'Nouvel Article',
+        ),
         backgroundColor: DesignTokens.primaryColor,
       ),
     );
@@ -127,7 +123,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
   }
 
   Widget _buildItemsView(List<MenuCategory> categories) {
-    final allItems = categories.expand((cat) => cat.items).toList();
+    final allItems = categories.expand((cat) => cat.items ?? []).toList();
 
     if (allItems.isEmpty) {
       return _buildEmptyState(
@@ -135,15 +131,24 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         title: 'Aucun article',
         subtitle: 'Ajoutez des articles � vos cat�gories de menu',
         actionLabel: 'Ajouter un article',
-        onAction: () => _showAddItemDialog(categories.isNotEmpty ? categories[0] : null),
+        onAction: () =>
+            _showAddItemDialog(categories.isNotEmpty ? categories[0] : null),
       );
     }
 
     final filteredItems = _searchQuery.isEmpty
         ? allItems
-        : allItems.where((item) =>
-            item.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            item.description.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
+        : allItems
+              .where(
+                (item) =>
+                    item.name.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    ) ||
+                    item.description.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    ),
+              )
+              .toList();
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -180,11 +185,8 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
           ),
         ),
         subtitle: Text(
-          '${category.items.length} articles',
-          style: TextStyle(
-            color: DesignTokens.textSecondary,
-            fontSize: 14,
-          ),
+          '${category.items?.length ?? 0} articles',
+          style: TextStyle(color: DesignTokens.textSecondary, fontSize: 14),
         ),
         trailing: PopupMenuButton(
           icon: const Icon(Icons.more_vert),
@@ -205,7 +207,10 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 children: [
                   Icon(Icons.delete, size: 20, color: DesignTokens.errorColor),
                   SizedBox(width: 8),
-                  Text('Supprimer', style: TextStyle(color: DesignTokens.errorColor)),
+                  Text(
+                    'Supprimer',
+                    style: TextStyle(color: DesignTokens.errorColor),
+                  ),
                 ],
               ),
             ),
@@ -219,7 +224,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
           },
         ),
         children: [
-          if (category.items.isEmpty)
+          if (category.items?.isEmpty ?? true)
             Padding(
               padding: const EdgeInsets.all(DesignTokens.spaceMD),
               child: Text(
@@ -231,7 +236,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               ),
             )
           else
-            ...category.items.map((item) => _buildItemListTile(item)),
+            ...(category.items ?? []).map((item) => _buildItemListTile(item)),
           Padding(
             padding: const EdgeInsets.all(DesignTokens.spaceSM),
             child: TextButton.icon(
@@ -381,14 +386,20 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 label: const Text('Modifier'),
               ),
               TextButton.icon(
-                onPressed: () => _toggleItemAvailability(item.itemId, !item.isAvailable),
-                icon: Icon(item.isAvailable ? Icons.visibility_off : Icons.visibility),
+                onPressed: () =>
+                    _toggleItemAvailability(item.itemId, !item.isAvailable),
+                icon: Icon(
+                  item.isAvailable ? Icons.visibility_off : Icons.visibility,
+                ),
                 label: Text(item.isAvailable ? 'D�sactiver' : 'Activer'),
               ),
               TextButton.icon(
                 onPressed: () => _showDeleteItemConfirmation(item),
                 icon: const Icon(Icons.delete, color: DesignTokens.errorColor),
-                label: const Text('Supprimer', style: TextStyle(color: DesignTokens.errorColor)),
+                label: const Text(
+                  'Supprimer',
+                  style: TextStyle(color: DesignTokens.errorColor),
+                ),
               ),
             ],
           ),
@@ -410,25 +421,21 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 80,
-              color: DesignTokens.textTertiary,
-            ),
+            Icon(icon, size: 80, color: DesignTokens.textTertiary),
             const SizedBox(height: DesignTokens.spaceLG),
             Text(
               title,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: DesignTokens.textSecondary,
-                  ),
+                color: DesignTokens.textSecondary,
+              ),
             ),
             const SizedBox(height: DesignTokens.spaceSM),
             Text(
               subtitle,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: DesignTokens.textTertiary,
-                  ),
+                color: DesignTokens.textTertiary,
+              ),
             ),
             const SizedBox(height: DesignTokens.spaceXL),
             ElevatedButton.icon(
@@ -465,17 +472,17 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
             const SizedBox(height: DesignTokens.spaceLG),
             Text(
               'Erreur de chargement',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: DesignTokens.errorColor,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: DesignTokens.errorColor),
             ),
             const SizedBox(height: DesignTokens.spaceSM),
             Text(
               error.toString(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: DesignTokens.textSecondary,
-                  ),
+                color: DesignTokens.textSecondary,
+              ),
             ),
             const SizedBox(height: DesignTokens.spaceLG),
             ElevatedButton.icon(
@@ -531,7 +538,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(DesignTokens.radiusXL)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(DesignTokens.radiusXL),
+        ),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(DesignTokens.spaceLG),
@@ -589,7 +598,8 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     if (_tabController.index == 0) {
       _showAddCategoryDialog();
     } else {
-      final categories = ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
+      final categories =
+          ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
       if (categories.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -646,9 +656,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         title: const Text('Modifier Cat�gorie'),
         content: TextField(
           controller: nameController,
-          decoration: const InputDecoration(
-            labelText: 'Nom de la cat�gorie',
-          ),
+          decoration: const InputDecoration(labelText: 'Nom de la cat�gorie'),
         ),
         actions: [
           TextButton(
@@ -745,20 +753,40 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                         height: 150,
                         decoration: BoxDecoration(
                           color: DesignTokens.lightGrey,
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                          border: Border.all(color: DesignTokens.primaryColor.withValues(alpha: 0.3)),
+                          borderRadius: BorderRadius.circular(
+                            DesignTokens.radiusMD,
+                          ),
+                          border: Border.all(
+                            color: DesignTokens.primaryColor.withValues(
+                              alpha: 0.3,
+                            ),
+                          ),
                         ),
                         child: selectedImage != null
                             ? ClipRRect(
-                                borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                                child: Image.file(selectedImage!, fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(
+                                  DesignTokens.radiusMD,
+                                ),
+                                child: Image.file(
+                                  selectedImage!,
+                                  fit: BoxFit.cover,
+                                ),
                               )
                             : const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.add_photo_alternate, size: 48, color: DesignTokens.primaryColor),
+                                  Icon(
+                                    Icons.add_photo_alternate,
+                                    size: 48,
+                                    color: DesignTokens.primaryColor,
+                                  ),
                                   SizedBox(height: 8),
-                                  Text('Ajouter une image', style: TextStyle(color: DesignTokens.primaryColor)),
+                                  Text(
+                                    'Ajouter une image',
+                                    style: TextStyle(
+                                      color: DesignTokens.primaryColor,
+                                    ),
+                                  ),
                                 ],
                               ),
                       ),
@@ -824,7 +852,8 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     controller: allergensController,
                     decoration: const InputDecoration(
                       labelText: 'Allerg�nes',
-                      hintText: 'Ex: gluten, lactose (s�par�s par des virgules)',
+                      hintText:
+                          'Ex: gluten, lactose (s�par�s par des virgules)',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -835,7 +864,8 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     controller: dietaryTagsController,
                     decoration: const InputDecoration(
                       labelText: 'Tags di�t�tiques',
-                      hintText: 'Ex: v�g�tarien, vegan (s�par�s par des virgules)',
+                      hintText:
+                          'Ex: v�g�tarien, vegan (s�par�s par des virgules)',
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -868,7 +898,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     prepTimeController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Veuillez remplir tous les champs obligatoires'),
+                      content: Text(
+                        'Veuillez remplir tous les champs obligatoires',
+                      ),
                       backgroundColor: DesignTokens.warningColor,
                     ),
                   );
@@ -883,8 +915,16 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                   double.tryParse(priceController.text) ?? 0,
                   int.tryParse(prepTimeController.text) ?? 15,
                   isPopular,
-                  allergensController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
-                  dietaryTagsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                  allergensController.text
+                      .split(',')
+                      .map((e) => e.trim())
+                      .where((e) => e.isNotEmpty)
+                      .toList(),
+                  dietaryTagsController.text
+                      .split(',')
+                      .map((e) => e.trim())
+                      .where((e) => e.isNotEmpty)
+                      .toList(),
                   selectedImage,
                 );
               },
@@ -900,9 +940,15 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
     final nameController = TextEditingController(text: item.name);
     final descriptionController = TextEditingController(text: item.description);
     final priceController = TextEditingController(text: item.price.toString());
-    final prepTimeController = TextEditingController(text: item.preparationTime.toString());
-    final allergensController = TextEditingController(text: item.allergens.join(', '));
-    final dietaryTagsController = TextEditingController(text: item.dietaryTags.join(', '));
+    final prepTimeController = TextEditingController(
+      text: item.preparationTime.toString(),
+    );
+    final allergensController = TextEditingController(
+      text: item.allergens?.join(', ') ?? '',
+    );
+    final dietaryTagsController = TextEditingController(
+      text: item.dietaryTags?.join(', ') ?? '',
+    );
     bool isPopular = item.isPopular;
     File? selectedImage;
     final ImagePicker picker = ImagePicker();
@@ -940,27 +986,52 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                         height: 150,
                         decoration: BoxDecoration(
                           color: DesignTokens.lightGrey,
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                          border: Border.all(color: DesignTokens.primaryColor.withValues(alpha: 0.3)),
+                          borderRadius: BorderRadius.circular(
+                            DesignTokens.radiusMD,
+                          ),
+                          border: Border.all(
+                            color: DesignTokens.primaryColor.withValues(
+                              alpha: 0.3,
+                            ),
+                          ),
                         ),
                         child: selectedImage != null
                             ? ClipRRect(
-                                borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                                child: Image.file(selectedImage!, fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(
+                                  DesignTokens.radiusMD,
+                                ),
+                                child: Image.file(
+                                  selectedImage!,
+                                  fit: BoxFit.cover,
+                                ),
                               )
                             : item.imageUrl != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-                                    child: Image.network(item.imageUrl!, fit: BoxFit.cover),
-                                  )
-                                : const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.add_photo_alternate, size: 48, color: DesignTokens.primaryColor),
-                                      SizedBox(height: 8),
-                                      Text('Changer l\'image', style: TextStyle(color: DesignTokens.primaryColor)),
-                                    ],
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  DesignTokens.radiusMD,
+                                ),
+                                child: Image.network(
+                                  item.imageUrl!,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_photo_alternate,
+                                    size: 48,
+                                    color: DesignTokens.primaryColor,
                                   ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Changer l\'image',
+                                    style: TextStyle(
+                                      color: DesignTokens.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
                     ),
                   ),
@@ -1064,7 +1135,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     prepTimeController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Veuillez remplir tous les champs obligatoires'),
+                      content: Text(
+                        'Veuillez remplir tous les champs obligatoires',
+                      ),
                       backgroundColor: DesignTokens.warningColor,
                     ),
                   );
@@ -1077,10 +1150,20 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     name: nameController.text,
                     description: descriptionController.text,
                     price: double.tryParse(priceController.text) ?? item.price,
-                    preparationTime: int.tryParse(prepTimeController.text) ?? item.preparationTime,
+                    preparationTime:
+                        int.tryParse(prepTimeController.text) ??
+                        item.preparationTime,
                     isPopular: isPopular,
-                    allergens: allergensController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
-                    dietaryTags: dietaryTagsController.text.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList(),
+                    allergens: allergensController.text
+                        .split(',')
+                        .map((e) => e.trim())
+                        .where((e) => e.isNotEmpty)
+                        .toList(),
+                    dietaryTags: dietaryTagsController.text
+                        .split(',')
+                        .map((e) => e.trim())
+                        .where((e) => e.isNotEmpty)
+                        .toList(),
                   ),
                   selectedImage,
                 );
@@ -1100,10 +1183,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         title: Row(
           children: [
             Expanded(
-              child: Text(
-                item.name,
-                style: const TextStyle(fontSize: 20),
-              ),
+              child: Text(item.name, style: const TextStyle(fontSize: 20)),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -1118,7 +1198,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: DesignTokens.fontWeightBold,
-                  color: item.isAvailable ? DesignTokens.successColor : DesignTokens.errorColor,
+                  color: item.isAvailable
+                      ? DesignTokens.successColor
+                      : DesignTokens.errorColor,
                 ),
               ),
             ),
@@ -1141,7 +1223,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                     errorBuilder: (_, __, ___) => Container(
                       height: 200,
                       color: DesignTokens.lightGrey,
-                      child: const Center(child: Icon(Icons.image_not_supported, size: 48)),
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported, size: 48),
+                      ),
                     ),
                   ),
                 ),
@@ -1150,7 +1234,10 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               // Description
               const Text(
                 'Description',
-                style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+                style: TextStyle(
+                  fontWeight: DesignTokens.fontWeightBold,
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 4),
               Text(item.description),
@@ -1160,11 +1247,19 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               Row(
                 children: [
                   Expanded(
-                    child: _buildDetailCard('Prix', '${item.price} FCFA', Icons.monetization_on),
+                    child: _buildDetailCard(
+                      'Prix',
+                      '${item.price} FCFA',
+                      Icons.monetization_on,
+                    ),
                   ),
                   const SizedBox(width: DesignTokens.spaceSM),
                   Expanded(
-                    child: _buildDetailCard('Pr�paration', '${item.preparationTime} min', Icons.timer),
+                    child: _buildDetailCard(
+                      'Pr�paration',
+                      '${item.preparationTime} min',
+                      Icons.timer,
+                    ),
                   ),
                 ],
               ),
@@ -1174,50 +1269,76 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               Row(
                 children: [
                   Expanded(
-                    child: _buildDetailCard('Commandes', '${item.orderCount}', Icons.shopping_bag),
+                    child: _buildDetailCard(
+                      'Commandes',
+                      '${item.orderCount}',
+                      Icons.shopping_bag,
+                    ),
                   ),
                   const SizedBox(width: DesignTokens.spaceSM),
                   Expanded(
-                    child: _buildDetailCard('Note', '${item.rating.toStringAsFixed(1)}/5', Icons.star),
+                    child: _buildDetailCard(
+                      'Note',
+                      '${(item.rating ?? 0.0).toStringAsFixed(1)}/5',
+                      Icons.star,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: DesignTokens.spaceMD),
 
               // Allergens
-              if (item.allergens.isNotEmpty) ...[
+              if (item.allergens?.isNotEmpty == true) ...[
                 const Text(
                   'Allerg�nes',
-                  style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+                  style: TextStyle(
+                    fontWeight: DesignTokens.fontWeightBold,
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: item.allergens.map((allergen) => Chip(
-                    label: Text(allergen),
-                    backgroundColor: DesignTokens.warningColor.withValues(alpha: 0.1),
-                    labelStyle: const TextStyle(fontSize: 12),
-                  )).toList(),
+                  children: (item.allergens ?? [])
+                      .map(
+                        (allergen) => Chip(
+                          label: Text(allergen),
+                          backgroundColor: DesignTokens.warningColor.withValues(
+                            alpha: 0.1,
+                          ),
+                          labelStyle: const TextStyle(fontSize: 12),
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: DesignTokens.spaceMD),
               ],
 
               // Dietary tags
-              if (item.dietaryTags.isNotEmpty) ...[
+              if (item.dietaryTags?.isNotEmpty == true) ...[
                 const Text(
                   'Tags di�t�tiques',
-                  style: TextStyle(fontWeight: DesignTokens.fontWeightBold, fontSize: 16),
+                  style: TextStyle(
+                    fontWeight: DesignTokens.fontWeightBold,
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: item.dietaryTags.map((tag) => Chip(
-                    label: Text(tag),
-                    backgroundColor: DesignTokens.successColor.withValues(alpha: 0.1),
-                    labelStyle: const TextStyle(fontSize: 12),
-                  )).toList(),
+                  children: (item.dietaryTags ?? [])
+                      .map(
+                        (tag) => Chip(
+                          label: Text(tag),
+                          backgroundColor: DesignTokens.successColor.withValues(
+                            alpha: 0.1,
+                          ),
+                          labelStyle: const TextStyle(fontSize: 12),
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: DesignTokens.spaceMD),
               ],
@@ -1225,7 +1346,10 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               // Popular badge
               if (item.isPopular)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
@@ -1233,7 +1357,11 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.local_fire_department, size: 16, color: DesignTokens.primaryColor),
+                      Icon(
+                        Icons.local_fire_department,
+                        size: 16,
+                        color: DesignTokens.primaryColor,
+                      ),
                       SizedBox(width: 4),
                       Text(
                         'Article Populaire',
@@ -1278,10 +1406,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
-              color: DesignTokens.textSecondary,
-            ),
+            style: TextStyle(fontSize: 12, color: DesignTokens.textSecondary),
           ),
           Text(
             value,
@@ -1323,8 +1448,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
   }
 
   void _showBulkStockUpdateDialog() {
-    final categories = ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
-    final allItems = categories.expand((cat) => cat.items).toList();
+    final categories =
+        ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
+    final allItems = categories.expand((cat) => cat.items ?? []).toList();
 
     if (allItems.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -1353,9 +1479,14 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 ),
                 const SizedBox(height: DesignTokens.spaceMD),
                 ListTile(
-                  leading: const Icon(Icons.visibility, color: DesignTokens.successColor),
+                  leading: const Icon(
+                    Icons.visibility,
+                    color: DesignTokens.successColor,
+                  ),
                   title: const Text('Activer tous les articles'),
-                  subtitle: Text('${allItems.length} articles seront disponibles'),
+                  subtitle: Text(
+                    '${allItems.length} articles seront disponibles',
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     _bulkUpdateAvailability(true);
@@ -1363,9 +1494,14 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.visibility_off, color: DesignTokens.errorColor),
+                  leading: const Icon(
+                    Icons.visibility_off,
+                    color: DesignTokens.errorColor,
+                  ),
                   title: const Text('D�sactiver tous les articles'),
-                  subtitle: Text('${allItems.length} articles seront indisponibles'),
+                  subtitle: Text(
+                    '${allItems.length} articles seront indisponibles',
+                  ),
                   onTap: () {
                     Navigator.pop(context);
                     _bulkUpdateAvailability(false);
@@ -1373,14 +1509,19 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.local_fire_department, color: DesignTokens.primaryColor),
+                  leading: const Icon(
+                    Icons.local_fire_department,
+                    color: DesignTokens.primaryColor,
+                  ),
                   title: const Text('Marquer tous comme populaires'),
                   subtitle: const Text('Tous les articles seront mis en avant'),
                   onTap: () {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Cette fonction n�cessite une mise � jour individuelle des articles'),
+                        content: Text(
+                          'Cette fonction n�cessite une mise � jour individuelle des articles',
+                        ),
                         backgroundColor: DesignTokens.infoColor,
                       ),
                     );
@@ -1541,9 +1682,10 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
   }
 
   Future<void> _bulkUpdateAvailability(bool isAvailable) async {
-    final categories = ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
+    final categories =
+        ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
     final allItemIds = categories
-        .expand((cat) => cat.items)
+        .expand((cat) => cat.items ?? [])
         .map((item) => item.itemId)
         .toList();
 
@@ -1619,7 +1761,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Article cr�� mais erreur lors de l\'upload de l\'image: $error'),
+                    content: Text(
+                      'Article cr�� mais erreur lors de l\'upload de l\'image: $error',
+                    ),
                     backgroundColor: DesignTokens.warningColor,
                   ),
                 );
@@ -1670,7 +1814,9 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Article mis � jour mais erreur lors de l\'upload de l\'image: $error'),
+                    content: Text(
+                      'Article mis � jour mais erreur lors de l\'upload de l\'image: $error',
+                    ),
                     backgroundColor: DesignTokens.warningColor,
                   ),
                 );

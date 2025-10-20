@@ -4,10 +4,10 @@
 /// Following the deduplication strategy, most models are now in shared locations.
 library;
 
-// Export profile repository models (excluding PaymentMethod to avoid conflict with shared)
-export 'profile_repository.dart' show Address, NotificationPreferences;
+// Export profile repository models
+export 'profile_repository.dart';
 
-// Re-export commonly used shared models for convenience
+// Re-export commonly used shared models for convenience (excluding PaymentMethod to avoid conflict)
 export 'package:eatfast_mobile/shared/services/orders/domain/models/order.dart';
 export 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
-export 'package:eatfast_mobile/shared/models/exports.dart';
+export 'package:eatfast_mobile/shared/models/exports.dart' hide PaymentMethod;

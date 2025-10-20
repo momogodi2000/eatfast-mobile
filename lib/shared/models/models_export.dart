@@ -45,6 +45,7 @@ export '../services/restaurants/domain/models/restaurant_review.dart';
 export '../services/analytics/domain/models/analytics.dart';
 // Note: analytics_models.dart contains duplicate LoyaltyTransaction - use loyalty models instead
 export '../services/analytics/domain/models/analytics_data.dart';
+export '../services/analytics/domain/models/analytics_request.dart';
 
 // Loyalty Models - canonical source for Loyalty models
 // Note: LoyaltyReward and LoyaltyTransaction defined in multiple places

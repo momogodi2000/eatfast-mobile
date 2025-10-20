@@ -2,13 +2,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provider.dart';
 import 'package:eatfast_mobile/shared/models/loyalty_models.dart';
-import 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/loyalty_tier_card.dart';
-import 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/points_summary_card.dart';
-import 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/rewards_showcase.dart';
-import 'package:eatfast_mobile/modules/client_module/widgets/widgets/loyalty/recent_loyalty_transactions.dart';
-import 'rewards_catalog_screen.dart';
-import 'loyalty_history_screen.dart';
-import 'tier_benefits_screen.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/widgets/loyalty_tier_card.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/widgets/points_summary_card.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/widgets/rewards_showcase.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/widgets/recent_loyalty_transactions.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/screens/rewards_catalog_screen.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/screens/loyalty_history_screen.dart';
+import 'package:eatfast_mobile/shared/services/loyalty/presentation/screens/tier_benefits_screen.dart';
 
 class LoyaltyScreen extends ConsumerWidget {
   const LoyaltyScreen({super.key});

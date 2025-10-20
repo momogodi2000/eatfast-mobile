@@ -64,6 +64,11 @@ _$CustomerInsightsImpl _$$CustomerInsightsImplFromJson(
       topPreferences: (json['topPreferences'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      newCustomers: (json['newCustomers'] as num).toInt(),
+      returningCustomers: (json['returningCustomers'] as num).toInt(),
+      customerRetentionRate: (json['customerRetentionRate'] as num).toDouble(),
+      averageCustomerLifetimeValue:
+          (json['averageCustomerLifetimeValue'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$CustomerInsightsImplToJson(
@@ -72,6 +77,10 @@ Map<String, dynamic> _$$CustomerInsightsImplToJson(
       'segments': instance.segments,
       'demographics': instance.demographics,
       'topPreferences': instance.topPreferences,
+      'newCustomers': instance.newCustomers,
+      'returningCustomers': instance.returningCustomers,
+      'customerRetentionRate': instance.customerRetentionRate,
+      'averageCustomerLifetimeValue': instance.averageCustomerLifetimeValue,
     };
 
 _$CustomerSegmentImpl _$$CustomerSegmentImplFromJson(
@@ -80,7 +89,7 @@ _$CustomerSegmentImpl _$$CustomerSegmentImplFromJson(
       name: json['name'] as String,
       count: (json['count'] as num).toInt(),
       percentage: (json['percentage'] as num).toDouble(),
-      avgOrderValue: (json['avgOrderValue'] as num).toDouble(),
+      averageSpending: (json['averageSpending'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$CustomerSegmentImplToJson(
@@ -89,7 +98,7 @@ Map<String, dynamic> _$$CustomerSegmentImplToJson(
       'name': instance.name,
       'count': instance.count,
       'percentage': instance.percentage,
-      'avgOrderValue': instance.avgOrderValue,
+      'averageSpending': instance.averageSpending,
     };
 
 _$OrderTrendPointImpl _$$OrderTrendPointImplFromJson(
@@ -115,6 +124,13 @@ _$PerformanceMetricsImpl _$$PerformanceMetricsImplFromJson(
       customerSatisfaction: (json['customerSatisfaction'] as num).toDouble(),
       orderAccuracy: (json['orderAccuracy'] as num).toDouble(),
       status: $enumDecode(_$PerformanceStatusEnumMap, json['status']),
+      orderFulfillmentRate: (json['orderFulfillmentRate'] as num).toDouble(),
+      averageDeliveryTime: (json['averageDeliveryTime'] as num).toDouble(),
+      customerSatisfactionScore:
+          (json['customerSatisfactionScore'] as num).toDouble(),
+      totalDeliveries: (json['totalDeliveries'] as num).toInt(),
+      cancelledOrders: (json['cancelledOrders'] as num).toInt(),
+      refundRate: (json['refundRate'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$PerformanceMetricsImplToJson(
@@ -124,6 +140,12 @@ Map<String, dynamic> _$$PerformanceMetricsImplToJson(
       'customerSatisfaction': instance.customerSatisfaction,
       'orderAccuracy': instance.orderAccuracy,
       'status': _$PerformanceStatusEnumMap[instance.status]!,
+      'orderFulfillmentRate': instance.orderFulfillmentRate,
+      'averageDeliveryTime': instance.averageDeliveryTime,
+      'customerSatisfactionScore': instance.customerSatisfactionScore,
+      'totalDeliveries': instance.totalDeliveries,
+      'cancelledOrders': instance.cancelledOrders,
+      'refundRate': instance.refundRate,
     };
 
 const _$PerformanceStatusEnumMap = {

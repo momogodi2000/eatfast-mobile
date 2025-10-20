@@ -28,7 +28,7 @@ export '../config/router/route_guard.dart';
 export '../models/restaurant_models.dart';
 export '../models/loyalty_models.dart';
 export '../models/wallet_models.dart';
-export '../models/menu_item.dart';
+export '../services/restaurants/domain/models/menu_item.dart';
 // Restaurant model is exported from services/restaurants/domain/models/restaurant.dart
 
 // Utilities

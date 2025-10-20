@@ -1,11 +1,11 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/wallet/providers/wallet_provider.dart';
-import '../../widgets/widgets/wallet/wallet_balance_card.dart';
-import '../../widgets/widgets/wallet/wallet_quick_actions.dart';
-import '../../widgets/widgets/wallet/transaction_list.dart';
-import 'top_up_screen.dart';
-import 'transaction_history_screen.dart';
+import 'package:eatfast_mobile/shared/services/wallet/presentation/widgets/wallet_balance_card.dart';
+import 'package:eatfast_mobile/shared/services/wallet/presentation/widgets/wallet_quick_actions.dart';
+import 'package:eatfast_mobile/shared/services/wallet/presentation/widgets/transaction_list.dart';
+import 'package:eatfast_mobile/shared/services/wallet/presentation/screens/top_up_screen.dart';
+import 'package:eatfast_mobile/shared/services/wallet/presentation/screens/transaction_history_screen.dart';
 
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});
@@ -87,7 +87,8 @@ class WalletScreen extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TransactionHistoryScreen(),
+                          builder: (context) =>
+                              const TransactionHistoryScreen(),
                         ),
                       );
                     },
@@ -101,16 +102,16 @@ class WalletScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'Transactions Récentes',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const TransactionHistoryScreen(),
+                              builder: (context) =>
+                                  const TransactionHistoryScreen(),
                             ),
                           );
                         },
@@ -141,16 +142,14 @@ class WalletScreen extends ConsumerWidget {
                           const SizedBox(height: 16),
                           Text(
                             'Aucune transaction',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: Colors.grey[600],
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: Colors.grey[600]),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             'Vos transactions apparaîtront ici',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[500],
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey[500]),
                           ),
                         ],
                       ),
@@ -163,7 +162,8 @@ class WalletScreen extends ConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TransactionHistoryScreen(),
+                            builder: (context) =>
+                                const TransactionHistoryScreen(),
                           ),
                         );
                       },
@@ -179,9 +179,7 @@ class WalletScreen extends ConsumerWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const TopUpScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const TopUpScreen()),
           );
         },
         icon: const Icon(Icons.add),

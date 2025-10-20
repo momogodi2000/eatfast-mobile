@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/themes/app_colors.dart';
 import 'package:eatfast_mobile/shared/themes/app_text_styles.dart';
 import 'package:eatfast_mobile/shared/widgets/widgets.dart';
-import 'package:eatfast_mobile/modules/client_module/providers/domain/models.dart' as domain;
+import 'package:eatfast_mobile/modules/client_module/providers/domain/models.dart'
+    as domain;
 import 'package:eatfast_mobile/modules/client_module/providers/profile_provider.dart';
 
 class PaymentMethodsScreen extends ConsumerStatefulWidget {
@@ -27,15 +28,11 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    _fadeInAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _fadeInAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
     _animationController.forward();
-    
+
     // Load payment methods when screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(profileProvider.notifier).loadPaymentMethods();
@@ -73,10 +70,9 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
       body: FadeTransition(
         opacity: _fadeInAnimation,
         child: profileState.when(
-          data: (state) => _buildPaymentMethodsList(context, state.paymentMethods),
-          loading: () => const Center(
-            child: AppLoadingIndicator(),
-          ),
+          data: (state) =>
+              _buildPaymentMethodsList(context, state.paymentMethods),
+          loading: () => const Center(child: AppLoadingIndicator()),
           error: (error, stack) => _buildErrorState(context, error.toString()),
         ),
       ),
@@ -91,7 +87,10 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
     );
   }
 
-  Widget _buildPaymentMethodsList(BuildContext context, List<domain.PaymentMethod> methods) {
+  Widget _buildPaymentMethodsList(
+    BuildContext context,
+    List<domain.PaymentMethod> methods,
+  ) {
     if (methods.isEmpty) {
       return _buildEmptyState(context);
     }
@@ -111,13 +110,14 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
     );
   }
 
-  Widget _buildPaymentMethodCard(BuildContext context, domain.PaymentMethod method) {
+  Widget _buildPaymentMethodCard(
+    BuildContext context,
+    domain.PaymentMethod method,
+  ) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => _showEditPaymentMethodSheet(context, method),
@@ -128,7 +128,9 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _getPaymentMethodColor(method.type).withValues(alpha: 0.1),
+                  color: _getPaymentMethodColor(
+                    method.type,
+                  ).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -144,10 +146,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
                   children: [
                     Row(
                       children: [
-                        Text(
-                          method.displayName,
-                          style: AppTextStyles.h3,
-                        ),
+                        Text(method.displayName, style: AppTextStyles.h3),
                         if (method.isDefault) ...[
                           const SizedBox(width: 8),
                           Container(
@@ -190,11 +189,8 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
                 ),
               ),
               PopupMenuButton<String>(
-                onSelected: (value) => _handlePaymentMethodAction(
-                  context,
-                  value,
-                  method,
-                ),
+                onSelected: (value) =>
+                    _handlePaymentMethodAction(context, value, method),
                 itemBuilder: (context) => [
                   const PopupMenuItem(
                     value: 'edit',
@@ -273,11 +269,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.error_outline,
-            size: 64,
-            color: AppColors.error,
-          ),
+          const Icon(Icons.error_outline, size: 64, color: AppColors.error),
           const SizedBox(height: 16),
           Text(
             'Erreur de chargement',
@@ -311,7 +303,10 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
     );
   }
 
-  void _showEditPaymentMethodSheet(BuildContext context, domain.PaymentMethod method) {
+  void _showEditPaymentMethodSheet(
+    BuildContext context,
+    domain.PaymentMethod method,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -330,7 +325,11 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
         _showEditPaymentMethodSheet(context, method);
         break;
       case 'default':
-        ref.read(profileProvider.notifier).setDefaultPaymentMethod(method.id);
+        if (method.id != null) {
+          ref
+              .read(profileProvider.notifier)
+              .setDefaultPaymentMethod(method.id!);
+        }
         break;
       case 'delete':
         _showDeleteConfirmation(context, method);
@@ -338,7 +337,10 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
     }
   }
 
-  void _showDeleteConfirmation(BuildContext context, domain.PaymentMethod method) {
+  void _showDeleteConfirmation(
+    BuildContext context,
+    domain.PaymentMethod method,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -355,7 +357,11 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              ref.read(profileProvider.notifier).deletePaymentMethod(method.id);
+              if (method.id != null) {
+                ref
+                    .read(profileProvider.notifier)
+                    .deletePaymentMethod(method.id!);
+              }
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
             child: const Text('Supprimer'),
@@ -397,7 +403,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
 
   String _formatAccountNumber(String accountNumber) {
     if (accountNumber.length <= 4) return accountNumber;
-    
+
     // Show only last 4 digits for security
     return '**** **** ${accountNumber.substring(accountNumber.length - 4)}';
   }
@@ -406,10 +412,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen>
 class AddPaymentMethodSheet extends ConsumerStatefulWidget {
   final domain.PaymentMethod? paymentMethod;
 
-  const AddPaymentMethodSheet({
-    super.key,
-    this.paymentMethod,
-  });
+  const AddPaymentMethodSheet({super.key, this.paymentMethod});
 
   @override
   ConsumerState<AddPaymentMethodSheet> createState() =>
@@ -420,12 +423,12 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
-  
+
   final _formKey = GlobalKey<FormState>();
   final _displayNameController = TextEditingController();
   final _accountNumberController = TextEditingController();
   final _accountNameController = TextEditingController();
-  
+
   String _selectedType = 'momo_mtn';
   bool _isDefault = false;
 
@@ -463,16 +466,16 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    
+    _slideAnimation = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
+
     _animationController.forward();
-    
+
     // Initialize form with existing payment method data
     if (widget.paymentMethod != null) {
       final method = widget.paymentMethod!;
@@ -496,7 +499,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.paymentMethod != null;
-    
+
     return SlideTransition(
       position: _slideAnimation,
       child: Container(
@@ -520,7 +523,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            
+
             // Header
             Padding(
               padding: const EdgeInsets.all(16),
@@ -543,7 +546,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                 ],
               ),
             ),
-            
+
             Expanded(
               child: Form(
                 key: _formKey,
@@ -552,17 +555,16 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Type de paiement',
-                        style: AppTextStyles.h3,
-                      ),
+                      Text('Type de paiement', style: AppTextStyles.h3),
                       const SizedBox(height: 12),
-                      
+
                       // Payment type selection
-                      ..._paymentTypes.map((type) => _buildPaymentTypeCard(type)),
-                      
+                      ..._paymentTypes.map(
+                        (type) => _buildPaymentTypeCard(type),
+                      ),
+
                       const SizedBox(height: 24),
-                      
+
                       TextFormField(
                         controller: _displayNameController,
                         decoration: const InputDecoration(
@@ -577,22 +579,24 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                           return null;
                         },
                       ),
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       if (_selectedType != 'cash') ...[
                         TextFormField(
                           controller: _accountNumberController,
                           decoration: InputDecoration(
-                            labelText: _selectedType.startsWith('momo') 
+                            labelText: _selectedType.startsWith('momo')
                                 ? 'Numéro de téléphone *'
                                 : 'Numéro de compte *',
                             hintText: _selectedType.startsWith('momo')
                                 ? 'Ex: 6XXXXXXXX'
                                 : 'Numéro de compte',
-                            prefixIcon: Icon(_selectedType.startsWith('momo')
-                                ? Icons.phone_outlined
-                                : Icons.account_balance_outlined),
+                            prefixIcon: Icon(
+                              _selectedType.startsWith('momo')
+                                  ? Icons.phone_outlined
+                                  : Icons.account_balance_outlined,
+                            ),
                           ),
                           keyboardType: TextInputType.phone,
                           validator: (value) {
@@ -601,15 +605,16 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                                   ? 'Veuillez saisir le numéro de téléphone'
                                   : 'Veuillez saisir le numéro de compte';
                             }
-                            if (_selectedType.startsWith('momo') && value!.length < 9) {
+                            if (_selectedType.startsWith('momo') &&
+                                value!.length < 9) {
                               return 'Numéro de téléphone invalide';
                             }
                             return null;
                           },
                         ),
-                        
+
                         const SizedBox(height: 16),
-                        
+
                         TextFormField(
                           controller: _accountNameController,
                           decoration: const InputDecoration(
@@ -619,21 +624,22 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
                           ),
                         ),
                       ],
-                      
+
                       const SizedBox(height: 16),
-                      
+
                       SwitchListTile(
                         title: const Text('Moyen de paiement par défaut'),
                         subtitle: const Text(
                           'Utiliser ce moyen de paiement par défaut pour les commandes',
                         ),
                         value: _isDefault,
-                        onChanged: (value) => setState(() => _isDefault = value),
+                        onChanged: (value) =>
+                            setState(() => _isDefault = value),
                         activeColor: AppColors.primary,
                       ),
-                      
+
                       const SizedBox(height: 32),
-                      
+
                       SizedBox(
                         width: double.infinity,
                         child: AppButton(
@@ -655,7 +661,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
 
   Widget _buildPaymentTypeCard(Map<String, dynamic> type) {
     final isSelected = _selectedType == type['value'];
-    
+
     return GestureDetector(
       onTap: () => setState(() => _selectedType = type['value']),
       child: Container(
@@ -663,21 +669,19 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? type['color'] : AppColors.gray.withValues(alpha: 0.3),
+            color: isSelected
+                ? type['color']
+                : AppColors.gray.withValues(alpha: 0.3),
             width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
-          color: isSelected 
+          color: isSelected
               ? type['color'].withValues(alpha: 0.1)
               : Colors.transparent,
         ),
         child: Row(
           children: [
-            Icon(
-              type['icon'],
-              color: type['color'],
-              size: 24,
-            ),
+            Icon(type['icon'], color: type['color'], size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -689,11 +693,7 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
               ),
             ),
             if (isSelected)
-              Icon(
-                Icons.check_circle,
-                color: type['color'],
-                size: 20,
-              ),
+              Icon(Icons.check_circle, color: type['color'], size: 20),
           ],
         ),
       ),
@@ -709,25 +709,36 @@ class _AddPaymentMethodSheetState extends ConsumerState<AddPaymentMethodSheet>
       // Update existing payment method
       final updatedMethod = widget.paymentMethod!.copyWith(
         type: _selectedType,
+        label: _displayNameController.text.trim(),
         displayName: _displayNameController.text.trim(),
-        accountNumber: _selectedType != 'cash' ? _accountNumberController.text.trim() : null,
-        accountName: _selectedType != 'cash' ? _accountNameController.text.trim() : null,
+        accountNumber: _selectedType != 'cash'
+            ? _accountNumberController.text.trim()
+            : null,
+        accountName: _selectedType != 'cash'
+            ? _accountNameController.text.trim()
+            : null,
         isDefault: _isDefault,
         updatedAt: now,
       );
 
-      ref.read(profileProvider.notifier).updatePaymentMethod(
-        widget.paymentMethod!.id,
-        updatedMethod,
-      );
+      if (widget.paymentMethod!.id != null) {
+        ref
+            .read(profileProvider.notifier)
+            .updatePaymentMethod(widget.paymentMethod!.id!, updatedMethod);
+      }
     } else {
       // Create new payment method
       final newMethod = domain.PaymentMethod(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         type: _selectedType,
+        label: _displayNameController.text.trim(),
         displayName: _displayNameController.text.trim(),
-        accountNumber: _selectedType != 'cash' ? _accountNumberController.text.trim() : null,
-        accountName: _selectedType != 'cash' ? _accountNameController.text.trim() : null,
+        accountNumber: _selectedType != 'cash'
+            ? _accountNumberController.text.trim()
+            : null,
+        accountName: _selectedType != 'cash'
+            ? _accountNameController.text.trim()
+            : null,
         isDefault: _isDefault,
         createdAt: now,
         updatedAt: now,

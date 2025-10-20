@@ -8,13 +8,15 @@ export 'package:eatfast_mobile/shared/constants/api_constants.dart';
 
 // Models
 export 'package:eatfast_mobile/shared/models/loyalty_models.dart';
-export 'package:eatfast_mobile/shared/models/wallet_models.dart' hide PaymentMethod, TopUpState;
+export 'package:eatfast_mobile/shared/models/wallet_models.dart'
+    hide PaymentMethod, TopUpState;
 export 'package:eatfast_mobile/shared/models/restaurant_models.dart';
-export 'package:eatfast_mobile/shared/models/menu_item.dart';
+export 'package:eatfast_mobile/shared/services/restaurants/domain/models/menu_item.dart';
 export 'package:eatfast_mobile/shared/models/admin_stats.dart';
 
 // Auth
-export 'package:eatfast_mobile/shared/services/auth/models/app_user.dart' hide AuthStatus;
+export 'package:eatfast_mobile/shared/services/auth/models/app_user.dart'
+    hide AuthStatus;
 export 'package:eatfast_mobile/shared/services/auth/providers/unified_auth_provider.dart';
 
 // Cart
@@ -33,7 +35,8 @@ export 'package:eatfast_mobile/shared/services/loyalty/providers/loyalty_provide
 export 'package:eatfast_mobile/shared/services/cart/providers/cart_provider.dart';
 export 'package:eatfast_mobile/shared/services/orders/providers/order_provider.dart';
 export 'package:eatfast_mobile/shared/services/ratings/providers/rating_provider.dart';
-export 'package:eatfast_mobile/shared/services/wallet/providers/wallet_provider.dart' show walletProvider, WalletNotifier;
+export 'package:eatfast_mobile/shared/services/wallet/providers/wallet_provider.dart'
+    show walletProvider, WalletNotifier;
 
 // Themes
 export 'package:eatfast_mobile/shared/themes/app_colors.dart';
