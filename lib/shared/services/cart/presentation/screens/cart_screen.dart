@@ -53,7 +53,7 @@ class CartScreen extends ConsumerWidget {
         foregroundColor: DesignTokens.white,
         elevation: 0,
         actions: [
-          if (cartState is CartLoaded && !cartState.cart.isEmpty)
+          if (cartState is CartLoaded && cartState.cart.isNotEmpty)
             TextButton(
               onPressed: () => _showClearCartDialog(context, ref),
               child: const Text(
@@ -64,7 +64,7 @@ class CartScreen extends ConsumerWidget {
         ],
       ),
       body: _buildBody(context, ref, cartState),
-      bottomNavigationBar: cartState is CartLoaded && !cartState.cart.isEmpty
+      bottomNavigationBar: cartState is CartLoaded && cartState.cart.isNotEmpty
           ? _buildBottomBar(context, cartState.cart)
           : null,
     );

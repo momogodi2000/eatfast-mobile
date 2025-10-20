@@ -1,7 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
-import 'package:eatfast_mobile/shared/services/cart/domain/models/cart.dart';
 import 'package:eatfast_mobile/shared/services/cart/domain/models/cart_item.dart';
 
 class CartItemCard extends StatelessWidget {

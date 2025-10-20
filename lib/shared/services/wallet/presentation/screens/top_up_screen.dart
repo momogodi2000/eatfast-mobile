@@ -67,7 +67,7 @@ class _TopUpScreenState extends ConsumerState<TopUpScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '${walletState.valueOrNull?.balance?.toStringAsFixed(0) ?? "0"} ${walletState.valueOrNull?.currency ?? "XAF"}',
+                      '${walletState.valueOrNull?.balance.toStringAsFixed(0) ?? "0"} ${walletState.valueOrNull?.currency ?? "XAF"}',
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             color: Colors.white,

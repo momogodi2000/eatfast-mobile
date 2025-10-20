@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/restaurant_stats.dart';
-import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_management.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import '../widgets/widgets/restaurant_manager_drawer.dart';
 import '../widgets/widgets/performance_chart.dart';

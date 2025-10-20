@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/services/auth/models/app_user.dart';
 import 'package:eatfast_mobile/shared/models/user_address.dart';
 import 'domain/profile_repository.dart' as repo;
-import 'domain/models.dart' as models;
 import 'data/profile_repository_impl.dart';
 
 // Repository provider
@@ -19,8 +18,8 @@ final profileProvider = StateNotifierProvider<ProfileNotifier, AsyncValue<Profil
 class ProfileState {
   final AppUser? user;
   final List<UserAddress> addresses;
-  final List<models.PaymentMethod> paymentMethods;
-  final models.NotificationPreferences? notificationPreferences;
+  final List<repo.PaymentMethod> paymentMethods;
+  final repo.NotificationPreferences? notificationPreferences;
   final bool isLoading;
   final String? error;
 
@@ -36,8 +35,8 @@ class ProfileState {
   ProfileState copyWith({
     AppUser? user,
     List<UserAddress>? addresses,
-    List<models.PaymentMethod>? paymentMethods,
-    models.NotificationPreferences? notificationPreferences,
+    List<repo.PaymentMethod>? paymentMethods,
+    repo.NotificationPreferences? notificationPreferences,
     bool? isLoading,
     String? error,
   }) {
@@ -161,7 +160,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
           city: addr.city,
           state: addr.state,
           postalCode: addr.postalCode,
-          country: addr.country,
+          country: addr.country ?? 'Cameroon',
           latitude: addr.latitude,
           longitude: addr.longitude,
           deliveryInstructions: addr.instructions,
@@ -328,21 +327,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     state = AsyncValue.data(currentState.copyWith(isLoading: true));
 
     try {
-      final repoPaymentMethods = await _repository.getPaymentMethods(userId);
-
-      // Convert repo.PaymentMethod to models.PaymentMethod
-      final paymentMethods = repoPaymentMethods.map((pm) {
-        return models.PaymentMethod(
-          id: pm.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
-          type: pm.type,
-          accountNumber: pm.cardNumber,
-          accountName: pm.cardHolderName,
-          displayName: pm.cardHolderName ?? pm.type,
-          isDefault: pm.isDefault,
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-      }).toList();
+      final paymentMethods = await _repository.getPaymentMethods(userId);
 
       state = AsyncValue.data(currentState.copyWith(
         paymentMethods: paymentMethods,
@@ -354,7 +339,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
   }
 
   /// Add payment method
-  Future<void> addPaymentMethod(models.PaymentMethod paymentMethod, {String? type, Map<String, dynamic>? details}) async {
+  Future<void> addPaymentMethod(repo.PaymentMethod paymentMethod, {String? type, Map<String, dynamic>? details}) async {
     final currentState = state.valueOrNull ?? const ProfileState();
     final userId = currentState.user?.id;
 
@@ -362,17 +347,8 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
 
     state = AsyncValue.data(currentState.copyWith(isLoading: true));
 
-    // Convert models.PaymentMethod to repo.PaymentMethod for repository
-    final repo.PaymentMethod methodToAdd = repo.PaymentMethod(
-      id: paymentMethod.id,
-      type: paymentMethod.type,
-      cardNumber: paymentMethod.accountNumber,
-      cardHolderName: paymentMethod.accountName,
-      isDefault: paymentMethod.isDefault,
-    );
-
     try {
-      final success = await _repository.addPaymentMethod(userId, methodToAdd);
+      final success = await _repository.addPaymentMethod(userId, paymentMethod);
 
       if (success) {
         // Reload payment methods
@@ -416,7 +392,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
   }
 
   /// Update payment method
-  Future<void> updatePaymentMethod(String paymentMethodId, models.PaymentMethod updatedMethod) async {
+  Future<void> updatePaymentMethod(String paymentMethodId, repo.PaymentMethod updatedMethod) async {
     final currentState = state.valueOrNull ?? const ProfileState();
 
     state = AsyncValue.data(currentState.copyWith(isLoading: true));
@@ -462,7 +438,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
   }
 
   /// Update notification preferences
-  Future<void> updateNotificationPreferences(models.NotificationPreferences preferences) async {
+  Future<void> updateNotificationPreferences(repo.NotificationPreferences preferences) async {
     final currentState = state.valueOrNull ?? const ProfileState();
     final userId = currentState.user?.id;
 
@@ -471,16 +447,7 @@ class ProfileNotifier extends StateNotifier<AsyncValue<ProfileState>> {
     state = AsyncValue.data(currentState.copyWith(isLoading: true));
 
     try {
-      // Convert models.NotificationPreferences to repo.NotificationPreferences
-      final repo.NotificationPreferences repoPreferences = repo.NotificationPreferences(
-        emailNotifications: preferences.emailNotifications,
-        pushNotifications: preferences.pushNotifications,
-        smsNotifications: preferences.smsNotifications,
-        orderUpdates: preferences.orderUpdates,
-        promotionalOffers: preferences.promotionalOffers,
-      );
-
-      final success = await _repository.updateNotificationPreferences(userId, repoPreferences);
+      final success = await _repository.updateNotificationPreferences(userId, preferences);
 
       if (success) {
         state = AsyncValue.data(currentState.copyWith(

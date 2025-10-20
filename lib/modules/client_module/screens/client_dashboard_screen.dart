@@ -132,7 +132,7 @@ class _ClientDashboardScreenState extends ConsumerState<ClientDashboardScreen> {
                         icon: Icons.account_balance_wallet,
                         color: Colors.green,
                         title: 'Portefeuille',
-                        value: '${walletAsync.value?.balance?.toStringAsFixed(0) ?? '0'} XAF',
+                        value: '${walletAsync.value?.balance.toStringAsFixed(0) ?? '0'} XAF',
                         onTap: () {
                           // TODO: Navigate to wallet screen
                         },

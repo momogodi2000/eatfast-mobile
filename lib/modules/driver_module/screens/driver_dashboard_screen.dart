@@ -9,7 +9,6 @@ import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/available_o
 import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/active_delivery_card.dart';
 import 'package:eatfast_mobile/modules/driver_module/widgets/widgets/quick_stats_row.dart';
 import 'package:eatfast_mobile/modules/driver_module/providers/domain/providers/driver_providers.dart';
-import 'package:eatfast_mobile/modules/driver_module/services/data/driver_service.dart' as driver_service_legacy;
 
 class DriverDashboardScreen extends ConsumerStatefulWidget {
   final String driverId;

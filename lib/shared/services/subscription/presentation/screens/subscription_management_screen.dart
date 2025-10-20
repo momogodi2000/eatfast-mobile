@@ -215,7 +215,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${subscription.plan?.price?.toStringAsFixed(0) ?? "0"} XAF',
+                          '${subscription.plan?.price.toStringAsFixed(0) ?? "0"} XAF',
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
@@ -351,9 +351,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
               isCurrentPlan: isCurrentPlan,
               isUpgrade: userSubscription != null &&
                          userSubscription.plan != null &&
-                         plan.price != null &&
-                         userSubscription.plan!.price != null &&
-                         plan.price! > userSubscription.plan!.price!,
+                         plan.price > userSubscription.plan!.price,
               onSelectPlan: () => _handlePlanSelection(plan, userSubscription),
             );
           },
@@ -448,7 +446,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
             ),
             const SizedBox(height: 8),
             Text(
-              'Montant: ${subscription.plan?.price?.toStringAsFixed(0) ?? "0"} XAF',
+              'Montant: ${subscription.plan?.price.toStringAsFixed(0) ?? "0"} XAF',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColor,
@@ -474,7 +472,7 @@ class _SubscriptionManagementScreenState extends ConsumerState<SubscriptionManag
             if (currentSubscription != null && currentSubscription.plan != null)
               Text('Vous allez passer de ${currentSubscription.plan!.name ?? "Plan actuel"} à ${plan.name ?? "nouveau plan"}.'),
             const SizedBox(height: 16),
-            Text('Prix: ${plan.price?.toStringAsFixed(0) ?? "0"} XAF/mois'),
+            Text('Prix: ${plan.price.toStringAsFixed(0) ?? "0"} XAF/mois'),
             const SizedBox(height: 8),
             Text('Facturation: ${plan.billingCycle}'),
           ],
