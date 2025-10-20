@@ -51,7 +51,7 @@ class OrderDetailCard extends StatelessWidget {
               _buildCustomerInfo(),
               const SizedBox(height: DesignTokens.spaceMD),
               _buildOrderItems(),
-              if (order.specialInstructions.isNotEmpty) ...[
+              if (order.specialInstructions?.isNotEmpty == true) ...[
                 const SizedBox(height: DesignTokens.spaceMD),
                 _buildSpecialInstructions(),
               ],
@@ -327,7 +327,7 @@ class OrderDetailCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  order.specialInstructions,
+                  order.specialInstructions ?? '',
                   style: const TextStyle(
                     color: DesignTokens.textPrimary,
                     fontSize: 14,
@@ -423,11 +423,12 @@ class OrderDetailCard extends StatelessWidget {
     List<Widget> actions = [];
 
     switch (order.status) {
-  case shared_models.OrderStatus.accepted:
+      case shared_models.OrderStatus.accepted:
         actions = [
           Expanded(
             child: ElevatedButton.icon(
-              onPressed: () => onStatusUpdate(shared_models.OrderStatus.preparing),
+              onPressed: () =>
+                  onStatusUpdate(shared_models.OrderStatus.preparing),
               icon: const Icon(Icons.restaurant, size: 18),
               label: const Text('Commencer pr�paration'),
               style: ElevatedButton.styleFrom(
@@ -437,7 +438,7 @@ class OrderDetailCard extends StatelessWidget {
           ),
         ];
         break;
-  case shared_models.OrderStatus.preparing:
+      case shared_models.OrderStatus.preparing:
         actions = [
           Expanded(
             child: ElevatedButton.icon(
@@ -451,14 +452,15 @@ class OrderDetailCard extends StatelessWidget {
           ),
         ];
         break;
-  case shared_models.OrderStatus.ready:
+      case shared_models.OrderStatus.ready:
         actions = [
           Expanded(
             child: Row(
               children: [
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => onStatusUpdate(shared_models.OrderStatus.pickedUp),
+                    onPressed: () =>
+                        onStatusUpdate(shared_models.OrderStatus.pickedUp),
                     icon: const Icon(Icons.local_shipping, size: 18),
                     label: const Text('R�cup�r�'),
                     style: OutlinedButton.styleFrom(
@@ -470,7 +472,8 @@ class OrderDetailCard extends StatelessWidget {
                 const SizedBox(width: DesignTokens.spaceSM),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: () => onStatusUpdate(shared_models.OrderStatus.delivered),
+                    onPressed: () =>
+                        onStatusUpdate(shared_models.OrderStatus.delivered),
                     icon: const Icon(Icons.check_circle, size: 18),
                     label: const Text('Livr�'),
                     style: ElevatedButton.styleFrom(

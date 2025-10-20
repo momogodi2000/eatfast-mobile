@@ -4,18 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'analytics_data.freezed.dart';
 part 'analytics_data.g.dart';
 
-enum TrendDirection {
-  up,
-  down,
-  stable,
-}
+enum TrendDirection { up, down, stable }
 
-enum CardType {
-  revenue,
-  orders,
-  customers,
-  performance,
-}
+enum CardType { revenue, orders, customers, performance }
 
 enum KPIMetric {
   totalRevenue,
@@ -26,12 +17,7 @@ enum KPIMetric {
   customerSatisfaction,
 }
 
-enum PerformanceStatus {
-  excellent,
-  good,
-  average,
-  poor,
-}
+enum PerformanceStatus { excellent, good, average, poor }
 
 @freezed
 class AnalyticsCard with _$AnalyticsCard {
@@ -41,8 +27,8 @@ class AnalyticsCard with _$AnalyticsCard {
     required String value,
     double? trend,
     TrendDirection? trendDirection,
-    @JsonKey(includeFromJson: false, includeToJson: false) IconData? icon,
-    @JsonKey(includeFromJson: false, includeToJson: false) Color? color,
+    IconData? icon,
+    Color? color,
     CardType? cardType,
   }) = _AnalyticsCard;
 
@@ -52,10 +38,8 @@ class AnalyticsCard with _$AnalyticsCard {
 
 @freezed
 class DataPoint with _$DataPoint {
-  const factory DataPoint({
-    required DateTime date,
-    required double value,
-  }) = _DataPoint;
+  const factory DataPoint({required DateTime date, required double value}) =
+      _DataPoint;
 
   factory DataPoint.fromJson(Map<String, dynamic> json) =>
       _$DataPointFromJson(json);

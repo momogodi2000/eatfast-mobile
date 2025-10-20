@@ -1686,7 +1686,7 @@ class _MenuManagementScreenState extends ConsumerState<MenuManagementScreen>
         ref.read(menuCategoriesProvider(widget.restaurantId)).value ?? [];
     final allItemIds = categories
         .expand((cat) => cat.items ?? [])
-        .map((item) => item.itemId)
+        .map<String>((item) => item.itemId)
         .toList();
 
     if (allItemIds.isEmpty) return;

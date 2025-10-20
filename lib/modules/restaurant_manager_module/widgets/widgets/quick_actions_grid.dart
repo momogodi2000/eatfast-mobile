@@ -5,10 +5,7 @@ import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 class QuickActionsGrid extends StatelessWidget {
   final String restaurantId;
 
-  const QuickActionsGrid({
-    super.key,
-    required this.restaurantId,
-  });
+  const QuickActionsGrid({super.key, required this.restaurantId});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,8 @@ class QuickActionsGrid extends StatelessWidget {
           title: 'Rapports',
           subtitle: 'Voir les statistiques',
           color: Colors.green,
-          onTap: () => context.push('/restaurant-owner/$restaurantId/analytics'),
+          onTap: () =>
+              context.push('/restaurant-owner/$restaurantId/analytics'),
         ),
         _QuickActionItem(
           icon: Icons.settings,
@@ -72,9 +70,7 @@ class _QuickActionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
@@ -89,11 +85,7 @@ class _QuickActionItem extends StatelessWidget {
                   color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(
-                  icon,
-                  size: 32,
-                  color: color,
-                ),
+                child: Icon(icon, size: 32, color: color),
               ),
               const SizedBox(height: 12),
               Text(
@@ -107,9 +99,9 @@ class _QuickActionItem extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 subtitle,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
             ],

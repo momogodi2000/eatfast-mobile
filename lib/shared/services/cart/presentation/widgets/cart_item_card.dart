@@ -75,7 +75,7 @@ class CartItemCard extends StatelessWidget {
   Widget _buildItemImage() {
     final imageUrl = cartItem.menuItem.imageUrl;
 
-    if (imageUrl.isEmpty) {
+    if (imageUrl?.isEmpty ?? true) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
         child: Container(
@@ -94,7 +94,7 @@ class CartItemCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
       child: CachedNetworkImage(
-        imageUrl: imageUrl,
+        imageUrl: imageUrl ?? '',
         width: 60,
         height: 60,
         fit: BoxFit.cover,
@@ -123,7 +123,7 @@ class CartItemCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          cartItem.menuItem.name,
+          cartItem.menuItem.name ?? '',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: DesignTokens.fontWeightSemiBold,
           ),
@@ -134,7 +134,7 @@ class CartItemCard extends StatelessWidget {
         const SizedBox(height: DesignTokens.spaceXS),
 
         Text(
-          '${cartItem.menuItem.price.toInt()} FCFA chacun',
+          '${(cartItem.menuItem.price ?? 0.0).toInt()} FCFA chacun',
           style: Theme.of(
             context,
           ).textTheme.bodyMedium?.copyWith(color: DesignTokens.textSecondary),

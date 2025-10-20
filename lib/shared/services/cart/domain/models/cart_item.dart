@@ -51,7 +51,7 @@ class CartItem {
 
   // Convenience getter for itemTotal (alias for total)
   double get itemTotal => total;
-  
+
   // Convenience getter for totalPrice (alias for total)
   double get totalPrice => total;
 

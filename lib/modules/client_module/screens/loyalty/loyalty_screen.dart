@@ -51,9 +51,9 @@ class LoyaltyScreen extends ConsumerWidget {
                 availablePoints: loyaltyState.availablePoints,
                 isLoading: loyaltyState.isLoading,
               ),
-              
+
               const SizedBox(height: 20),
-              
+
               // Loyalty Tier Card
               LoyaltyTierCard(
                 currentTier: loyaltyState.currentTier,
@@ -68,9 +68,9 @@ class LoyaltyScreen extends ConsumerWidget {
                   );
                 },
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Quick Actions
               Row(
                 children: [
@@ -109,9 +109,9 @@ class LoyaltyScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Featured Rewards
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,9 +135,9 @@ class LoyaltyScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 12),
-              
+
               // Rewards Showcase
               RewardsShowcase(
                 availablePoints: loyaltyState.availablePoints,
@@ -145,9 +145,9 @@ class LoyaltyScreen extends ConsumerWidget {
                   _showRewardDetails(context, ref, reward);
                 },
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Recent Transactions Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,15 +171,15 @@ class LoyaltyScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 12),
-              
+
               // Recent Transactions
               RecentLoyaltyTransactions(
                 transactions: loyaltyState.transactions.take(5).toList(),
                 isLoading: loyaltyState.isLoadingTransactions,
               ),
-              
+
               // Error handling
               if (loyaltyState.error != null)
                 Container(
@@ -193,10 +193,7 @@ class LoyaltyScreen extends ConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: Colors.red[600],
-                      ),
+                      Icon(Icons.error_outline, color: Colors.red[600]),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -217,9 +214,9 @@ class LoyaltyScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-              
+
               const SizedBox(height: 32),
-              
+
               // Help Section
               Container(
                 width: double.infinity,
@@ -227,12 +224,20 @@ class LoyaltyScreen extends ConsumerWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+                      Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.1),
+                      Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.05),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
+                  border: Border.all(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.2),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,10 +252,11 @@ class LoyaltyScreen extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Text(
                           'Comment ça marche ?',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ],
                     ),
@@ -275,7 +281,11 @@ class LoyaltyScreen extends ConsumerWidget {
     );
   }
 
-  void _showRewardDetails(BuildContext context, WidgetRef ref, LoyaltyReward reward) {
+  void _showRewardDetails(
+    BuildContext context,
+    WidgetRef ref,
+    LoyaltyReward reward,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -291,7 +301,9 @@ class LoyaltyScreen extends ConsumerWidget {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Récompense ${reward.name} échangée avec succès!'),
+                  content: Text(
+                    'Récompense ${reward.name} échangée avec succès!',
+                  ),
                   backgroundColor: Colors.green,
                 ),
               );
@@ -354,26 +366,22 @@ class _QuickActionCard extends StatelessWidget {
                 color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(
-                icon,
-                size: 20,
-                color: color,
-              ),
+              child: Icon(icon, size: 20, color: color),
             ),
             const SizedBox(height: 8),
             Text(
               title,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 2),
             Text(
               subtitle,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
               textAlign: TextAlign.center,
             ),
           ],
@@ -427,16 +435,16 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               reward.name,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
               reward.description,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: 16),
             Container(
@@ -460,9 +468,8 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
                       ),
                       Text(
                         '${reward.pointsCost} points',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -477,10 +484,11 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
                       ),
                       Text(
                         '$availablePoints points',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: canAfford ? Colors.green : Colors.red,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: canAfford ? Colors.green : Colors.red,
+                            ),
                       ),
                     ],
                   ),
@@ -501,7 +509,7 @@ class _RewardDetailsBottomSheet extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  canAfford 
+                  canAfford
                       ? 'Échanger ${reward.pointsCost} points'
                       : 'Points insuffisants',
                   style: const TextStyle(

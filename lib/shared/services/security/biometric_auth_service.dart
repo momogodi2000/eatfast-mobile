@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'secure_storage_service.dart';
+import '../storage/secure_storage_service.dart';
 
 /// Biometric authentication service
 /// Handles fingerprint, face recognition, and device security
@@ -21,12 +21,12 @@ class BiometricAuthService {
     try {
       final bool isAvailable = await _localAuth.isDeviceSupported();
       final bool canCheckBiometrics = await _localAuth.canCheckBiometrics;
-      final List<BiometricType> availableBiometrics = 
-          await _localAuth.getAvailableBiometrics();
+      final List<BiometricType> availableBiometrics = await _localAuth
+          .getAvailableBiometrics();
 
-      return isAvailable && 
-             canCheckBiometrics && 
-             availableBiometrics.isNotEmpty;
+      return isAvailable &&
+          canCheckBiometrics &&
+          availableBiometrics.isNotEmpty;
     } catch (e) {
       return false;
     }
@@ -139,20 +139,22 @@ class BiometricAuthService {
 
       if (Platform.isAndroid) {
         final androidInfo = await _deviceInfo.androidInfo;
-        fingerprint = '${androidInfo.model}-${androidInfo.id}-${androidInfo.brand}';
+        fingerprint =
+            '${androidInfo.model}-${androidInfo.id}-${androidInfo.brand}';
       } else if (Platform.isIOS) {
         final iosInfo = await _deviceInfo.iosInfo;
-        fingerprint = '${iosInfo.model}-${iosInfo.identifierForVendor}-${iosInfo.systemVersion}';
+        fingerprint =
+            '${iosInfo.model}-${iosInfo.identifierForVendor}-${iosInfo.systemVersion}';
       }
 
       // Add some randomness and hash the fingerprint
       final random = Random();
       final salt = random.nextInt(1000000).toString();
       final combined = '$fingerprint-$salt';
-      
+
       final bytes = utf8.encode(combined);
       final digest = sha256.convert(bytes);
-      
+
       return digest.toString();
     } catch (e) {
       // Fallback fingerprint
@@ -213,8 +215,8 @@ class BiometricAuthService {
       return 'Empreinte digitale';
     } else if (types.contains(BiometricType.iris)) {
       return 'Reconnaissance iris';
-    } else if (types.contains(BiometricType.strong) || 
-               types.contains(BiometricType.weak)) {
+    } else if (types.contains(BiometricType.strong) ||
+        types.contains(BiometricType.weak)) {
       return 'Biométrie';
     } else {
       return 'Authentification biométrique';

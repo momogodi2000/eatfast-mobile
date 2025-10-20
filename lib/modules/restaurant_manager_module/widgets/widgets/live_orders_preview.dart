@@ -185,7 +185,7 @@ class LiveOrdersPreview extends StatelessWidget {
                   ),
                 ],
               ),
-              if (order.specialInstructions.isNotEmpty) ...[
+              if (order.specialInstructions?.isNotEmpty == true) ...[
                 const SizedBox(height: DesignTokens.spaceSM),
                 Container(
                   width: double.infinity,
@@ -204,7 +204,7 @@ class LiveOrdersPreview extends StatelessWidget {
                       const SizedBox(width: DesignTokens.spaceXS),
                       Expanded(
                         child: Text(
-                          order.specialInstructions,
+                          order.specialInstructions ?? '',
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: DesignTokens.textSecondary),
                           maxLines: 2,

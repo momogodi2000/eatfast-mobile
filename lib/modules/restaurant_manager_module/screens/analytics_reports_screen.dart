@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 import 'package:eatfast_mobile/shared/widgets/common/app_loading_indicator.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/restaurant_stats.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/domain/models/menu_item_performance.dart';
 import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
 import '../widgets/widgets/restaurant_manager_drawer.dart';
 import '../widgets/widgets/performance_chart.dart';
@@ -14,23 +15,26 @@ import '../widgets/widgets/performance_chart.dart';
 class AnalyticsReportsScreen extends ConsumerStatefulWidget {
   final String restaurantId;
 
-  const AnalyticsReportsScreen({
-    super.key,
-    required this.restaurantId,
-  });
+  const AnalyticsReportsScreen({super.key, required this.restaurantId});
 
   @override
-  ConsumerState<AnalyticsReportsScreen> createState() => _AnalyticsReportsScreenState();
+  ConsumerState<AnalyticsReportsScreen> createState() =>
+      _AnalyticsReportsScreenState();
 }
 
-class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen> {
+class _AnalyticsReportsScreenState
+    extends ConsumerState<AnalyticsReportsScreen> {
   DateTimeRange? _selectedDateRange;
   String _selectedPeriod = 'week'; // day, week, month, custom
 
   @override
   Widget build(BuildContext context) {
-    final dashboardStatsAsync = ref.watch(dashboardStatsProvider(widget.restaurantId));
-    final itemPerformanceAsync = ref.watch(itemPerformanceProvider(widget.restaurantId));
+    final dashboardStatsAsync = ref.watch(
+      dashboardStatsProvider(widget.restaurantId),
+    );
+    final itemPerformanceAsync = ref.watch(
+      itemPerformanceProvider(widget.restaurantId),
+    );
 
     return Scaffold(
       backgroundColor: DesignTokens.backgroundGrey,
@@ -63,7 +67,8 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
               _buildPeriodChip(),
               const SizedBox(height: DesignTokens.spaceLG),
               dashboardStatsAsync.when(
-                data: (stats) => _buildAnalyticsContent(stats, itemPerformanceAsync),
+                data: (stats) =>
+                    _buildAnalyticsContent(stats, itemPerformanceAsync),
                 loading: () => const Center(
                   child: Padding(
                     padding: EdgeInsets.all(DesignTokens.spaceXL),
@@ -93,7 +98,8 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
         break;
       case 'custom':
         if (_selectedDateRange != null) {
-          periodText = '${_formatDate(_selectedDateRange!.start)} - ${_formatDate(_selectedDateRange!.end)}';
+          periodText =
+              '${_formatDate(_selectedDateRange!.start)} - ${_formatDate(_selectedDateRange!.end)}';
         } else {
           periodText = 'P�riode personnalis�e';
         }
@@ -123,7 +129,10 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     );
   }
 
-  Widget _buildAnalyticsContent(RestaurantStats stats, AsyncValue<List<MenuItemPerformance>> itemPerformance) {
+  Widget _buildAnalyticsContent(
+    RestaurantStats stats,
+    AsyncValue<List<MenuItemPerformance>> itemPerformance,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -151,7 +160,8 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
         itemPerformance.when(
           data: (performance) => _buildItemPerformanceList(performance),
           loading: () => const AppLoadingIndicator(),
-          error: (error, _) => _buildErrorMessage('Erreur de chargement des performances'),
+          error: (error, _) =>
+              _buildErrorMessage('Erreur de chargement des performances'),
         ),
         const SizedBox(height: DesignTokens.spaceXL),
 
@@ -173,9 +183,9 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     return Text(
       title,
       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: DesignTokens.fontWeightBold,
-            color: DesignTokens.textPrimary,
-          ),
+        fontWeight: DesignTokens.fontWeightBold,
+        color: DesignTokens.textPrimary,
+      ),
     );
   }
 
@@ -271,19 +281,28 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
                 const Spacer(),
                 if (trend != null)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: (trendUp ?? false)
                           ? DesignTokens.successColor.withValues(alpha: 0.1)
                           : DesignTokens.errorColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                      borderRadius: BorderRadius.circular(
+                        DesignTokens.radiusSM,
+                      ),
                     ),
                     child: Row(
                       children: [
                         Icon(
-                          (trendUp ?? false) ? Icons.trending_up : Icons.trending_down,
+                          (trendUp ?? false)
+                              ? Icons.trending_up
+                              : Icons.trending_down,
                           size: 14,
-                          color: (trendUp ?? false) ? DesignTokens.successColor : DesignTokens.errorColor,
+                          color: (trendUp ?? false)
+                              ? DesignTokens.successColor
+                              : DesignTokens.errorColor,
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -291,7 +310,9 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: DesignTokens.fontWeightBold,
-                            color: (trendUp ?? false) ? DesignTokens.successColor : DesignTokens.errorColor,
+                            color: (trendUp ?? false)
+                                ? DesignTokens.successColor
+                                : DesignTokens.errorColor,
                           ),
                         ),
                       ],
@@ -302,10 +323,7 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
             const SizedBox(height: DesignTokens.spaceMD),
             Text(
               title,
-              style: TextStyle(
-                fontSize: 12,
-                color: DesignTokens.textSecondary,
-              ),
+              style: TextStyle(fontSize: 12, color: DesignTokens.textSecondary),
             ),
             const SizedBox(height: 4),
             Text(
@@ -318,10 +336,7 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
             ),
             Text(
               subtitle,
-              style: TextStyle(
-                fontSize: 12,
-                color: DesignTokens.textTertiary,
-              ),
+              style: TextStyle(fontSize: 12, color: DesignTokens.textTertiary),
             ),
           ],
         ),
@@ -360,10 +375,7 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
               ],
             ),
             const SizedBox(height: DesignTokens.spaceMD),
-            PerformanceChart(
-              dailyStats: stats.weeklyStats,
-              height: 200,
-            ),
+            PerformanceChart(dailyStats: stats.weeklyStats, height: 200),
           ],
         ),
       ),
@@ -382,11 +394,17 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
           children: [
             _buildStatRow('Total des commandes', stats.totalOrders.toString()),
             const Divider(),
-            _buildStatRow('Compl�t�es aujourd\'hui', stats.completedToday.toString()),
+            _buildStatRow(
+              'Compl�t�es aujourd\'hui',
+              stats.completedToday.toString(),
+            ),
             const Divider(),
             _buildStatRow('En attente', stats.pendingOrders.toString()),
             const Divider(),
-            _buildStatRow('Panier moyen', '${(stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)).toStringAsFixed(0)} FCFA'),
+            _buildStatRow(
+              'Panier moyen',
+              '${(stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)).toStringAsFixed(0)} FCFA',
+            ),
           ],
         ),
       ),
@@ -401,10 +419,7 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
         children: [
           Text(
             label,
-            style: TextStyle(
-              fontSize: 14,
-              color: DesignTokens.textSecondary,
-            ),
+            style: TextStyle(fontSize: 14, color: DesignTokens.textSecondary),
           ),
           Text(
             value,
@@ -488,11 +503,17 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
           return Column(
             children: [
               ListTile(
-                leading: const Icon(Icons.trending_up, color: DesignTokens.primaryColor),
+                leading: const Icon(
+                  Icons.trending_up,
+                  color: DesignTokens.primaryColor,
+                ),
                 title: Text(item.itemName),
                 subtitle: Text('${item.orderCount} commandes'),
                 trailing: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: DesignTokens.successColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
@@ -521,21 +542,24 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
         _buildInsightCard(
           icon: Icons.lightbulb,
           title: 'Optimisation du Menu',
-          description: 'Vos 5 articles les plus populaires g�n�rent 60% de vos revenus. Envisagez de promouvoir ces articles.',
+          description:
+              'Vos 5 articles les plus populaires g�n�rent 60% de vos revenus. Envisagez de promouvoir ces articles.',
           color: DesignTokens.warningColor,
         ),
         const SizedBox(height: DesignTokens.spaceMD),
         _buildInsightCard(
           icon: Icons.schedule,
           title: 'Heures de Pointe',
-          description: 'Vos heures de pointe sont entre 12h-14h et 19h-21h. Assurez-vous d\'avoir suffisamment de stock.',
+          description:
+              'Vos heures de pointe sont entre 12h-14h et 19h-21h. Assurez-vous d\'avoir suffisamment de stock.',
           color: DesignTokens.infoColor,
         ),
         const SizedBox(height: DesignTokens.spaceMD),
         _buildInsightCard(
           icon: Icons.thumb_up,
           title: 'Satisfaction Client',
-          description: 'Votre note moyenne de ${stats.averageRating.toStringAsFixed(1)}/5 est excellente! Continuez comme �a.',
+          description:
+              'Votre note moyenne de ${stats.averageRating.toStringAsFixed(1)}/5 est excellente! Continuez comme �a.',
           color: DesignTokens.successColor,
         ),
       ],
@@ -655,17 +679,17 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
             const SizedBox(height: DesignTokens.spaceLG),
             Text(
               'Erreur de chargement',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: DesignTokens.errorColor,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: DesignTokens.errorColor),
             ),
             const SizedBox(height: DesignTokens.spaceSM),
             Text(
               error.toString(),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: DesignTokens.textSecondary,
-                  ),
+                color: DesignTokens.textSecondary,
+              ),
             ),
             const SizedBox(height: DesignTokens.spaceLG),
             ElevatedButton.icon(
@@ -703,7 +727,9 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(DesignTokens.radiusXL)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(DesignTokens.radiusXL),
+        ),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(DesignTokens.spaceLG),
@@ -779,7 +805,9 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(DesignTokens.radiusXL)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(DesignTokens.radiusXL),
+        ),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(DesignTokens.spaceLG),
@@ -804,7 +832,10 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
             ),
             const SizedBox(height: DesignTokens.spaceMD),
             ListTile(
-              leading: const Icon(Icons.table_chart, color: DesignTokens.successColor),
+              leading: const Icon(
+                Icons.table_chart,
+                color: DesignTokens.successColor,
+              ),
               title: const Text('Export CSV'),
               subtitle: const Text('Donn�es tabulaires pour Excel'),
               onTap: () {
@@ -822,7 +853,10 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
               },
             ),
             ListTile(
-              leading: const Icon(Icons.description, color: DesignTokens.warningColor),
+              leading: const Icon(
+                Icons.description,
+                color: DesignTokens.warningColor,
+              ),
               title: const Text('Rapport texte'),
               subtitle: const Text('R�sum� format�'),
               onTap: () {
@@ -906,7 +940,9 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     buffer.writeln('Commandes compl�t�es,${stats.completedToday}');
     buffer.writeln('Commandes en attente,${stats.pendingOrders}');
     buffer.writeln('Note moyenne,${stats.averageRating}');
-    buffer.writeln('Panier moyen,${stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)}');
+    buffer.writeln(
+      'Panier moyen,${stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)}',
+    );
 
     buffer.writeln('\nArticles populaires');
     buffer.writeln('Nom,Commandes,Note');
@@ -936,17 +972,23 @@ class _AnalyticsReportsScreenState extends ConsumerState<AnalyticsReportsScreen>
     buffer.writeln('=== RAPPORT D\'ANALYTIQUES ===');
     buffer.writeln('G�n�r� le: ${DateTime.now().toLocal()}');
     buffer.writeln('\n--- R�SUM� ---');
-    buffer.writeln('Revenus du jour: ${stats.todayRevenue.toStringAsFixed(0)} FCFA');
+    buffer.writeln(
+      'Revenus du jour: ${stats.todayRevenue.toStringAsFixed(0)} FCFA',
+    );
     buffer.writeln('Total commandes: ${stats.totalOrders}');
     buffer.writeln('Commandes compl�t�es: ${stats.completedToday}');
     buffer.writeln('Commandes en attente: ${stats.pendingOrders}');
     buffer.writeln('Note moyenne: ${stats.averageRating.toStringAsFixed(1)}/5');
-    buffer.writeln('Panier moyen: ${(stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)).toStringAsFixed(0)} FCFA');
+    buffer.writeln(
+      'Panier moyen: ${(stats.todayRevenue / (stats.completedToday > 0 ? stats.completedToday : 1)).toStringAsFixed(0)} FCFA',
+    );
 
     buffer.writeln('\n--- ARTICLES POPULAIRES ---');
     for (var i = 0; i < stats.popularItems.length; i++) {
       final item = stats.popularItems[i];
-      buffer.writeln('${i + 1}. ${item.itemName} - ${item.orderCount} commandes (${item.rating.toStringAsFixed(1)}/5)');
+      buffer.writeln(
+        '${i + 1}. ${item.itemName} - ${item.orderCount} commandes (${item.rating.toStringAsFixed(1)}/5)',
+      );
     }
 
     return buffer.toString();

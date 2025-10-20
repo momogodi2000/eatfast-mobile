@@ -118,10 +118,10 @@ class _AdvancedAnalyticsScreenState
           children: _buildTabViews(analytics),
         ),
         loading: () => const LoadingWidget(),
-          error: (error, stack) => ErrorDisplayWidget(
-            message: error.toString(),
-            onRetry: () => ref.invalidate(analyticsProvider),
-          ),
+        error: (error, stack) => ErrorDisplayWidget(
+          message: error.toString(),
+          onRetry: () => ref.invalidate(analyticsProvider),
+        ),
       ),
     );
   }
@@ -359,14 +359,14 @@ class _AdvancedAnalyticsScreenState
             PerformanceMetricsWidget(
               metrics:
                   analytics.driverMetrics ??
-                  PerformanceMetrics(
-                    orderFulfillmentRate: 0.0,
-                    averageDeliveryTime: 0.0,
-                    customerSatisfactionScore: 0.0,
-                    totalDeliveries: 0,
-                    cancelledOrders: 0,
-                    refundRate: 0.0,
-                  ),
+                  {
+                    'orderFulfillmentRate': 0.0,
+                    'averageDeliveryTime': 0.0,
+                    'customerSatisfactionScore': 0.0,
+                    'totalDeliveries': 0,
+                    'cancelledOrders': 0,
+                    'refundRate': 0.0,
+                  },
             ),
           ],
         ),

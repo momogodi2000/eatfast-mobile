@@ -7,7 +7,7 @@ class SecureStorageService {
   final FlutterSecureStorage _storage;
 
   SecureStorageService([FlutterSecureStorage? storage])
-      : _storage = storage ?? const FlutterSecureStorage();
+    : _storage = storage ?? const FlutterSecureStorage();
 
   // Storage Keys
   static const String _authTokenKey = 'auth_token';
@@ -17,6 +17,8 @@ class SecureStorageService {
   static const String _biometricEnabledKey = 'biometric_enabled';
   static const String _rememberMeKey = 'remember_me';
   static const String _savedEmailKey = 'saved_email';
+  static const String _biometricCredentialsKey = 'biometric_credentials';
+  static const String _deviceFingerprintKey = 'device_fingerprint';
 
   // ==================== Auth Token Management ====================
 
@@ -90,16 +92,54 @@ class SecureStorageService {
 
   /// Save biometric enabled preference
   Future<void> setBiometricEnabled(bool enabled) async {
-    await _storage.write(
-      key: _biometricEnabledKey,
-      value: enabled.toString(),
-    );
+    await _storage.write(key: _biometricEnabledKey, value: enabled.toString());
   }
 
   /// Get biometric enabled preference
   Future<bool> isBiometricEnabled() async {
     final value = await _storage.read(key: _biometricEnabledKey);
     return value == 'true';
+  }
+
+  /// Set biometric login enabled (alias for setBiometricEnabled)
+  Future<void> setBiometricLoginEnabled(bool enabled) async {
+    await setBiometricEnabled(enabled);
+  }
+
+  /// Check if biometric login is enabled (alias for isBiometricEnabled)
+  Future<bool> isBiometricLoginEnabled() async {
+    return await isBiometricEnabled();
+  }
+
+  /// Store biometric credentials
+  Future<void> storeBiometricCredentials(
+    Map<String, dynamic> credentials,
+  ) async {
+    // Store as JSON string - actual implementation would encrypt this
+    await _storage.write(
+      key: _biometricCredentialsKey,
+      value: credentials.toString(),
+    );
+  }
+
+  /// Check if user has valid tokens (auth + refresh)
+  Future<bool> hasValidTokens() async {
+    final authToken = await getAuthToken();
+    final refreshToken = await getRefreshToken();
+    return authToken != null &&
+        refreshToken != null &&
+        authToken.isNotEmpty &&
+        refreshToken.isNotEmpty;
+  }
+
+  /// Get device fingerprint
+  Future<String?> getDeviceFingerprint() async {
+    return await _storage.read(key: _deviceFingerprintKey);
+  }
+
+  /// Store device fingerprint
+  Future<void> storeDeviceFingerprint(String fingerprint) async {
+    await _storage.write(key: _deviceFingerprintKey, value: fingerprint);
   }
 
   // ==================== Remember Me ====================
