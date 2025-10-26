@@ -1,0 +1,549 @@
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
+import 'package:eatfast_mobile/modules/restaurant_manager_module/providers/restaurant_owner_provider.dart';
+import 'package:eatfast_mobile/shared/models/live_order.dart';
+import 'package:eatfast_mobile/shared/models/exports.dart';
+import '../widgets/widgets/order_detail_card.dart';
+import '../widgets/widgets/restaurant_manager_drawer.dart';
+
+enum OrderFilter {
+  all,
+  pending,
+  preparing,
+  ready,
+  completed,
+}
+
+class LiveOrdersScreen extends ConsumerStatefulWidget {
+  final String restaurantId;
+  
+  const LiveOrdersScreen({
+    super.key,
+    required this.restaurantId,
+  });
+
+  @override
+  ConsumerState<LiveOrdersScreen> createState() => _LiveOrdersScreenState();
+}
+
+class _LiveOrdersScreenState extends ConsumerState<LiveOrdersScreen>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Watch restaurant state for future use
+    // ignore: unused_local_variable
+    final restaurantState = ref.watch(restaurantOwnerProvider(widget.restaurantId));
+    final liveOrdersAsync = ref.watch(liveOrdersProvider(widget.restaurantId));
+    
+    return Scaffold(
+      backgroundColor: DesignTokens.backgroundGrey,
+      drawer: RestaurantManagerDrawer(restaurantId: widget.restaurantId),
+      appBar: AppBar(
+        title: const Text('Commandes en direct'),
+        backgroundColor: DesignTokens.primaryColor,
+        foregroundColor: DesignTokens.white,
+        actions: [
+          IconButton(
+            onPressed: () => _showSortOptions(context),
+            icon: const Icon(Icons.sort),
+          ),
+          IconButton(
+            onPressed: () => _refreshOrders(),
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: DesignTokens.white,
+          labelColor: DesignTokens.white,
+          unselectedLabelColor: DesignTokens.white.withValues(alpha: 0.7),
+          tabs: [
+            Tab(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Toutes'),
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.all);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Attente'),
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.pending);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Pr�paration'),
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.preparing);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Pr�t'),
+                  liveOrdersAsync.whenOrNull(
+                    data: (orders) {
+                      final count = _getOrderCount(orders, OrderFilter.ready);
+                      if (count > 0) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(width: 4),
+                            _buildBadge(count),
+                          ],
+                        );
+                      }
+                      return null;
+                    },
+                  ) ?? const SizedBox.shrink(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: liveOrdersAsync.when(
+        data: (orders) => TabBarView(
+          controller: _tabController,
+          children: [
+            _buildOrdersList(orders, OrderFilter.all),
+            _buildOrdersList(orders, OrderFilter.pending),
+            _buildOrdersList(orders, OrderFilter.preparing),
+            _buildOrdersList(orders, OrderFilter.ready),
+          ],
+        ),
+        loading: () => const Center(child: AppLoadingIndicator()),
+        error: (error, _) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.error_outline,
+                size: 64,
+                color: DesignTokens.errorColor,
+              ),
+              const SizedBox(height: DesignTokens.spaceMD),
+              Text(
+                'Erreur de connexion',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: DesignTokens.errorColor,
+                ),
+              ),
+              const SizedBox(height: DesignTokens.spaceXS),
+              Text(
+                error.toString(),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: DesignTokens.textSecondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: DesignTokens.spaceLG),
+              ElevatedButton.icon(
+                onPressed: _refreshOrders,
+                icon: const Icon(Icons.refresh),
+                label: const Text('R�essayer'),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'live_orders_fab',
+        onPressed: () => _showCreateOrderDialog(),
+        icon: const Icon(Icons.add),
+        label: const Text('Nouvelle commande'),
+        backgroundColor: DesignTokens.primaryColor,
+      ),
+    );
+  }
+
+  Widget _buildBadge(int count) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: const BoxDecoration(
+        color: DesignTokens.errorColor,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        count.toString(),
+        style: const TextStyle(
+          color: DesignTokens.white,
+          fontSize: 10,
+          fontWeight: DesignTokens.fontWeightBold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrdersList(List<LiveOrder> orders, OrderFilter filter) {
+    final filteredOrders = _filterOrders(orders, filter);
+    
+    if (filteredOrders.isEmpty) {
+      return _buildEmptyState(filter);
+    }
+
+    return RefreshIndicator(
+      onRefresh: _refreshOrders,
+      child: ListView.builder(
+        padding: const EdgeInsets.all(DesignTokens.spaceMD),
+        itemCount: filteredOrders.length,
+        itemBuilder: (context, index) {
+          final order = filteredOrders[index];
+          return OrderDetailCard(
+            order: order,
+            onTap: () => _showOrderDetail(order),
+            onAccept: (estimatedTime) => _acceptOrder(order.orderId, estimatedTime),
+            onReject: (reason) => _rejectOrder(order.orderId, reason),
+            onStatusUpdate: (status) => _updateOrderStatus(order.orderId, status),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(OrderFilter filter) {
+    String title;
+    String subtitle;
+    IconData icon;
+    
+    switch (filter) {
+      case OrderFilter.all:
+        title = 'Aucune commande';
+        subtitle = 'Toutes les nouvelles commandes appara�tront ici';
+        icon = Icons.inbox_outlined;
+        break;
+      case OrderFilter.pending:
+        title = 'Aucune commande en attente';
+        subtitle = 'Les commandes n�cessitant votre attention appara�tront ici';
+        icon = Icons.hourglass_empty;
+        break;
+      case OrderFilter.preparing:
+        title = 'Aucune commande en pr�paration';
+        subtitle = 'Les commandes accept�es appara�tront ici';
+        icon = Icons.restaurant;
+        break;
+      case OrderFilter.ready:
+        title = 'Aucune commande pr�te';
+        subtitle = 'Les commandes pr�tes pour livraison appara�tront ici';
+        icon = Icons.done_all;
+        break;
+      case OrderFilter.completed:
+        title = 'Aucune commande termin�e';
+        subtitle = 'Les commandes livr�es appara�tront ici';
+        icon = Icons.check_circle_outline;
+        break;
+    }
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(DesignTokens.spaceXL),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 64,
+              color: DesignTokens.textTertiary,
+            ),
+            const SizedBox(height: DesignTokens.spaceLG),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: DesignTokens.textSecondary,
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceXS),
+            Text(
+              subtitle,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: DesignTokens.textTertiary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<LiveOrder> _filterOrders(List<LiveOrder> orders, OrderFilter filter) {
+    switch (filter) {
+      case OrderFilter.all:
+        return orders.where((order) => order.status != OrderStatus.cancelled &&
+                                     order.status != OrderStatus.completed).toList();
+      case OrderFilter.pending:
+        return orders.where((order) => order.status == OrderStatus.pending).toList();
+      case OrderFilter.preparing:
+        return orders.where((order) =>
+          order.status == OrderStatus.confirmed ||
+          order.status == OrderStatus.preparing
+        ).toList();
+      case OrderFilter.ready:
+        return orders.where((order) => order.status == OrderStatus.ready).toList();
+      case OrderFilter.completed:
+        return orders.where((order) => order.status == OrderStatus.delivered).toList();
+    }
+  }
+
+  int _getOrderCount(List<LiveOrder> orders, OrderFilter filter) {
+    return _filterOrders(orders, filter).length;
+  }
+
+  Future<void> _refreshOrders() async {
+    final _ = ref.refresh(liveOrdersProvider(widget.restaurantId));
+  }
+
+  void _showOrderDetail(LiveOrder order) {
+    context.push('/restaurant-owner/${widget.restaurantId}/orders/${order.orderId}');
+  }
+
+  void _acceptOrder(String orderId, int estimatedTime) {
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
+        .acceptOrder(orderId);
+  }
+
+  void _rejectOrder(String orderId, String reason) {
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
+        .rejectOrder(orderId, reason);
+  }
+
+  void _updateOrderStatus(String orderId, OrderStatus status) {
+    ref.read(liveOrdersProvider(widget.restaurantId).notifier)
+        .updateOrderStatus(orderId, status);
+  }
+
+  void _showSortOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(DesignTokens.radiusXL),
+          topRight: Radius.circular(DesignTokens.radiusXL),
+        ),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(DesignTokens.spaceLG),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: DesignTokens.lightGrey,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceLG),
+            Text(
+              'Trier par',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: DesignTokens.fontWeightBold,
+              ),
+            ),
+            const SizedBox(height: DesignTokens.spaceMD),
+            ListTile(
+              leading: const Icon(Icons.access_time),
+              title: const Text('Heure de commande'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.euro),
+              title: const Text('Montant'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.priority_high),
+              title: const Text('Priorit�'),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showCreateOrderDialog() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        maxChildSize: 0.95,
+        minChildSize: 0.4,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: DesignTokens.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(DesignTokens.radiusXL),
+              topRight: Radius.circular(DesignTokens.radiusXL),
+            ),
+          ),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: DesignTokens.spaceMD),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: DesignTokens.lightGrey,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(DesignTokens.spaceLG),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Type de commande',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: DesignTokens.fontWeightBold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceLG),
+                  children: [
+                    _buildOrderTypeOption(
+                      title: 'Commande t�l�phonique',
+                      subtitle: 'Cr�er une commande pour un client au t�l�phone',
+                      icon: Icons.phone,
+                      color: DesignTokens.primaryColor,
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.push('/restaurant-owner/${widget.restaurantId}/orders/create/phone');
+                      },
+                    ),
+                    _buildOrderTypeOption(
+                      title: 'Sur place',
+                      subtitle: 'Pour les clients qui mangent au restaurant',
+                      icon: Icons.store,
+                      color: DesignTokens.successColor,
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.push('/restaurant-owner/${widget.restaurantId}/orders/create/dine-in');
+                      },
+                    ),
+                    _buildOrderTypeOption(
+                      title: '� emporter',
+                      subtitle: 'Commande � r�cup�rer par le client',
+                      icon: Icons.takeout_dining,
+                      color: DesignTokens.warningColor,
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.push('/restaurant-owner/${widget.restaurantId}/orders/create/takeaway');
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderTypeOption({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: DesignTokens.spaceMD),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color,
+          child: Icon(icon, color: DesignTokens.white),
+        ),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: onTap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+          side: const BorderSide(color: DesignTokens.borderColor),
+        ),
+      ),
+    );
+  }
+}
