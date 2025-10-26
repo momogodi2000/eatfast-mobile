@@ -279,7 +279,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                               ),
                               const SizedBox(width: DesignTokens.spaceXS),
                               Text(
-                                'Faites d�filer jusqu\'au bas pour continuer',
+                                'Faites défiler jusqu\'au bas pour continuer',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: DesignTokens.warningColor,
                                 ),
@@ -319,7 +319,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                                   ),
                                   Expanded(
                                     child: Text(
-                                      'J\'ai lu et j\'accepte les conditions g�n�rales d\'utilisation',
+                                      'J\'ai lu et j\'accepte les conditions générales d\'utilisation',
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         fontWeight: DesignTokens.fontWeightMedium,
                                         color: _hasReadToBottom
