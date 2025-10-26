@@ -20,7 +20,7 @@ class GuestLandingScreen extends ConsumerStatefulWidget {
 class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  Position? _currentLocation;
+  // Position? _currentLocation; // Removed unused field
   bool _isLoadingLocation = false;
   String _locationText = 'Localisation non disponible';
 
@@ -49,29 +49,24 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
       vsync: this,
     );
 
-    _heroFadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _heroAnimationController,
-      curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-    ));
+    _heroFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _heroAnimationController,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+      ),
+    );
 
-    _heroSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _heroAnimationController,
-      curve: const Interval(0.2, 0.8, curve: Curves.easeOutCubic),
-    ));
+    _heroSlideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _heroAnimationController,
+            curve: const Interval(0.2, 0.8, curve: Curves.easeOutCubic),
+          ),
+        );
 
-    _cardStaggerAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _cardAnimationController,
-      curve: Curves.easeOut,
-    ));
+    _cardStaggerAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _cardAnimationController, curve: Curves.easeOut),
+    );
 
     _heroAnimationController.forward();
     Future.delayed(const Duration(milliseconds: 300), () {
@@ -124,10 +119,10 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
         return;
       }
 
-      final position = await Geolocator.getCurrentPosition();
+      await Geolocator.getCurrentPosition();
       setState(() {
-        _currentLocation = position;
-        _locationText = 'Yaoundé, Cameroun'; // You can geocode the position later
+        _locationText =
+            'Yaoundé, Cameroun'; // You can geocode the position later
       });
     } catch (e) {
       setState(() {
@@ -200,7 +195,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                             children: [
                               // Top Bar with Login Button
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   // Logo
                                   Container(
@@ -209,8 +205,12 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                       vertical: DesignTokens.spaceSM,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: DesignTokens.white.withValues(alpha: 0.2),
-                                      borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                      color: DesignTokens.white.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                        DesignTokens.radiusMD,
+                                      ),
                                     ),
                                     child: Row(
                                       children: [
@@ -219,13 +219,16 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                           color: DesignTokens.white,
                                           size: DesignTokens.iconMD,
                                         ),
-                                        const SizedBox(width: DesignTokens.spaceXS),
+                                        const SizedBox(
+                                          width: DesignTokens.spaceXS,
+                                        ),
                                         Text(
                                           AppConstants.appName,
                                           style: const TextStyle(
                                             color: DesignTokens.white,
                                             fontSize: DesignTokens.fontSizeLG,
-                                            fontWeight: DesignTokens.fontWeightBold,
+                                            fontWeight:
+                                                DesignTokens.fontWeightBold,
                                           ),
                                         ),
                                       ],
@@ -236,14 +239,17 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                     onPressed: _navigateToAuth,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: DesignTokens.white,
-                                      foregroundColor: DesignTokens.primaryColor,
+                                      foregroundColor:
+                                          DesignTokens.primaryColor,
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: DesignTokens.spaceLG,
                                         vertical: DesignTokens.spaceMD,
                                       ),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                        borderRadius: BorderRadius.circular(
+                                          DesignTokens.radiusMD,
+                                        ),
                                       ),
                                     ),
                                     child: const Text(
@@ -262,7 +268,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                               Text(
                                 'Bienvenue chez',
                                 style: TextStyle(
-                                  color: DesignTokens.white.withValues(alpha: 0.9),
+                                  color: DesignTokens.white.withValues(
+                                    alpha: 0.9,
+                                  ),
                                   fontSize: DesignTokens.fontSizeMD,
                                   fontWeight: DesignTokens.fontWeightMedium,
                                 ),
@@ -281,7 +289,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                               Text(
                                 'Découvrez les saveurs authentiques\ndu Cameroun à portée de main',
                                 style: TextStyle(
-                                  color: DesignTokens.white.withValues(alpha: 0.95),
+                                  color: DesignTokens.white.withValues(
+                                    alpha: 0.95,
+                                  ),
                                   fontSize: DesignTokens.fontSizeMD,
                                   height: 1.5,
                                 ),
@@ -290,12 +300,20 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
 
                               // Location Display
                               Container(
-                                padding: const EdgeInsets.all(DesignTokens.spaceMD),
+                                padding: const EdgeInsets.all(
+                                  DesignTokens.spaceMD,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: DesignTokens.white.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                  color: DesignTokens.white.withValues(
+                                    alpha: 0.2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                    DesignTokens.radiusMD,
+                                  ),
                                   border: Border.all(
-                                    color: DesignTokens.white.withValues(alpha: 0.3),
+                                    color: DesignTokens.white.withValues(
+                                      alpha: 0.3,
+                                    ),
                                   ),
                                 ),
                                 child: Row(
@@ -308,22 +326,28 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                     const SizedBox(width: DesignTokens.spaceSM),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'Votre position',
                                             style: TextStyle(
-                                              color: DesignTokens.white.withValues(alpha: 0.9),
+                                              color: DesignTokens.white
+                                                  .withValues(alpha: 0.9),
                                               fontSize: DesignTokens.fontSizeSM,
-                                              fontWeight: DesignTokens.fontWeightMedium,
+                                              fontWeight:
+                                                  DesignTokens.fontWeightMedium,
                                             ),
                                           ),
                                           Text(
-                                            _isLoadingLocation ? 'Recherche...' : _locationText,
+                                            _isLoadingLocation
+                                                ? 'Recherche...'
+                                                : _locationText,
                                             style: const TextStyle(
                                               color: DesignTokens.white,
                                               fontSize: DesignTokens.fontSizeMD,
-                                              fontWeight: DesignTokens.fontWeightBold,
+                                              fontWeight:
+                                                  DesignTokens.fontWeightBold,
                                             ),
                                           ),
                                         ],
@@ -335,9 +359,10 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                         height: 20,
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation<Color>(
-                                            DesignTokens.white,
-                                          ),
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                DesignTokens.white,
+                                              ),
                                         ),
                                       )
                                     else
@@ -372,7 +397,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                   return Opacity(
                     opacity: _cardStaggerAnimation.value,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMD),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: DesignTokens.spaceMD,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -384,13 +411,19 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                               gradient: LinearGradient(
                                 colors: [
                                   DesignTokens.accentColor,
-                                  DesignTokens.accentColor.withValues(alpha: 0.8),
+                                  DesignTokens.accentColor.withValues(
+                                    alpha: 0.8,
+                                  ),
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
+                              borderRadius: BorderRadius.circular(
+                                DesignTokens.radiusLG,
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: DesignTokens.accentColor.withValues(alpha: 0.3),
+                                  color: DesignTokens.accentColor.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 20,
                                   offset: const Offset(0, 10),
                                 ),
@@ -417,7 +450,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                 Text(
                                   'Explorez des centaines de restaurants à Yaoundé, Douala et partout au Cameroun',
                                   style: TextStyle(
-                                    color: DesignTokens.white.withValues(alpha: 0.95),
+                                    color: DesignTokens.white.withValues(
+                                      alpha: 0.95,
+                                    ),
                                     fontSize: DesignTokens.fontSizeMD,
                                   ),
                                   textAlign: TextAlign.center,
@@ -435,17 +470,21 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                       ),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                        borderRadius: BorderRadius.circular(
+                                          DesignTokens.radiusMD,
+                                        ),
                                       ),
                                     ),
                                     child: const Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Explorer maintenant',
                                           style: TextStyle(
                                             fontSize: DesignTokens.fontSizeMD,
-                                            fontWeight: DesignTokens.fontWeightBold,
+                                            fontWeight:
+                                                DesignTokens.fontWeightBold,
                                           ),
                                         ),
                                         SizedBox(width: DesignTokens.spaceXS),
@@ -463,7 +502,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                           // Feature Cards Section
                           Text(
                             'Pourquoi choisir ${AppConstants.appName} ?',
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
                                   fontWeight: DesignTokens.fontWeightBold,
                                   color: DesignTokens.textPrimary,
                                 ),
@@ -496,7 +536,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                   DesignTokens.secondaryColor,
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(DesignTokens.radiusLG),
+                              borderRadius: BorderRadius.circular(
+                                DesignTokens.radiusLG,
+                              ),
                             ),
                             child: Column(
                               children: [
@@ -519,7 +561,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                 Text(
                                   'Profitez de promotions exclusives, suivez vos commandes et bien plus encore',
                                   style: TextStyle(
-                                    color: DesignTokens.white.withValues(alpha: 0.95),
+                                    color: DesignTokens.white.withValues(
+                                      alpha: 0.95,
+                                    ),
                                     fontSize: DesignTokens.fontSizeMD,
                                   ),
                                   textAlign: TextAlign.center,
@@ -531,13 +575,16 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                                     onPressed: _navigateToRegister,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: DesignTokens.white,
-                                      foregroundColor: DesignTokens.primaryColor,
+                                      foregroundColor:
+                                          DesignTokens.primaryColor,
                                       padding: const EdgeInsets.symmetric(
                                         vertical: DesignTokens.spaceMD,
                                       ),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                        borderRadius: BorderRadius.circular(
+                                          DesignTokens.radiusMD,
+                                        ),
                                       ),
                                     ),
                                     child: const Text(
@@ -558,7 +605,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                           // Enterprise Links Section
                           Text(
                             'À propos d\'${AppConstants.appName}',
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
                                   fontWeight: DesignTokens.fontWeightBold,
                                   color: DesignTokens.textPrimary,
                                 ),
@@ -629,9 +677,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
           Text(
             'Comment ça marche ?',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: DesignTokens.fontWeightBold,
-                  color: DesignTokens.textPrimary,
-                ),
+              fontWeight: DesignTokens.fontWeightBold,
+              color: DesignTokens.textPrimary,
+            ),
           ),
           const SizedBox(height: DesignTokens.spaceLG),
           _buildStepItem(
@@ -648,7 +696,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
             step: '2',
             icon: Icons.shopping_cart,
             title: 'Commandez',
-            description: 'Choisissez vos plats préférés et validez votre commande',
+            description:
+                'Choisissez vos plats préférés et validez votre commande',
             color: DesignTokens.accentColor,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
@@ -657,7 +706,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
             step: '3',
             icon: Icons.delivery_dining,
             title: 'Recevez',
-            description: 'Livraison rapide à votre porte en moins de 30 minutes',
+            description:
+                'Livraison rapide à votre porte en moins de 30 minutes',
             color: DesignTokens.secondaryColor,
           ),
         ],
@@ -684,11 +734,7 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
             borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
           ),
           child: Center(
-            child: Icon(
-              icon,
-              color: color,
-              size: DesignTokens.iconMD,
-            ),
+            child: Icon(icon, color: color, size: DesignTokens.iconMD),
           ),
         ),
         const SizedBox(width: DesignTokens.spaceMD),
@@ -720,9 +766,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
                   Text(
                     title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: DesignTokens.fontWeightBold,
-                          color: DesignTokens.textPrimary,
-                        ),
+                      fontWeight: DesignTokens.fontWeightBold,
+                      color: DesignTokens.textPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -730,8 +776,8 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
               Text(
                 description,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: DesignTokens.textSecondary,
-                    ),
+                  color: DesignTokens.textSecondary,
+                ),
               ),
             ],
           ),
@@ -788,17 +834,11 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: DesignTokens.iconLG,
-          ),
+          Icon(icon, color: color, size: DesignTokens.iconLG),
           const SizedBox(height: DesignTokens.spaceSM),
           Text(
             value,
@@ -811,9 +851,9 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
           const SizedBox(height: DesignTokens.spaceXS),
           Text(
             label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: DesignTokens.textSecondary,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: DesignTokens.textSecondary),
             textAlign: TextAlign.center,
           ),
         ],
@@ -857,17 +897,17 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
             Text(
               title,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: DesignTokens.fontWeightBold,
-                    color: DesignTokens.textPrimary,
-                  ),
+                fontWeight: DesignTokens.fontWeightBold,
+                color: DesignTokens.textPrimary,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: DesignTokens.spaceXS),
             Text(
               description,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: DesignTokens.textSecondary,
-                  ),
+                color: DesignTokens.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -887,17 +927,17 @@ class _GuestLandingScreenState extends ConsumerState<GuestLandingScreen>
         children: [
           Text(
             '© 2025 ${AppConstants.companyName}',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: DesignTokens.textSecondary,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: DesignTokens.textSecondary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: DesignTokens.spaceXS),
           Text(
             'Tous droits réservés',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: DesignTokens.textTertiary,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: DesignTokens.textTertiary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
