@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 
 /// Guest delivery information form widget
@@ -76,17 +76,19 @@ class GuestDeliveryInfo extends StatelessWidget {
             controller: phoneController,
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
-              labelText: 'Num�ro de t�l�phone *',
+              labelText: 'Numéro de téléphone *',
               prefixIcon: Icon(Icons.phone_outlined),
               border: OutlineInputBorder(),
               hintText: '+237 6XX XXX XXX',
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Veuillez entrer votre num�ro de t�l�phone';
+                return 'Veuillez entrer votre numéro de téléphone';
               }
-              if (!RegExp(r'^\+?[0-9]{8,15}$').hasMatch(value.replaceAll(' ', ''))) {
-                return 'Num�ro de t�l�phone invalide';
+              if (!RegExp(
+                r'^\+?[0-9]{8,15}$',
+              ).hasMatch(value.replaceAll(' ', ''))) {
+                return 'Numéro de téléphone invalide';
               }
               return null;
             },
@@ -102,7 +104,7 @@ class GuestDeliveryInfo extends StatelessWidget {
               labelText: 'Adresse de livraison *',
               prefixIcon: Icon(Icons.location_on_outlined),
               border: OutlineInputBorder(),
-              hintText: 'Quartier, rue, num�ro de maison, point de rep�re...',
+              hintText: 'Quartier, rue, numéro de maison, point de repère...',
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -122,7 +124,7 @@ class GuestDeliveryInfo extends StatelessWidget {
             controller: notesController,
             maxLines: 2,
             decoration: const InputDecoration(
-              labelText: 'Instructions sp�ciales (optionnel)',
+              labelText: 'Instructions spéciales (optionnel)',
               prefixIcon: Icon(Icons.note_outlined),
               border: OutlineInputBorder(),
               hintText: 'Instructions pour le livreur...',
@@ -151,7 +153,7 @@ class GuestDeliveryInfo extends StatelessWidget {
                 const SizedBox(width: DesignTokens.spaceSM),
                 Expanded(
                   child: Text(
-                    'Vous recevrez un SMS de confirmation avec les d�tails de votre commande.',
+                    'Vous recevrez un SMS de confirmation avec les détails de votre commande.',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: DesignTokens.primaryColor,
                     ),

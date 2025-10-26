@@ -27,7 +27,7 @@ class GuestCartSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'R�sum� de votre commande',
+            'Résumé de votre commande',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: DesignTokens.fontWeightBold,
               color: DesignTokens.textPrimary,

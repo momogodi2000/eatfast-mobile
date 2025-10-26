@@ -99,7 +99,7 @@ class GuestRestaurantCard extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          restaurant.isOpen ? 'Ouvert' : 'Ferm�',
+                          restaurant.isOpen ? 'Ouvert' : 'Fermé',
                           style: TextStyle(
                             color: restaurant.isOpen
                                 ? DesignTokens.successColor

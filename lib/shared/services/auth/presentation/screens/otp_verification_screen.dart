@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
@@ -10,14 +10,12 @@ import 'package:eatfast_mobile/shared/services/auth/unified_auth_service.dart';
 /// OTP Verification Screen
 class OtpVerificationScreen extends ConsumerStatefulWidget {
   final String phoneNumber;
-  
-  const OtpVerificationScreen({
-    super.key,
-    required this.phoneNumber,
-  });
+
+  const OtpVerificationScreen({super.key, required this.phoneNumber});
 
   @override
-  ConsumerState<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  ConsumerState<OtpVerificationScreen> createState() =>
+      _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
@@ -25,10 +23,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     6,
     (index) => TextEditingController(),
   );
-  final List<FocusNode> _focusNodes = List.generate(
-    6,
-    (index) => FocusNode(),
-  );
+  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
 
   bool _isLoading = false;
   bool _canResend = false;
@@ -82,7 +77,9 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     }
 
     // Check if all fields are filled
-    final bool allFilled = _controllers.every((controller) => controller.text.isNotEmpty);
+    final bool allFilled = _controllers.every(
+      (controller) => controller.text.isNotEmpty,
+    );
     if (allFilled) {
       _onVerifyPressed();
     }
@@ -107,18 +104,20 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
 
     try {
       // Call real API through unified auth provider
-      await ref.read(authProvider.notifier).verifyOtp(
-        phoneOrEmail: widget.phoneNumber,
-        code: otp,
-        type: OtpType.login,
-      );
+      await ref
+          .read(authProvider.notifier)
+          .verifyOtp(
+            phoneOrEmail: widget.phoneNumber,
+            code: otp,
+            type: OtpType.login,
+          );
 
       if (!mounted) return;
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('V�rification r�ussie'),
+          content: Text('Vérification réussie'),
           backgroundColor: DesignTokens.successColor,
         ),
       );
@@ -135,7 +134,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Erreur de v�rification: ${error.toString()}'),
+          content: Text('Erreur de vérification: ${error.toString()}'),
           backgroundColor: DesignTokens.errorColor,
         ),
       );
@@ -147,17 +146,16 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
 
     try {
       // Call real API to resend OTP
-      final success = await ref.read(authProvider.notifier).sendOtp(
-        phoneOrEmail: widget.phoneNumber,
-        type: OtpType.login,
-      );
+      final success = await ref
+          .read(authProvider.notifier)
+          .sendOtp(phoneOrEmail: widget.phoneNumber, type: OtpType.login);
 
       if (!mounted) return;
 
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Code de v�rification renvoy�'),
+            content: Text('Code de vérification renvoyé'),
             backgroundColor: DesignTokens.successColor,
           ),
         );
@@ -193,7 +191,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => context.pop(),
         ),
-        title: const Text('V�rification'),
+        title: const Text('Vérification'),
       ),
       body: SafeArea(
         child: Padding(
@@ -202,7 +200,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: DesignTokens.spaceXL),
-              
+
               // Icon
               Container(
                 width: 80,
@@ -217,30 +215,30 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                   size: 40,
                 ),
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceLG),
-              
+
               // Header
               Text(
-                'V�rification du code',
+                'Vérification du code',
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
                   fontWeight: DesignTokens.fontWeightBold,
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceXS),
-              
+
               Text(
-                'Nous avons envoy� un code de v�rification �',
+                'Nous avons envoyé un code de vérification �',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: DesignTokens.textSecondary,
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceXS),
-              
+
               Text(
                 widget.phoneNumber,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -249,9 +247,9 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceXXL),
-              
+
               // OTP Input Fields
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -265,16 +263,19 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       maxLength: 1,
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: DesignTokens.fontWeightBold,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(fontWeight: DesignTokens.fontWeightBold),
                       decoration: InputDecoration(
                         counterText: '',
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            DesignTokens.radiusMD,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                          borderRadius: BorderRadius.circular(
+                            DesignTokens.radiusMD,
+                          ),
                           borderSide: const BorderSide(
                             color: DesignTokens.primaryColor,
                             width: 2,
@@ -287,9 +288,9 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                   );
                 }),
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceXXL),
-              
+
               // Verify Button
               SizedBox(
                 width: double.infinity,
@@ -301,7 +302,9 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                           width: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(DesignTokens.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              DesignTokens.white,
+                            ),
                           ),
                         )
                       : const Text(
@@ -313,32 +316,34 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
                         ),
                 ),
               ),
-              
+
               const SizedBox(height: DesignTokens.spaceLG),
-              
+
               // Resend Code
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Vous n\'avez pas re�u le code ? '),
+                  const Text('Vous n\'avez pas reçu le code ? '),
                   TextButton(
                     onPressed: _canResend ? _onResendPressed : null,
                     child: Text(
                       _canResend ? 'Renvoyer' : 'Renvoyer ($_resendCountdown)',
                       style: TextStyle(
-                        color: _canResend ? DesignTokens.primaryColor : DesignTokens.textSecondary,
+                        color: _canResend
+                            ? DesignTokens.primaryColor
+                            : DesignTokens.textSecondary,
                       ),
                     ),
                   ),
                 ],
               ),
-              
+
               const Spacer(),
-              
+
               // Change Number
               TextButton(
                 onPressed: () => context.pop(),
-                child: const Text('Changer le num�ro de t�l�phone'),
+                child: const Text('Changer le numéro de téléphone'),
               ),
             ],
           ),

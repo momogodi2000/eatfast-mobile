@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/config/router/route_names.dart';
@@ -23,7 +23,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
@@ -60,14 +61,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
         return;
       }
 
-      ref.read(authProvider.notifier).register(
-        name: _nameController.text.trim(),
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-        confirmPassword: _confirmPasswordController.text,
-        phone: _phoneController.text.trim(),
-        role: UserRole.customer,
-      );
+      ref
+          .read(authProvider.notifier)
+          .register(
+            name: _nameController.text.trim(),
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+            confirmPassword: _confirmPasswordController.text,
+            phone: _phoneController.text.trim(),
+            role: UserRole.customer,
+          );
     }
   }
 
@@ -121,48 +124,48 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
           ),
           title: const Text('Inscription'),
         ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(DesignTokens.spaceLG),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              _buildHeader(),
-              
-              const SizedBox(height: DesignTokens.spaceXL),
-              
-              // Registration Form
-              _buildRegistrationForm(authState),
-              
-              const SizedBox(height: DesignTokens.spaceLG),
-              
-              // Terms and Conditions
-              _buildTermsCheckbox(),
-              
-              const SizedBox(height: DesignTokens.spaceLG),
-              
-              // Register Button
-              _buildRegisterButton(authState),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(DesignTokens.spaceLG),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                _buildHeader(),
 
-              const SizedBox(height: DesignTokens.spaceLG),
+                const SizedBox(height: DesignTokens.spaceXL),
 
-              // Social Login Divider
-              _buildSocialLoginDivider(),
+                // Registration Form
+                _buildRegistrationForm(authState),
 
-              const SizedBox(height: DesignTokens.spaceLG),
+                const SizedBox(height: DesignTokens.spaceLG),
 
-              // Google Sign-In Button
-              _buildGoogleSignInButton(authState.isLoading),
+                // Terms and Conditions
+                _buildTermsCheckbox(),
 
-              const SizedBox(height: DesignTokens.spaceLG),
+                const SizedBox(height: DesignTokens.spaceLG),
 
-              // Footer
-              _buildFooter(),
-            ],
+                // Register Button
+                _buildRegisterButton(authState),
+
+                const SizedBox(height: DesignTokens.spaceLG),
+
+                // Social Login Divider
+                _buildSocialLoginDivider(),
+
+                const SizedBox(height: DesignTokens.spaceLG),
+
+                // Google Sign-In Button
+                _buildGoogleSignInButton(authState.isLoading),
+
+                const SizedBox(height: DesignTokens.spaceLG),
+
+                // Footer
+                _buildFooter(),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -172,17 +175,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Cr�er un compte',
+          'Créer un compte',
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             fontWeight: DesignTokens.fontWeightBold,
           ),
         ),
         const SizedBox(height: DesignTokens.spaceXS),
         Text(
-          'Rejoignez ${AppConstants.appName} et d�couvrez la meilleure cuisine camerounaise',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: DesignTokens.textSecondary,
-          ),
+          'Rejoignez ${AppConstants.appName} et découvrez la meilleure cuisine camerounaise',
+          style: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(color: DesignTokens.textSecondary),
         ),
       ],
     );
@@ -206,14 +209,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                 return 'Veuillez entrer votre nom complet';
               }
               if (value.trim().length < 2) {
-                return 'Le nom doit contenir au moins 2 caract�res';
+                return 'Le nom doit contenir au moins 2 caractères';
               }
               return null;
             },
             enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
-          
+
           // Email
           TextFormField(
             controller: _emailController,
@@ -226,12 +229,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
-          
+
           // Phone
           TextFormField(
             controller: _phoneController,
             decoration: const InputDecoration(
-              labelText: 'Num�ro de t�l�phone',
+              labelText: 'Numéro de téléphone',
               prefixIcon: Icon(Icons.phone_outlined),
               hintText: '+237 6XX XXX XXX',
             ),
@@ -240,7 +243,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
-          
+
           // Password
           TextFormField(
             controller: _passwordController,
@@ -263,7 +266,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             enabled: !authState.isLoading,
           ),
           const SizedBox(height: DesignTokens.spaceMD),
-          
+
           // Confirm Password
           TextFormField(
             controller: _confirmPasswordController,
@@ -272,7 +275,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
               prefixIcon: const Icon(Icons.lock_outline),
               suffixIcon: IconButton(
                 icon: Icon(
-                  _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                  _obscureConfirmPassword
+                      ? Icons.visibility_off
+                      : Icons.visibility,
                 ),
                 onPressed: () {
                   setState(() {
@@ -321,10 +326,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                         onTap: () => context.go(RouteNames.terms),
                         child: Text(
                           'conditions d\'utilisation',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: DesignTokens.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: DesignTokens.primaryColor,
+                                decoration: TextDecoration.underline,
+                              ),
                         ),
                       ),
                     ),
@@ -333,11 +339,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                       child: GestureDetector(
                         onTap: () => context.go(RouteNames.terms),
                         child: Text(
-                          'politique de confidentialit�',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: DesignTokens.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
+                          'politique de confidentialité',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: DesignTokens.primaryColor,
+                                decoration: TextDecoration.underline,
+                              ),
                         ),
                       ),
                     ),
@@ -353,7 +360,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
 
   Widget _buildRegisterButton(AuthState authState) {
     final isLoading = authState.isLoading;
-    
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -368,7 +375,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                 ),
               )
             : const Text(
-                'Cr�er mon compte',
+                'Créer mon compte',
                 style: TextStyle(
                   fontSize: DesignTokens.fontSizeLG,
                   fontWeight: DesignTokens.fontWeightSemiBold,
@@ -386,9 +393,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
           padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMD),
           child: Text(
             'Ou s\'inscrire avec',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: DesignTokens.textSecondary,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: DesignTokens.textSecondary),
           ),
         ),
         const Expanded(child: Divider(color: DesignTokens.borderColor)),
@@ -432,7 +439,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Vous avez d�j� un compte ?'),
+        const Text('Vous avez déjà un compte ?'),
         TextButton(
           onPressed: () => context.go(RouteNames.login),
           child: const Text('Se connecter'),

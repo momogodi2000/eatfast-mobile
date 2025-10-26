@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/config/router/route_names.dart';
@@ -20,11 +20,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
-  
+
   bool _isPasswordVisible = false;
   bool _isEmailLogin = true;
   bool _rememberMe = false;
-  
+
   late AnimationController _slideAnimationController;
   late AnimationController _fadeAnimationController;
   late Animation<Offset> _slideAnimation;
@@ -41,27 +41,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    
+
     _fadeAnimationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideAnimationController,
-      curve: Curves.easeOut,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _slideAnimationController,
+            curve: Curves.easeOut,
+          ),
+        );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeAnimationController,
-      curve: Curves.easeIn,
-    ));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeAnimationController, curve: Curves.easeIn),
+    );
 
     _slideAnimationController.forward();
     _fadeAnimationController.forward();
@@ -80,14 +76,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   void _login() {
     if (_formKey.currentState?.validate() ?? false) {
       if (_isEmailLogin) {
-        ref.read(authProvider.notifier).login(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-        );
+        ref
+            .read(authProvider.notifier)
+            .login(
+              email: _emailController.text.trim(),
+              password: _passwordController.text,
+            );
       } else {
-        ref.read(authProvider.notifier).loginWithPhone(
-          phoneNumber: _phoneController.text.trim(),
-        );
+        ref
+            .read(authProvider.notifier)
+            .loginWithPhone(phoneNumber: _phoneController.text.trim());
       }
     }
   }
@@ -152,67 +150,74 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             onPressed: () => context.go(RouteNames.guestLanding),
           ),
         ),
-      body: AnimatedBuilder(
-        animation: Listenable.merge([_slideAnimationController, _fadeAnimationController]),
-        builder: (context, child) {
-          return FadeTransition(
-            opacity: _fadeAnimation,
-            child: SlideTransition(
-              position: _slideAnimation,
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(DesignTokens.spaceLG),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Header Section
-                        _buildHeader(context),
-                        
-                        const SizedBox(height: DesignTokens.spaceXXL),
-                        
-                        // Login Method Selector
-                        _buildLoginMethodSelector(),
-                        
-                        const SizedBox(height: DesignTokens.spaceLG),
-                        
-                        // Login Form
-                        if (_isEmailLogin) _buildEmailLoginForm() else _buildPhoneLoginForm(),
-                        
-                        const SizedBox(height: DesignTokens.spaceLG),
-                        
-                        // Remember Me & Forgot Password
-                        if (_isEmailLogin) _buildRememberMeAndForgotPassword(),
-                        
-                        const SizedBox(height: DesignTokens.spaceXL),
-                        
-                        // Login Button
-                        _buildLoginButton(isLoading),
+        body: AnimatedBuilder(
+          animation: Listenable.merge([
+            _slideAnimationController,
+            _fadeAnimationController,
+          ]),
+          builder: (context, child) {
+            return FadeTransition(
+              opacity: _fadeAnimation,
+              child: SlideTransition(
+                position: _slideAnimation,
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(DesignTokens.spaceLG),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Header Section
+                          _buildHeader(context),
 
-                        const SizedBox(height: DesignTokens.spaceXL),
+                          const SizedBox(height: DesignTokens.spaceXXL),
 
-                        // Social Login Divider
-                        _buildSocialLoginDivider(),
+                          // Login Method Selector
+                          _buildLoginMethodSelector(),
 
-                        const SizedBox(height: DesignTokens.spaceXL),
+                          const SizedBox(height: DesignTokens.spaceLG),
 
-                        // Google Sign-In Button
-                        _buildGoogleSignInButton(isLoading),
+                          // Login Form
+                          if (_isEmailLogin)
+                            _buildEmailLoginForm()
+                          else
+                            _buildPhoneLoginForm(),
 
-                        const SizedBox(height: DesignTokens.spaceXL),
+                          const SizedBox(height: DesignTokens.spaceLG),
 
-                        // Register Link
-                        _buildRegisterLink(),
-                      ],
+                          // Remember Me & Forgot Password
+                          if (_isEmailLogin)
+                            _buildRememberMeAndForgotPassword(),
+
+                          const SizedBox(height: DesignTokens.spaceXL),
+
+                          // Login Button
+                          _buildLoginButton(isLoading),
+
+                          const SizedBox(height: DesignTokens.spaceXL),
+
+                          // Social Login Divider
+                          _buildSocialLoginDivider(),
+
+                          const SizedBox(height: DesignTokens.spaceXL),
+
+                          // Google Sign-In Button
+                          _buildGoogleSignInButton(isLoading),
+
+                          const SizedBox(height: DesignTokens.spaceXL),
+
+                          // Register Link
+                          _buildRegisterLink(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -237,9 +242,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             ),
           ),
         ),
-        
+
         const SizedBox(height: DesignTokens.spaceLG),
-        
+
         // Welcome Text
         Text(
           'Bon retour!',
@@ -248,11 +253,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             color: DesignTokens.textPrimary,
           ),
         ),
-        
+
         const SizedBox(height: DesignTokens.spaceXS),
-        
+
         Text(
-          'Connectez-vous pour continuer votre exp�rience culinaire',
+          'Connectez-vous pour continuer votre expérience culinaire',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: DesignTokens.textSecondary,
             height: 1.4,
@@ -274,16 +279,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             child: GestureDetector(
               onTap: () => _toggleLoginMethod(),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMD),
+                padding: const EdgeInsets.symmetric(
+                  vertical: DesignTokens.spaceMD,
+                ),
                 decoration: BoxDecoration(
-                  color: _isEmailLogin ? DesignTokens.primaryColor : Colors.transparent,
+                  color: _isEmailLogin
+                      ? DesignTokens.primaryColor
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
                 ),
                 child: Text(
                   'Email',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: _isEmailLogin ? DesignTokens.white : DesignTokens.textSecondary,
+                    color: _isEmailLogin
+                        ? DesignTokens.white
+                        : DesignTokens.textSecondary,
                     fontWeight: DesignTokens.fontWeightMedium,
                   ),
                 ),
@@ -294,16 +305,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             child: GestureDetector(
               onTap: () => _toggleLoginMethod(),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: DesignTokens.spaceMD),
+                padding: const EdgeInsets.symmetric(
+                  vertical: DesignTokens.spaceMD,
+                ),
                 decoration: BoxDecoration(
-                  color: !_isEmailLogin ? DesignTokens.primaryColor : Colors.transparent,
+                  color: !_isEmailLogin
+                      ? DesignTokens.primaryColor
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
                 ),
                 child: Text(
-                  'T�l�phone',
+                  'Téléphone',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: !_isEmailLogin ? DesignTokens.white : DesignTokens.textSecondary,
+                    color: !_isEmailLogin
+                        ? DesignTokens.white
+                        : DesignTokens.textSecondary,
                     fontWeight: DesignTokens.fontWeightMedium,
                   ),
                 ),
@@ -330,9 +347,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
           ),
           validator: Validators.validateEmail,
         ),
-        
+
         const SizedBox(height: DesignTokens.spaceMD),
-        
+
         // Password Field
         TextFormField(
           controller: _passwordController,
@@ -367,16 +384,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
           keyboardType: TextInputType.phone,
           textInputAction: TextInputAction.done,
           decoration: const InputDecoration(
-            labelText: 'Num�ro de t�l�phone',
+            labelText: 'Numéro de téléphone',
             prefixIcon: Icon(Icons.phone_outlined),
             hintText: '+237 6XX XXX XXX',
           ),
           validator: Validators.validatePhone,
           onFieldSubmitted: (_) => _login(),
         ),
-        
+
         const SizedBox(height: DesignTokens.spaceMD),
-        
+
         Container(
           padding: const EdgeInsets.all(DesignTokens.spaceMD),
           decoration: BoxDecoration(
@@ -396,7 +413,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
               const SizedBox(width: DesignTokens.spaceXS),
               Expanded(
                 child: Text(
-                  'Un code de v�rification sera envoy� � ce num�ro',
+                  'Un code de vérification sera envoyé � ce num�ro',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: DesignTokens.infoColor,
                   ),
@@ -431,12 +448,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             ),
           ],
         ),
-        
+
         // Forgot Password
         TextButton(
           onPressed: _navigateToForgotPassword,
           child: const Text(
-            'Mot de passe oubli�?',
+            'Mot de passe oublié?',
             style: TextStyle(
               color: DesignTokens.primaryColor,
               fontWeight: DesignTokens.fontWeightMedium,
@@ -480,9 +497,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
           padding: const EdgeInsets.symmetric(horizontal: DesignTokens.spaceMD),
           child: Text(
             'Ou continuer avec',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: DesignTokens.textSecondary,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: DesignTokens.textSecondary),
           ),
         ),
         const Expanded(child: Divider(color: DesignTokens.borderColor)),
@@ -533,7 +550,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         TextButton(
           onPressed: _navigateToRegister,
           child: const Text(
-            'Cr�er un compte',
+            'Créer un compte',
             style: TextStyle(
               color: DesignTokens.primaryColor,
               fontWeight: DesignTokens.fontWeightSemiBold,

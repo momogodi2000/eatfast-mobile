@@ -110,7 +110,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'R�sum� de la commande',
+              'Résumé de la commande',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -188,7 +188,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
             TextFormField(
               controller: _phoneController,
               decoration: const InputDecoration(
-                labelText: 'Num�ro de t�l�phone *',
+                labelText: 'Numéro de téléphone *',
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
                 helperText: 'Format: ${AppConfig.countryCode} 6XX XXX XXX',
@@ -196,13 +196,13 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
               keyboardType: TextInputType.phone,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Le num�ro de t�l�phone est requis';
+                  return 'Le numéro de téléphone est requis';
                 }
                 final phoneRegex = RegExp(
                   '^${AppConfig.countryCode}[679]\\d{8}\$',
                 );
                 if (!phoneRegex.hasMatch(value.replaceAll(' ', ''))) {
-                  return 'Format de t�l�phone invalide';
+                  return 'Format de téléphone invalide';
                 }
                 return null;
               },
@@ -214,7 +214,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                 labelText: 'Email (optionnel)',
                 prefixIcon: Icon(Icons.email),
                 border: OutlineInputBorder(),
-                helperText: 'Pour recevoir les mises � jour de commande',
+                helperText: 'Pour recevoir les mises à jour de commande',
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
@@ -248,10 +248,10 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
             TextFormField(
               controller: _addressController,
               decoration: const InputDecoration(
-                labelText: 'Adresse compl�te *',
+                labelText: 'Adresse complète *',
                 prefixIcon: Icon(Icons.location_on),
                 border: OutlineInputBorder(),
-                helperText: 'Incluez les d�tails pour faciliter la livraison',
+                helperText: 'Incluez les détails pour faciliter la livraison',
               ),
               maxLines: 3,
               validator: (value) {
@@ -265,10 +265,10 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
             TextFormField(
               controller: _instructionsController,
               decoration: const InputDecoration(
-                labelText: 'Instructions sp�ciales (optionnel)',
+                labelText: 'Instructions spéciales (optionnel)',
                 prefixIcon: Icon(Icons.note),
                 border: OutlineInputBorder(),
-                helperText: '�tage, digicode, indications particuli�res...',
+                helperText: 'Étage, digicode, indications particulières...',
               ),
               maxLines: 2,
             ),
@@ -338,7 +338,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Conditions g�n�rales',
+              'Conditions générales',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
@@ -350,7 +350,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                 });
               },
               title: const Text(
-                'J\'accepte les conditions g�n�rales d\'utilisation',
+                'J\'accepte les conditions générales d\'utilisation',
               ),
               subtitle: TextButton(
                 onPressed: _showTermsAndConditions,
@@ -381,7 +381,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Vous pouvez cr�er un compte apr�s votre commande pour suivre vos futures commandes et b�n�ficier de nos avantages.',
+                    'Vous pouvez créer un compte après votre commande pour suivre vos futures commandes et bénéficier de nos avantages.',
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
@@ -402,7 +402,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Total � payer:',
+              'Total à payer:',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
@@ -444,7 +444,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
     // and reverse geocoding to get address
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Fonctionnalit� de g�olocalisation � impl�menter'),
+        content: Text('Fonctionnalit� de géolocalisation � implémenter'),
       ),
     );
   }
@@ -453,10 +453,10 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Conditions g�n�rales'),
+        title: const Text('Conditions générales'),
         content: const SingleChildScrollView(
           child: Text(
-            'Conditions g�n�rales d\'utilisation EatFast...\n\n'
+            'Conditions générales d\'utilisation EatFast...\n\n'
             '1. Acceptance des conditions\n'
             '2. Utilisation du service\n'
             '3. Commandes et paiements\n'
@@ -480,7 +480,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
     if (_currentSessionId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Session non initialis�e. Veuillez r�essayer.'),
+          content: Text('Session non initialisée. Veuillez réessayer.'),
         ),
       );
       return;
@@ -536,7 +536,7 @@ class _GuestCheckoutScreenState extends ConsumerState<GuestCheckoutScreen> {
         }
       } else {
         throw Exception(
-          response.error ?? 'Erreur lors de la cr�ation de la commande',
+          response.error ?? 'Erreur lors de la création de la commande',
         );
       }
     } catch (e) {
@@ -614,7 +614,7 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Commande confirm�e'),
+        title: const Text('Commande confirmée'),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -624,7 +624,7 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
             const Icon(Icons.check_circle, color: Colors.green, size: 80),
             const SizedBox(height: 16),
             Text(
-              'Commande confirm�e !',
+              'Commande confirmée !',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
@@ -641,7 +641,7 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
                     if (orderData.estimatedDeliveryTime != null)
                       ListTile(
                         leading: const Icon(Icons.schedule),
-                        title: const Text('Livraison estim�e'),
+                        title: const Text('Livraison estimée'),
                         subtitle: Text(orderData.estimatedDeliveryTime!),
                       ),
                     ListTile(
@@ -679,7 +679,7 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () => _showAccountCreationDialog(context),
-                child: const Text('Cr�er un compte pour mes futures commandes'),
+                child: const Text('Créer un compte pour mes futures commandes'),
               ),
             ),
           ],
@@ -713,12 +713,12 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Cr�er un compte'),
+        title: const Text('Créer un compte'),
         content: const Text(
-          'Cr�ez un compte EatFast pour:\n'
+          'Créez un compte EatFast pour:\n'
           '� Suivre vos commandes\n'
           '� Sauvegarder vos adresses\n'
-          '� Acc�der aux programmes de fid�lit�\n'
+          '� Accéder aux programmes de fidélité\n'
           '� Commander plus rapidement',
         ),
         actions: [
@@ -731,7 +731,7 @@ class GuestOrderConfirmationScreen extends StatelessWidget {
               Navigator.of(context).pop();
               // Navigate to registration with pre-filled order data
             },
-            child: const Text('Cr�er un compte'),
+            child: const Text('Créer un compte'),
           ),
         ],
       ),
@@ -750,7 +750,7 @@ class GuestOrderTrackingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Suivi de commande')),
       body: const Center(
-        child: Text('�cran de suivi de commande � impl�menter'),
+        child: Text('�cran de suivi de commande � implémenter'),
       ),
     );
   }

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/config/router/route_names.dart';
@@ -18,11 +18,11 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     with TickerProviderStateMixin {
   final PageController _pageController = PageController();
-  
+
   late AnimationController _fadeAnimationController;
   late AnimationController _slideAnimationController;
   late AnimationController _scaleAnimationController;
-  
+
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _scaleAnimation;
@@ -30,24 +30,27 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   final List<OnboardingPage> _pages = [
     const OnboardingPage(
       title: 'Bienvenue chez EatFast',
-      subtitle: 'D�couvrez les saveurs authentiques du Cameroun',
-      description: 'Votre application de livraison de nourriture pr�f�r�e vous connecte avec les meilleurs restaurants locaux pour une exp�rience culinaire exceptionnelle.',
+      subtitle: 'Découvrez les saveurs authentiques du Cameroun',
+      description:
+          'Votre application de livraison de nourriture préférée vous connecte avec les meilleurs restaurants locaux pour une expérience culinaire exceptionnelle.',
       imagePath: AppConstants.onboardingWelcome,
       animationPath: AppConstants.welcomeAnimation,
       backgroundColor: DesignTokens.primaryColor,
     ),
     const OnboardingPage(
       title: 'Notre Mission',
-      subtitle: 'Connecter les Camerounais avec leurs restaurants pr�f�r�s',
-      description: 'Nous facilitons l\'acc�s � une vari�t� de plats traditionnels et modernes, pr�par�s avec amour par nos partenaires restaurateurs de confiance.',
+      subtitle: 'Connecter les Camerounais avec leurs restaurants préférés',
+      description:
+          'Nous facilitons l\'accès à une variété de plats traditionnels et modernes, préparés avec amour par nos partenaires restaurateurs de confiance.',
       imagePath: AppConstants.onboardingMission,
       animationPath: AppConstants.missionAnimation,
       backgroundColor: DesignTokens.secondaryColor,
     ),
     const OnboardingPage(
       title: 'Livraison Rapide',
-      subtitle: '� votre porte en 30 minutes ou moins',
-      description: 'Notre r�seau de livreurs d�vou�s assure une livraison rapide et s�curis�e de vos repas favoris, o� que vous soyez dans la ville.',
+      subtitle: 'À votre porte en 30 minutes ou moins',
+      description:
+          'Notre réseau de livreurs dévoués assure une livraison rapide et sécurisée de vos repas favoris, où que vous soyez dans la ville.',
       imagePath: AppConstants.onboardingDelivery,
       animationPath: AppConstants.deliveryAnimation,
       backgroundColor: DesignTokens.accentColor,
@@ -66,40 +69,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    
+
     _slideAnimationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    
+
     _scaleAnimationController = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeAnimationController,
-      curve: Curves.easeIn,
-    ));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeAnimationController, curve: Curves.easeIn),
+    );
 
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _slideAnimationController,
-      curve: Curves.easeOut,
-    ));
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _slideAnimationController,
+            curve: Curves.easeOut,
+          ),
+        );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _scaleAnimationController,
-      curve: Curves.elasticOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _scaleAnimationController,
+        curve: Curves.elasticOut,
+      ),
+    );
   }
 
   void _startInitialAnimation() {
@@ -110,11 +108,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
 
   void _onPageChanged(int index) {
     ref.read(onboardingProvider.notifier).setCurrentPage(index);
-    
+
     // Restart animations for new page
     _slideAnimationController.reset();
     _scaleAnimationController.reset();
-    
+
     Future.delayed(const Duration(milliseconds: 100), () {
       _slideAnimationController.forward();
       _scaleAnimationController.forward();
@@ -180,7 +178,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     return _buildOnboardingPage(_pages[index]);
                   },
                 ),
-                
+
                 // Top Action Bar
                 Positioned(
                   top: MediaQuery.of(context).padding.top + 16,
@@ -201,7 +199,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           ),
                         ),
                       ),
-                      
+
                       // Page Indicators
                       Row(
                         children: List.generate(
@@ -223,7 +221,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     ],
                   ),
                 ),
-                
+
                 // Bottom Navigation
                 Positioned(
                   bottom: MediaQuery.of(context).padding.bottom + 32,
@@ -239,12 +237,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           icon: const Icon(Icons.arrow_back),
                           label: const Text(AppConstants.previousButton),
                           style: TextButton.styleFrom(
-                            foregroundColor: DesignTokens.white.withValues(alpha: 0.8),
+                            foregroundColor: DesignTokens.white.withValues(
+                              alpha: 0.8,
+                            ),
                           ),
                         )
                       else
                         const SizedBox.shrink(),
-                      
+
                       // Next/Get Started Button
                       ElevatedButton.icon(
                         onPressed: _nextPage,
@@ -256,12 +256,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             vertical: DesignTokens.spaceMD,
                           ),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusXL),
+                            borderRadius: BorderRadius.circular(
+                              DesignTokens.radiusXL,
+                            ),
                           ),
                         ),
-                        icon: Icon(isLastPage ? Icons.check : Icons.arrow_forward),
+                        icon: Icon(
+                          isLastPage ? Icons.check : Icons.arrow_forward,
+                        ),
                         label: Text(
-                          isLastPage ? AppConstants.getStartedButton : AppConstants.nextButton,
+                          isLastPage
+                              ? AppConstants.getStartedButton
+                              : AppConstants.nextButton,
                           style: const TextStyle(
                             fontWeight: DesignTokens.fontWeightSemiBold,
                           ),
@@ -280,7 +286,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
 
   Widget _buildOnboardingPage(OnboardingPage page) {
     return AnimatedBuilder(
-      animation: Listenable.merge([_slideAnimationController, _scaleAnimationController]),
+      animation: Listenable.merge([
+        _slideAnimationController,
+        _scaleAnimationController,
+      ]),
       builder: (context, child) {
         return Container(
           width: double.infinity,
@@ -302,7 +311,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: DesignTokens.spaceXXL),
-                  
+
                   // Image/Animation Section
                   SlideTransition(
                     position: _slideAnimation,
@@ -330,7 +339,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 errorBuilder: (context, error, stackTrace) {
                                   return Icon(
                                     _getIconForPage(page.title),
-                                    size: MediaQuery.of(context).size.width * 0.2,
+                                    size:
+                                        MediaQuery.of(context).size.width * 0.2,
                                     color: page.backgroundColor,
                                   );
                                 },
@@ -341,9 +351,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: DesignTokens.spaceXXL),
-                  
+
                   // Text Content
                   SlideTransition(
                     position: _slideAnimation,
@@ -352,41 +362,48 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         // Title
                         Text(
                           page.title,
-                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                            color: DesignTokens.white,
-                            fontWeight: DesignTokens.fontWeightBold,
-                            height: 1.2,
-                          ),
+                          style: Theme.of(context).textTheme.displayMedium
+                              ?.copyWith(
+                                color: DesignTokens.white,
+                                fontWeight: DesignTokens.fontWeightBold,
+                                height: 1.2,
+                              ),
                           textAlign: TextAlign.center,
                         ),
-                        
+
                         const SizedBox(height: DesignTokens.spaceMD),
-                        
+
                         // Subtitle
                         Text(
                           page.subtitle,
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: DesignTokens.white.withValues(alpha: 0.9),
-                            fontWeight: DesignTokens.fontWeightMedium,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: DesignTokens.white.withValues(
+                                  alpha: 0.9,
+                                ),
+                                fontWeight: DesignTokens.fontWeightMedium,
+                              ),
                           textAlign: TextAlign.center,
                         ),
-                        
+
                         const SizedBox(height: DesignTokens.spaceLG),
-                        
+
                         // Description
                         Text(
                           page.description,
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: DesignTokens.white.withValues(alpha: 0.8),
-                            height: 1.6,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                color: DesignTokens.white.withValues(
+                                  alpha: 0.8,
+                                ),
+                                height: 1.6,
+                              ),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: DesignTokens.spaceXXL),
                 ],
               ),

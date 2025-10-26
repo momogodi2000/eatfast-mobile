@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/config/router/route_names.dart';
 import 'package:eatfast_mobile/shared/constants/app_constants.dart';
@@ -17,15 +17,15 @@ class TermsConditionsScreen extends StatefulWidget {
 class _TermsConditionsScreenState extends State<TermsConditionsScreen>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  
+
   bool _isAccepted = false;
   bool _hasReadToBottom = false;
   double _scrollProgress = 0.0;
-  
+
   late AnimationController _headerAnimationController;
   late AnimationController _checkboxAnimationController;
   late AnimationController _buttonAnimationController;
-  
+
   late Animation<double> _headerFadeAnimation;
   late Animation<double> _headerSlideAnimation;
   late Animation<double> _checkboxScaleAnimation;
@@ -43,48 +43,41 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    
+
     _checkboxAnimationController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
+
     _buttonAnimationController = AnimationController(
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
 
-    _headerFadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _headerAnimationController,
-      curve: Curves.easeIn,
-    ));
+    _headerFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _headerAnimationController, curve: Curves.easeIn),
+    );
 
-    _headerSlideAnimation = Tween<double>(
-      begin: -50.0,
-      end: 0.0,
-    ).animate(CurvedAnimation(
-      parent: _headerAnimationController,
-      curve: Curves.easeOut,
-    ));
+    _headerSlideAnimation = Tween<double>(begin: -50.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _headerAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
 
-    _checkboxScaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _checkboxAnimationController,
-      curve: Curves.elasticOut,
-    ));
+    _checkboxScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _checkboxAnimationController,
+        curve: Curves.elasticOut,
+      ),
+    );
 
-    _buttonSlideAnimation = Tween<double>(
-      begin: 100.0,
-      end: 0.0,
-    ).animate(CurvedAnimation(
-      parent: _buttonAnimationController,
-      curve: Curves.easeOut,
-    ));
+    _buttonSlideAnimation = Tween<double>(begin: 100.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _buttonAnimationController,
+        curve: Curves.easeOut,
+      ),
+    );
 
     // Start header animation
     _headerAnimationController.forward();
@@ -94,10 +87,10 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
     _scrollController.addListener(() {
       final maxScroll = _scrollController.position.maxScrollExtent;
       final currentScroll = _scrollController.position.pixels;
-      
+
       setState(() {
         _scrollProgress = (currentScroll / maxScroll).clamp(0.0, 1.0);
-        
+
         // Check if user has scrolled to near bottom (90% or more)
         if (_scrollProgress >= 0.9 && !_hasReadToBottom) {
           _hasReadToBottom = true;
@@ -111,7 +104,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
     setState(() {
       _isAccepted = value ?? false;
     });
-    
+
     if (_isAccepted) {
       _checkboxAnimationController.forward();
     } else {
@@ -161,7 +154,9 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                       color: DesignTokens.primaryColor.withValues(alpha: 0.1),
                       border: Border(
                         bottom: BorderSide(
-                          color: DesignTokens.primaryColor.withValues(alpha: 0.3),
+                          color: DesignTokens.primaryColor.withValues(
+                            alpha: 0.3,
+                          ),
                           width: 1,
                         ),
                       ),
@@ -187,16 +182,19 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                             children: [
                               Text(
                                 'Conditions d\'utilisation',
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: DesignTokens.fontWeightSemiBold,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge
+                                    ?.copyWith(
+                                      fontWeight:
+                                          DesignTokens.fontWeightSemiBold,
+                                    ),
                               ),
                               const SizedBox(height: DesignTokens.spaceXS),
                               Text(
                                 'Veuillez lire attentivement nos conditions',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: DesignTokens.textSecondary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: DesignTokens.textSecondary,
+                                    ),
                               ),
                             ],
                           ),
@@ -208,17 +206,19 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
               );
             },
           ),
-          
+
           // Scroll Progress Indicator
           LinearProgressIndicator(
             value: _scrollProgress,
             backgroundColor: DesignTokens.lightGrey,
             valueColor: AlwaysStoppedAnimation<Color>(
-              _hasReadToBottom ? DesignTokens.successColor : DesignTokens.primaryColor,
+              _hasReadToBottom
+                  ? DesignTokens.successColor
+                  : DesignTokens.primaryColor,
             ),
             minHeight: 3,
           ),
-          
+
           // Terms Content
           Expanded(
             child: SingleChildScrollView(
@@ -227,7 +227,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
               child: const TermsContent(),
             ),
           ),
-          
+
           // Bottom Action Section
           AnimatedBuilder(
             animation: _buttonAnimationController,
@@ -239,10 +239,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                   decoration: BoxDecoration(
                     color: DesignTokens.white,
                     border: const Border(
-                      top: BorderSide(
-                        color: DesignTokens.lightGrey,
-                        width: 1,
-                      ),
+                      top: BorderSide(color: DesignTokens.lightGrey, width: 1),
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -263,10 +260,16 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                             vertical: DesignTokens.spaceXS,
                           ),
                           decoration: BoxDecoration(
-                            color: DesignTokens.warningColor.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                            color: DesignTokens.warningColor.withValues(
+                              alpha: 0.1,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              DesignTokens.radiusSM,
+                            ),
                             border: Border.all(
-                              color: DesignTokens.warningColor.withValues(alpha: 0.3),
+                              color: DesignTokens.warningColor.withValues(
+                                alpha: 0.3,
+                              ),
                             ),
                           ),
                           child: Row(
@@ -280,16 +283,18 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                               const SizedBox(width: DesignTokens.spaceXS),
                               Text(
                                 'Faites défiler jusqu\'au bas pour continuer',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: DesignTokens.warningColor,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: DesignTokens.warningColor,
+                                    ),
                               ),
                             ],
                           ),
                         ),
-                      
-                      if (!_hasReadToBottom) const SizedBox(height: DesignTokens.spaceMD),
-                      
+
+                      if (!_hasReadToBottom)
+                        const SizedBox(height: DesignTokens.spaceMD),
+
                       // Acceptance Checkbox
                       AnimatedBuilder(
                         animation: _checkboxAnimationController,
@@ -297,35 +302,53 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                           return Transform.scale(
                             scale: _checkboxScaleAnimation.value,
                             child: Container(
-                              padding: const EdgeInsets.all(DesignTokens.spaceMD),
+                              padding: const EdgeInsets.all(
+                                DesignTokens.spaceMD,
+                              ),
                               decoration: BoxDecoration(
                                 color: _hasReadToBottom
-                                    ? DesignTokens.successColor.withValues(alpha: 0.1)
-                                    : DesignTokens.lightGrey.withValues(alpha: 0.5),
-                                borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                                    ? DesignTokens.successColor.withValues(
+                                        alpha: 0.1,
+                                      )
+                                    : DesignTokens.lightGrey.withValues(
+                                        alpha: 0.5,
+                                      ),
+                                borderRadius: BorderRadius.circular(
+                                  DesignTokens.radiusMD,
+                                ),
                                 border: Border.all(
                                   color: _hasReadToBottom
-                                      ? DesignTokens.successColor.withValues(alpha: 0.3)
-                                      : DesignTokens.mediumGrey.withValues(alpha: 0.3),
+                                      ? DesignTokens.successColor.withValues(
+                                          alpha: 0.3,
+                                        )
+                                      : DesignTokens.mediumGrey.withValues(
+                                          alpha: 0.3,
+                                        ),
                                 ),
                               ),
                               child: Row(
                                 children: [
                                   Checkbox(
                                     value: _isAccepted,
-                                    onChanged: _hasReadToBottom ? _onAcceptanceChanged : null,
+                                    onChanged: _hasReadToBottom
+                                        ? _onAcceptanceChanged
+                                        : null,
                                     activeColor: DesignTokens.primaryColor,
                                     checkColor: DesignTokens.white,
                                   ),
                                   Expanded(
                                     child: Text(
                                       'J\'ai lu et j\'accepte les conditions générales d\'utilisation',
-                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                        fontWeight: DesignTokens.fontWeightMedium,
-                                        color: _hasReadToBottom
-                                            ? DesignTokens.textPrimary
-                                            : DesignTokens.textTertiary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontWeight:
+                                                DesignTokens.fontWeightMedium,
+                                            color: _hasReadToBottom
+                                                ? DesignTokens.textPrimary
+                                                : DesignTokens.textTertiary,
+                                          ),
                                     ),
                                   ),
                                 ],
@@ -334,14 +357,16 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen>
                           );
                         },
                       ),
-                      
+
                       const SizedBox(height: DesignTokens.spaceLG),
-                      
+
                       // Continue Button
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: (_isAccepted && _hasReadToBottom) ? _onContinuePressed : null,
+                          onPressed: (_isAccepted && _hasReadToBottom)
+                              ? _onContinuePressed
+                              : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: (_isAccepted && _hasReadToBottom)
                                 ? DesignTokens.primaryColor

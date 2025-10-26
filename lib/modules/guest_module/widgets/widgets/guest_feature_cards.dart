@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 
 /// Feature cards showcasing EatFast capabilities for guest users
@@ -28,8 +28,9 @@ class GuestFeatureCards extends StatelessWidget {
                   child: _buildFeatureCard(
                     context,
                     icon: Icons.location_on,
-                    title: 'Restaurants � proximit�',
-                    description: 'Trouvez les meilleurs restaurants pr�s de vous',
+                    title: 'Restaurants � proximité',
+                    description:
+                        'Trouvez les meilleurs restaurants près de vous',
                     color: DesignTokens.primaryColor,
                   ),
                 ),
@@ -87,10 +88,7 @@ class GuestFeatureCards extends StatelessWidget {
       decoration: BoxDecoration(
         color: DesignTokens.white,
         borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
-        border: Border.all(
-          color: color.withValues(alpha: 0.2),
-          width: 1,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
         boxShadow: [
           BoxShadow(
             color: DesignTokens.black.withValues(alpha: 0.1),
@@ -108,11 +106,7 @@ class GuestFeatureCards extends StatelessWidget {
               color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
             ),
-            child: Icon(
-              icon,
-              color: color,
-              size: DesignTokens.iconMD,
-            ),
+            child: Icon(icon, color: color, size: DesignTokens.iconMD),
           ),
           const SizedBox(height: DesignTokens.spaceMD),
           Text(

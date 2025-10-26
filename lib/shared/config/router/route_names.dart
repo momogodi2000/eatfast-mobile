@@ -29,6 +29,9 @@ class RouteNames {
   static const String guestRestaurants = '/guest-restaurants';
   static const String guestCheckout = '/guest-checkout';
   static const String promotions = '/promotions';
+  static const String termsAndConditions = '/terms-and-conditions';
+  static const String privacyPolicy = '/privacy-policy';
+  static const String faq = '/faq';
 
   // Admin routes
   static const String adminDashboard = '/admin-dashboard';

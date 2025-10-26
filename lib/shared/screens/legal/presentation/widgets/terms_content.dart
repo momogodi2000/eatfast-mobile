@@ -87,7 +87,8 @@ class _TermsContentState extends State<TermsContent> {
                   Expanded(
                     child: Text(
                       'Conditions Générales d\'Utilisation',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
                             fontWeight: DesignTokens.fontWeightBold,
                             color: DesignTokens.primaryColor,
                           ),
@@ -99,9 +100,9 @@ class _TermsContentState extends State<TermsContent> {
               Text(
                 'Merci de lire attentivement ces conditions avant d\'utiliser ${AppConstants.appName}. En utilisant notre service, vous acceptez ces conditions.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: DesignTokens.textSecondary,
-                      height: 1.5,
-                    ),
+                  color: DesignTokens.textSecondary,
+                  height: 1.5,
+                ),
               ),
             ],
           ),
@@ -139,13 +140,13 @@ class _TermsContentState extends State<TermsContent> {
             },
             decoration: InputDecoration(
               hintText: 'Rechercher dans les conditions...',
-              prefixIcon: Icon(
-                Icons.search,
-                color: DesignTokens.primaryColor,
-              ),
+              prefixIcon: Icon(Icons.search, color: DesignTokens.primaryColor),
               suffixIcon: _searchQuery.isNotEmpty
                   ? IconButton(
-                      icon: Icon(Icons.clear, color: DesignTokens.textSecondary),
+                      icon: Icon(
+                        Icons.clear,
+                        color: DesignTokens.textSecondary,
+                      ),
                       onPressed: () {
                         setState(() {
                           _searchController.clear();
@@ -264,7 +265,8 @@ class _TermsContentState extends State<TermsContent> {
           index: 5,
           icon: Icons.cancel_outlined,
           title: '6. Politique d\'Annulation et de Remboursement',
-          content: 'Les commandes peuvent être annulées selon les conditions suivantes :',
+          content:
+              'Les commandes peuvent être annulées selon les conditions suivantes :',
           bulletPoints: [
             'Annulation gratuite dans les 2 minutes suivant la confirmation',
             'Annulation avec frais de 20% avant la préparation du plat',
@@ -280,7 +282,8 @@ class _TermsContentState extends State<TermsContent> {
           index: 6,
           icon: Icons.delivery_dining,
           title: '7. Livraison',
-          content: 'Nos services de livraison sont soumis aux conditions suivantes :',
+          content:
+              'Nos services de livraison sont soumis aux conditions suivantes :',
           bulletPoints: [
             'Zone de livraison : Principales villes du Cameroun (Yaoundé, Douala, etc.)',
             'Frais de livraison : Variables selon la distance et le restaurant',
@@ -373,7 +376,8 @@ class _TermsContentState extends State<TermsContent> {
             'WhatsApp': AppConstants.companyWhatsApp,
             'Adresse': AppConstants.companyAddress,
           },
-          note: 'Notre service client est disponible du lundi au dimanche de 8h à 22h.',
+          note:
+              'Notre service client est disponible du lundi au dimanche de 8h à 22h.',
         ),
 
         _buildExpandableSection(
@@ -417,9 +421,9 @@ class _TermsContentState extends State<TermsContent> {
                   Text(
                     'Dernière mise à jour',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: DesignTokens.fontWeightBold,
-                          color: DesignTokens.infoColor,
-                        ),
+                      fontWeight: DesignTokens.fontWeightBold,
+                      color: DesignTokens.infoColor,
+                    ),
                   ),
                 ],
               ),
@@ -427,16 +431,16 @@ class _TermsContentState extends State<TermsContent> {
               Text(
                 'Ces conditions générales d\'utilisation ont été mises à jour le 10 janvier 2025.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: DesignTokens.textSecondary,
-                      fontWeight: DesignTokens.fontWeightMedium,
-                    ),
+                  color: DesignTokens.textSecondary,
+                  fontWeight: DesignTokens.fontWeightMedium,
+                ),
               ),
               const SizedBox(height: DesignTokens.spaceXS),
               Text(
                 'Version 1.0.0',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: DesignTokens.textTertiary,
-                    ),
+                  color: DesignTokens.textTertiary,
+                ),
               ),
             ],
           ),
@@ -451,15 +455,15 @@ class _TermsContentState extends State<TermsContent> {
               Text(
                 '© 2025 ${AppConstants.companyName}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: DesignTokens.textTertiary,
-                    ),
+                  color: DesignTokens.textTertiary,
+                ),
               ),
               const SizedBox(height: DesignTokens.spaceXS),
               Text(
                 'Tous droits réservés',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: DesignTokens.textTertiary,
-                    ),
+                  color: DesignTokens.textTertiary,
+                ),
               ),
             ],
           ),
@@ -482,10 +486,14 @@ class _TermsContentState extends State<TermsContent> {
     String? note,
   }) {
     final isExpanded = _expandedSections[index] ?? false;
-    final matchesSearch = _searchQuery.isEmpty ||
+    final matchesSearch =
+        _searchQuery.isEmpty ||
         title.toLowerCase().contains(_searchQuery) ||
         content.toLowerCase().contains(_searchQuery) ||
-        (bulletPoints?.any((point) => point.toLowerCase().contains(_searchQuery)) ?? false);
+        (bulletPoints?.any(
+              (point) => point.toLowerCase().contains(_searchQuery),
+            ) ??
+            false);
 
     // Don't show section if it doesn't match search
     if (_searchQuery.isNotEmpty && !matchesSearch) {
@@ -509,7 +517,9 @@ class _TermsContentState extends State<TermsContent> {
         ),
         boxShadow: [
           BoxShadow(
-            color: DesignTokens.black.withValues(alpha: isExpanded ? 0.1 : 0.05),
+            color: DesignTokens.black.withValues(
+              alpha: isExpanded ? 0.1 : 0.05,
+            ),
             blurRadius: isExpanded ? 12 : 8,
             offset: Offset(0, isExpanded ? 4 : 2),
           ),
@@ -534,7 +544,9 @@ class _TermsContentState extends State<TermsContent> {
                     padding: const EdgeInsets.all(DesignTokens.spaceXS),
                     decoration: BoxDecoration(
                       color: DesignTokens.primaryColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(DesignTokens.radiusSM),
+                      borderRadius: BorderRadius.circular(
+                        DesignTokens.radiusSM,
+                      ),
                     ),
                     child: Icon(
                       icon,
@@ -547,11 +559,11 @@ class _TermsContentState extends State<TermsContent> {
                     child: Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: DesignTokens.fontWeightBold,
-                            color: isExpanded
-                                ? DesignTokens.primaryColor
-                                : DesignTokens.textPrimary,
-                          ),
+                        fontWeight: DesignTokens.fontWeightBold,
+                        color: isExpanded
+                            ? DesignTokens.primaryColor
+                            : DesignTokens.textPrimary,
+                      ),
                     ),
                   ),
                   AnimatedRotation(
@@ -588,9 +600,9 @@ class _TermsContentState extends State<TermsContent> {
                   Text(
                     content,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          height: 1.6,
-                          color: DesignTokens.textPrimary,
-                        ),
+                      height: 1.6,
+                      color: DesignTokens.textPrimary,
+                    ),
                     textAlign: TextAlign.justify,
                   ),
 
@@ -599,7 +611,9 @@ class _TermsContentState extends State<TermsContent> {
                     const SizedBox(height: DesignTokens.spaceMD),
                     ...bulletPoints.map(
                       (point) => Padding(
-                        padding: const EdgeInsets.only(bottom: DesignTokens.spaceXS),
+                        padding: const EdgeInsets.only(
+                          bottom: DesignTokens.spaceXS,
+                        ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -616,9 +630,9 @@ class _TermsContentState extends State<TermsContent> {
                             Expanded(
                               child: Text(
                                 point,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      height: 1.5,
-                                    ),
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium?.copyWith(height: 1.5),
                               ),
                             ),
                           ],
@@ -633,8 +647,12 @@ class _TermsContentState extends State<TermsContent> {
                     Container(
                       padding: const EdgeInsets.all(DesignTokens.spaceMD),
                       decoration: BoxDecoration(
-                        color: DesignTokens.primaryColor.withValues(alpha: 0.05),
-                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                        color: DesignTokens.primaryColor.withValues(
+                          alpha: 0.05,
+                        ),
+                        borderRadius: BorderRadius.circular(
+                          DesignTokens.radiusMD,
+                        ),
                       ),
                       child: Column(
                         children: contactInfo.entries
@@ -649,8 +667,12 @@ class _TermsContentState extends State<TermsContent> {
                                       width: 90,
                                       child: Text(
                                         '${entry.key} :',
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                              fontWeight: DesignTokens.fontWeightSemiBold,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontWeight: DesignTokens
+                                                  .fontWeightSemiBold,
                                               color: DesignTokens.primaryColor,
                                             ),
                                       ),
@@ -658,7 +680,9 @@ class _TermsContentState extends State<TermsContent> {
                                     Expanded(
                                       child: Text(
                                         entry.value,
-                                        style: Theme.of(context).textTheme.bodyMedium,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodyMedium,
                                       ),
                                     ),
                                   ],
@@ -677,9 +701,13 @@ class _TermsContentState extends State<TermsContent> {
                       padding: const EdgeInsets.all(DesignTokens.spaceMD),
                       decoration: BoxDecoration(
                         color: DesignTokens.warningColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(DesignTokens.radiusMD),
+                        borderRadius: BorderRadius.circular(
+                          DesignTokens.radiusMD,
+                        ),
                         border: Border.all(
-                          color: DesignTokens.warningColor.withValues(alpha: 0.3),
+                          color: DesignTokens.warningColor.withValues(
+                            alpha: 0.3,
+                          ),
                         ),
                       ),
                       child: Row(
@@ -694,7 +722,8 @@ class _TermsContentState extends State<TermsContent> {
                           Expanded(
                             child: Text(
                               note,
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
                                     color: DesignTokens.warningColor,
                                     fontWeight: DesignTokens.fontWeightMedium,
                                   ),

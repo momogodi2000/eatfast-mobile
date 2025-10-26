@@ -44,7 +44,9 @@
       "Bash(timeout 120 bash -c \"while ! grep -q ''Succeeded'' ''E:\\project\\Eat Fast App\\eatfatsApp\\build_runner_output.txt''; do sleep 3; done; tail -10 ''E:\\project\\Eat Fast App\\eatfatsApp\\build_runner_output.txt''\")",
       "Bash(git checkout:*)",
       "Bash(del \"lib\\shared\\screens\\legal\\presentation\\widgets\\terms_content.dart\")",
-      "Bash(move:*)"
+      "Bash(move:*)",
+      "Bash(xxd:*)",
+      "Bash(python -m py_compile:*)"
     ],
     "deny": [],
     "ask": []

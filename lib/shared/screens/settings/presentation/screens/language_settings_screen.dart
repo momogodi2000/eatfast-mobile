@@ -54,7 +54,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
                 context: context,
                 ref: ref,
                 language: const Locale('fr', ''),
-                title: 'Fran�ais',
+                title: 'Français',
                 subtitle: 'French',
                 isSelected: currentLanguage.languageCode == 'fr',
               ),
@@ -137,7 +137,7 @@ class LanguageSettingsScreen extends ConsumerWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'Language changed to ${language.languageCode == 'fr' ? 'Fran�ais' : 'English'}',
+                    'Language changed to ${language.languageCode == 'fr' ? 'Français' : 'English'}',
                   ),
                   backgroundColor: DesignTokens.successColor,
                 ),

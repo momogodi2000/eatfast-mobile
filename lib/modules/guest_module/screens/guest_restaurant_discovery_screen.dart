@@ -63,7 +63,7 @@ class _GuestRestaurantDiscoveryScreenState
       builder: (context) => AlertDialog(
         title: const Text('Localisation'),
         content: const Text(
-          'Activez la localisation pour d�couvrir les restaurants pr�s de vous et obtenir des recommandations personnalis�es.',
+          'Activez la localisation pour découvrir les restaurants près de vous et obtenir des recommandations personnalisées.',
         ),
         actions: [
           TextButton(
@@ -92,7 +92,7 @@ class _GuestRestaurantDiscoveryScreenState
       backgroundColor: DesignTokens.backgroundLight,
       appBar: AppBar(
         title: const Text(
-          'D�couvrir les restaurants',
+          'Découvrir les restaurants',
           style: TextStyle(
             color: DesignTokens.white,
             fontWeight: DesignTokens.fontWeightBold,
@@ -162,7 +162,7 @@ class _GuestRestaurantDiscoveryScreenState
                       Expanded(
                         child: Text(
                           restaurantState.hasLocation
-                              ? 'Restaurants pr�s de vous'
+                              ? 'Restaurants près de vous'
                               : 'Tous les restaurants',
                           style: const TextStyle(
                             color: DesignTokens.white,
@@ -247,7 +247,7 @@ class _GuestRestaurantDiscoveryScreenState
                 onPressed: () {
                   ref.read(guestRestaurantProvider.notifier).refresh();
                 },
-                child: const Text('R�essayer'),
+                child: const Text('Réessayer'),
               ),
             ],
           ),
@@ -269,7 +269,7 @@ class _GuestRestaurantDiscoveryScreenState
               ),
               const SizedBox(height: DesignTokens.spaceMD),
               Text(
-                'Aucun restaurant trouv�',
+                'Aucun restaurant trouvé',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: DesignTokens.fontWeightBold,
                   color: DesignTokens.textPrimary,

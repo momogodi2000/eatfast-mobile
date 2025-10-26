@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
 
 /// Guest payment method selection widget
@@ -72,7 +72,7 @@ class GuestPaymentSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Choisissez votre op�rateur:',
+                    'Choisissez votre opérateur:',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: DesignTokens.fontWeightSemiBold,
                       color: DesignTokens.textPrimary,
@@ -113,7 +113,7 @@ class GuestPaymentSection extends StatelessWidget {
             context,
             value: 'cash',
             title: 'Paiement � la livraison',
-            subtitle: 'Payez en esp�ces au livreur',
+            subtitle: 'Payez en espèces au livreur',
             icon: Icons.money,
             isSelected: selectedPaymentMethod == 'cash',
           ),
@@ -153,7 +153,7 @@ class GuestPaymentSection extends StatelessWidget {
                 const SizedBox(width: DesignTokens.spaceSM),
                 Expanded(
                   child: Text(
-                    'Vos informations de paiement sont s�curis�es et crypt�es.',
+                    'Vos informations de paiement sont sécurisées et cryptées.',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: DesignTokens.accentColor,
                     ),
@@ -197,7 +197,9 @@ class GuestPaymentSection extends StatelessWidget {
             Icon(
               icon,
               color: isEnabled
-                  ? (isSelected ? DesignTokens.primaryColor : DesignTokens.textSecondary)
+                  ? (isSelected
+                        ? DesignTokens.primaryColor
+                        : DesignTokens.textSecondary)
                   : DesignTokens.textSecondary.withValues(alpha: 0.5),
               size: DesignTokens.iconMD,
             ),
@@ -229,7 +231,9 @@ class GuestPaymentSection extends StatelessWidget {
             Radio<String>(
               value: value,
               groupValue: selectedPaymentMethod,
-              onChanged: isEnabled ? (val) => onPaymentMethodChanged(val!) : null,
+              onChanged: isEnabled
+                  ? (val) => onPaymentMethodChanged(val!)
+                  : null,
               activeColor: DesignTokens.primaryColor,
             ),
           ],
@@ -266,10 +270,7 @@ class GuestPaymentSection extends StatelessWidget {
             Container(
               width: 8,
               height: 8,
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             const SizedBox(width: DesignTokens.spaceSM),
             Expanded(

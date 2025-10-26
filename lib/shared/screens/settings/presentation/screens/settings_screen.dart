@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:eatfast_mobile/shared/themes/design_tokens.dart';
@@ -16,7 +16,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Param�tres'),
+        title: const Text('Paramètres'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
@@ -46,11 +46,8 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Connectez-vous pour acc�der � toutes les fonctionnalit�s',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    'Connectez-vous pour accéder � toutes les fonctionnalités',
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -71,7 +68,9 @@ class SettingsScreen extends ConsumerWidget {
                         child: OutlinedButton(
                           onPressed: () => context.push(RouteNames.register),
                           style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: DesignTokens.primaryColor),
+                            side: const BorderSide(
+                              color: DesignTokens.primaryColor,
+                            ),
                             foregroundColor: DesignTokens.primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
@@ -99,7 +98,9 @@ class SettingsScreen extends ConsumerWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: DesignTokens.primaryColor.withValues(alpha: 0.2),
+                    backgroundColor: DesignTokens.primaryColor.withValues(
+                      alpha: 0.2,
+                    ),
                     backgroundImage: user.avatar != null
                         ? NetworkImage(user.avatar!)
                         : null,
@@ -148,7 +149,7 @@ class SettingsScreen extends ConsumerWidget {
                               ),
                               SizedBox(width: 4),
                               Text(
-                                'Compte v�rifi�',
+                                'Compte vérifié',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.green,
@@ -169,21 +170,21 @@ class SettingsScreen extends ConsumerWidget {
             context,
             icon: Icons.person,
             title: 'Modifier le profil',
-            subtitle: 'G�rer vos informations personnelles',
+            subtitle: 'Gérer vos informations personnelles',
             onTap: () => context.push(RouteNames.editProfile),
           ),
           _buildSettingsTile(
             context,
             icon: Icons.lock,
-            title: 'S�curit�',
+            title: 'Sécurité',
             subtitle: 'Mot de passe et authentification',
             onTap: () => _showComingSoonSnackBar(context),
           ),
           _buildSettingsTile(
             context,
             icon: Icons.privacy_tip,
-            title: 'Confidentialit�',
-            subtitle: 'Contr�lez vos donn�es personnelles',
+            title: 'Confidentialité',
+            subtitle: 'Contrôlez vos données personnelles',
             onTap: () => _showComingSoonSnackBar(context),
           ),
 
@@ -195,14 +196,14 @@ class SettingsScreen extends ConsumerWidget {
             context,
             icon: Icons.language,
             title: 'Langue',
-            subtitle: 'Fran�ais (par d�faut)',
+            subtitle: 'Français (par défaut)',
             onTap: () => context.push(RouteNames.languageSettings),
           ),
           _buildSettingsTile(
             context,
             icon: Icons.notifications,
             title: 'Notifications',
-            subtitle: 'G�rer les alertes et les rappels',
+            subtitle: 'Gérer les alertes et les rappels',
             onTap: () => _showComingSoonSnackBar(context),
           ),
           _buildThemeTile(context, ref),
@@ -214,15 +215,15 @@ class SettingsScreen extends ConsumerWidget {
           _buildSettingsTile(
             context,
             icon: Icons.payment,
-            title: 'M�thodes de paiement',
-            subtitle: 'G�rer vos cartes et comptes',
+            title: 'Méthodes de paiement',
+            subtitle: 'Gérer vos cartes et comptes',
             onTap: () => _showComingSoonSnackBar(context),
           ),
           _buildSettingsTile(
             context,
             icon: Icons.location_on,
             title: 'Adresses de livraison',
-            subtitle: 'G�rer vos adresses favorites',
+            subtitle: 'Gérer vos adresses favorites',
             onTap: () => _showComingSoonSnackBar(context),
           ),
 
@@ -247,7 +248,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildSettingsTile(
             context,
             icon: Icons.info,
-            title: '� propos',
+            title: 'À propos',
             subtitle: 'Informations sur l\'application',
             onTap: () => context.push(RouteNames.aboutUs),
           ),
@@ -255,7 +256,7 @@ class SettingsScreen extends ConsumerWidget {
           const Divider(),
 
           // Legal Section
-          _buildSectionHeader('L�gal'),
+          _buildSectionHeader('Légal'),
           _buildSettingsTile(
             context,
             icon: Icons.description,
@@ -266,8 +267,8 @@ class SettingsScreen extends ConsumerWidget {
           _buildSettingsTile(
             context,
             icon: Icons.policy,
-            title: 'Politique de confidentialit�',
-            subtitle: 'Comment nous utilisons vos donn�es',
+            title: 'Politique de confidentialité',
+            subtitle: 'Comment nous utilisons vos données',
             onTap: () => _showComingSoonSnackBar(context),
           ),
 
@@ -278,7 +279,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildSettingsTile(
             context,
             icon: Icons.exit_to_app,
-            title: 'Se d�connecter',
+            title: 'Se déconnecter',
             subtitle: 'Quitter votre session actuelle',
             textColor: Colors.red,
             onTap: () => _showLogoutDialog(context, ref),
@@ -287,7 +288,7 @@ class SettingsScreen extends ConsumerWidget {
             context,
             icon: Icons.delete_forever,
             title: 'Supprimer le compte',
-            subtitle: 'Effacer d�finitivement votre compte',
+            subtitle: 'Effacer définitivement votre compte',
             textColor: Colors.red,
             onTap: () => _showDeleteAccountDialog(context),
           ),
@@ -300,17 +301,11 @@ class SettingsScreen extends ConsumerWidget {
               children: [
                 Text(
                   'EatFast v1.0.0',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 14),
                 ),
                 Text(
                   '� 2024 EatFast Cameroun',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey[500], fontSize: 12),
                 ),
               ],
             ),
@@ -348,33 +343,21 @@ class SettingsScreen extends ConsumerWidget {
         themeSubtitle = 'Sombre';
         break;
       case AppThemeMode.system:
-        themeSubtitle = 'Automatique (syst�me)';
+        themeSubtitle = 'Automatique (système)';
         break;
     }
 
     return ListTile(
-      leading: Icon(
-        Icons.brightness_6,
-        color: Colors.grey[700],
-      ),
+      leading: Icon(Icons.brightness_6, color: Colors.grey[700]),
       title: const Text(
-        'Th�me',
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
+        'Thème',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       ),
       subtitle: Text(
         themeSubtitle,
-        style: const TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
+        style: const TextStyle(fontSize: 14, color: Colors.grey),
       ),
-      trailing: const Icon(
-        Icons.chevron_right,
-        color: Colors.grey,
-      ),
+      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
       onTap: () => _showThemeDialog(context, ref),
     );
   }
@@ -385,7 +368,7 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choisir un th�me'),
+        title: const Text('Choisir un thème'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -412,7 +395,7 @@ class SettingsScreen extends ConsumerWidget {
               },
             ),
             RadioListTile<AppThemeMode>(
-              title: const Text('Automatique (syst�me)'),
+              title: const Text('Automatique (système)'),
               value: AppThemeMode.system,
               groupValue: currentTheme,
               onChanged: (value) {
@@ -443,10 +426,7 @@ class SettingsScreen extends ConsumerWidget {
     Color? textColor,
   }) {
     return ListTile(
-      leading: Icon(
-        icon,
-        color: textColor ?? Colors.grey[700],
-      ),
+      leading: Icon(icon, color: textColor ?? Colors.grey[700]),
       title: Text(
         title,
         style: TextStyle(
@@ -457,15 +437,9 @@ class SettingsScreen extends ConsumerWidget {
       ),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
+        style: const TextStyle(fontSize: 14, color: Colors.grey),
       ),
-      trailing: const Icon(
-        Icons.chevron_right,
-        color: Colors.grey,
-      ),
+      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
       onTap: onTap,
     );
   }
@@ -473,7 +447,7 @@ class SettingsScreen extends ConsumerWidget {
   void _showComingSoonSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Fonctionnalit� bient�t disponible'),
+        content: Text('Fonctionnalit� bientôt disponible'),
         duration: Duration(seconds: 2),
       ),
     );
@@ -483,8 +457,8 @@ class SettingsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('D�connexion'),
-        content: const Text('�tes-vous s�r de vouloir vous d�connecter?'),
+        title: const Text('Déconnexion'),
+        content: const Text('Êtes-vous sûr de vouloir vous déconnecter?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -498,10 +472,8 @@ class SettingsScreen extends ConsumerWidget {
                 context.go('/login');
               }
             },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: const Text('Se d�connecter'),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Se déconnecter'),
           ),
         ],
       ),
@@ -514,7 +486,7 @@ class SettingsScreen extends ConsumerWidget {
       builder: (context) => AlertDialog(
         title: const Text('Supprimer le compte'),
         content: const Text(
-          'Cette action est irr�versible. Toutes vos donn�es seront d�finitivement supprim�es.',
+          'Cette action est irréversible. Toutes vos données seront définitivement supprimées.',
         ),
         actions: [
           TextButton(
@@ -526,14 +498,14 @@ class SettingsScreen extends ConsumerWidget {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Contactez le support pour supprimer votre compte'),
+                  content: Text(
+                    'Contactez le support pour supprimer votre compte',
+                  ),
                   backgroundColor: Colors.orange,
                 ),
               );
             },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Supprimer'),
           ),
         ],
