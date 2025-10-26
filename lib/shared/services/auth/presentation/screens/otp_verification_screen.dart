@@ -230,7 +230,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
               const SizedBox(height: DesignTokens.spaceXS),
 
               Text(
-                'Nous avons envoyé un code de vérification �',
+                'Nous avons envoyé un code de vérification à �',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: DesignTokens.textSecondary,
                 ),
